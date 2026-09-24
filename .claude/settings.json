@@ -1,0 +1,42 @@
+{
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash(npm install*)",
+      "Bash(npm create*)",
+      "Bash(npm run *)",
+      "Bash(npm ls*)",
+      "Bash(npx biome*)",
+      "Bash(npx vite*)",
+      "Bash(npx tailwindcss*)",
+      "Bash(node scripts/*)",
+      "Bash(git init*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git branch*)",
+      "Bash(git checkout*)",
+      "Bash(git switch*)",
+      "Bash(mkdir*)",
+      "Bash(dir*)",
+      "Bash(ls*)"
+    ],
+    "deny": [
+      "Bash(git push*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean*)",
+      "Bash(gh *)",
+      "Bash(vercel*)",
+      "Bash(rm -rf*)",
+      "Bash(rmdir /s*)",
+      "Bash(del /s*)"
+    ]
+  }
+}

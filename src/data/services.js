@@ -1,0 +1,157 @@
+// Tjenestekort på forsiden og seksjoner på /verksted.
+// Ikoner er navn fra lucide-react og slås opp i komponenten.
+
+export const services = [
+  {
+    slug: "verksted",
+    icon: "Wrench",
+    title: "Verksted og reparasjon",
+    text: "Service, feilsøking og reparasjon av amerikanske biler, og de fleste andre merker. Dyktige teknikere med lang erfaring, også på europeiske biler.",
+    short: "Service og reparasjon av US-biler, og de fleste andre merker.",
+    to: "/verksted",
+    image: "/images/verksted/verksted-impala-motorblokk",
+    imageAlt: "Rød Chevrolet Impala inne i verkstedet med en motorblokk på stativ",
+  },
+  {
+    slug: "custom",
+    icon: "Gauge",
+    title: "Custom og speedshop",
+    text: "Ombygging, oppgradering og skreddersydde prosjekter. Kustom Speedshop er der entusiastbilen din får det den fortjener.",
+    short: "Ombygging, oppgradering og skreddersydde prosjekter.",
+    to: "/verksted#custom",
+    image: "/images/verksted/verksted-camaro-motorrom",
+    imageAlt: "Gul Chevrolet Camaro SS med åpent motorrom i verkstedet",
+  },
+  {
+    slug: "deler",
+    icon: "Package",
+    title: "Deler og delelager",
+    text: "Godt delelager til de fleste US-biler, også Tesla. Vi skaffer deler til både bruksbilen og entusiastbilen din.",
+    short: "Godt delelager til de fleste US-biler, også Tesla.",
+    to: "/deler",
+    image: "/images/butikk/butikk-vaesker-disk",
+    imageAlt: "Oljer og tilsetninger på disken i butikken",
+  },
+  {
+    slug: "classic",
+    icon: "Car",
+    title: "Veteran og classic",
+    text: "Classic-biler av alle merker, med respekt for originalen. Vi tar vare på bilen din: gammel som ny, blank som rusten.",
+    short: "Classic-biler av alle merker, med respekt for originalen.",
+    to: "/verksted#classic",
+    image: "/images/hero/verksted-hero-klassiker",
+    imageAlt: "Amerikansk klassiker fotografert i sort-hvitt fra lav vinkel",
+  },
+  {
+    slug: "biler",
+    icon: "Tag",
+    title: "Biler til salgs",
+    text: "Det står til tider svært fine biler inne i butikk og kundemottak. Se hva som er inne nå, eller spør oss om det du leter etter.",
+    short: "Se hva som står inne nå, eller spør oss.",
+    to: "/biler-til-salgs",
+    image: "/images/butikk/kundemottak-hyller-bar",
+    imageAlt: "Kundemottaket med hyller, bardisk og bilsofa",
+  },
+  {
+    slug: "utleie",
+    icon: "Snowflake",
+    title: "Utleie og safari",
+    text: "Snøscooter, ATV, tilhenger og biltransporthenger. Guidet snøscootersafari gjennom hele vintersesongen.",
+    short: "Snøscooter, ATV, tilhenger og safari.",
+    to: "/utleie",
+    image: "/images/utleie/snoscootere-oppstilt",
+    imageAlt: "Snøscootere oppstilt i snøen",
+  },
+];
+
+// Detaljseksjoner på /verksted. Teksten bygger på kundens egne formuleringer.
+export const workshopSections = [
+  {
+    id: "reparasjon",
+    icon: "Wrench",
+    title: "Reparasjon og service",
+    text: "Service, feilsøking og reparasjon av amerikanske biler, og de fleste andre merker. Vi har et moderne verksted som tar vare på bilen din, gamle som nye, blanke som rustne.",
+    image: "/images/verksted/verksted-corvette-service",
+    imageAlt: "Rød Corvette på løftebukk med panseret oppe under service",
+    image2: "/images/verksted/verksted-suburban-ramme",
+    image2Alt: "Karosseriet på en Suburban løftet av rammen i verkstedet",
+  },
+  {
+    id: "custom",
+    icon: "Gauge",
+    title: "Custom og speedshop",
+    text: "Ombygging, oppgradering og skreddersydde prosjekter. Kustom Speedshop er der entusiastbilen din får det den fortjener. Vi er entusiaster på biler, ikke bare amerikanske, men alle spesielle biler.",
+    image: "/images/verksted/verksted-camaro-motorrom",
+    imageAlt: "Gul Chevrolet Camaro SS med åpent motorrom",
+    image2: "/images/verksted/motor-v8-benk",
+    image2Alt: "Nyoverhalt V8-motor på pall i verkstedet",
+  },
+  {
+    id: "classic",
+    icon: "Car",
+    title: "Veteran og classic",
+    text: "Classic-biler av alle merker, med respekt for originalen. Vi tar alt fra gamle veteranbiler til nye bruksbiler.",
+    image: "/images/verksted/verksted-belair-loftebukk",
+    imageAlt: "Gul Chevrolet Bel Air på løftebukk med panseret oppe",
+    image2: "/images/verksted/verksted-mustang-loftebukk",
+    image2Alt: "Lyseblå Ford Mustang foran løftebukken i verkstedet",
+  },
+  {
+    id: "europeisk",
+    icon: "Zap",
+    title: "Europeiske biler og Tesla",
+    text: "Vi har dyktige teknikere med lang erfaring på europeiske biler også. Delelageret dekker de fleste US-biler, også Tesla. Noe du trenger hjelp til, så er det bare å ta kontakt.",
+    image: "/images/verksted/verksted-cabriolet-loftebukk",
+    imageAlt: "Grønn cabriolet på løftebukk i verkstedet",
+    image2: null,
+    image2Alt: "",
+  },
+  {
+    id: "maskiner",
+    icon: "Tractor",
+    title: "Maskiner og traktor",
+    text: "Det er ikke bare biler som er innom. Traktor og maskiner får også plass på løftebukken. [Bekreftes av Gjermund: hvilke maskiner dere tar inn]",
+    image: "/images/verksted/verksted-traktor",
+    imageAlt: "Traktor inne i verkstedet",
+    image2: null,
+    image2Alt: "",
+  },
+  {
+    id: "deler",
+    icon: "Package",
+    title: "Deler",
+    text: "Godt delelager til de fleste US-biler, også Tesla. Vi skaffer deler til både bruksbilen og entusiastbilen din. Finner du ikke delen i nettbutikken, send oss en forespørsel.",
+    image: "/images/butikk/butikk-oljehylle",
+    imageAlt: "Oljehylle i butikken hos GT Maskin",
+    image2: null,
+    image2Alt: "",
+    link: { label: "Gå til nettbutikken", to: "/deler" },
+  },
+];
+
+export const workshopGallery = [
+  {
+    image: "/images/verksted/verksted-cabriolet-kobber",
+    alt: "Kobberfarget cabriolet på løftebukk i verkstedet",
+  },
+  {
+    image: "/images/verksted/verksted-impala-motorblokk",
+    alt: "Rød Chevrolet Impala i verkstedet med motorblokk på stativ",
+  },
+  {
+    image: "/images/bygg/fasade-dag-klassikere",
+    alt: "Bygget til GT Maskin på dagtid med amerikanske klassikere foran",
+  },
+  {
+    image: "/images/biler/cadillac-rod-hekk",
+    alt: "Rød Cadillac med finner sett bakfra",
+  },
+  {
+    image: "/images/biler/corvette-sort-utenfor",
+    alt: "Sort Corvette parkert utenfor verkstedet",
+  },
+  {
+    image: "/images/bygg/firmabil-kustom-speedshop",
+    alt: "Firmabilen til GT Maskin med Kustom Speedshop-skrift på siden",
+  },
+];

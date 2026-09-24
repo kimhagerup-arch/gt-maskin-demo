@@ -1,0 +1,19 @@
+{
+  "name": "GT Maskin AS",
+  "short_name": "GT Maskin",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#151412",
+  "background_color": "#151412",
+  "display": "browser"
+}
