@@ -76,15 +76,15 @@ export const nav = {
 };
 
 export const hero = {
-  kicker: "Godkjent bilverksted · Alta · Siden 2012",
-  kickerMobile: "Godkjent bilverksted · Siden 2012",
+  kicker: "Godkjent bilverksted · Alta",
+  kickerMobile: "Godkjent bilverksted · Alta",
   title: ["Spesialisten på", "amerikanske", "biler i Alta"],
   lead: "Vi er entusiaster på biler, ikke bare amerikanske, men alle spesielle biler. Moderne verksted, godt delelager og lang erfaring. Fra gamle veteranbiler til nye bruksbiler.",
   primary: { label: "Bestill verkstedtime", to: "/bestill" },
   secondary: { label: "Se hva vi gjør", to: "/verksted" },
   badge: {
-    value: "2012",
-    text: "Etablert i Alta. Amerikanske biler, custom-prosjekter og delesalg.",
+    value: "Kustom Speedshop i Alta",
+    text: "Amerikanske biler, custom-prosjekter og delesalg.",
   },
   image: "/images/hero/forside-hero-firmabil",
   imageAlt: "Firmabilen til GT Maskin, en International panelvan med Kustom Speedshop-skrift",
@@ -117,6 +117,7 @@ export const servicesSection = {
   kicker: "Hva vi gjør",
   title: "Verksted, deler og prosjekter",
   lead: "Vi tar alt fra gamle veteranbiler til nye bruksbiler, med et moderne verksted som tar vare på bilen din, gamle som nye, blanke som rustne.",
+  readMore: "Les mer",
 };
 
 export const videoSection = {
@@ -150,9 +151,9 @@ export const carsSection = {
     lead: "Vi har til tider veldig fine biler stående inne i butikk og kundemottak. Her legger vi ut det som er til salgs. Finner du ikke det du leter etter, ta kontakt, vi vet hva som er på vei inn.",
     heroImage: "/images/hero/fasade-vinter-klassikere",
     heroAlt: "To amerikanske klassikere foran fasaden til GT Maskin om vinteren",
+    gridTitle: "Biler som er inne nå",
     askTitle: "Leter du etter noe spesielt?",
-    askText:
-      "Vi følger med på hva som er på vei inn, og vi skaffer deler og tar service på bilen du kjøper. Send oss noen ord om hva du ser etter.",
+    askText: "Ta kontakt, vi vet hva som er på vei inn. Send oss noen ord om hva du ser etter.",
     askCta: { label: "Send forespørsel", to: "/kontakt" },
   },
 };
@@ -180,6 +181,7 @@ export const partsSection = {
     title: "Deler til US-biler, Tesla og bruksbilen",
     lead: "Vi har godt delelager til de fleste amerikanske biler, og skaffer det vi ikke har på lager. Finner du ikke delen her, send oss en forespørsel med merke, modell og årsmodell.",
     searchLabel: "Søk i deler",
+    gridTitle: "Deler i nettbutikken",
     searchPlaceholder: "Søk etter del, merke eller kategori",
     resultsLabel: "deler",
     noResults: "Ingen treff. Send oss en forespørsel, så finner vi delen.",
@@ -198,6 +200,7 @@ export const partsSection = {
     request: "Send forespørsel om denne delen",
     fitsLabel: "Passer til",
     skuLabel: "Varenummer",
+    stockLabel: "Lager",
     categoryLabel: "Kategori",
     descriptionFallback: "[Produktbeskrivelse legges inn når produktutvalget er klart]",
     notFound: "Fant ikke denne delen.",
@@ -211,6 +214,7 @@ export const partsSection = {
     qty: "Antall",
     remove: "Fjern",
     subtotal: "Sum (foreløpig)",
+    validation: "Fyll inn navn og enten telefon eller e-post.",
     subtotalNote: "Priser bekreftes av oss før betaling.",
     submit: "Send bestillingsforespørsel",
     success: "Takk! Vi går gjennom bestillingen og tar kontakt for bekreftelse.",
@@ -251,7 +255,7 @@ export const aboutSection = {
     "Vi er entusiaster, ikke bare på amerikanske biler, men på alle spesielle biler. Kundemottaket er innbydende og kreativt, og det står til tider svært fine biler inne hos oss. Trenger du hjelp til noe, er det bare å ta kontakt.",
   ],
   facts: [
-    { value: "2012", label: "Etablert i Alta" },
+    { value: "2012", label: "GT Maskin AS stiftet" },
     { value: "Alta", label: "Myggveien 3, Aronneskjosen" },
     { value: "Godkjent", label: "Bilverksted" },
     { value: "Lærebedrift", label: "Vi tar inn lærlinger" },
@@ -267,7 +271,7 @@ export const aboutSection = {
     receptionKicker: "Kundemottaket",
     receptionTitle: "Innbydende og kreativt",
     receptionText:
-      "Kundemottaket i Myggveien er bygd av entusiaster, for entusiaster. Bardisk, bilsofa, gammel bensinpumpe, og som regel en fin bil eller to inne på gulvet.",
+      "Kundemottaket i Myggveien er innbydende og kreativt: bardisk, bilsofa, gammel bensinpumpe og til tider svært fine biler inne på gulvet.",
     quote: {
       text: "Innbydende og kreativt kundemottak. Kan bistå med service og vedlikehold, gode tips og råd!",
       source: "Alta Amcar Klubb",
@@ -288,6 +292,11 @@ export const aboutSection = {
       },
     ],
     apprenticeCta: { label: "Ta kontakt om læreplass", to: "/kontakt" },
+    peopleTitle: "Folkene bak GT Maskin",
+    ctaKicker: "Bestill time",
+    ctaTitle: "Trenger du hjelp til noe?",
+    ctaText: "Da er det bare å ta kontakt med oss.",
+    cta: { label: "Bestill verkstedtime", to: "/bestill" },
     portraitLabel: "[Portrett]",
   },
 };

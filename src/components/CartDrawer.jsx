@@ -71,7 +71,18 @@ export default function CartDrawer() {
 
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {cart.items.length === 0 ? (
-            <p className="py-10 text-center text-brand-muted-inverse">{t.empty}</p>
+            <div className="flex flex-col items-center gap-4 py-10 text-center">
+              <p className="text-brand-muted-inverse">{t.empty}</p>
+              <Button
+                to={partsSection.checkout.emptyCta.to}
+                variant="outlineDark"
+                size="sm"
+                arrow
+                onClick={cart.close}
+              >
+                {partsSection.checkout.emptyCta.label}
+              </Button>
+            </div>
           ) : (
             <ul className="flex flex-col divide-y divide-brand-border-dark">
               {cart.items.map((item) => (
@@ -129,24 +140,26 @@ export default function CartDrawer() {
           )}
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-brand-border-dark px-5 py-5">
-          <div className="flex items-baseline justify-between">
-            <span className="text-sm font-semibold text-brand-muted-inverse">
-              {partsSection.checkout.subtotal}
-            </span>
-            <span className="font-display text-2xl">
-              {cart.subtotal === null ? "[PRIS]" : formatPrice(cart.subtotal)}{" "}
-              {partsSection.card.priceSuffix}
-            </span>
+        {cart.items.length > 0 && (
+          <div className="flex flex-col gap-3 border-t border-brand-border-dark px-5 py-5">
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm font-semibold text-brand-muted-inverse">
+                {partsSection.checkout.subtotal}
+              </span>
+              <span className="font-display text-2xl">
+                {cart.subtotal === null ? "[PRIS]" : formatPrice(cart.subtotal)}{" "}
+                {partsSection.card.priceSuffix}
+              </span>
+            </div>
+            <p className="text-xs text-brand-muted-inverse">{partsSection.checkout.subtotalNote}</p>
+            <Button to="/kasse" onClick={cart.close} arrow disabled={cart.items.length === 0}>
+              {t.checkout}
+            </Button>
+            <Button variant="outlineDark" size="sm" onClick={cart.close}>
+              {t.continue}
+            </Button>
           </div>
-          <p className="text-xs text-brand-muted-inverse">{partsSection.checkout.subtotalNote}</p>
-          <Button to="/kasse" onClick={cart.close} arrow disabled={cart.items.length === 0}>
-            {t.checkout}
-          </Button>
-          <Button variant="outlineDark" size="sm" onClick={cart.close}>
-            {t.continue}
-          </Button>
-        </div>
+        )}
       </aside>
     </div>
   );

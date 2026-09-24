@@ -16,6 +16,7 @@ const MANIFEST = path.join(ROOT, "src", "data", "imageManifest.js");
 
 const FULL_WIDTH = 1920;
 const CARD_WIDTH = 800;
+const SMALL_WIDTH = 400;
 
 /** [kildefil, målmappe, nytt navn, kort beskrivelse for manifestet] */
 const PHOTOS = [
@@ -113,6 +114,7 @@ async function processPhoto([file, folder, name, description]) {
   const fullW = Math.min(meta.width, FULL_WIDTH);
   widths.push(fullW);
   if (meta.width > CARD_WIDTH + 40) widths.push(CARD_WIDTH);
+  if (meta.width > SMALL_WIDTH + 40) widths.push(SMALL_WIDTH);
 
   const sizes = [];
   for (const w of widths) {
@@ -216,6 +218,8 @@ async function processLogo() {
     .resize({ height: 512, withoutEnlargement: true })
     .webp({ quality: 90 })
     .toFile(`${logoBase}-512.webp`);
+  await sharp(png).resize({ height: 256 }).png().toFile(`${logoBase}-256.png`);
+  await sharp(png).resize({ height: 256 }).webp({ quality: 90 }).toFile(`${logoBase}-256.webp`);
   await sharp(png).resize({ height: 128 }).png().toFile(`${logoBase}-128.png`);
   await sharp(png).resize({ height: 128 }).webp({ quality: 90 }).toFile(`${logoBase}-128.webp`);
   const big = await sharp(`${logoBase}-512.png`).metadata();
@@ -257,7 +261,7 @@ for (const candidate of ["hero.mp4", path.join("video", "hero.mp4")]) {
 }
 if (!heroVideo) console.log("Ingen hero.mp4 i assets-raw/, hero bruker stillbilde.");
 
-const header = "// Generert av scripts/prepare-images.mjs. Ikke rediger for hånd.\n";
+const header = "// Skrevet av scripts/prepare-images.mjs. Ikke rediger for hånd.\n";
 writeFileSync(
   MANIFEST,
   `${header}export const imageManifest = ${JSON.stringify(manifest, null, 2)};\n\nexport const heroVideo = ${JSON.stringify(heroVideo)};\n`,

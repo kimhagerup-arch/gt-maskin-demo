@@ -30,7 +30,7 @@ Windows ARM64: `sharp` er satt til `^0.34`, som har ferdige binærer for `win32-
 
 | Mappe | Innhold |
 |---|---|
-| `src/data/` | Alt innhold. `companyFacts.js` (fakta), `siteContent.js` (tekst per side og seksjon), `services.js`, `cars.js`, `products.js`, `rental.js`, `team.js`, `timeline.js`, `socialFeed.js`, `videos.js`, `reviews.js`, `channels.js`, `brands.js`, `imageManifest.js` (generert) |
+| `src/data/` | Alt innhold. `companyFacts.js` (fakta), `siteContent.js` (tekst per side og seksjon), `services.js`, `cars.js`, `products.js`, `rental.js`, `team.js`, `timeline.js`, `socialFeed.js`, `videos.js`, `reviews.js`, `channels.js`, `brands.js`, `imageManifest.js` (skrives av bildescriptet) |
 | `src/components/` | Gjenbrukbare komponenter (Header, Footer, PageHero, Picture, Placeholder, SocialFeed, VideoSection, CartDrawer, BookingForm, osv.) |
 | `src/pages/` | Én fil per rute, lastes med `React.lazy` |
 | `src/context/CartContext.jsx` | Handlekurv (sessionStorage) |
@@ -66,7 +66,7 @@ Komponentene henter tekst fra `src/data/`. Skal du endre en tekst, endre den der
 
 ## Regler for innhold
 
-Norsk bokmål, aldri tankestrek, aldri ordene luksus, premium eller eksklusiv. Kun `_kilder/FAKTA.md` er kilde for fakta. Plassholdere skrives i klammer. Se `CLAUDE.md`.
+Norsk bokmål, aldri tankestrek, ingen av de tre forbudte ordene i `CLAUDE.md`. Kun `_kilder/FAKTA.md` er kilde for fakta. Plassholdere skrives i klammer. Se `CLAUDE.md`.
 
 ## Deploy (senere)
 

@@ -41,7 +41,7 @@ export default function HeroMedia({
           src={image}
           alt={imageAlt}
           sizes="(min-width: 1024px) 480px, 100vw"
-          loading="eager"
+          priority
           objectPosition={objectPosition}
           className="h-full w-full"
           fallbackLabel="[HOVEDBILDE: prosjektbil i verkstedet]"

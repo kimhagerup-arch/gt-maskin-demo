@@ -21,7 +21,8 @@ export default function StickyMobileBar() {
   }, []);
 
   return (
-    <div
+    <nav
+      aria-label="Hurtigvalg"
       className={cx(
         "fixed inset-x-0 bottom-0 z-30 grid grid-cols-2 border-t border-brand-border-dark bg-brand-primary/95 backdrop-blur transition-transform duration-200 md:hidden",
         hidden && "translate-y-full",
@@ -44,6 +45,6 @@ export default function StickyMobileBar() {
         {nav.cta.label}
         <Icon name="ArrowRight" size={18} strokeWidth={2.2} />
       </Link>
-    </div>
+    </nav>
   );
 }

@@ -114,6 +114,7 @@ export default function Deler() {
             </div>
           </div>
 
+          <h2 className="sr-only">{t.gridTitle}</h2>
           <p className="text-sm text-brand-muted" aria-live="polite">
             {visible.length} {t.resultsLabel}
           </p>

@@ -110,11 +110,7 @@ export default function OmOss() {
       {/* Folkene */}
       <section className="section-pad bg-brand-bg text-brand-text">
         <div className="container-site flex flex-col gap-8 md:gap-10">
-          <SectionHeader
-            tone="light"
-            kicker={aboutSection.peopleLabel}
-            title="Folkene bak GT Maskin"
-          />
+          <SectionHeader tone="light" kicker={aboutSection.peopleLabel} title={p.peopleTitle} />
           <TeamGrid large className="md:max-w-3xl" />
         </div>
       </section>
@@ -143,12 +139,7 @@ export default function OmOss() {
         </div>
       </section>
 
-      <CtaBand
-        kicker="Bestill time"
-        title="Trenger du hjelp til noe?"
-        text="Da er det bare å ta kontakt med oss."
-        cta={{ label: "Bestill verkstedtime", to: "/bestill" }}
-      />
+      <CtaBand kicker={p.ctaKicker} title={p.ctaTitle} text={p.ctaText} cta={p.cta} />
     </>
   );
 }

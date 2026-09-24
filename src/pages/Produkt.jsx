@@ -92,7 +92,7 @@ export default function Produkt() {
               <dd>{product.category}</dd>
               <dt className="font-bold text-brand-muted">{t.skuLabel}</dt>
               <dd>{product.sku || "[varenummer]"}</dd>
-              <dt className="font-bold text-brand-muted">Lager</dt>
+              <dt className="font-bold text-brand-muted">{t.stockLabel}</dt>
               <dd>{stockLabel}</dd>
               {product.fits?.length > 0 && (
                 <>

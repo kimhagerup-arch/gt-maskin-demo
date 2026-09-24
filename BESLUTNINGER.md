@@ -47,7 +47,7 @@ Fargene ligger som RGB-tripler i CSS-variabler (`src/index.css`) og eksponeres i
 - `logo1.jpg` er et foto av et fysisk skilt med aluminiumsramme og vindusrefleks i kantene. `logo2.jpg` er samme logo på mørk, jevn bakgrunn uten ramme (RESSURSER.md beskriver den som lys eller grå, det stemmer ikke). `logo2.jpg` er brukt som kilde.
 - Bakgrunnen fjernes i `scripts/prepare-images.mjs` med flood fill fra kantene (bare mørke, umettede piksler som henger sammen med kanten), slik at mørke felt inne i skjoldet beholdes. Deretter trimmes marger og tynne kantrester. Resultat: `public/images/logo/gt-maskin-logo-512.png` og `-128.png` med gjennomsiktig bakgrunn.
 - Logoen ligger rett på mørk header. I footer ligger den i en mørk badge (`brand-primary-light` med kant). Ingen logo i hero.
-- Favicon-sett og OG-bilde er generert fra den trimmede logoen.
+- Favicon-sett og OG-bilde er laget fra den trimmede logoen.
 - Logoen har skiltet «2008», mens selskapet er stiftet 2012 (FAKTA.md). Ikke endret. Spørsmål til Gjermund: hva står 2008 for?
 
 ## 3. Bilder
@@ -59,7 +59,7 @@ Fargene ligger som RGB-tripler i CSS-variabler (`src/index.css`) og eksponeres i
 - OG-bildet bruker `herobilde-fasade.jpg` (fasaden med skilt) i stedet for `herobilde.jpg`, fordi det er skarpere og ikke har tekst i bildet fra før.
 - Om oss-siden har `utside1.jpg` (bygget med klassikere) som PageHero, slik at `hero.jpg` ikke brukes to steder.
 - `butikk9.jpg` (capser) viser et merke (Stetson) som ikke står i kildene. Bildet brukes nøytralt som «capser» uten merkenavn i tekst.
-- Bildene leveres som webp med jpg-fallback i maks 1920 px og 800 px bredde, med `width`/`height` fra `src/data/imageManifest.js` (generert).
+- Bildene leveres som webp med jpg-fallback i maks 1920 px og 800 px bredde, med `width`/`height` fra `src/data/imageManifest.js` (skrives av bildescriptet).
 
 ## 4. Stavefeil rettet i kundens tekst
 
@@ -96,3 +96,51 @@ Rekkefølgen følger PROMPT.md punkt 4. Bakgrunner: hero (mørk), tillitsstripe 
 - Hero-video: `scripts/prepare-images.mjs` kopierer `assets-raw/hero.mp4` til `public/video/hero.mp4` hvis den finnes og skriver `heroVideo` i manifestet. `HeroMedia` viser da video (autoplay, muted, loop, poster), ellers stillbilde. Ingen video finnes nå.
 - Mobilmeny: `<button aria-expanded aria-controls>`, fullskjerms-overlay, Escape lukker, fokusfelle, fokus tilbake til knappen, lukkes ved rutebytte.
 - Overskrifter har `hyphens-auto` og `break-words` som sikring mot overflow på 375 px. Kasse-tittelen har egen mindre mobilstørrelse.
+
+## QA (24.09.2026, før demo)
+
+Kritisk gjennomgang av innhold, bilder, visuelt, tilgjengelighet og ytelse. Full rapport i `docs/qa/QA-RAPPORT.md`.
+
+### Innhold mot kildene
+
+- Alle datafiler i `src/data/` er lest mot `FAKTA.md` og del B. Tall, navn, adresse, åpningstider, telefon, e-post og lenker finnes i kildene. Følgende var egne formuleringer og er strammet inn:
+  - `/om-oss`, kundemottaket: «bygd av entusiaster, for entusiaster» og «som regel en fin bil eller to» er byttet til kundens ord: «innbydende og kreativt» og «til tider svært fine biler».
+  - `/biler-til-salgs`, CTA-tekst: «vi skaffer deler og tar service på bilen du kjøper» er fjernet (påstand kunden ikke har kommet med). Nå: «Ta kontakt, vi vet hva som er på vei inn.»
+  - Hardkodede strenger i JSX («Les mer», «Lager», «Folkene bak GT Maskin», CTA på om oss, valideringsmelding i kassen) er flyttet til `siteContent.js`.
+- Årstall: logoen viser 2008, selskapet er stiftet 2012. Til Gjermund har svart: hero-kicker er «Godkjent bilverksted · Alta», boksen i hero er «Kustom Speedshop i Alta», faktaboksen er «2012 / GT Maskin AS stiftet», og tidslinjen starter med «[ÅR]: [Oppstart, bekreftes av Gjermund]» før 2012. Spørsmålet ligger i STATUS.md og BILDELISTE.md.
+- Søk etter tankestrek, forbudte ord og verktøyord i `src`, `public`, `index.html`, `docs`, README, BESLUTNINGER, STATUS og BILDELISTE: null treff i synlig innhold. Kodekommentarer om automatisk skrevne filer er omformulert. Commitmeldinger er uten medforfatter-linjer og verktøynavn.
+- Stillingstitler: kun «daglig leder og eier», med små bokstaver.
+
+### Bilder og logo
+
+- `assets-raw/` er ikke sporet i git (`git ls-files` tom). Ingen tredjeparts merkelogo under `public/`.
+- Alle innholdsbilder har `width`, `height`, beskrivende `alt` og `loading="lazy"`. Hero og PageHero lastes eagert med `fetchpriority="high"`. Dekorative bilder (logo i lenke med synlig tekst, miniatyrer i spillelisten, kurvbilder ved siden av tittel) har `alt=""`.
+- Header-logo målt: 48 px av 65 px header på mobil (74 %), 64 px av 89 px på desktop (72 %). Logoen ble økt fra 36/44 px etter måling. Logo vises nå som webp med png-fallback i 128/256 px (512 px-varianten lastet 380 kB unødvendig).
+- `og-image.jpg` og favicon-filer åpnet og kontrollert: logo sentrert, riktig proporsjon, ikke beskåret.
+- Bildescriptet lager nå også en 400 px-variant, slik at små flater (feed-kort på mobil, Snapchat-QR) ikke laster 800 px.
+
+### Ytelse (Lighthouse mobil mot `npm run preview`)
+
+Første måling: ytelse 60-69, CLS 0,25-0,29, LCP 4,7-6,4 s. Årsaker og tiltak:
+
+- Google Fonts-CSS blokkerte rendering (930 ms) og fontbytte ga layout shift. Bebas Neue og Barlow (OFL) er nå selvhostet i `public/fonts/` (latin-subsett, woff2) med `@font-face` i `src/index.css` og `preload` i `index.html`. Fontene er de samme som før, bare lastet lokalt. Ingen eksterne kall før brukeren klikker.
+- Footer flyttet seg når lazy-lastet side erstattet fallback (CLS 0,25). `RouteFallback` er nå `min-h-screen`.
+- Forsiden lastes eagert (ikke `React.lazy`), siden det er hovedruten. Hovedchunk 276 kB (83 kB gzip), resten av rutene er egne chunker under 10 kB gzip.
+- `public/robots.txt` lagt til (`Disallow: /` i demoen, byttes ved go-live).
+
+- Hero-bildet oppdages først når JS har kjørt (LCP 3,5 s). `index.html` preloader hero-webp med `imagesrcset`/`imagesizes` (17-61 kB, også på undersider, akseptert).
+- Første nedlasting av fontene traff latin-ext-subsettet (uten A-Z) fordi subset-kommentaren i Google-CSS-en ble lest fra feil blokk. Oppdaget på skjermbildene (Impact i stedet for Bebas), rettet og verifisert med fontkit (A-Z, a-z, æøå finnes).
+
+Etter tiltak: ytelse 90-96 (/, to kjøringer), 94 (/deler), 96 (/kontakt), tilgjengelighet 100, beste praksis 100, CLS 0. SEO 66 skyldes kun `noindex`; målt til 100 uten `noindex` og med `Allow` i robots.txt (midlertidig test mot dist, tilbakestilt).
+
+### Tilgjengelighet
+
+- axe-core (wcag2a/aa, 2.1, best-practice) på alle ruter ved 375 og 1440 px: to moderate funn rettet (sticky mobil-CTA manglet landemerke, nå `<nav aria-label="Hurtigvalg">`; h1 til h3 på `/deler` og `/biler-til-salgs`, nå med skjult h2). Null funn etter retting.
+- Lighthouse «label-content-name-mismatch» på logo-lenken: `aria-label` fjernet, synlig tekst er navnet.
+- Tastatur: tab-rekkefølge starter med «Hopp til innhold», fokus synlig (2 px aksent) på alle stopp, Escape lukker meny og kurv og gir fokus tilbake til knappen som åpnet. `prefers-reduced-motion`: ingen skjulte reveal-elementer, ingen video.
+
+### Små visuelle rettinger
+
+- Tom handlekurv viste «Sum 0 kr» og «Til bestilling»; nå kun tekst og lenke til `/deler`.
+- Suksess-boksen i bestillingsskjemaet strakk seg til full kolonnehøyde; nå `self-start`.
+- Tittelen på `/kasse` ga 1 px overflow på 375 px; egen mobilstørrelse.

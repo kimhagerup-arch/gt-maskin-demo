@@ -24,7 +24,7 @@ export default function PageHero({
             src={image}
             alt=""
             sizes="100vw"
-            loading="eager"
+            priority
             objectPosition={imagePosition}
             imgClassName="h-full w-full object-cover opacity-70 md:opacity-100"
             fallbackLabel=""

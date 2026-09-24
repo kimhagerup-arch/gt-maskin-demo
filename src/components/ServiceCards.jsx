@@ -43,7 +43,7 @@ export default function ServiceCards({ id = "tjenester" }) {
                   <h3 className="text-lg font-bold md:text-[22px]">{service.title}</h3>
                   <p className="text-base leading-relaxed text-brand-muted">{service.text}</p>
                   <span className="mt-auto inline-flex items-center gap-2 pt-2 text-sm font-bold text-brand-accent-deep">
-                    Les mer
+                    {servicesSection.readMore}
                     <Icon
                       name="ArrowRight"
                       size={16}

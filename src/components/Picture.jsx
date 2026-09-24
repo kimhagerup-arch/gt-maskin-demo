@@ -17,6 +17,7 @@ export default function Picture({
   className,
   imgClassName = "h-full w-full object-cover",
   loading = "lazy",
+  priority = false,
   objectPosition,
   fallbackLabel = "[Bilde]",
   tone = "dark",
@@ -41,7 +42,8 @@ export default function Picture({
         width={image.width}
         height={image.height}
         alt={alt}
-        loading={loading}
+        loading={priority ? "eager" : loading}
+        fetchpriority={priority ? "high" : undefined}
         decoding="async"
         draggable={draggable}
         className={imgClassName}

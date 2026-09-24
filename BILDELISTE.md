@@ -22,7 +22,7 @@ Bilder som fortsatt mangler, med ønsket motiv, hvor de brukes, format og størr
 
 1. Er bilene på `bil1.jpg` (rød Cadillac), `bil2.jpg` (gul Camaro SS) og `bil3.jpg` (sort Corvette) til salgs, kundebiler eller egne? De brukes i dag kun i galleriet på `/verksted`.
 2. Kan logoene til Amsoil, Fluid Film, Carhartt, Chevrolet, Dodge, Ram, Ford, Cadillac og Tesla brukes på siden? I dag vises kun navnene som tekst.
-3. Hva står «2008» på logoen for?
+3. Hva står «2008» på logoen for? Når startet virksomheten? Selskapet er stiftet 2012, og tidslinjen har nå «[ÅR]: [Oppstart, bekreftes av Gjermund]» før 2012.
 4. Finnes det bilder eller video fra snøscootersafari (Norseman Trail) som kan brukes?
 5. Er det greit at bildene fra Facebook brukes slik de er i demoen (personer i bakgrunnen på `butikk.jpg`, `butikk5.jpg`, `butikk7.jpg`, `verksted4.jpg`, `verksted10.jpg`)?
 

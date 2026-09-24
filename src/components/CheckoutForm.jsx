@@ -37,7 +37,7 @@ export default function CheckoutForm({ onSuccess }) {
     }
     if (!isBlank(values.email) && !EMAIL_RE.test(values.email.trim())) next.email = true;
     setErrors(next);
-    setFormError(Object.keys(next).length ? "Fyll inn navn og enten telefon eller e-post." : "");
+    setFormError(Object.keys(next).length ? t.validation : "");
     return Object.keys(next).length === 0;
   };
 

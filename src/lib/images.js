@@ -1,7 +1,7 @@
 import { imageManifest } from "../data/imageManifest";
 
 /**
- * Slår opp et bilde i manifestet generert av scripts/prepare-images.mjs.
+ * Slår opp et bilde i manifestet som scripts/prepare-images.mjs skriver.
  * Returnerer null hvis nøkkelen ikke finnes (komponentene viser da plassholder).
  */
 export function getImage(key) {

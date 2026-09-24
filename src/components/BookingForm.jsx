@@ -132,6 +132,7 @@ export default function BookingForm({
       ref={formRef}
       className={cx(
         "border border-brand-border-dark bg-brand-primary-light p-6 md:p-10",
+        status === "success" && "self-start",
         className,
       )}
     >

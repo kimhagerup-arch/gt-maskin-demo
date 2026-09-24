@@ -4,8 +4,8 @@ import Layout from "./components/Layout";
 import RouteFallback from "./components/RouteFallback";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
+import Home from "./pages/Home";
 
-const Home = lazy(() => import("./pages/Home"));
 const Verksted = lazy(() => import("./pages/Verksted"));
 const Deler = lazy(() => import("./pages/Deler"));
 const Produkt = lazy(() => import("./pages/Produkt"));

@@ -20,7 +20,7 @@ export default function Kasse() {
       <div className="container-site flex flex-col gap-8 md:gap-10">
         <div className="flex flex-col gap-3">
           <p className="kicker text-brand-accent-light">{partsSection.kicker}</p>
-          <h1 className="font-display text-4xl leading-[0.95] tracking-wide md:text-7xl">
+          <h1 className="font-display text-[32px] leading-[0.95] tracking-wide md:text-7xl">
             {t.title}
           </h1>
           <p className="max-w-xl text-lg text-brand-muted-inverse">{t.lead}</p>

@@ -25,6 +25,7 @@ export default function BilerTilSalgs() {
 
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
         <div className="container-site flex flex-col gap-8">
+          <h2 className="sr-only">{t.gridTitle}</h2>
           {forSale.length ? (
             <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
               {forSale.map((car, i) => (

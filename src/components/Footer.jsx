@@ -38,15 +38,22 @@ export default function Footer() {
             <div className="flex items-center gap-3 text-brand-text-inverse">
               <span className="flex h-14 w-14 items-center justify-center border border-brand-border-dark bg-brand-primary-light p-1.5">
                 {logo ? (
-                  <img
-                    src={`${LOGO_KEY}-128.png`}
-                    width={logo.sizes[0].w}
-                    height={logo.sizes[0].h}
-                    alt=""
-                    className="h-full w-full object-contain"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={`${LOGO_KEY}-128.webp 1x, ${LOGO_KEY}-256.webp 2x`}
+                    />
+                    <img
+                      src={`${LOGO_KEY}-128.png`}
+                      srcSet={`${LOGO_KEY}-128.png 1x, ${LOGO_KEY}-256.png 2x`}
+                      width={logo.sizes[0].w}
+                      height={logo.sizes[0].h}
+                      alt=""
+                      className="h-full w-full object-contain"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                 ) : (
                   <span className="font-display text-2xl text-brand-accent-light">GT</span>
                 )}

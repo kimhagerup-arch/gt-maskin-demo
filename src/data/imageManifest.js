@@ -1,4 +1,4 @@
-// Generert av scripts/prepare-images.mjs. Ikke rediger for hånd.
+// Skrevet av scripts/prepare-images.mjs. Ikke rediger for hånd.
 export const imageManifest = {
   "/images/hero/forside-hero-firmabil": {
     "width": 888,
@@ -11,6 +11,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 449
+      },
+      {
+        "w": 400,
+        "h": 224
       }
     ],
     "description": "Firmabilen, International panelvan i sepia"
@@ -26,6 +30,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Amerikansk klassiker i sort-hvitt, lav vinkel"
@@ -41,6 +49,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 450
+      },
+      {
+        "w": 400,
+        "h": 225
       }
     ],
     "description": "Fasaden i Myggveien i kveldslys med skilt"
@@ -56,6 +68,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 598
+      },
+      {
+        "w": 400,
+        "h": 299
       }
     ],
     "description": "Klassikere foran fasaden om vinteren"
@@ -71,6 +87,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Rød Impala i verkstedet med motorblokk på stativ"
@@ -86,6 +106,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Gul Bel Air på løftebukk med panseret oppe"
@@ -101,6 +125,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Karosseri løftet av rammen på en Suburban"
@@ -116,6 +144,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Grønn cabriolet på løftebukk"
@@ -131,6 +163,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Rød Corvette på løftebukk under service"
@@ -142,6 +178,10 @@ export const imageManifest = {
       {
         "w": 540,
         "h": 960
+      },
+      {
+        "w": 400,
+        "h": 711
       }
     ],
     "description": "Traktor inne i verkstedet"
@@ -153,6 +193,10 @@ export const imageManifest = {
       {
         "w": 720,
         "h": 960
+      },
+      {
+        "w": 400,
+        "h": 533
       }
     ],
     "description": "Kobberfarget cabriolet på løftebukk"
@@ -164,6 +208,10 @@ export const imageManifest = {
       {
         "w": 750,
         "h": 562
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Gul Camaro SS med åpent motorrom"
@@ -179,6 +227,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Lyseblå Mustang foran løftebukk"
@@ -190,6 +242,10 @@ export const imageManifest = {
       {
         "w": 720,
         "h": 1280
+      },
+      {
+        "w": 400,
+        "h": 711
       }
     ],
     "description": "Nyoverhalt V8-motor på pall"
@@ -201,6 +257,10 @@ export const imageManifest = {
       {
         "w": 720,
         "h": 1280
+      },
+      {
+        "w": 400,
+        "h": 711
       }
     ],
     "description": "Oljehylle i butikken"
@@ -216,6 +276,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 599
+      },
+      {
+        "w": 400,
+        "h": 299
       }
     ],
     "description": "Hylle med rustbeskyttelse"
@@ -231,6 +295,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Væsker og tilsetninger på disken"
@@ -246,6 +314,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Kundemottaket med bardisk og neonskilt"
@@ -261,6 +333,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Kundemottaket med bilsofa og cabriolet"
@@ -276,6 +352,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Kundemottaket med hyller og bardisk"
@@ -291,6 +371,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Cabriolet inne i kundemottaket"
@@ -306,6 +390,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Disken med gammel bensinpumpe og bilsofa"
@@ -321,6 +409,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 1000
+      },
+      {
+        "w": 400,
+        "h": 500
       }
     ],
     "description": "Capser i butikken"
@@ -336,6 +428,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
       }
     ],
     "description": "Arbeidsklær på stativ i butikken"
@@ -351,6 +447,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Rød Cadillac med finner, sett bakfra"
@@ -362,6 +462,10 @@ export const imageManifest = {
       {
         "w": 720,
         "h": 960
+      },
+      {
+        "w": 400,
+        "h": 533
       }
     ],
     "description": "Gul Camaro SS sett forfra"
@@ -377,6 +481,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Sort Corvette utenfor verkstedet"
@@ -392,6 +500,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Snøscootere oppstilt i snøen"
@@ -407,6 +519,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Biltransporthenger sett skrått forfra"
@@ -422,6 +538,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Biltransporthenger fra siden"
@@ -437,6 +557,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Bygget på dagtid med klassikere foran"
@@ -452,6 +576,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Bygget på dagtid med mange biler foran"
@@ -467,6 +595,10 @@ export const imageManifest = {
       {
         "w": 800,
         "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
       }
     ],
     "description": "Firmabilen med Kustom Speedshop-skrift"
@@ -478,6 +610,10 @@ export const imageManifest = {
       {
         "w": 797,
         "h": 797
+      },
+      {
+        "w": 400,
+        "h": 400
       }
     ],
     "description": "Snapchat-QR-kode for GT Maskin"
