@@ -57,8 +57,8 @@ export default function ProductCard({ product }) {
           </Link>
         </h3>
         <span className="text-xs text-brand-muted">{stockLabel}</span>
-        <div className="mt-auto flex items-center justify-between gap-3 pt-3">
-          <span className="font-display text-2xl text-brand-accent-deep">
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
+          <span className="whitespace-nowrap font-display text-xl text-brand-accent-deep md:text-2xl">
             {formatPrice(product.price)} {partsSection.card.priceSuffix}
           </span>
           <button
@@ -68,7 +68,7 @@ export default function ProductCard({ product }) {
               setAdded(true);
             }}
             className={cx(
-              "inline-flex h-10 items-center gap-1.5 px-3.5 text-[13px] font-bold transition-colors",
+              "inline-flex h-10 items-center gap-1.5 whitespace-nowrap px-3 text-[13px] font-bold transition-colors md:px-3.5",
               added
                 ? "bg-brand-accent text-brand-primary"
                 : "bg-brand-primary text-brand-text-inverse hover:bg-brand-primary-light",

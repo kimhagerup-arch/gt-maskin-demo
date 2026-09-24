@@ -15,6 +15,7 @@ export function getImage(key) {
     width: entry.width,
     height: entry.height,
     description: entry.description,
+    sizes,
     src: `${key}-${entry.width}.${ext}`,
     srcSet: sizes.map((s) => `${key}-${s.w}.${ext} ${s.w}w`).join(", "),
     webpSrcSet: sizes.map((s) => `${key}-${s.w}.webp ${s.w}w`).join(", "),

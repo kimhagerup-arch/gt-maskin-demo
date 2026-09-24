@@ -40,8 +40,8 @@ export default function Footer() {
                 {logo ? (
                   <img
                     src={`${LOGO_KEY}-128.png`}
-                    width={logo.sizes[1]?.w || logo.width}
-                    height={logo.sizes[1]?.h || logo.height}
+                    width={logo.sizes[0].w}
+                    height={logo.sizes[0].h}
                     alt=""
                     className="h-full w-full object-contain"
                     loading="lazy"

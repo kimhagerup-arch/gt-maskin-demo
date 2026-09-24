@@ -4,36 +4,36 @@
 
 :root {
   /* Grunnflater */
-  --brand-primary: #151412;
-  --brand-primary-dark: #0f0e0d;
-  --brand-primary-light: #1f1d1a;
-  --brand-primary-soft: #23211e;
+  --brand-primary: 21 20 18; /* #151412 */
+  --brand-primary-dark: 15 14 13; /* #0F0E0D */
+  --brand-primary-light: 31 29 26; /* #1F1D1A */
+  --brand-primary-soft: 35 33 30; /* #23211E */
 
   /* Aksent hentet fra logoen (oransje). Se BESLUTNINGER.md for målinger. */
-  --brand-accent: #f08003;
-  --brand-accent-light: #f79a2b;
-  --brand-accent-deep: #9c4a08;
-  --brand-accent-hover: #d46f02;
+  --brand-accent: 240 128 3; /* #F08003 */
+  --brand-accent-light: 247 154 43; /* #F79A2B */
+  --brand-accent-deep: 156 74 8; /* #9C4A08 */
+  --brand-accent-hover: 212 111 2; /* #D46F02 */
 
   /* Lyse flater */
-  --brand-bg: #f3efe7;
-  --brand-surface: #e4ded2;
-  --brand-card: #ffffff;
+  --brand-bg: 243 239 231; /* #F3EFE7 */
+  --brand-surface: 228 222 210; /* #E4DED2 */
+  --brand-card: 255 255 255; /* #FFFFFF */
 
   /* Tekst */
-  --brand-text: #151412;
-  --brand-text-inverse: #f3efe7;
-  --brand-muted: #5e5850;
-  --brand-muted-inverse: #b9b2a6;
-  --brand-placeholder: #9c9487;
-  --brand-footer: #8f877a;
+  --brand-text: 21 20 18; /* #151412 */
+  --brand-text-inverse: 243 239 231; /* #F3EFE7 */
+  --brand-muted: 94 88 80; /* #5E5850 */
+  --brand-muted-inverse: 185 178 166; /* #B9B2A6 */
+  --brand-placeholder: 156 148 135; /* #9C9487 */
+  --brand-footer: 143 135 122; /* #8F877A */
 
   /* Kanter */
-  --brand-border: #dcd5c8;
-  --brand-border-strong: #c9c1b3;
-  --brand-border-dark: #2e2b27;
-  --brand-border-dark-strong: #3a3631;
-  --brand-outline: #4a463f;
+  --brand-border: 220 213 200; /* #DCD5C8 */
+  --brand-border-strong: 201 193 179; /* #C9C1B3 */
+  --brand-border-dark: 46 43 39; /* #2E2B27 */
+  --brand-border-dark-strong: 58 54 49; /* #3A3631 */
+  --brand-outline: 74 70 63; /* #4A463F */
 }
 
 @layer base {
@@ -54,7 +54,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--brand-accent-light);
+    outline: 2px solid rgb(var(--brand-accent-light));
     outline-offset: 2px;
   }
 
@@ -66,7 +66,7 @@
   }
 
   ::placeholder {
-    color: var(--brand-placeholder);
+    color: rgb(var(--brand-placeholder));
     opacity: 1;
   }
 
@@ -102,13 +102,13 @@
   }
 
   .h1-hero {
-    @apply font-display text-6xl leading-[0.92] tracking-wide md:text-[104px];
+    @apply font-display text-6xl leading-[0.92] tracking-wide md:text-[88px] xl:text-[104px];
   }
   .h1-page {
-    @apply font-display text-5xl leading-[0.95] tracking-wide md:text-7xl;
+    @apply font-display text-5xl leading-[0.95] tracking-wide break-words hyphens-auto md:text-7xl;
   }
   .h2-section {
-    @apply font-display text-[44px] leading-[0.95] tracking-wide md:text-[64px];
+    @apply font-display text-[44px] leading-[0.95] tracking-wide break-words hyphens-auto md:text-[64px];
   }
 
   .reveal {

@@ -13,7 +13,7 @@ export default function HeroMedia({
   imageAlt,
   video,
   className,
-  objectPosition = "35% 50%",
+  objectPosition = "18% 50%",
 }) {
   const reduced = useReducedMotion();
   const [videoFailed, setVideoFailed] = useState(false);

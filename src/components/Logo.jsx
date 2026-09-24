@@ -30,8 +30,8 @@ export default function Logo({ size = "md", showTagline = true, className, linkC
         <img
           src={`${LOGO_KEY}-128.png`}
           srcSet={`${LOGO_KEY}-128.png 1x, ${LOGO_KEY}-512.png 2x`}
-          width={image.sizes[1]?.w || image.width}
-          height={image.sizes[1]?.h || image.height}
+          width={image.sizes[0].w}
+          height={image.sizes[0].h}
           alt=""
           className={cx("shrink-0 object-contain", box, className)}
           decoding="async"
