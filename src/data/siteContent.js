@@ -144,8 +144,8 @@ export const videoSection = {
     kicker: "Video",
     title: "GT Maskin på film",
     lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien. Videoene lastes først når du trykker på avspilling.",
-    heroImage: "/images/bygg/firmabil-kustom-speedshop",
-    heroAlt: "Firmabilen til GT Maskin med Kustom Speedshop-skrift på siden",
+    heroImage: "/images/bygg/fasade-dag-bilpark",
+    heroAlt: "Bygget til GT Maskin på dagtid med mange biler foran",
     featuredTitle: "Siste video",
     gridTitle: "Flere videoer",
     moreKicker: "Mer fra oss",
@@ -605,6 +605,7 @@ export const placeholderLabels = {
 };
 
 export const draftBanner = {
+  label: "Utkast",
   text: "Utkast laget av KOVISION for GT Maskin. Tekst i [klammer] fylles inn sammen med dere.",
   close: "Lukk meldingen",
 };

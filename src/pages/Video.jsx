@@ -22,7 +22,7 @@ export default function Video() {
         lead={t.lead}
         image={t.heroImage}
         imageAlt={t.heroAlt}
-        imagePosition="50% 75%"
+        imagePosition="50% 60%"
         compact
       />
 

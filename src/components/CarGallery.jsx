@@ -48,7 +48,7 @@ export default function CarGallery({ images = [], alts = [], title, placeholderL
       <div className="aspect-[4/3] overflow-hidden border border-brand-border-dark">
         <Placeholder
           label={placeholderLabel || carsSection.card.imageLabel}
-          className={cx("h-full w-full", dimmed && "opacity-60")}
+          className="h-full w-full"
         />
       </div>
     );

@@ -1,5 +1,25 @@
 # ARBEIDSLOGG
 
+## 07.10.2026: runde 2, løft før kunden ser siden
+
+**Forutsetning**: `_kilder/INNHOLD-FRA-GJERMUND.md` skulle være eneste kilde for nytt innhold. Filen finnes ikke. Strukturen er bygd ferdig og plassholderne beholdt; hva som mangler står i STATUS.md.
+
+**Gjort, per punkt**
+
+1. Feed og video: `FeedCard` med norsk dato, klipp til fire linjer med «Les mer på Facebook», karusell-ikon; `SocialFeed` viser bare ekte innlegg når det finnes minst tre, rundet ned til multiplum av tre. Ny `VideoPlayer` med kildene youtube, facebook (plugins/video.php, 16:9 eller 9:16), mp4 og snapchat (lenke ut), alt montert først ved klikk, ingen eksterne miniatyrer. Ny rute `/video` (kodesplittet) med hovedspiller, rutenett og kanalstripe. «Video» i hovedmeny, mobilmeny og footer; header-mellomrom redusert og sjekket på 1024 og 1280 px. `seo.video`.
+2. Butikk: `products.js` med gruppene «Deler» og «Klær og utstyr», fire plassholderprodukter for klær og capser med butikkbilder bak etiketten, `sizes` på klær. `/deler` med gruppeveksler, kategorichips og filter i URL. Produktside med størrelsesvelger (deaktivert til størrelser er kjent). Handlekurv nøklet på slug + størrelse i `CartContext`, skuff og kasse viser størrelse. Menytekst «Butikk», ny `seo.deler`, lenkerad på forsiden.
+3. Biler til salgs: `cars` (tom) og `exampleCars`. Siden i rekkefølgen PageHero, «Inne hos oss nå», «Vi skaffer»-skjema (`CarWantedForm`, `submitForm("biljakt")`, skjuler sticky CTA), «Solgte biler», «Slik presenteres bilene». Ny detaljside `/biler-til-salgs/:slug` med `CarGallery` (piler, tastatur, swipe), nøkkeltall og «Spør om bilen». Ukjent slug gir 404. Forsiden viser kompakt tom tilstand med knapp til skjemaet.
+4. Kanaler: `channels.js` med messenger og snapchat (uten brukernavn: kun QR). Ny `SocialLinks` i footer, på `/kontakt` (Ring, E-post, Messenger samlet; QR på desktop, lenke på mobil når den finnes) og på `/video`. Personverntekst oppdatert.
+5. Utleie, variant B: `/utleie` samler alt med `RentalForm` (`submitForm("utleie")`, til-dato ikke før fra-dato), bestillingsknapper byttet til forespørsel, domenet fjernet fra `companyFacts`, `rental.js`, footer og all synlig tekst. ATV med `IconField`. Forsidens utleiekort peker til `/utleie`.
+6. Løft: `DraftBanner` (aside, sessionStorage, ingen CLS), felles `Placeholder`-stil med «Fylles inn», forsiden viser kun Gjermund med monogram, hero byttet til `herobilde-fasade.jpg` etter 2x-sammenligning, OG/canonical/twitter-meta, `robots.txt` med Facebook-unntak, `HeroPreload` for undersidenes hero-bilder.
+7. QA: build og lint rene. 18 ruter på 375/768/1024/1440 uten konsollfeil og overflow (to overflow-feil funnet og rettet). axe 0 funn etter tre rettinger. Lighthouse mobil: `/` 91, `/video` 90, `/utleie` 90, `/biler-til-salgs` 93, tilgjengelighet og beste praksis 100, CLS 0. Ingen eksterne kall før klikk; Facebook- og YouTube-spiller verifisert med midlertidige testlenker i dev. Fem skjemaer med feil og suksess verifisert, handlekurv med to størrelser gir to linjer. Null treff på tankestrek, forbudte ord og verktøyord. 50 skjermbilder i `docs/qa/skjermbilder/runde-2/`.
+
+**Fra QA-rapport og STATUS runde 1 som ble løftet uten nye fakta**: ATV-plassholder erstattet med ikonfelt, tomme [Navn]-kort fjernet fra forsiden, hero-bilde byttet til skarpere fil, OG-metadata komplettert, robots.txt justert for deling, footer-kolonner rebalansert.
+
+**Beslutninger**: BESLUTNINGER.md, seksjon «Runde 2». **Rapport**: `docs/qa/QA-RAPPORT.md`, seksjon «Runde 2».
+
+**Åpne punkter**: innholdet som skulle komme fra kundefilen (STATUS.md), spørsmålene fra runde 1.
+
 ## 24.09.2026, kveld: QA-gjennomgang før demo
 
 **Gjort**

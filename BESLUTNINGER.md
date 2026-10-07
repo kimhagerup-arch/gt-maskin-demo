@@ -144,3 +144,64 @@ Etter tiltak: ytelse 90-96 (/, to kjøringer), 94 (/deler), 96 (/kontakt), tilgj
 - Tom handlekurv viste «Sum 0 kr» og «Til bestilling»; nå kun tekst og lenke til `/deler`.
 - Suksess-boksen i bestillingsskjemaet strakk seg til full kolonnehøyde; nå `self-start`.
 - Tittelen på `/kasse` ga 1 px overflow på 375 px; egen mobilstørrelse.
+
+## Runde 2 (07.10.2026): løft før kunden ser siden
+
+### Innholdsfilen fra kunden mangler
+
+`_kilder/INNHOLD-FRA-GJERMUND.md` skulle være eneste kilde for nytt innhold i runden (scooterdomenet, Snapchat, Facebook-innlegg, videolenker, nytt hovedbilde). Filen finnes ikke. Etter oppdragets regel er strukturen bygd ferdig, plassholderne beholdt, og ingenting gjettet. Hva som mangler står i STATUS.md.
+
+### Feed
+
+- Innleggstekst i feeden skal gjengis ordrett, også stavemåte og emoji, fordi det er sitater fra Facebook. Stavefeil rettes bare i sidetekst, ikke i feeden.
+- Når det finnes minst 3 ekte innlegg, viser `SocialFeed` bare de ekte og runder ned til nærmeste multiplum av 3 (3, 6 eller 9). Overskytende innlegg vises ingen steder. Komponenten er fortsatt blind for kilde; `placeholderImage` er et demofelt som ignoreres i drift.
+- Lange tekster klippes til fire linjer og lenken skifter til «Les mer på Facebook». Karusell får et lite bildestabel-ikon, video og reel får play-overlegg.
+
+### Video
+
+- Kilder: `youtube` (youtube-nocookie.com), `facebook` (facebook.com/plugins/video.php med `show_text=false`), `mp4` og `snapchat`. Snapchat kan ikke bygges inn og vises som kort med poster og «Se på Snapchat».
+- Spillerens ramme er alltid 16:9 så siden ikke flytter seg når en stående video (`aspect: "9:16"`) monteres; den sentreres inne i rammen på svart flate.
+- Ingen eksterne miniatyrer lastes før klikk. Den gamle YouTube-miniatyr-fallbacken (i.ytimg.com) er fjernet; poster må være et lokalt bilde.
+- Varighet og dato vises bare når de er kjent (`null` skjules), så ingenting gjettes.
+- Hero-bildet på `/video` er `fasade-dag-bilpark` (31 kB på 800 px). Første valg, firmabilen, veide 101 kB og ga Lighthouse 87; byttet ga 90.
+
+### Butikk
+
+- Sortimentet er delt i «Deler» og «Klær og utstyr». Underkategorier for klær: «Klær» og «Capser og tilbehør». Valgt gruppe og kategori ligger i URL-en.
+- Klær får `sizes`. `[]` betyr at størrelsene ikke er bekreftet: velgeren vises deaktivert med «[Størrelser bekreftes]», og plagget kan legges i kurven uten størrelse. Når størrelser er kjent, må en velges før «Legg i kurv». Handlekurven nøkler linjer på slug + størrelse.
+- Carhartt nevnes som tekst i gruppeingressen for klær, ikke som produktnavn (står i `brands.store`).
+- Menyteksten «Deler» er byttet til «Butikk» i header, mobilmeny og footer. Ruten `/deler` er beholdt.
+- Plassholderproduktene for klær og capser bruker `butikk-klaer` og `butikk-capser` bak PLASSHOLDER-etiketten, slik feeden gjør.
+
+### Biler til salgs
+
+- `cars` (ekte) er tom, og eksempelkortene ligger i `exampleCars`. Eksemplene vises bare når `cars` er tom, så seksjonen «Slik presenteres bilene» forsvinner av seg selv når første ekte bil legges inn.
+- «Vi skaffer» brukes som overskrift slik oppdraget sier, uten løfter om leveringstid, garanti eller import. Ingressen er kundens egen formulering «vi vet hva som er på vei inn».
+- Solgte biler får «Solgt»-merke, nedtonet bilde og gjennomstreket pris. Plassholderen bak et solgt eksempel nedtones ikke, fordi etiketten «Fylles inn» ellers mister kontrast (axe-funn, rettet).
+- Detaljsiden har galleri med piler, piltaster og swipe. Galleriet er en `<section>` med `onKeyDown`; piltastene virker når fokus står på en knapp i galleriet. Et `tabIndex` på selve seksjonen ble fjernet etter Biome-regelen `noNoninteractiveTabindex`.
+
+### Snapchat og Messenger
+
+- Messenger-lenken er `https://m.me/GtMaskinas`, avledet av Facebook-sidens adresse.
+- Snapchat-brukernavn mangler: kun QR vises, uten lenke, med teksten «[Snapchat-brukernavn bekreftes av Gjermund]». Når `url` settes i `channels.js`, vises QR på desktop og «Åpne i Snapchat» på mobil.
+- Én komponent, `SocialLinks`, brukes i footer, på kontaktsiden og på videosiden. Ikonene er dekor (`aria-hidden`), teksten er lenken. Facebook- og Snapchat-merkene er inline SVG i `currentColor`.
+- Footerens lenkekolonne «Følg oss» er omdøpt til «Mer» (Video, Om oss, Kontakt), siden kanalknappene har fått egen kolonne med samme tittel.
+
+### Utleie: variant B
+
+Innholdsfilen som skulle beskrive scooterdomenet finnes ikke, og ingen av kildene i `_kilder/` sier noe om et bookingsystem der. Variant B er derfor valgt: `/utleie` er eneste sted for utleie, bestillingsknappene er byttet til en utleieforespørsel på siden, og domenet nevnes ikke i synlig tekst (`grep` i `src` og `index.html` gir null treff). `companyFacts.links.rental` er fjernet. Hvis det viser seg at domenet har et bookingsystem kunden vil beholde, legges lenken tilbake (variant A). Ved go-live videresendes scooterdomenet til gtmaskin.com/utleie (301).
+
+- Prisene fra 2022 er ikke brukt. Priser og vilkår er fortsatt «[PRIS]» og «[vilkår]», med en setning om at de bekreftes ved forespørsel.
+- ATV uten bilde vises som et designet ikonfelt (lucide-ikon på mørk flate med aksentstrek og stille striper), ikke som tom plassholder.
+- Utleieforespørselen validerer at til-dato ikke er før fra-dato, og sendes via `submitForm("utleie", payload)`.
+
+### Løft
+
+- Utkastbanner: `<aside>` i normal flyt over headeren, ikke sticky. Lukket tilstand leses synkront fra `sessionStorage` ved første render, så banneret gir ingen layoutforskyvning (CLS målt til 0). Oransje flate med mørk tekst, 6,83:1.
+- Felles plassholderstil: stiplet kant, nedtonet tekst og etikett «Fylles inn» i `Placeholder`. Forsidens om oss-del viser kun Gjermund, med monogram «GT» der portrettet mangler; `/om-oss` beholder plassholderne for ansatte samlet.
+- Hero-bilde: skjermbilder av hero på 1440 px (2x) med `herobilde.jpg` (886 px, innbakt tekst) og `herobilde-fasade.jpg` (1278 px). Fasaden er tydelig skarpere og har ingen tekst i bildet. Den er valgt, med `object-position: 64% 42%` så skiltet og bilene i vinduene kommer med. Preload i `index.html` er oppdatert. Nytt høyoppløst bilde anbefales fortsatt.
+- OG og deling: `og:url`, `canonical`, absolutt `og:image` med `secure_url`, `type`, `width`, `height` og `alt`, pluss `twitter:card`, `twitter:title`, `twitter:description` og `twitter:image`.
+- `robots.txt` slipper inn `facebookexternalhit` og `Facebot` så delinger får forhåndsvisning, og holder alle andre ute. `X-Robots-Tag: noindex` og meta noindex beholdes.
+- `HeroPreload` legger inn preload for undersidens hero-bilde fra hovedchunken så snart ruten er kjent. Målbar effekt var liten (bildestørrelsen avgjør), men det koster ingenting.
+- Lenker til bilder på produktkort og bilkort har ikke lenger `aria-label`; de har en `sr-only`-tekst i stedet, så den synlige plassholderteksten inngår i det tilgjengelige navnet (axe `label-content-name-mismatch`).
+- `SectionHeader` sin høyre-slot har `md:max-w-[50%]` så lange ingresser ikke skaper horisontal overflow på 768 px. Videorutenettet på forsiden har `min-w-0` på kolonnene, så lange spillelistetitler avkortes i stedet for å presse ut siden på 375 px.

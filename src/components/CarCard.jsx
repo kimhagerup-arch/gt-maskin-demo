@@ -10,11 +10,8 @@ export default function CarCard({ car }) {
   const href = `/biler-til-salgs/${car.slug}`;
   return (
     <article className="flex h-full flex-col border border-brand-border-dark bg-brand-primary-light transition-colors hover:border-brand-accent-light">
-      <Link
-        to={href}
-        className="relative block aspect-[4/3] overflow-hidden"
-        aria-label={`${carsSection.card.details}: ${car.title} ${car.year}`}
-      >
+      <Link to={href} className="relative block aspect-[4/3] overflow-hidden">
+        <span className="sr-only">{`${carsSection.card.details}: ${car.title} ${car.year}`}</span>
         {image ? (
           <Picture
             src={image}
@@ -26,7 +23,7 @@ export default function CarCard({ car }) {
         ) : (
           <Placeholder
             label={car.placeholderLabel || carsSection.card.imageLabel}
-            className={cx("h-full w-full", car.sold && "opacity-60")}
+            className="h-full w-full"
           />
         )}
         {car.placeholder && (

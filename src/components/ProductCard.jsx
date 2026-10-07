@@ -28,11 +28,8 @@ export default function ProductCard({ product }) {
 
   return (
     <article className="flex h-full flex-col border border-brand-border bg-brand-card transition-colors hover:border-brand-accent">
-      <Link
-        to={`/deler/${product.slug}`}
-        className="relative block aspect-[4/3] overflow-hidden"
-        aria-label={product.title}
-      >
+      <Link to={`/deler/${product.slug}`} className="relative block aspect-[4/3] overflow-hidden">
+        <span className="sr-only">{product.title}</span>
         {imageKey ? (
           <Picture
             src={imageKey}

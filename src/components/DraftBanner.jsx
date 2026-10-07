@@ -32,7 +32,8 @@ export default function DraftBanner() {
   };
 
   return (
-    <div
+    <aside
+      aria-label={draftBanner.label}
       className="flex min-h-9 items-center justify-between gap-3 bg-brand-accent px-4 py-1.5 text-[13px] font-semibold leading-snug text-brand-primary md:px-6"
       data-utkast
     >
@@ -49,6 +50,6 @@ export default function DraftBanner() {
       >
         <Icon name="X" size={16} strokeWidth={2.4} />
       </button>
-    </div>
+    </aside>
   );
 }

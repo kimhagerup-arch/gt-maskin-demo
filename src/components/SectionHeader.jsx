@@ -48,7 +48,7 @@ export default function SectionHeader({
           {lead}
         </p>
       )}
-      {aside && <div className="shrink-0">{aside}</div>}
+      {aside && <div className="min-w-0 md:max-w-[50%] md:shrink-0">{aside}</div>}
     </div>
   );
 }

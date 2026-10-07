@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+import HeroPreload from "./components/HeroPreload";
 import Layout from "./components/Layout";
 import RouteFallback from "./components/RouteFallback";
 import ScrollToTop from "./components/ScrollToTop";
@@ -24,6 +25,7 @@ export default function App() {
   return (
     <CartProvider>
       <ScrollToTop />
+      <HeroPreload />
       <Routes>
         <Route element={<Layout />}>
           <Route

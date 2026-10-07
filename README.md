@@ -66,7 +66,7 @@ Komponentene henter tekst fra `src/data/`. Skal du endre en tekst, endre den der
 
 ## Regler for innhold
 
-Norsk bokmål, aldri tankestrek, ingen av de tre forbudte ordene i `CLAUDE.md`. Kun `_kilder/FAKTA.md` er kilde for fakta. Plassholdere skrives i klammer. Se `CLAUDE.md`.
+Norsk bokmål, aldri tankestrek, ingen av de tre forbudte ordene fra prosjektinstruksen i synlig tekst. Kun `_kilder/FAKTA.md` er kilde for fakta. Plassholdere skrives i klammer. Reglene står i prosjektinstruksen i repoets rot.
 
 ## Deploy (senere)
 
