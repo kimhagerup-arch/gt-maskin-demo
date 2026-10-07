@@ -65,4 +65,9 @@ export const safari = {
   text: "Om vinteren kjører vi guidede snøscooterturer, se Norseman Trail.",
   ctaLabel: "norsemantrail.com",
   url: "https://www.norsemantrail.com",
+  // Bakgrunn: lisens sjekkes og krediteres før go-live (se BILDELISTE.md).
+  image: "/images/utleie/safari-fjell",
+  // Frilagt produsentbilde, kun demo. Byttes med GT Maskins egne scootere før go-live.
+  sledImage: "/images/utleie/safari-scooter",
+  credit: "Foto: [Fotograf, lisens]",
 };

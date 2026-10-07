@@ -4,6 +4,8 @@ Sist oppdatert: 07.10.2026 etter runde 2 (løft før kunden ser siden). Branch `
 
 **Demoen er klar til å vises.** Et tynt, lukkbart utkastbanner øverst forteller at tekst i klammer fylles inn sammen med kunden.
 
+Rask retting 07.10.2026 (tre commits etter runde 2): telefonnummeret vises som «+47 911 14 628» overalt; Facebook og Snapchat ligger som ikonknapper i header (fra 1024 px), mobilmeny og hero, der Snapchat åpner en QR-dialog til brukernavnet er kjent; safari-banneret på forsiden og `/utleie` har fjellbakgrunn og tre animerte snøscootere (pauses utenfor viewport, én stille scooter ved redusert bevegelse). **Før go-live**: bytt den frilagte produsent-scooteren (`ac-profil.jpg`, kun demo) med GT Maskins egne scootere, og sjekk lisensen på bakgrunnsbildet `Mountain_scootering_Finnmark.jpg` og fyll inn kreditlinjen «Foto: [Fotograf, lisens]». Se BESLUTNINGER.md og BILDELISTE.md.
+
 ## Viktig: innholdsfilen fra kunden mangler
 
 Runde 2 skulle hente nytt innhold fra `_kilder/INNHOLD-FRA-GJERMUND.md` (scooterdomenet, Snapchat-brukernavn, Facebook-innlegg, videolenker, eventuelt nytt hovedbilde og hero-video). Filen finnes ikke i repoet. Strukturen for alt dette er bygd ferdig, men innholdet står som plassholdere:

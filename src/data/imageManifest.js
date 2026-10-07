@@ -508,6 +508,25 @@ export const imageManifest = {
     ],
     "description": "Snøscootere oppstilt i snøen"
   },
+  "/images/utleie/safari-fjell": {
+    "width": 1920,
+    "height": 1440,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 1440
+      },
+      {
+        "w": 800,
+        "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
+      }
+    ],
+    "description": "Snøscooter på vidda i Finnmark med fjell bak"
+  },
   "/images/utleie/biltransporthenger-skra": {
     "width": 960,
     "height": 720,
@@ -637,6 +656,22 @@ export const imageManifest = {
       "width": 887,
       "height": 924
     }
+  },
+  "/images/utleie/safari-scooter": {
+    "width": 800,
+    "height": 312,
+    "sizes": [
+      {
+        "w": 800,
+        "h": 312
+      },
+      {
+        "w": 400,
+        "h": 156
+      }
+    ],
+    "description": "Snøscooter i profil, frilagt (produsentbilde, kun demo)",
+    "format": "png"
   }
 };
 

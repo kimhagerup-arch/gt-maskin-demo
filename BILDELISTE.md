@@ -19,7 +19,9 @@ Sist oppdatert 07.10.2026 (runde 2). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 | Biler til salgs, 3-6 bilder per bil (front, side, bak, interiør) | `/biler-til-salgs`, detaljside med galleri, forsiden | jpg | min. 1600 px bred, 4:3 | Merke, modell, årsmodell, km, motor og pris må følge med. Galleriet tar flere bilder per bil (`images` og `imageAlts`) |
 | Produktbilder, deler | `/deler`, produktside, handlekurv | jpg eller png | min. 1200 px, 4:3, nøytral bakgrunn | Navn, merke, pris, varenummer og passer-til må følge med |
 | Produktbilder, klær og capser | `/deler?gruppe=klaer`, produktside | jpg eller png | min. 1200 px, 4:3 eller 3:4 | Navn, merke, pris og størrelser må følge med. `butikk-klaer` og `butikk-capser` brukes bak PLASSHOLDER-etiketten nå |
-| Bilder fra snøscootersafari (tur, guide, nordlys) | Safari-banner på forsiden og `/utleie` | jpg | min. 1600 px bred | Ikke i bruk ennå |
+| GT Maskins egne snøscootere i profil, frilagt eller på jevn bakgrunn | Animert safari-banner (forsiden og `/utleie`) | png med gjennomsiktighet, eller jpg på hvit bakgrunn | min. 1400 px bred | `ac-profil.jpg` som brukes nå er produsentens bilde og kun for demo. Byttes før go-live |
+| Lisens og fotograf for bakgrunnsbildet i safari-banneret | Safari-banner | | | `Mountain_scootering_Finnmark.jpg` brukes nå med kreditlinje «Foto: [Fotograf, lisens]». Lisensen sjekkes og fotografen krediteres før go-live, eller bildet byttes med eget safaribilde |
+| Bilder fra snøscootersafari (tur, guide, nordlys) | Safari-banner på forsiden og `/utleie` | jpg | min. 1600 px bred | Kan erstatte bakgrunnsbildet over |
 | Lærling i arbeid | Om oss (lærebedrift), feed-plassholder 6 | jpg | min. 1600 px bred | |
 
 ## Spørsmål til Gjermund
@@ -69,4 +71,6 @@ Sist oppdatert 07.10.2026 (runde 2). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 | tilhenger3.jpg | Ikke brukt (duplikat av tilhenger.jpg) | |
 | utside1.jpg | PageHero, galleri | `/om-oss`, `/verksted` |
 | firmabil.jpg | Galleri | `/verksted` |
-| snapchat.jpg | Snapchat-QR | Footer, `/kontakt`, `/video` |
+| snapchat.jpg | Snapchat-QR | Footer, `/kontakt`, `/video`, QR-dialog fra header, mobilmeny og hero |
+| Mountain_scootering_Finnmark.jpg | Bakgrunn i safari-banner (`/images/utleie/safari-fjell`). Lisens sjekkes før go-live | Forside, `/utleie` |
+| ac-profil.jpg | Frilagt scooter i safari-banner (`/images/utleie/safari-scooter`). Produsentbilde, kun demo | Forside, `/utleie` |

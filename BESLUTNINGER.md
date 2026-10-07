@@ -204,4 +204,34 @@ Innholdsfilen som skulle beskrive scooterdomenet finnes ikke, og ingen av kilden
 - `robots.txt` slipper inn `facebookexternalhit` og `Facebot` så delinger får forhåndsvisning, og holder alle andre ute. `X-Robots-Tag: noindex` og meta noindex beholdes.
 - `HeroPreload` legger inn preload for undersidens hero-bilde fra hovedchunken så snart ruten er kjent. Målbar effekt var liten (bildestørrelsen avgjør), men det koster ingenting.
 - Lenker til bilder på produktkort og bilkort har ikke lenger `aria-label`; de har en `sr-only`-tekst i stedet, så den synlige plassholderteksten inngår i det tilgjengelige navnet (axe `label-content-name-mismatch`).
-- `SectionHeader` sin høyre-slot har `md:max-w-[50%]` så lange ingresser ikke skaper horisontal overflow på 768 px. Videorutenettet på forsiden har `min-w-0` på kolonnene, så lange spillelistetitler avkortes i stedet for å presse ut siden på 375 px.
+- `SectionHeader` sin høyre-slot har `md:max-w-[50%]` så lange ingresser ikke skaper horisontal overflow på 768 px.
+
+## Rask retting (07.10.2026): landskode, kanaler høyt oppe, animert safari-banner
+
+### Telefonnummer
+
+Nummeret vises som «+47 911 14 628» overalt (`companyFacts.phone.display` og de to tekstene i `siteContent.js` som skriver nummeret ut). `href` er fortsatt `tel:+4791114628`.
+
+### Facebook og Snapchat høyt oppe
+
+- Ny `SocialIcons`: små ikonknapper i header (fra 1024 px, ved siden av telefonnummeret), i mobilmenyen («Følg oss») og i hero («Følg verkstedet på Facebook og Snapchat»). Footer er uendret. Ikonene gjenbruker merkene fra `SocialLinks`.
+- Snapchat uten brukernavn åpner en liten dialog (`SnapchatQrDialog`) med QR-koden og teksten «Skann for å følge oss på Snapchat». Escape og klikk utenfor lukker, fokus går tilbake til knappen. Når `channels.js` får `url`, blir ikonet en vanlig lenke til snapchat.com/add/<brukernavn>.
+- Header ved 1024 px: sju menypunkter, to ikoner og CTA ble for bredt. Menyen har `gap-3.5` og 14 px fra 1024 px, `gap-7` og 15 px fra 1280 px, og `whitespace-nowrap` på menypunkter og CTA. Verifisert uten brudd på 1024 og 1280 px. Telefonnummeret vises fortsatt bare fra 1280 px.
+
+### Animert safari-banner
+
+- Bakgrunn: `Mountain_scootering_Finnmark.jpg` (2272×1704) ligger i `assets-raw/`, leveres som `/images/utleie/safari-fjell` (webp og jpg, 1920/800/400). `object-position: 50% 62%` så snøflaten og fjellene synes. **Lisens må sjekkes og fotograf krediteres før go-live**; kreditlinjen nederst til høyre er en plassholder.
+- Scooter: `ac-profil.jpg` er produsentens profilbilde på hvit bakgrunn og **kun for demo**. Byttes med frilagt bilde av GT Maskins egne scootere før go-live. Bakgrunnen fjernes i `scripts/prepare-images.mjs` med samme flood fill som logoen (`cutOut()`), her med lyse, umettede piksler (`min > 196`, `max - min < 16`) som henger sammen med kanten. Terskelen ble senket fra 228 til 196 for å få med produktbildets lyse slagskygge. Leveres som `/images/utleie/safari-scooter` i 400 og 800 px, png og webp med gjennomsiktighet.
+- Bevegelse: tre baner (`.safari-lane`, 100 % bredde) animeres med `translate3d` fra -50 % til 100 % over 14, 15,5 og 16 sekunder, med forsinkelser -3,5 s, 0,5 s og 4 s så første scooter er synlig raskt. Scooterne er 210/175/140 px på desktop og 150/125/100 px på mobil, plassert på ulik høyde for perspektiv. Hver har myk skygge (blur-ellipse), gynging (`safari-bob`, rotasjon ±0,8° og 3 px løft) og snøsky bak beltet (`safari-snow`, skalert og fadet ellipse). Kun `transform` og `opacity` animeres.
+- Animasjonen har `animation-play-state: paused` til banneret er i viewport (IntersectionObserver, terskel 0,1) og pauses igjen utenfor. Med `prefers-reduced-motion` vises én scooter stille på snøflaten (`.safari-lane-static`).
+- Scooterne er dekor: `alt=""` i et `aria-hidden`-lag med `pointer-events-none`. Tekst og knapp ligger over (z-10) og er klikkbare.
+- Kontrast, målt i headless Chrome ved å skjule teksten og lese bakgrunnspikslene bak den (verste piksel, tekst #F3EFE7):
+
+| Element | 375 px | 1440 px | AA |
+|---|---|---|---|
+| Tittel | 9,61:1 | 6,71:1 | bestått |
+| Ingress | 9,08:1 | 8,33:1 | bestått |
+| Knapp (#151412 på #F08003, fast flate) | 6,83:1 | 6,83:1 | bestått |
+| Kreditlinje (#F3EFE7 på heldekkende #151412) | 16,05:1 | 16,05:1 | bestått |
+
+Overlegget er heldekkende `brand-primary` 80 % på mobil, og en gradient fra 95 % via 70 % til 5 % på desktop. På mobil har innholdet 128 px bunnmarg så scooterne kjører under knappen, ikke bak teksten. Videorutenettet på forsiden har `min-w-0` på kolonnene, så lange spillelistetitler avkortes i stedet for å presse ut siden på 375 px.

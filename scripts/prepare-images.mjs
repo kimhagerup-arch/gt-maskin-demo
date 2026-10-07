@@ -87,6 +87,12 @@ const PHOTOS = [
   ["bil3.jpg", "biler", "corvette-sort-utenfor", "Sort Corvette utenfor verkstedet"],
 
   ["snowmobile.jpg", "utleie", "snoscootere-oppstilt", "Snøscootere oppstilt i snøen"],
+  [
+    "Mountain_scootering_Finnmark.jpg",
+    "utleie",
+    "safari-fjell",
+    "Snøscooter på vidda i Finnmark med fjell bak",
+  ],
   ["tilhenger.jpg", "utleie", "biltransporthenger-skra", "Biltransporthenger sett skrått forfra"],
   ["tilhenger2.jpg", "utleie", "biltransporthenger-side", "Biltransporthenger fra siden"],
 
@@ -238,6 +244,95 @@ async function processLogo() {
   console.log(`logo -> logo/gt-maskin-logo (${big.width}x${big.height})`);
 }
 
+/**
+ * Frilegging med flood fill fra kantene. Bare piksler som oppfyller `isBg` og
+ * henger sammen med kanten gjøres gjennomsiktige, slik at felt med samme farge
+ * inne i motivet beholdes. Returnerer trimmet png-buffer.
+ */
+async function cutOut(input, isBg, trimThreshold = 10) {
+  const { data, info } = await sharp(input)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  const visited = new Uint8Array(width * height);
+  const stack = [];
+  const push = (x, y) => {
+    if (x < 0 || y < 0 || x >= width || y >= height) return;
+    const p = y * width + x;
+    if (visited[p]) return;
+    visited[p] = 1;
+    if (isBg(data, p * channels)) stack.push(p);
+  };
+  for (let x = 0; x < width; x++) {
+    push(x, 0);
+    push(x, height - 1);
+  }
+  for (let y = 0; y < height; y++) {
+    push(0, y);
+    push(width - 1, y);
+  }
+  let cleared = 0;
+  while (stack.length) {
+    const p = stack.pop();
+    data[p * channels + 3] = 0;
+    cleared++;
+    const x = p % width;
+    const y = (p - x) / width;
+    push(x + 1, y);
+    push(x - 1, y);
+    push(x, y + 1);
+    push(x, y - 1);
+  }
+  const png = await sharp(data, { raw: { width, height, channels } })
+    .trim({ threshold: trimThreshold })
+    .png()
+    .toBuffer();
+  return { png, cleared };
+}
+
+/**
+ * Snøscooter til safari-banneret: ac-profil.jpg er produsentens profilbilde på
+ * hvit bakgrunn (kun demo, byttes før go-live). Lyse, umettede piksler som henger
+ * sammen med kanten fjernes, bildet trimmes og leveres som webp og png med
+ * gjennomsiktighet i 400 og 800 px bredde.
+ */
+async function processScooter() {
+  const input = path.join(SRC, "ac-profil.jpg");
+  if (!existsSync(input)) {
+    console.warn("Mangler: ac-profil.jpg");
+    return;
+  }
+  const dir = path.join(OUT, "utleie");
+  mkdirSync(dir, { recursive: true });
+  const isLightBg = (data, i) => {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    return min > 196 && max - min < 16;
+  };
+  const { png, cleared } = await cutOut(input, isLightBg, 6);
+  console.log(`ac-profil.jpg: ${cleared} bakgrunnspiksler gjort gjennomsiktige`);
+  const base = path.join(dir, "safari-scooter");
+  const sizes = [];
+  for (const w of [800, 400]) {
+    const pipeline = sharp(png).resize({ width: w, withoutEnlargement: true });
+    const info = await pipeline.clone().png({ compressionLevel: 9 }).toFile(`${base}-${w}.png`);
+    await pipeline.clone().webp({ quality: 86, alphaQuality: 90 }).toFile(`${base}-${w}.webp`);
+    sizes.push({ w: info.width, h: info.height });
+  }
+  manifest["/images/utleie/safari-scooter"] = {
+    width: sizes[0].w,
+    height: sizes[0].h,
+    sizes,
+    description: "Snøscooter i profil, frilagt (produsentbilde, kun demo)",
+    format: "png",
+  };
+  console.log(`ac-profil.jpg -> utleie/safari-scooter (${sizes.map((s) => s.w).join(", ")})`);
+}
+
 mkdirSync(path.join(OUT, "feed"), { recursive: true });
 writeFileSync(path.join(OUT, "feed", ".gitkeep"), "");
 
@@ -245,6 +340,7 @@ for (const photo of PHOTOS) {
   await processPhoto(photo);
 }
 await processLogo();
+await processScooter();
 
 // Hero-video: kopieres til public/video/hero.mp4 hvis den finnes i assets-raw/.
 let heroVideo = null;
