@@ -8,7 +8,7 @@ import { useCart } from "../context/CartContext";
 import { products } from "../data/products";
 import { partsSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
-import { formatPrice } from "../lib/format";
+import { cx, formatPrice } from "../lib/format";
 
 export default function Produkt() {
   const { slug } = useParams();
@@ -16,6 +16,8 @@ export default function Produkt() {
   const cart = useCart();
   const t = partsSection.product;
   const [added, setAdded] = useState(false);
+  const [size, setSize] = useState("");
+  const [sizeError, setSizeError] = useState(false);
 
   useSeoMeta(
     product
@@ -42,6 +44,14 @@ export default function Produkt() {
     );
   }
 
+  const group = product.group || "deler";
+  const backTo = `/deler?gruppe=${group}`;
+  const backLabel = t.backByGroup[group] || t.back;
+  const requestLabel = t.requestByGroup[group] || t.request;
+  const imageKey = product.image || product.placeholderImage;
+  const hasSizes = Array.isArray(product.sizes);
+  const sizesKnown = hasSizes && product.sizes.length > 0;
+
   const stockLabel =
     product.stock === null
       ? partsSection.card.stockUnknown
@@ -49,25 +59,39 @@ export default function Produkt() {
         ? partsSection.card.inStock
         : partsSection.card.outOfStock;
 
+  const addToCart = () => {
+    if (sizesKnown && !size) {
+      setSizeError(true);
+      return;
+    }
+    setSizeError(false);
+    cart.add(product, 1, sizesKnown ? size : null);
+    setAdded(true);
+  };
+
   return (
     <section className="section-pad bg-brand-bg text-brand-text">
       <div className="container-site flex flex-col gap-8">
         <Link
-          to="/deler"
+          to={backTo}
           className="inline-flex items-center gap-1.5 text-sm font-bold text-brand-muted hover:text-brand-text"
         >
           <Icon name="ChevronLeft" size={18} strokeWidth={2.2} />
-          {t.back}
+          {backLabel}
         </Link>
 
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-6">
-          <div className="aspect-[4/3] overflow-hidden border border-brand-border lg:col-span-7">
-            {product.image ? (
+          <div className="relative aspect-[4/3] overflow-hidden border border-brand-border lg:col-span-7">
+            {imageKey ? (
               <Picture
-                src={product.image}
-                alt={product.title}
+                src={imageKey}
+                alt={product.image ? product.title : `Eksempel: ${product.placeholderLabel}`}
                 sizes="(min-width: 1024px) 680px, 100vw"
                 className="h-full w-full"
+                imgClassName={cx(
+                  "h-full w-full object-cover",
+                  product.placeholder && "saturate-[.85]",
+                )}
                 tone="light"
               />
             ) : (
@@ -76,6 +100,16 @@ export default function Produkt() {
                 label={product.placeholderLabel || partsSection.card.imageLabel}
                 className="h-full w-full"
               />
+            )}
+            {product.placeholder && imageKey && (
+              <>
+                <span className="absolute left-0 top-0 bg-brand-primary px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-accent-light">
+                  {t.placeholderTag}
+                </span>
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-primary/90 to-transparent px-4 pb-3 pt-8 text-sm font-semibold text-brand-text-inverse">
+                  {product.placeholderLabel}
+                </span>
+              </>
             )}
           </div>
 
@@ -101,18 +135,58 @@ export default function Produkt() {
                 </>
               )}
             </dl>
+
+            {hasSizes && (
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="storrelse"
+                  className="text-xs font-bold uppercase tracking-wider text-brand-muted"
+                >
+                  {t.sizeLabel}
+                </label>
+                <select
+                  id="storrelse"
+                  value={size}
+                  onChange={(e) => {
+                    setSize(e.target.value);
+                    setSizeError(false);
+                  }}
+                  disabled={!sizesKnown}
+                  aria-invalid={sizeError || undefined}
+                  aria-describedby={sizeError ? "storrelse-feil" : undefined}
+                  className={cx(
+                    "h-12 w-full max-w-xs border bg-brand-card px-3.5 text-base text-brand-text focus:border-brand-primary focus:outline-none disabled:cursor-not-allowed disabled:border-dashed disabled:text-brand-muted",
+                    sizeError ? "border-brand-accent-deep" : "border-brand-border-strong",
+                  )}
+                >
+                  {sizesKnown ? (
+                    <>
+                      <option value="">{t.sizeChoose}</option>
+                      {product.sizes.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    <option value="">{t.sizePlaceholder}</option>
+                  )}
+                </select>
+                <p
+                  id="storrelse-feil"
+                  aria-live="polite"
+                  className="min-h-[1.25rem] text-sm text-brand-accent-deep"
+                >
+                  {sizeError ? t.sizeRequired : ""}
+                </p>
+              </div>
+            )}
+
             <p className="leading-relaxed text-brand-muted">
               {product.description || t.descriptionFallback}
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Button
-                onClick={() => {
-                  cart.add(product);
-                  setAdded(true);
-                }}
-                variant={added ? "primary" : "dark"}
-                aria-live="polite"
-              >
+              <Button onClick={addToCart} variant={added ? "primary" : "dark"} aria-live="polite">
                 {added ? partsSection.card.added : t.addToCart}
               </Button>
               <Button
@@ -120,7 +194,7 @@ export default function Produkt() {
                 variant="light"
                 className="border border-brand-border-strong"
               >
-                {t.request}
+                {requestLabel}
               </Button>
             </div>
             <p className="border-l-2 border-brand-accent pl-4 text-sm text-brand-muted">

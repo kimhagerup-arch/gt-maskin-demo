@@ -105,7 +105,27 @@ export default function Home() {
               </Link>
             }
           />
-          <BrandChips prefix={partsSection.brandsPrefix} brands={brands.parts} />
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
+            <BrandChips prefix={partsSection.brandsPrefix} brands={brands.parts} />
+            <nav
+              aria-label={partsSection.groupLinksLabel}
+              className="flex flex-wrap items-center gap-2 text-sm"
+            >
+              <span className="mr-1 font-semibold text-brand-muted">
+                {partsSection.groupLinksLabel}
+              </span>
+              {partsSection.groupLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="inline-flex h-9 items-center gap-1.5 border border-brand-border-strong px-3.5 font-semibold text-brand-text transition-colors hover:border-brand-primary hover:text-brand-accent-deep"
+                >
+                  {link.label}
+                  <Icon name="ArrowRight" size={14} strokeWidth={2.2} />
+                </Link>
+              ))}
+            </nav>
+          </div>
           <div className="grid gap-3 md:gap-6 lg:grid-cols-12">
             <ul className="grid grid-cols-2 gap-3 md:gap-6 lg:col-span-8">
               {products.slice(0, 4).map((product, i) => (

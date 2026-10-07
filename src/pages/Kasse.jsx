@@ -39,7 +39,7 @@ export default function Kasse() {
             ) : (
               <ul className="flex flex-col divide-y divide-brand-border-dark border border-brand-border-dark bg-brand-primary-light px-5">
                 {cart.items.map((item) => (
-                  <li key={item.slug} className="flex gap-4 py-4">
+                  <li key={item.key} className="flex gap-4 py-4">
                     <div className="h-16 w-20 shrink-0 overflow-hidden">
                       {item.image ? (
                         <Picture src={item.image} alt="" sizes="80px" className="h-full w-full" />
@@ -53,6 +53,7 @@ export default function Kasse() {
                       </span>
                       <span className="truncate font-bold">{item.title}</span>
                       <span className="text-sm text-brand-muted-inverse">
+                        {item.size ? `${t.size} ${item.size} · ` : ""}
                         {t.qty}: {item.qty}
                       </span>
                     </div>
@@ -62,7 +63,7 @@ export default function Kasse() {
                       </span>
                       <button
                         type="button"
-                        onClick={() => cart.remove(item.slug)}
+                        onClick={() => cart.remove(item.key)}
                         className="inline-flex items-center gap-1 text-xs text-brand-muted-inverse hover:text-brand-accent-light"
                       >
                         <Icon name="Trash2" size={14} strokeWidth={2} />

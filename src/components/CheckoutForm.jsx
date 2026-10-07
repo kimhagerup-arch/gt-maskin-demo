@@ -49,7 +49,13 @@ export default function CheckoutForm({ onSuccess }) {
     const res = await submitForm("checkout", {
       ...values,
       website: undefined,
-      items: cart.items.map((i) => ({ slug: i.slug, title: i.title, qty: i.qty, price: i.price })),
+      items: cart.items.map((i) => ({
+        slug: i.slug,
+        size: i.size,
+        title: i.title,
+        qty: i.qty,
+        price: i.price,
+      })),
     });
     if (res.ok) {
       setStatus("success");

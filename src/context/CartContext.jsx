@@ -3,11 +3,18 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 const STORAGE_KEY = "gtm-cart";
 const CartContext = createContext(null);
 
+/** Linjenøkkel: slug pluss størrelse, slik at samme plagg i to størrelser gir to linjer. */
+export function lineKey(slug, size) {
+  return size ? `${slug}::${size}` : slug;
+}
+
 function readStorage() {
   try {
     const raw = window.sessionStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    // Eldre lagrede linjer uten nøkkel får en.
+    return parsed.map((i) => ({ ...i, key: i.key || lineKey(i.slug, i.size) }));
   } catch {
     return [];
   }
@@ -26,38 +33,41 @@ export function CartProvider({ children }) {
     }
   }, [items]);
 
-  const add = useCallback((product, qty = 1) => {
+  const add = useCallback((product, qty = 1, size = null) => {
+    const key = lineKey(product.slug, size);
     setItems((prev) => {
-      const existing = prev.find((i) => i.slug === product.slug);
+      const existing = prev.find((i) => i.key === key);
       if (existing) {
-        return prev.map((i) => (i.slug === product.slug ? { ...i, qty: i.qty + qty } : i));
+        return prev.map((i) => (i.key === key ? { ...i, qty: i.qty + qty } : i));
       }
       return [
         ...prev,
         {
+          key,
           slug: product.slug,
+          size,
           title: product.title,
           brand: product.brand,
           price: product.price,
-          image: product.image,
+          image: product.image || product.placeholderImage || null,
           placeholderLabel: product.placeholderLabel,
           qty,
         },
       ];
     });
-    setLastAdded(product.slug);
+    setLastAdded(key);
     setOpen(true);
   }, []);
 
-  const remove = useCallback((slug) => {
-    setItems((prev) => prev.filter((i) => i.slug !== slug));
+  const remove = useCallback((key) => {
+    setItems((prev) => prev.filter((i) => i.key !== key));
   }, []);
 
-  const setQty = useCallback((slug, qty) => {
+  const setQty = useCallback((key, qty) => {
     setItems((prev) =>
       qty <= 0
-        ? prev.filter((i) => i.slug !== slug)
-        : prev.map((i) => (i.slug === slug ? { ...i, qty } : i)),
+        ? prev.filter((i) => i.key !== key)
+        : prev.map((i) => (i.key === key ? { ...i, qty } : i)),
     );
   }, []);
 

@@ -86,7 +86,7 @@ export default function CartDrawer() {
           ) : (
             <ul className="flex flex-col divide-y divide-brand-border-dark">
               {cart.items.map((item) => (
-                <li key={item.slug} className="flex gap-4 py-4">
+                <li key={item.key} className="flex gap-4 py-4">
                   <div className="h-20 w-24 shrink-0 overflow-hidden">
                     {item.image ? (
                       <Picture src={item.image} alt="" sizes="96px" className="h-full w-full" />
@@ -99,6 +99,11 @@ export default function CartDrawer() {
                       {item.brand}
                     </span>
                     <span className="truncate font-bold">{item.title}</span>
+                    {item.size && (
+                      <span className="text-sm text-brand-muted-inverse">
+                        {partsSection.checkout.size} {item.size}
+                      </span>
+                    )}
                     <span className="font-display text-xl text-brand-accent-light">
                       {formatPrice(item.price)} {partsSection.card.priceSuffix}
                     </span>
@@ -106,7 +111,7 @@ export default function CartDrawer() {
                       <div className="inline-flex items-center border border-brand-border-dark-strong">
                         <button
                           type="button"
-                          onClick={() => cart.setQty(item.slug, item.qty - 1)}
+                          onClick={() => cart.setQty(item.key, item.qty - 1)}
                           className="flex h-9 w-9 items-center justify-center hover:bg-brand-primary-light"
                           aria-label={`Færre ${item.title}`}
                         >
@@ -117,7 +122,7 @@ export default function CartDrawer() {
                         </span>
                         <button
                           type="button"
-                          onClick={() => cart.setQty(item.slug, item.qty + 1)}
+                          onClick={() => cart.setQty(item.key, item.qty + 1)}
                           className="flex h-9 w-9 items-center justify-center hover:bg-brand-primary-light"
                           aria-label={`Flere ${item.title}`}
                         >
@@ -126,7 +131,7 @@ export default function CartDrawer() {
                       </div>
                       <button
                         type="button"
-                        onClick={() => cart.remove(item.slug)}
+                        onClick={() => cart.remove(item.key)}
                         className="ml-auto inline-flex h-9 items-center gap-1.5 px-2 text-sm text-brand-muted-inverse hover:text-brand-accent-light"
                       >
                         <Icon name="Trash2" size={16} strokeWidth={2} />
