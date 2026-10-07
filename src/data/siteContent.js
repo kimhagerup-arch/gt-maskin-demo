@@ -52,7 +52,7 @@ export const seo = {
   kontakt: {
     title: "Kontakt GT Maskin AS i Alta",
     description:
-      "Myggveien 3, 9514 Alta. Mandag-fredag 08:30-16:00. Ring 911 14 628 eller send forespørsel.",
+      "Myggveien 3, 9514 Alta. Mandag-fredag 08:30-16:00. Ring +47 911 14 628 eller send forespørsel.",
   },
   personvern: {
     title: "Personvern | GT Maskin AS",
@@ -475,7 +475,7 @@ export const bookingForm = {
   submit: "Send forespørsel",
   sending: "Sender …",
   success: "Takk! Vi har mottatt forespørselen din og tar kontakt.",
-  error: "Noe gikk galt. Ring oss på 911 14 628 eller send e-post til gtm-as@online.no.",
+  error: "Noe gikk galt. Ring oss på +47 911 14 628 eller send e-post til gtm-as@online.no.",
   validation: "Fyll inn navn, melding og enten telefon eller e-post.",
   validationEmail: "Sjekk e-postadressen.",
   aside: "Du kan også ringe eller sende e-post direkte.",

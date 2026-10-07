@@ -20,7 +20,7 @@ export const companyFacts = {
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Myggveien+3,+9514+Alta,+Norway",
   },
   phone: {
-    display: "911 14 628",
+    display: "+47 911 14 628",
     href: "tel:+4791114628",
   },
   email: {
