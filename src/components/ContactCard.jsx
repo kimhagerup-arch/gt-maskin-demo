@@ -3,6 +3,7 @@ import { contactPage } from "../data/siteContent";
 import { cx } from "../lib/format";
 import Icon from "./Icon";
 import Picture from "./Picture";
+import SocialLinks from "./SocialLinks";
 
 function Row({ icon, label, children }) {
   return (
@@ -10,7 +11,7 @@ function Row({ icon, label, children }) {
       <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-brand-border-dark bg-brand-primary-light text-brand-accent-light">
         <Icon name={icon} size={22} strokeWidth={1.8} />
       </span>
-      <div className="flex flex-col gap-0.5">
+      <div className="flex min-w-0 flex-col gap-0.5">
         <span className="text-[13px] font-bold uppercase tracking-[0.15em] text-brand-muted-inverse">
           {label}
         </span>
@@ -22,9 +23,12 @@ function Row({ icon, label, children }) {
 
 /**
  * Adressekort med åpningstider, telefon, e-post og bilde av fasaden.
- * Kart som lenke til Google Maps, aldri embed.
+ * Kart som lenke til Google Maps, aldri embed. Med `showChannels` vises
+ * Messenger, Facebook og Snapchat rett under telefon og e-post, slik at
+ * «Ring», «E-post» og «Messenger» står samlet som de tre raske veiene inn.
+ * QR vises på desktop, på mobil vises lenken «Åpne i Snapchat» i stedet.
  */
-export default function ContactCard({ showImage = true, showSnapchat = false, className }) {
+export default function ContactCard({ showImage = true, showChannels = false, className }) {
   return (
     <div className={cx("flex flex-col gap-6", className)}>
       <Row icon="MapPin" label={contactPage.addressLabel}>
@@ -52,6 +56,12 @@ export default function ContactCard({ showImage = true, showSnapchat = false, cl
         </a>
       </Row>
 
+      {showChannels && (
+        <Row icon="MessageCircle" label={contactPage.channelsLabel}>
+          <SocialLinks tone="dark" qr="desktop" className="mt-2" />
+        </Row>
+      )}
+
       {showImage && (
         <a
           href={companyFacts.address.mapsUrl}
@@ -76,22 +86,6 @@ export default function ContactCard({ showImage = true, showSnapchat = false, cl
             </span>
           </span>
         </a>
-      )}
-
-      {showSnapchat && (
-        <div className="flex items-center gap-4 border border-brand-border-dark bg-brand-primary-light p-4">
-          <div className="h-24 w-24 shrink-0 bg-brand-bg p-1">
-            <Picture
-              src={contactPage.snapchatImage}
-              alt={contactPage.snapchatAlt}
-              sizes="96px"
-              imgClassName="h-full w-full object-contain"
-              tone="light"
-              fallbackLabel="[QR]"
-            />
-          </div>
-          <p className="text-base font-semibold">{contactPage.snapchatLabel}</p>
-        </div>
       )}
     </div>
   );

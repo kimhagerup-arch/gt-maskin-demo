@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import { companyFacts } from "../data/companyFacts";
 import { footer } from "../data/siteContent";
 import { getImage } from "../lib/images";
-import Icon from "./Icon";
-import Picture from "./Picture";
 import ReviewBadges from "./ReviewBadges";
+import SocialLinks from "./SocialLinks";
 
 const LOGO_KEY = "/images/logo/gt-maskin-logo";
 
@@ -34,7 +33,7 @@ export default function Footer() {
       <div className="container-site flex flex-col gap-10 py-12 md:py-14">
         <div className="grid gap-10 md:grid-cols-12 md:gap-8">
           {/* Firma */}
-          <div className="flex flex-col gap-4 md:col-span-5">
+          <div className="flex flex-col gap-4 md:col-span-5 lg:col-span-4">
             <div className="flex items-center gap-3 text-brand-text-inverse">
               <span className="flex h-14 w-14 items-center justify-center border border-brand-border-dark bg-brand-primary-light p-1.5">
                 {logo ? (
@@ -76,20 +75,11 @@ export default function Footer() {
               <br />
               {companyFacts.hours.weekdays}
             </p>
-            <a
-              href={companyFacts.links.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-brand-text-inverse transition-colors hover:text-brand-accent-light"
-            >
-              <Icon name="Facebook" size={18} strokeWidth={2} />
-              facebook.com/GtMaskinas
-            </a>
             <ReviewBadges className="mt-2" />
           </div>
 
           {/* Lenkekolonner */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-5">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7 lg:col-span-5">
             {footer.columns.map((col) => (
               <div key={col.title} className="flex flex-col gap-2.5">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-text-inverse">
@@ -102,19 +92,12 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Snapchat */}
-          <div className="flex items-center gap-4 md:col-span-2 md:flex-col md:items-start">
-            <div className="h-20 w-20 shrink-0 overflow-hidden bg-brand-bg p-1">
-              <Picture
-                src={footer.snapchatImage}
-                alt={footer.snapchatAlt}
-                sizes="80px"
-                imgClassName="h-full w-full object-contain"
-                fallbackLabel="[QR]"
-                tone="light"
-              />
-            </div>
-            <p className="text-sm font-semibold text-brand-text-inverse">{footer.snapchat}</p>
+          {/* Kanaler: Facebook, Messenger og Snapchat med QR */}
+          <div className="flex flex-col gap-3 md:col-span-12 lg:col-span-3">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-text-inverse">
+              {footer.followTitle}
+            </p>
+            <SocialLinks tone="dark" qr="always" />
           </div>
         </div>
 

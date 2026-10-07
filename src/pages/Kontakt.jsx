@@ -35,7 +35,7 @@ export default function Kontakt() {
       />
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
         <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-6">
-          <ContactCard className="lg:col-span-5" showSnapchat />
+          <ContactCard className="lg:col-span-5" showChannels />
           <BookingForm
             variant="contact"
             id="kontaktskjema"
