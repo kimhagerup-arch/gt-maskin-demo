@@ -1,19 +1,24 @@
 import Button from "../components/Button";
 import Icon from "../components/Icon";
+import IconField from "../components/IconField";
 import PageHero from "../components/PageHero";
 import Picture from "../components/Picture";
-import Placeholder from "../components/Placeholder";
+import RentalForm from "../components/RentalForm";
 import Reveal from "../components/Reveal";
 import SafariBanner from "../components/SafariBanner";
-import { companyFacts } from "../data/companyFacts";
 import { rental } from "../data/rental";
 import { rentalSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
 import { cx, formatPrice } from "../lib/format";
 
+/**
+ * Samlesiden for utleie: snøscooter 60 og 120 hk, ATV, tilhenger og
+ * biltransporthenger, safari (norsemantrail.com) og utleieforespørsel.
+ */
 export default function Utleie() {
   useSeoMeta(seo.utleie);
   const t = rentalSection.page;
+  const formHref = `#${rentalSection.request.id}`;
 
   return (
     <>
@@ -25,9 +30,22 @@ export default function Utleie() {
         imageAlt={t.heroAlt}
         imagePosition="50% 60%"
       >
-        <Button href={companyFacts.links.rental} external arrow className="self-start">
-          {rentalSection.bookLabel}
-        </Button>
+        <div className="flex flex-col gap-4">
+          <Button href={formHref} arrow className="self-start">
+            {rentalSection.bookLabel}
+          </Button>
+          <nav aria-label={t.shortcutsLabel} className="flex flex-wrap gap-2 text-sm">
+            {rental.map((item) => (
+              <a
+                key={item.slug}
+                href={`#${item.slug}`}
+                className="inline-flex h-10 items-center border border-brand-outline px-3 font-semibold text-brand-text-inverse transition-colors hover:border-brand-accent-light"
+              >
+                {item.title}
+              </a>
+            ))}
+          </nav>
+        </div>
       </PageHero>
 
       <section className="bg-brand-bg text-brand-text">
@@ -43,7 +61,7 @@ export default function Utleie() {
                 as="article"
                 key={item.slug}
                 id={item.slug}
-                className="grid gap-6 py-12 md:gap-10 md:py-16 lg:grid-cols-12"
+                className="grid scroll-mt-24 gap-6 py-12 md:gap-10 md:py-16 lg:grid-cols-12"
               >
                 <div
                   className={cx(
@@ -65,14 +83,8 @@ export default function Utleie() {
                     </span>
                     <span className="text-sm text-brand-muted">{item.note}</span>
                   </div>
-                  <Button
-                    href={item.bookingUrl}
-                    external
-                    arrow
-                    variant="dark"
-                    className="self-start"
-                  >
-                    {rentalSection.bookLabel}
+                  <Button href={formHref} arrow variant="dark" className="self-start">
+                    {rentalSection.askLabel}
                   </Button>
                 </div>
                 <div
@@ -102,10 +114,11 @@ export default function Utleie() {
                       </div>
                     ))
                   ) : (
-                    <Placeholder
-                      tone="light"
-                      label={rentalSection.imageLabel}
+                    <IconField
+                      icon={item.icon}
+                      label={item.title}
                       className="aspect-[16/9] border border-brand-border"
+                      size={96}
                     />
                   )}
                 </div>
@@ -115,10 +128,25 @@ export default function Utleie() {
         </div>
       </section>
 
+      {/* Safari */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
         <div className="container-site flex flex-col gap-6">
           <SafariBanner />
-          <p className="text-sm text-brand-muted-inverse">{t.priceNote}</p>
+        </div>
+      </section>
+
+      {/* Utleieforespørsel */}
+      <section className="section-pad border-t border-brand-border-dark bg-brand-primary-dark text-brand-text-inverse">
+        <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-6">
+          <div className="flex flex-col gap-4 lg:col-span-5">
+            <p className="kicker text-brand-accent-light">{rentalSection.request.kicker}</p>
+            <h2 className="h2-section">{rentalSection.request.heading}</h2>
+            <p className="max-w-md text-lg leading-relaxed text-brand-muted-inverse">
+              {rentalSection.request.intro}
+            </p>
+            <p className="text-sm text-brand-muted-inverse">{t.priceNote}</p>
+          </div>
+          <RentalForm className="lg:col-span-7" />
         </div>
       </section>
     </>

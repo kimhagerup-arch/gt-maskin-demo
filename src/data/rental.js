@@ -1,5 +1,7 @@
-// Utleie. Priser er plassholdere til Gjermund har bekreftet.
-// Bestilling skjer på snoscooterutleie.com, safari på norsemantrail.com.
+// Utleie. Priser og vilkår er plassholdere til Gjermund har bekreftet.
+// All utleie samles på /utleie med en utleieforespørsel på siden (ingen ekstern booking).
+// Safari bestilles på norsemantrail.com.
+// Objekter uten bilde (image: null) vises med et ikonfelt, ikke tom plassholder.
 
 export const rental = [
   {
@@ -10,7 +12,6 @@ export const rental = [
     price: "[PRIS]",
     unit: "kr / døgn",
     note: "inkl. forsikring",
-    bookingUrl: "https://www.snoscooterutleie.com",
     image: "/images/utleie/snoscootere-oppstilt",
     imageAlt: "Snøscootere oppstilt i snøen",
   },
@@ -22,7 +23,6 @@ export const rental = [
     price: "[PRIS]",
     unit: "kr / døgn",
     note: "inkl. forsikring",
-    bookingUrl: "https://www.snoscooterutleie.com",
     image: "/images/utleie/snoscootere-oppstilt",
     imageAlt: "Snøscootere oppstilt i snøen",
     imagePosition: "70% 50%",
@@ -35,7 +35,6 @@ export const rental = [
     price: "[PRIS]",
     unit: "kr / døgn",
     note: "[vilkår]",
-    bookingUrl: "https://www.snoscooterutleie.com",
     image: null,
     imageAlt: "",
   },
@@ -47,12 +46,17 @@ export const rental = [
     price: "[PRIS]",
     unit: "kr / døgn",
     note: "[vilkår]",
-    bookingUrl: "https://www.snoscooterutleie.com",
     image: "/images/utleie/biltransporthenger-skra",
     imageAlt: "Biltransporthenger sett skrått forfra utenfor verkstedet",
     image2: "/images/utleie/biltransporthenger-side",
     image2Alt: "Biltransporthenger sett fra siden",
   },
+];
+
+/** Valg i utleieforespørselen. Verdi = slug fra listen over, pluss «annet». */
+export const rentalTypes = [
+  ...rental.map((r) => ({ value: r.slug, label: r.title })),
+  { value: "annet", label: "Annet / usikker" },
 ];
 
 export const safari = {

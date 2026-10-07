@@ -165,7 +165,20 @@ export default function Home() {
           <SectionHeader
             kicker={rentalSection.kicker}
             title={rentalSection.title}
-            lead={rentalSection.lead}
+            aside={
+              <div className="flex flex-col gap-3 md:items-end">
+                <p className="max-w-[420px] text-base leading-relaxed text-brand-muted-inverse md:text-right md:text-[17px]">
+                  {rentalSection.lead}
+                </p>
+                <Link
+                  to={rentalSection.link.to}
+                  className="link-underline border-brand-accent-light text-brand-text-inverse hover:text-brand-accent-light"
+                >
+                  {rentalSection.link.label}
+                  <Icon name="ArrowRight" size={18} strokeWidth={2.2} />
+                </Link>
+              </div>
+            }
           />
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
             {rental.map((item, i) => (

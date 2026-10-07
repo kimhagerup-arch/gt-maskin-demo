@@ -35,8 +35,6 @@ export const companyFacts = {
   links: {
     facebook: "https://www.facebook.com/GtMaskinas",
     website: "https://www.gtmaskin.com",
-    rental: "https://www.snoscooterutleie.com",
-    rentalLabel: "snoscooterutleie.com",
     safari: "https://www.norsemantrail.com",
     safariLabel: "norsemantrail.com",
     kovision: "https://kovision.no",

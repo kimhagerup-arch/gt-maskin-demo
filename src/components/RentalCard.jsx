@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import { rentalSection } from "../data/siteContent";
 import { formatPrice } from "../lib/format";
 import Icon from "./Icon";
+import IconField from "./IconField";
 import Picture from "./Picture";
-import Placeholder from "./Placeholder";
 
+/** Utleiekort på forsiden. Uten bilde vises et designet ikonfelt. Lenker til /utleie. */
 export default function RentalCard({ item, compact = false }) {
   return (
     <article className="flex h-full flex-col border border-brand-border-dark bg-brand-primary-light transition-colors hover:border-brand-accent-light">
@@ -17,7 +19,7 @@ export default function RentalCard({ item, compact = false }) {
             objectPosition={item.imagePosition}
           />
         ) : (
-          <Placeholder label={rentalSection.imageLabel} className="h-full w-full" />
+          <IconField icon={item.icon} label={item.title} className="h-full w-full" />
         )}
       </div>
       <div className="flex flex-1 flex-col gap-3 p-5 md:p-7">
@@ -31,15 +33,13 @@ export default function RentalCard({ item, compact = false }) {
           <span className="text-[13px] text-brand-muted-inverse">{item.note}</span>
         </div>
         {!compact && (
-          <a
-            href={item.bookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={`/utleie#${item.slug}`}
             className="mt-2 inline-flex h-11 items-center justify-center gap-2 border-[1.5px] border-brand-outline px-4 text-sm font-bold transition-colors hover:border-brand-accent-light hover:text-brand-accent-light"
           >
-            {rentalSection.bookLabel}
-            <Icon name="ExternalLink" size={16} strokeWidth={2} />
-          </a>
+            {rentalSection.cardLink}
+            <Icon name="ArrowRight" size={16} strokeWidth={2} />
+          </Link>
         )}
       </div>
     </article>
