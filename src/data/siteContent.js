@@ -92,8 +92,9 @@ export const hero = {
     value: "Kustom Speedshop i Alta",
     text: "Amerikanske biler, custom-prosjekter og delesalg.",
   },
-  image: "/images/hero/forside-hero-firmabil",
-  imageAlt: "Firmabilen til GT Maskin, en International panelvan med Kustom Speedshop-skrift",
+  image: "/images/hero/fasade-kveld-skilt",
+  imageAlt: "Fasaden til GT Maskin i Myggveien i kveldslys, med skilt og klassikere i vinduene",
+  imagePosition: "64% 42%",
   video: "/video/hero.mp4",
 };
 
@@ -600,4 +601,10 @@ export const placeholderLabels = {
   image: "[Bilde]",
   video: "[Video]",
   portrait: "[Portrett]",
+  fill: "Fylles inn",
+};
+
+export const draftBanner = {
+  text: "Utkast laget av KOVISION for GT Maskin. Tekst i [klammer] fylles inn sammen med dere.",
+  close: "Lukk meldingen",
 };

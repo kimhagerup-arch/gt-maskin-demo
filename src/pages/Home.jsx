@@ -221,7 +221,7 @@ export default function Home() {
               <p className="text-[13px] font-bold uppercase tracking-[0.2em] text-brand-muted">
                 {aboutSection.peopleLabel}
               </p>
-              <TeamGrid />
+              <TeamGrid onlyVerified />
             </div>
           </div>
         </div>

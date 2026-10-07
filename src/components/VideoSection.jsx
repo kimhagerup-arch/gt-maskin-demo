@@ -40,7 +40,7 @@ export default function VideoSection({ videos = [], id = "video" }) {
         />
 
         <div className="grid gap-4 lg:grid-cols-12 lg:gap-6">
-          <div className="lg:col-span-8">
+          <div className="min-w-0 lg:col-span-8">
             <VideoPlayer
               key={active.id}
               video={active}
@@ -51,7 +51,7 @@ export default function VideoSection({ videos = [], id = "video" }) {
           </div>
 
           <div
-            className="flex flex-col gap-3 lg:col-span-4"
+            className="flex min-w-0 flex-col gap-3 lg:col-span-4"
             aria-label={videoSection.playlistLabel}
           >
             {playlist.map((video) => {
@@ -66,7 +66,7 @@ export default function VideoSection({ videos = [], id = "video" }) {
                   key={video.id}
                   type="button"
                   onClick={() => setActiveId(video.id)}
-                  className="flex flex-1 items-center gap-3.5 border border-brand-border-dark bg-brand-primary-light p-3 text-left transition-colors hover:border-brand-accent-light md:p-4"
+                  className="flex min-w-0 flex-1 items-center gap-3.5 overflow-hidden border border-brand-border-dark bg-brand-primary-light p-3 text-left transition-colors hover:border-brand-accent-light md:p-4"
                 >
                   <span className="relative h-[72px] w-[112px] shrink-0 overflow-hidden bg-brand-primary-soft bg-stripes-dark">
                     {thumb && (

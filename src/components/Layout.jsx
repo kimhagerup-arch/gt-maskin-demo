@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import CartDrawer from "./CartDrawer";
+import DraftBanner from "./DraftBanner";
 import Footer from "./Footer";
 import Header from "./Header";
 import StickyMobileBar from "./StickyMobileBar";
@@ -13,6 +14,7 @@ export default function Layout() {
       >
         Hopp til innhold
       </a>
+      <DraftBanner />
       <Header />
       <main id="innhold" className="flex-1 pb-14 md:pb-0">
         <Outlet />

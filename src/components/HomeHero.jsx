@@ -38,6 +38,7 @@ export default function HomeHero() {
             image={hero.image}
             imageAlt={hero.imageAlt}
             video={heroVideo}
+            objectPosition={hero.imagePosition}
             className="aspect-[16/10] w-full border border-brand-border-dark md:aspect-[4/3] lg:aspect-auto lg:h-[560px]"
           />
           <div className="relative -mt-6 ml-4 mr-4 flex max-w-[240px] flex-col gap-1.5 bg-brand-bg px-5 py-4 text-brand-text md:-mt-10 lg:absolute lg:-left-8 lg:bottom-8 lg:ml-0 lg:mt-0 lg:px-[22px] lg:py-5">

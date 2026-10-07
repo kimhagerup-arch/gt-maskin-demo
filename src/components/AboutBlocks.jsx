@@ -78,12 +78,46 @@ export function Timeline({ tone = "light", className }) {
   );
 }
 
-/** Folkene: portrett (plassholder til bilder finnes), navn og rolle. */
-export function TeamGrid({ tone = "light", className, large = false }) {
-  const dark = tone === "dark";
+/** Monogram der portrett mangler for en verifisert person. */
+function Monogram({ dark, name }) {
+  const initials = name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
   return (
-    <ul className={cx("grid grid-cols-3 gap-3 md:gap-4", className)}>
-      {team.map((person, i) => (
+    <div
+      className={cx(
+        "flex h-full w-full items-center justify-center border",
+        dark
+          ? "border-brand-border-dark bg-brand-primary-light text-brand-accent-light"
+          : "border-brand-border bg-brand-primary text-brand-accent-light",
+      )}
+      aria-hidden="true"
+    >
+      <span className="font-display text-5xl tracking-wide md:text-6xl">{initials}</span>
+    </div>
+  );
+}
+
+/**
+ * Folkene: portrett, navn og rolle. `onlyVerified` viser bare personer som ikke
+ * er plassholdere (forsiden). Verifisert person uten bilde får monogram,
+ * plassholdere får plassholder for portrett (/om-oss).
+ */
+export function TeamGrid({ tone = "light", className, large = false, onlyVerified = false }) {
+  const dark = tone === "dark";
+  const people = onlyVerified ? team.filter((p) => !p.placeholder) : team;
+  return (
+    <ul
+      className={cx(
+        "grid gap-3 md:gap-4",
+        people.length === 1 ? "grid-cols-1 sm:max-w-[240px]" : "grid-cols-3",
+        className,
+      )}
+    >
+      {people.map((person, i) => (
         <li key={`${person.name}-${i}`} className="flex flex-col gap-2.5">
           <div className={cx("overflow-hidden", large ? "aspect-[4/5]" : "aspect-[5/4]")}>
             {person.image ? (
@@ -94,12 +128,14 @@ export function TeamGrid({ tone = "light", className, large = false }) {
                 className="h-full w-full"
                 tone={tone}
               />
-            ) : (
+            ) : person.placeholder ? (
               <Placeholder
                 tone={tone}
                 label={aboutSection.page.portraitLabel}
                 className="h-full w-full text-xs"
               />
+            ) : (
+              <Monogram dark={dark} name={person.name} />
             )}
           </div>
           <span
