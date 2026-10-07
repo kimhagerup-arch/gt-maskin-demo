@@ -30,7 +30,7 @@ export default function Header() {
       <div className="container-site flex h-16 items-center justify-between md:h-[88px]">
         <Logo />
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Hovedmeny">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Hovedmeny">
           {nav.items.map((item) => (
             <NavLink
               key={item.to}

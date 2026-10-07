@@ -13,17 +13,22 @@ const PLATFORM_ICON = {
 const MEDIA_LABEL = {
   video: "Video",
   reel: "Reel",
-  carousel: "Bildeserie",
 };
+
+/** Tekster lengre enn dette klippes til fire linjer og får «Les mer»-lenke. */
+const LONG_CAPTION = 180;
 
 /**
  * Ett feed-kort. Blind for kilde: leser bare feltene i socialFeed-objektet.
+ * Lange tekster klippes visuelt til fire linjer, lenken går til innlegget.
  */
 export default function FeedCard({ post, channelName }) {
   const isVideo = post.mediaType === "video" || post.mediaType === "reel";
+  const isCarousel = post.mediaType === "carousel";
   const imageKey = post.mediaUrl || post.poster || post.placeholderImage;
-  const hasReactions = post.likes !== null || post.comments !== null;
+  const hasReactions = post.likes != null || post.comments != null;
   const mediaLabel = MEDIA_LABEL[post.mediaType];
+  const isLong = (post.caption || "").length > LONG_CAPTION;
 
   return (
     <article className="flex h-full flex-col border border-brand-border bg-brand-card transition-colors hover:border-brand-accent">
@@ -58,12 +63,18 @@ export default function FeedCard({ post, channelName }) {
 
         {mediaLabel && (
           <span className="absolute right-0 top-0 flex items-center gap-1.5 bg-brand-primary/90 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-brand-text-inverse">
-            <Icon
-              name={post.mediaType === "carousel" ? "Images" : "Video"}
-              size={13}
-              strokeWidth={2}
-            />
+            <Icon name="Video" size={13} strokeWidth={2} />
             {mediaLabel}
+          </span>
+        )}
+
+        {isCarousel && (
+          <span
+            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center bg-brand-primary/90 text-brand-text-inverse"
+            title={feedSection.moreImages}
+          >
+            <Icon name="Images" size={16} strokeWidth={2} />
+            <span className="sr-only">{feedSection.moreImages}</span>
           </span>
         )}
 
@@ -91,17 +102,19 @@ export default function FeedCard({ post, channelName }) {
             {formatDate(post.date, feedSection.dateFallback)}
           </time>
         </p>
-        <p className="line-clamp-4 text-[15px] leading-relaxed text-brand-text">{post.caption}</p>
+        <p className="line-clamp-4 whitespace-pre-line text-[15px] leading-relaxed text-brand-text">
+          {post.caption}
+        </p>
         <div className="mt-auto flex items-center justify-between gap-3 pt-2 text-[13px] text-brand-muted">
           {hasReactions ? (
             <span className="flex items-center gap-3">
-              {post.likes !== null && (
+              {post.likes != null && (
                 <span className="inline-flex items-center gap-1">
                   <Icon name="Heart" size={14} strokeWidth={2} />
                   {formatNumber(post.likes)}
                 </span>
               )}
-              {post.comments !== null && (
+              {post.comments != null && (
                 <span className="inline-flex items-center gap-1">
                   <Icon name="MessageCircle" size={14} strokeWidth={2} />
                   {formatNumber(post.comments)}
@@ -117,7 +130,7 @@ export default function FeedCard({ post, channelName }) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 font-semibold text-brand-text transition-colors hover:text-brand-accent-deep"
           >
-            {feedSection.openPost}
+            {isLong ? feedSection.readMore : feedSection.openPost}
             <Icon name="ExternalLink" size={14} strokeWidth={2} />
           </a>
         </div>

@@ -29,6 +29,11 @@ export const seo = {
     title: "Biler til salgs | GT Maskin AS",
     description: "Se hvilke biler som står inne hos GT Maskin i Alta akkurat nå.",
   },
+  video: {
+    title: "Video fra verkstedet | GT Maskin AS",
+    description:
+      "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien. Video fra GT Maskin i Alta.",
+  },
   utleie: {
     title: "Snøscooterutleie, ATV og henger i Alta | GT Maskin AS",
     description:
@@ -64,6 +69,7 @@ export const nav = {
     { label: "Verksted", to: "/verksted" },
     { label: "Deler", to: "/deler" },
     { label: "Biler til salgs", to: "/biler-til-salgs" },
+    { label: "Video", to: "/video" },
     { label: "Utleie", to: "/utleie" },
     { label: "Om oss", to: "/om-oss" },
     { label: "Kontakt", to: "/kontakt" },
@@ -111,6 +117,8 @@ export const feedSection = {
   checkinsSuffix: "har vært her",
   verifiedPrefix: "Tall fra Facebook",
   openPost: "Åpne innlegget på Facebook",
+  readMore: "Les mer på Facebook",
+  moreImages: "Flere bilder",
 };
 
 export const servicesSection = {
@@ -128,6 +136,24 @@ export const videoSection = {
   placeholderTag: "Plassholder",
   playlistLabel: "Spilleliste",
   nowPlaying: "Spiller nå",
+  allVideos: { label: "Se alle videoer", to: "/video" },
+  seeOnSnapchat: "Se på Snapchat",
+  seeOnFacebook: "Se på Facebook",
+  page: {
+    kicker: "Video",
+    title: "GT Maskin på film",
+    lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien. Videoene lastes først når du trykker på avspilling.",
+    heroImage: "/images/bygg/firmabil-kustom-speedshop",
+    heroAlt: "Firmabilen til GT Maskin med Kustom Speedshop-skrift på siden",
+    featuredTitle: "Siste video",
+    gridTitle: "Flere videoer",
+    moreKicker: "Mer fra oss",
+    moreTitle: "Følg GT Maskin",
+    moreText: "Følg oss på Facebook og Snapchat for det siste fra verkstedet.",
+    moreFacebook: "Mer på Facebook",
+    moreSnapchat: "Følg oss på Snapchat",
+    snapchatQrHint: "Skann QR-koden i Snapchat",
+  },
 };
 
 export const carsSection = {
@@ -442,7 +468,7 @@ export const footer = {
       title: "Følg oss",
       links: [
         { label: "Facebook", href: "https://www.facebook.com/GtMaskinas" },
-        { label: "Video", to: "/#video" },
+        { label: "Video", to: "/video" },
         { label: "Om oss", to: "/om-oss" },
       ],
     },
@@ -456,6 +482,15 @@ export const footer = {
   orgPrefix: "Org.nr.",
   phonePrefix: "Tlf.",
   reviewsKicker: "Anmeldelser",
+};
+
+export const socialLinks = {
+  facebook: "Facebook",
+  messenger: "Send melding på Messenger",
+  snapchat: "Følg oss på Snapchat",
+  snapchatOpen: "Åpne i Snapchat",
+  snapchatQr: "Skann QR-koden i Snapchat",
+  snapchatPending: "[Snapchat-brukernavn bekreftes av Gjermund]",
 };
 
 export const placeholderLabels = {
