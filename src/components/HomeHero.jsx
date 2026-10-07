@@ -1,7 +1,8 @@
 import { heroVideo } from "../data/imageManifest";
-import { hero } from "../data/siteContent";
+import { hero, socialLinks } from "../data/siteContent";
 import Button from "./Button";
 import HeroMedia from "./HeroMedia";
+import SocialIcons from "./SocialIcons";
 
 export default function HomeHero() {
   return (
@@ -31,6 +32,7 @@ export default function HomeHero() {
               {hero.secondary.label}
             </Button>
           </div>
+          <SocialIcons size="sm" label={socialLinks.heroFollow} className="flex-wrap" />
         </div>
 
         <div className="relative lg:col-span-5 lg:col-start-8">

@@ -5,7 +5,7 @@ import Icon from "./Icon";
 import Picture from "./Picture";
 
 /** Facebook-merket som inline SVG i currentColor. Dekor, teksten står ved siden av. */
-function FacebookMark({ size = 18 }) {
+export function FacebookMark({ size = 18 }) {
   return (
     <svg
       width={size}
@@ -21,7 +21,7 @@ function FacebookMark({ size = 18 }) {
 }
 
 /** Snapchat-spøkelset som inline SVG i currentColor. Dekor. */
-function SnapchatMark({ size = 18 }) {
+export function SnapchatMark({ size = 18 }) {
   return (
     <svg
       width={size}

@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { companyFacts } from "../data/companyFacts";
-import { nav } from "../data/siteContent";
+import { nav, socialLinks } from "../data/siteContent";
 import { cx } from "../lib/format";
 import Button from "./Button";
 import Icon from "./Icon";
 import Logo from "./Logo";
+import SocialIcons from "./SocialIcons";
 
 /**
  * Fullskjerms mobilmeny. Lukkes med Escape, ved klikk på lenke og ved rutebytte
@@ -106,6 +107,7 @@ export default function MobileMenu({ id, open, onClose, returnFocusRef }) {
         <Button to={nav.cta.to} onClick={onClose} arrow>
           {nav.cta.label}
         </Button>
+        <SocialIcons label={socialLinks.follow} className="justify-center pt-1" />
         <p className="text-center text-sm text-brand-muted-inverse">
           {companyFacts.address.full} · {companyFacts.hours.short}
         </p>

@@ -8,6 +8,7 @@ import Button from "./Button";
 import Icon from "./Icon";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
+import SocialIcons from "./SocialIcons";
 
 const MENU_ID = "mobilmeny";
 
@@ -30,14 +31,14 @@ export default function Header() {
       <div className="container-site flex h-16 items-center justify-between md:h-[88px]">
         <Logo />
 
-        <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Hovedmeny">
+        <nav className="hidden items-center gap-3.5 lg:flex xl:gap-7" aria-label="Hovedmeny">
           {nav.items.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
                 cx(
-                  "border-b-2 py-1 text-[15px] font-semibold tracking-[0.02em] transition-colors duration-150",
+                  "whitespace-nowrap border-b-2 py-1 text-[14px] font-semibold tracking-[0.02em] transition-colors duration-150 xl:text-[15px]",
                   isActive
                     ? "border-brand-accent text-brand-text-inverse"
                     : "border-transparent text-brand-text-inverse hover:border-brand-outline",
@@ -49,7 +50,8 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-2 md:gap-3 xl:gap-4">
+          <SocialIcons size="sm" className="hidden lg:flex" />
           <a
             href={companyFacts.phone.href}
             className="hidden items-center gap-2 text-base font-bold tracking-[0.02em] text-brand-text-inverse transition-colors hover:text-brand-accent-light xl:inline-flex"
@@ -80,7 +82,7 @@ export default function Header() {
             <Icon name="Phone" size={20} strokeWidth={2} />
           </a>
 
-          <Button to={nav.cta.to} size="sm" className="hidden md:inline-flex">
+          <Button to={nav.cta.to} size="sm" className="hidden whitespace-nowrap md:inline-flex">
             {nav.cta.label}
           </Button>
 

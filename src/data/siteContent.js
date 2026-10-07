@@ -595,6 +595,12 @@ export const socialLinks = {
   snapchatOpen: "Åpne i Snapchat",
   snapchatQr: "Skann QR-koden i Snapchat",
   snapchatPending: "[Snapchat-brukernavn bekreftes av Gjermund]",
+  follow: "Følg oss",
+  heroFollow: "Følg verkstedet på Facebook og Snapchat",
+  facebookAria: "GT Maskin på Facebook",
+  snapchatAria: "GT Maskin på Snapchat",
+  qrDialogTitle: "Skann for å følge oss på Snapchat",
+  qrDialogClose: "Lukk",
 };
 
 export const placeholderLabels = {
