@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import BookingForm from "../components/BookingForm";
 import ContactCard from "../components/ContactCard";
 import PageHero from "../components/PageHero";
-import { cars } from "../data/cars";
+import { findCar } from "../data/cars";
 import { products } from "../data/products";
 import { contactPage, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
@@ -18,8 +18,8 @@ export default function Kontakt() {
     const product = products.find((p) => p.slug === vare);
     initialMessage = `${contactPage.productRequestPrefix} ${product ? `${product.title} (${product.brand})` : vare}\n\n`;
   } else if (bil) {
-    const car = cars.find((c) => c.slug === bil);
-    initialMessage = `Spørsmål om bil: ${car ? `${car.title} ${car.year}` : bil}\n\n`;
+    const car = findCar(bil);
+    initialMessage = `${contactPage.carRequestPrefix} ${car ? `${car.title} ${car.year}` : bil}\n\n`;
   }
 
   return (

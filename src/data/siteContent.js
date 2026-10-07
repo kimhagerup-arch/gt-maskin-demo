@@ -163,13 +163,15 @@ export const carsSection = {
   empty: {
     title: "Ingen biler ute for salg akkurat nå.",
     text: "Leter du etter noe spesielt? Ta kontakt, vi vet hva som er på vei inn.",
-    cta: { label: "Ta kontakt", to: "/kontakt" },
+    cta: { label: "Si hva du leter etter", to: "/biler-til-salgs#vi-skaffer" },
   },
   card: {
     imageLabel: "[Bilde av bil]",
     priceSuffix: "kr",
     sold: "Solgt",
     ask: "Spør om bilen",
+    details: "Se bilen",
+    exampleTag: "Plassholder",
   },
   page: {
     kicker: "Biler til salgs",
@@ -177,10 +179,53 @@ export const carsSection = {
     lead: "Vi har til tider veldig fine biler stående inne i butikk og kundemottak. Her legger vi ut det som er til salgs. Finner du ikke det du leter etter, ta kontakt, vi vet hva som er på vei inn.",
     heroImage: "/images/hero/fasade-vinter-klassikere",
     heroAlt: "To amerikanske klassikere foran fasaden til GT Maskin om vinteren",
-    gridTitle: "Biler som er inne nå",
-    askTitle: "Leter du etter noe spesielt?",
-    askText: "Ta kontakt, vi vet hva som er på vei inn. Send oss noen ord om hva du ser etter.",
-    askCta: { label: "Send forespørsel", to: "/kontakt" },
+    nowKicker: "Inne nå",
+    nowTitle: "Inne hos oss nå",
+    soldKicker: "Solgt",
+    soldTitle: "Solgte biler",
+    examplesKicker: "Slik presenteres bilene",
+    examplesTitle: "Slik ser det ut når bilene kommer",
+    examplesText:
+      "Bilene legges ut her med bilder, årsmodell, km, motor og pris. Kortene under er eksempler, ikke biler til salgs.",
+  },
+  wanted: {
+    id: "vi-skaffer",
+    kicker: "Vi skaffer",
+    title: "Leter du etter noe spesielt? Vi skaffer",
+    lead: "Si hva du leter etter, så tar vi kontakt. Vi vet hva som er på vei inn.",
+    fields: {
+      name: { label: "Navn", placeholder: "Ditt navn" },
+      phone: { label: "Telefon", placeholder: "Mobilnummer" },
+      email: { label: "E-post", placeholder: "navn@eksempel.no" },
+      model: { label: "Merke og modell", placeholder: "F.eks. Chevrolet Camaro" },
+      yearFrom: { label: "Årsmodell fra", placeholder: "F.eks. 1967" },
+      yearTo: { label: "Årsmodell til", placeholder: "F.eks. 1972" },
+      budget: { label: "Budsjett (valgfritt)", placeholder: "Omtrent, i kroner" },
+      wishes: { label: "Andre ønsker", placeholder: "Farge, motor, stand, utstyr …" },
+    },
+    submit: "Send ønsket",
+    sending: "Sender …",
+    success: "Takk! Vi har mottatt ønsket ditt og tar kontakt.",
+    validation: "Fyll inn navn, merke og modell, og enten telefon eller e-post.",
+    validationEmail: "Sjekk e-postadressen.",
+    validationYears: "Årsmodell til kan ikke være før årsmodell fra.",
+  },
+  detail: {
+    back: "Alle biler",
+    specs: { year: "Årsmodell", km: "Kilometer", engine: "Motor", price: "Pris" },
+    descriptionTitle: "Om bilen",
+    descriptionFallback: "[Beskrivelse av bilen legges inn sammen med bildene]",
+    ask: "Spør om bilen",
+    callPrefix: "Eller ring",
+    gallery: {
+      label: "Bildegalleri",
+      prev: "Forrige bilde",
+      next: "Neste bilde",
+      goTo: "Vis bilde",
+      of: "av",
+    },
+    notFound: "Fant ikke denne bilen.",
+    exampleNote: "Dette er et eksempel på hvordan en bil presenteres. Bilen finnes ikke til salgs.",
   },
 };
 
@@ -427,6 +472,7 @@ export const contactPage = {
   formTitle: "Send oss en melding",
   formLead: "Fortell oss hva du trenger hjelp til, så tar vi kontakt.",
   productRequestPrefix: "Forespørsel om del:",
+  carRequestPrefix: "Spørsmål om bil:",
 };
 
 export const checkoutPage = {

@@ -11,6 +11,7 @@ const Deler = lazy(() => import("./pages/Deler"));
 const Produkt = lazy(() => import("./pages/Produkt"));
 const Kasse = lazy(() => import("./pages/Kasse"));
 const BilerTilSalgs = lazy(() => import("./pages/BilerTilSalgs"));
+const Bil = lazy(() => import("./pages/Bil"));
 const Video = lazy(() => import("./pages/Video"));
 const Utleie = lazy(() => import("./pages/Utleie"));
 const OmOss = lazy(() => import("./pages/OmOss"));
@@ -70,6 +71,14 @@ export default function App() {
             element={
               <Suspense fallback={<RouteFallback />}>
                 <BilerTilSalgs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="biler-til-salgs/:slug"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <Bil />
               </Suspense>
             }
           />

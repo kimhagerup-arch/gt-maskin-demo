@@ -80,9 +80,18 @@ export default function Home() {
               ))}
             </ul>
           ) : (
-            <div className="border border-brand-border-dark bg-brand-primary-light p-8">
-              <p className="text-xl font-bold">{carsSection.empty.title}</p>
-              <p className="mt-2 text-brand-muted-inverse">{carsSection.empty.text}</p>
+            <div className="flex flex-col gap-5 border border-brand-border-dark bg-brand-primary-light p-6 md:flex-row md:items-center md:justify-between md:gap-10 md:p-8">
+              <div className="flex flex-col gap-2">
+                <p className="text-xl font-bold md:text-[22px]">{carsSection.empty.title}</p>
+                <p className="max-w-xl text-brand-muted-inverse">{carsSection.empty.text}</p>
+              </div>
+              <Button
+                to={carsSection.empty.cta.to}
+                arrow
+                className="shrink-0 self-start md:self-auto"
+              >
+                {carsSection.empty.cta.label}
+              </Button>
             </div>
           )}
         </div>
