@@ -126,3 +126,18 @@ Søk etter tankestrek, forbudte ord og verktøyord i `src`, `public`, `index.htm
 1. Alt i tabellen «Innholdsfilen fra kunden mangler» i STATUS.md: Facebook-innlegg, videolenker, Snapchat-brukernavn, scooterdomenets innhold, nytt hovedbilde, hero-video.
 2. Spørsmålene fra runde 1 (årstall 2008/2012, bil1-3, merkelogoer, maskiner og traktor, telefonnummer, priser, produkter, ansatte).
 3. LCP på 3,1-3,5 s er bundet til hero-bildene; et lettere hovedbilde fra kunden kan løfte ytelsen videre.
+
+## Rask designretting (08.10.2026): kustom-emblem i hero
+
+Kun forsiden er berørt. Skjermbilder av hero i `docs/qa/skjermbilder/runde-2/hero-emblem-{375,1024,1440}.png` (fra `npm run preview`).
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene |
+| axe-core `/` ved 375 og 1440 px | 0 funn |
+| Lighthouse mobil `/` (to kjøringer) | ytelse 90, tilgjengelighet 100, beste praksis 100, LCP 3,5 s, CLS 0, TBT 60 ms |
+| Kontrast bak emblemteksten (verste piksel) | 6,05:1 til 12,66:1, alle AA. Tabell i BESLUTNINGER.md |
+| Overlapp med bilen i bildet | ingen på 1024, 1280 og 1440 px |
+| Mobil 375 px | emblemet ligger i flyt under bildet, ingen overlapp med tekst eller knapper, ingen horisontal overflow |
+| Hover og redusert bevegelse | glans fades inn på 0,3 s fra 768 px; med `prefers-reduced-motion` er overgangen 0,00001 s |
+| Konsollfeil | ingen |

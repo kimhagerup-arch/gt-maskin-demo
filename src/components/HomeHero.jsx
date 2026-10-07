@@ -2,6 +2,7 @@ import { heroVideo } from "../data/imageManifest";
 import { hero, socialLinks } from "../data/siteContent";
 import Button from "./Button";
 import HeroMedia from "./HeroMedia";
+import KustomEmblem from "./KustomEmblem";
 import SocialIcons from "./SocialIcons";
 
 export default function HomeHero() {
@@ -43,12 +44,10 @@ export default function HomeHero() {
             objectPosition={hero.imagePosition}
             className="aspect-[16/10] w-full border border-brand-border-dark md:aspect-[4/3] lg:aspect-auto lg:h-[560px]"
           />
-          <div className="relative -mt-6 ml-4 mr-4 flex max-w-[240px] flex-col gap-1.5 bg-brand-bg px-5 py-4 text-brand-text md:-mt-10 lg:absolute lg:-left-8 lg:bottom-8 lg:ml-0 lg:mt-0 lg:px-[22px] lg:py-5">
-            <span className="font-display text-3xl leading-[0.95] md:text-4xl">
-              {hero.badge.value}
-            </span>
-            <span className="text-sm font-semibold text-brand-muted">{hero.badge.text}</span>
-          </div>
+          <KustomEmblem
+            badge={hero.badge}
+            className="-mt-8 ml-5 md:-mt-12 md:ml-8 lg:absolute lg:-bottom-16 lg:-left-20 lg:ml-0 lg:mt-0 xl:-bottom-11 xl:-left-14"
+          />
         </div>
       </div>
     </section>

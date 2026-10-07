@@ -89,7 +89,9 @@ export const hero = {
   primary: { label: "Bestill verkstedtime", to: "/bestill" },
   secondary: { label: "Se hva vi gjør", to: "/verksted" },
   badge: {
-    value: "Kustom Speedshop i Alta",
+    script: "Kustom",
+    main: "Speedshop",
+    place: "Alta",
     text: "Amerikanske biler, custom-prosjekter og delesalg.",
   },
   image: "/images/hero/fasade-kveld-skilt",

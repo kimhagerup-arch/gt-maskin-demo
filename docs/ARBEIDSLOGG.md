@@ -1,5 +1,14 @@
 # ARBEIDSLOGG
 
+## 08.10.2026: kustom-emblem i hero
+
+**Gjort**
+
+- Ny `KustomEmblem.jsx` erstatter den hvite boksen i `HomeHero`: avlangt skilt med dobbel kant (mørk ramme, kobberlinje), nagler, støytekstur via `feTurbulence`, egen pinstriping i SVG (speilet halvdel, vertikalt speilet under teksten), glans ved hover på desktop. All pynt `aria-hidden`, teksten er ekte tekst.
+- `hero.badge` i `siteContent.js` delt i `script`, `main`, `place`, `text`. Yellowtail (OFL, latin) selvhostet i `public/fonts/`, `@font-face` i `index.css`, `font-script` i Tailwind, preload i `index.html`. Vite må restartes etter endring i `tailwind.config.js`.
+- Plassering per bredde (`lg` og `xl`) så emblemet ikke dekker bilen i hero-bildet; mobil i flyt under bildet.
+- QA: build og lint rene, axe 0 funn på `/`, Lighthouse mobil `/` 90 og CLS 0, kontrast målt bak teksten (verste 6,05:1). Skjermbilder `hero-emblem-{375,1024,1440}.png` i `docs/qa/skjermbilder/runde-2/`. Detaljer i BESLUTNINGER.md.
+
 ## 07.10.2026: runde 2, løft før kunden ser siden
 
 **Forutsetning**: `_kilder/INNHOLD-FRA-GJERMUND.md` skulle være eneste kilde for nytt innhold. Filen finnes ikke. Strukturen er bygd ferdig og plassholderne beholdt; hva som mangler står i STATUS.md.

@@ -36,6 +36,7 @@ export default {
       fontFamily: {
         display: ['"Bebas Neue"', "Impact", "sans-serif"],
         sans: ["Barlow", "system-ui", "sans-serif"],
+        script: ["Yellowtail", "cursive"],
       },
       maxWidth: {
         container: "1200px",

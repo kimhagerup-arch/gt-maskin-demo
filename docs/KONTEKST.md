@@ -4,7 +4,7 @@
 
 - Vite 5.4, React 18.3, react-router-dom 6.28 med `future`-flagg (`v7_startTransition`, `v7_relativeSplatPath`, `v7_fetcherPersist`, `v7_normalizeFormMethod`, `v7_partialHydration`, `v7_skipActionErrorRevalidation`).
 - Tailwind 3.4. Farger som `rgb(var(--brand-x) / <alpha-value>)`; variablene er RGB-tripler i `src/index.css`. Egne klasser i `@layer components`: `container-site`, `section-pad`, `kicker`, `h1-hero`, `h1-page`, `h2-section`, `reveal`, `input-dark`, `textarea-dark`, `link-underline`.
-- Fonter: Bebas Neue 400 og Barlow 400/500/600/700 (Google Fonts, OFL) selvhostet i `public/fonts/` som woff2 (latin-subsett). `@font-face` i `src/index.css` med `font-display: swap`, preload av Bebas og Barlow 400 i `index.html`. Ingen eksterne kall ved lasting.
+- Fonter: Bebas Neue 400, Barlow 400/500/600/700 og Yellowtail 400 (Google Fonts, OFL) selvhostet i `public/fonts/` som woff2 (latin-subsett). `@font-face` i `src/index.css` med `font-display: swap`, preload av Bebas, Barlow 400 og Yellowtail i `index.html`. Yellowtail (`font-script`) brukes kun i `KustomEmblem` i hero. Ingen eksterne kall ved lasting.
 - Biome 1.9 for lint og format. `a11y/useSemanticElements` er av. `src/data/imageManifest.js` og `public/` ignoreres.
 - lucide-react via `src/components/Icon.jsx` (navn som streng i datafilene). Facebook- og Snapchat-merkene er inline SVG i `SocialLinks.jsx`.
 - sharp ^0.34 (Windows ARM64-støtte).

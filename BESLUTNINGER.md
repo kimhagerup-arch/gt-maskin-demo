@@ -235,3 +235,25 @@ Nummeret vises som «+47 911 14 628» overalt (`companyFacts.phone.display` og d
 | Kreditlinje (#F3EFE7 på heldekkende #151412) | 16,05:1 | 16,05:1 | bestått |
 
 Overlegget er heldekkende `brand-primary` 80 % på mobil, og en gradient fra 95 % via 70 % til 5 % på desktop. På mobil har innholdet 128 px bunnmarg så scooterne kjører under knappen, ikke bak teksten. Videorutenettet på forsiden har `min-w-0` på kolonnene, så lange spillelistetitler avkortes i stedet for å presse ut siden på 375 px.
+
+## Rask designretting (08.10.2026): kustom-emblem i hero
+
+Boksen «Kustom Speedshop i Alta» var en hvit tekstboks. Den er byttet med et emblem som skal se håndlaget ut, i stil med pinstriping og emaljeskilt, med utgangspunkt i logoens kobber, sort og slitt metall.
+
+- Form: avlangt skilt med avrundede hjørner, mørk ramme (`brand-primary-dark`, 3 px) med en tynn kobberlinje (`brand-accent` 80 %) innenfor, og fire nagler i hjørnene (radial-aktig gradient fra `brand-muted-inverse` via `brand-outline` til `brand-primary-dark`). Flaten er en lineær gradient fra `brand-primary-light` via `brand-primary` til `brand-primary-dark` med en svak støytekstur (SVG `feTurbulence`, fractalNoise, 14 % opasitet, `mix-blend-screen`). Bygd i inline SVG og CSS i `KustomEmblem.jsx`, ikke som bilde. Ingen hex-verdier i komponenten; SVG-pynten bruker `currentColor` og `fill-brand-primary`.
+- Pinstriping: egen tegning i SVG (viewBox 200×30): en hovedlinje med løkke, en tynnere følgelinje, små dråper i endene og en spiss i midten. Venstre halvdel speiles om midten, og linjen under teksten er den samme speilet vertikalt. Ikke kopiert fra kjente motiver.
+- Typografi: «Kustom» i Yellowtail (OFL, Google Fonts), selvhostet som `public/fonts/yellowtail-400-latin.woff2` (18 kB, kun latin-subsett), `font-display: swap`, preload i `index.html` fordi emblemet står over folden på forsiden. Ny font-token `font-script` i `tailwind.config.js`. «Speedshop» i Bebas Neue med sperring 0,26 em, «Alta» i 11 px med 0,32 em sperring og korte kobberstreker på sidene. Undertekst i `brand-text-inverse`. Skriptlinjen har fast høyde, så fontbyttet ikke flytter noe (CLS 0 målt).
+- Innhold: `hero.badge` i `siteContent.js` er delt i `script`, `main`, `place` og `text`. Ordlyden er uendret: «Kustom Speedshop» + «Alta» og «Amerikanske biler, custom-prosjekter og delesalg.»
+- Plassering: vippet -3 grader, myk skygge (`shadow-2xl` i `brand-primary-dark` 80 %). Desktop: absolutt plassert nede til venstre, stikker ut over bildekanten som et klistremerke. Avstandene er satt per bredde så emblemet ikke dekker bilen i vinduet: 1024-1279 px `-left-20 -bottom-16`, fra 1280 px `-left-14 -bottom-11`. Verifisert visuelt på 1024, 1280 og 1440 px. Mobil: samme emblem i 204 px bredde (236 px fra 768 px), i flyt under bildet med negativ toppmarg, så det aldri overlapper tekst eller knapper.
+- Bevegelse: ingen animasjon. Eneste effekt er en svak glans (gradient fra `brand-text-inverse` 10 %) som fades inn ved hover fra 768 px. Med `prefers-reduced-motion` slås overgangen av av den globale regelen (målt `transition-duration` 0,00001 s), glansen vises da uten fade.
+- Tilgjengelighet: all pynt (støy, kobberlinje, nagler, glans, pinstriping) er `aria-hidden`. Teksten er ekte tekst i spans og et avsnitt, leses som «Kustom Speedshop Alta Amerikanske biler, custom-prosjekter og delesalg.»
+- Kontrast, målt i headless Chrome ved å skjule teksten og lese pikslene bak hver tekstboks (verste piksel, inkludert støytekstur og gradient):
+
+| Tekst | Farge | 375 px, verste | 1440 px, verste | Snitt | AA |
+|---|---|---|---|---|---|
+| «Kustom» (34-38 px skript) | `brand-accent-light` | 6,12:1 | 6,05:1 | 7,28:1 | bestått |
+| «Speedshop» (26-29 px Bebas) | `brand-text-inverse` | 12,01:1 | 11,96:1 | 14,03:1 | bestått |
+| «Alta» (11 px) | `brand-muted-inverse` | 6,91:1 | 6,82:1 | 7,74:1 | bestått |
+| Undertekst (12-13 px) | `brand-text-inverse` | 12,66:1 | 12,49:1 | 14,51:1 | bestått |
+
+- QA: build og lint rene. axe-core på `/` ved 375 og 1440 px: 0 funn. Lighthouse mobil på `/` mot `npm run preview`, to kjøringer: ytelse 90, tilgjengelighet 100, beste praksis 100, LCP 3,5 s, CLS 0, TBT 60 ms (SEO 69 skyldes `noindex`). Ingen konsollfeil og ingen horisontal overflow på 375, 1024, 1280 og 1440 px. Skjermbilder: `docs/qa/skjermbilder/runde-2/hero-emblem-{375,1024,1440}.png`.
