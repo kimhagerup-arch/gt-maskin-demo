@@ -67,6 +67,12 @@
 | Sporing | Ingen | Plausible eller Vercel Analytics ved go-live |
 | noindex | `index.html`, `vercel.json`, `public/robots.txt` (Facebook-forhåndsvisning sluppet inn) | Fjernes/endres ved go-live |
 
+## Deploy
+
+- GitHub: `kimhagerup-arch/gt-maskin-demo` (privat), branch `dev`. Pushet 8. oktober 2026.
+- Vercel: https://gt-maskin-demo.vercel.app, deployet 8. oktober 2026 fra `dev`. SPA-rewrite fra `vercel.json`.
+- `X-Robots-Tag: noindex` verifisert i svarhodene på den live siden.
+
 ## Verifisering
 
 - `npm run build` og `npm run lint` er rene. Hovedchunk 294 kB (88 kB gzip), ruter under 10 kB gzip hver (Video-chunk 2,6 kB gzip).
