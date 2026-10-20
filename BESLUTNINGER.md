@@ -38,6 +38,9 @@ Målte kontraster (WCAG AA, `node scripts/check-contrast.mjs`):
 | Nedtonet på surface (plassholder lys) | #5E5850 på #E4DED2 | 5.25:1 | bestått |
 | Plassholdertekst på plassholder mørk | #9C9487 på #23211E | 5.35:1 | bestått |
 | Copyright-linje i footer | #8F877A på #0F0E0D | 5.43:1 | bestått |
+| Hvit tekst og merke på Facebook-blått (knapper, Messenger) | #FFFFFF på #0866FF | 4.82:1 | bestått |
+| Svart tekst på Snapchat-gult (knapper, kort) | #000000 på #FFFC00 | 19.18:1 | bestått |
+| Gul tekst på svart knapp i Snapchat-kortet | #FFFC00 på #000000 | 19.18:1 | bestått |
 | Tekst i footer | #F3EFE7 på #0F0E0D | 16.82:1 | bestått |
 
 Fargene ligger som RGB-tripler i CSS-variabler (`src/index.css`) og eksponeres i Tailwind med `<alpha-value>`, slik at `bg-brand-primary/70` og gradienter fungerer. Resten av paletten er uendret fra designsystemet.
@@ -266,3 +269,69 @@ Boksen «Kustom Speedshop i Alta» var en hvit tekstboks. Den er byttet med et e
 - Reel-lenker (`facebook.com/reel/<id>`) spiller ikke i `plugins/video.php`. `src` i dataene er den fulle reel-lenken, og `VideoPlayer` skriver den om til `facebook.com/GtMaskinas/videos/<id>/` ved montering. Handlen leses fra `channels.js`, ikke hardkodet. Fortsatt ingen eksterne kall før klikk (verifisert: null forespørsler utenfor localhost før play, deretter facebook.com og fbcdn.net).
 - Rutenettet «Flere videoer» på `/video` bruker stående kort i 2 / 3 / 5 kolonner (375 / 640 / 1024 px) når alle videoene er 9:16, ellers det gamle 1 / 2 / 3-rutenettet. Spillelistekortene på forsiden er gjort kompakte (96×60 px miniatyr) så fem kort fyller omtrent samme høyde som spilleren på desktop.
 - QA i headless Chrome mot `npm run preview`, 375 og 1440 px: axe-core 0 funn på `/` og `/video`, ingen horisontal overflow, ingen konsollfeil. Avspilling: etter klikk på play monteres pluginen og videoen (720×1280) lastes; i headless krevde pluginen ett klikk til før `currentTime` gikk fra 0 til 3,9 og videre til 6,9 sekunder. Skjermbilder i `docs/qa/skjermbilder/video/`.
+
+## Runde 3 (20.10.2026): videovisning, merkefarger, Snapchat, safari ut
+
+Branch `feature/runde-3`. Fakta sjekket 20.10.2026 (Snapchat, merkefarger, safari) står i `_kilder/INNHOLD-FRA-GJERMUND.md` og `_kilder/FAKTA.md`.
+
+### Videovisning (punkt 1)
+
+- Hovedspilleren er høydestyrt for stående video (`.player-portrait` i `index.css`): mobil `min(70svh, bredde × 16/9)`, desktop `min(640px, 100svh - 136px)` (header 88 px + luft). Bredden følger 9:16, så posteren fyller hele rammen uten mørke sidefelt, og rammen er den samme før og etter klikk (CLS 0). Liggende video får full bredde i 16:9 med samme makshøyde.
+- Desktop: spilleren står på en dempet flate (`brand-primary-light`, maks 880 px bred, sentrert) med tittel, kildeetikett og «Se på Facebook» ved siden av. Den uskarpe posteren i full bredde fra forrige runde er fjernet. Mobil: spilleren alene, teksten én gang under. Tittelen ligger ikke lenger oppå bildet; play-knappen har aria-label «Spill av video: <tittel>».
+- Sticky mobil-CTA (56 px) dekker aldri play-knappen: med header 64 px og spiller maks 70 svh står knappen midt i de øverste 78 % av skjermen.
+- Autoplay: plugin-URL-en har `autoplay=true` og iframen `allow="autoplay; encrypted-media; picture-in-picture"`. I headless Chrome starter ikke videoen av seg selv etter vårt klikk (`readyState` 4, `paused` true, `currentTime` 0); den krever ett klikk til inne i Facebook-pluginen. Vi har ikke verifisert om en vanlig nettleser med brukeraktivering oppfører seg annerledes. Noteres som kjent begrensning: Facebook styrer dette i sin iframe.
+
+### Videoliste som slider (punkt 2)
+
+- `VideoSlider` uten bibliotek: `overflow-x: auto`, `scroll-snap-type: x mandatory`, `scroll-padding` lik sidemargen. På mobil går sporet ut til skjermkanten (`-mx-6 px-6`), kortene er 44 % brede, så neste kort synes i kanten. Fra md er kortene 208 px (9:16) eller 320 px (16:9).
+- Piler fra md: «Forrige videoer» / «Neste videoer», blar ett kort (kortbredde + gap) med `scrollBy`, deaktiveres i hver ende. Endene måles på `scroll`, `ResizeObserver` og `resize`. Med `prefers-reduced-motion` brukes `behavior: auto`.
+- Kortene er knapper med `aria-pressed`; aktivt kort får aksentkant og etiketten «Spiller nå». Valg bytter video i hovedspilleren (tilbake til poster, ingen eksterne kall før play) og ruller spilleren inn med 96 px headermargin når den er utenfor viewport. Tastatur: Tab går gjennom kortene og nettleseren ruller det fokuserte kortet inn i sporet.
+- Samme komponent (`VideoShowcase`) brukes på forsiden og `/video`. Listen på `/video` heter «Alle videoer» (tidligere «Flere videoer»), siden den nå inneholder alle, med den aktive markert.
+
+### Merkefarger (punkt 3)
+
+- Tokens i `index.css` og `tailwind.config.js`: `brand-facebook` #0866FF, `brand-on-facebook` #FFFFFF, `brand-snapchat` #FFFC00, `brand-on-snapchat` #000000. Ingen hex i komponenter.
+- Facebook og Messenger: hvitt merke og hvit tekst på blått. Snapchat: gul flate, spøkelset hvitt med svart kontur (`paint-order: stroke`, strek 1,6 i 24-viewBox), svart tekst. Merkene skaleres bare, farges ikke om, ingen effekter; hover er `brightness` på flaten.
+- Brukt i header (ikonknapper), mobilmeny, hero, footer, kontaktsiden, QR-dialogen, «Følg GT Maskin» på `/video` og kildeetiketten «Facebook» på videokortene (`SourceMark`, 16 px blått kvadrat med hvit f).
+- Kontrast målt med `scripts/check-contrast.mjs` og lagt i tabellen over: hvit på Facebook-blått 4,82:1, svart på Snapchat-gult 19,18:1. Alle AA.
+- Footer: Snapchat-knappen er tatt ut når QR-blokken vises (`qr="always"`), siden blokken har samme lenke («Åpne i Snapchat»); ellers sto «Følg oss på Snapchat» to ganger.
+
+### Snapchat (punkt 4)
+
+- `channels.js`: `username` gtmaskin-as, `profileType` public, `url` https://www.snapchat.com/@gtmaskin-as, `embedUrl` https://www.snapchat.com/@gtmaskin-as/embed, `verifiedAt` 2026-10-20. Plassholderen «[Snapchat-brukernavn bekreftes av Gjermund]» er fjernet fra tekst og kode.
+- Alle Snapchat-knapper lenker direkte. Ikonknappen i header, mobilmeny og hero lenker direkte under 768 px og åpner QR-dialogen fra 768 px (der telefonen gjerne ligger ved siden av); dialogen har QR, @gtmaskin-as og «Åpne i Snapchat», fokusfelle mellom lukk og lenke, Escape og klikk utenfor lukker.
+- Ny `SnapchatSection` (tekster i `siteContent.snapchatSection`): «GT Maskin på Snapchat», «Følg oss på Snapchat for flere videoer.» Før klikk: gult kort med spøkelse, @gtmaskin-as og «Vis Snapchat-profilen». Ved klikk: ren iframe mot `embedUrl`, 416 px bred og 692 px høy som i Snapchats eksempel, title «GT Maskin på Snapchat». Svarhodene fra Snapchat har `frame-ancestors *`, så blockquote-koden og `embed.js` fra dokumentasjonen trengs ikke. Verifisert i headless Chrome: iframen viser profilkortet («GT Maskin | gtmaskin-as | Alta, Finnmark, Norge | Amerikansk bilverksted | Historier»).
+- Plassering: nederst i videoseksjonen på forsiden, og egen blokk på `/video` over «Følg GT Maskin», som nå bare har Facebook-knappen.
+- Personvern: teksten om eksterne lenker nevner nå at Snapchat-profilen lastes først ved klikk, og norsemantrail.com er tatt ut. «Sist oppdatert» satt til oktober 2026.
+- Ingen eksterne kall før klikk er verifisert på nytt. Etter klikk på «Vis Snapchat-profilen» laster Snapchat også Google Analytics og Tag Manager inne i sin iframe; det er deres side, nevnt i QA-rapporten.
+
+### Safari ut, utleiebanner inn (punkt 5)
+
+- Alt om snøscootersafari og Norseman Trail er fjernet fra synlig innhold, SEO-tekster, footer, tidslinjen («utleie og safari» er «utleie»), tjenestekortet («Utleie og safari» er «Utleie» med kundens ordlyd om utleie) og `companyFacts.links`. `_kilder/FAKTA.md` noterer at safarien er avsluttet (opplyst 20.10.2026).
+- `SafariBanner` er blitt `RentalBanner` (CSS-klasser `scooter-*`). Kicker «Snøscooterutleie», tittel «Gjennom hele scootersesongen» og ingress ordrett fra `rentalSection.lead` («Snøscooterutleie gjennom hele scootersesongen, ATV og hengere resten av året. Send en utleieforespørsel, så tar vi kontakt.»). Ingen nye fakta. Knapp «Se utleie» til `/utleie` på forsiden, «Send utleieforespørsel» til skjemaet på `/utleie`.
+- Bakgrunnen er en egen SVG-illustrasjon, `public/images/utleie/vidde.svg` (under 3 kB): blågrå himmelgradient, tre fjellrekker i lag med svake snøflater, flat vidde med drifter i forgrunnen. Ingen mennesker, ikke fotorealistisk, `preserveAspectRatio="xMidYMid slice"` og `object-cover`, så den skalerer uten forvrengning. Fotoet `Mountain_scootering_Finnmark.jpg` og kreditlinjen er fjernet fra `public/`, manifestet og bildescriptet.
+- Scooterbildet er omdøpt fra `safari-scooter` til `scooter-profil` (samme produsentbilde, fortsatt kun demo, står som go-live-punkt i STATUS.md). `loading="lazy"` er tatt av de tre scooterbildene: Chrome rapporterte DevTools-issuen `LazyLoadImageIssue` for dem i det animerte laget, og filen er 21 kB (webp) delt av alle tre.
+
+### Header på smale skjermer (punkt 6)
+
+- Undertittelen «KUSTOM SPEEDSHOP · ALTA» holdes på én linje: `white-space: nowrap`, sperring 0,15 em under 640 px (0,25 em fra 640 px), og «· ALTA» skjules under 380 px (nytt brekkpunkt `xs`). `companyFacts.taglineParts` deler teksten. Verifisert på 320, 360, 375, 390 og 430 px.
+
+### Konsoll og DevTools-issues (punkt 7)
+
+- Fra vår kode før klikk: ingen konsollfeil eller -advarsler. Én DevTools-issue, `LazyLoadImageIssue`, for de tre scooterbildene i utleiebanneret på hver last, og sporadisk for footer-logoen på korte sider. Rettet som beskrevet over; etter retting dukker meldingen bare sporadisk opp (4 av 75 laster i siste fullkjøring, 0 av 47 kontrollaster). Den er rådgivende fra Chrome, ikke en feil.
+- Fra Facebook etter klikk på reel: ingen konsollfeil, -advarsler eller DevTools-issues fra Facebook-pluginen i testen
+- Fra Snapchat etter klikk på «Vis Snapchat-profilen»: `CookieIssue` (56-64 per side) fra Snapchats egen profilvisning: tredjeparts-cookies i iframen
+
+### Ytelse (del av punkt 9)
+
+- Første måling etter runde 3 ga Lighthouse mobil 86-88 på `/video` og `/utleie` (LCP 3,7-4,0 s). Årsak: miniatyrene i slideren, scooterbildene og QR-koden lastet tidlig (Chrome laster `loading="lazy"`-bilder langt under folden på treg linje) og konkurrerte med hero-bildet, og undersidene fikk hero-bildet senere enn forsiden fordi `index.html` preloadet forsidens bilde på alle ruter og sidechunken ble hentet i en ekstra rundtur.
+- Tiltak: (1) `useAfterLoad()` monterer miniatyrer i `VideoCard`, scooterne i `RentalBanner` og QR-bildet i `SocialLinks` først etter `window` `load`; boksene har fast størrelse, så CLS er fortsatt 0. (2) Ny Vite-plugin `gtm-hero-preload` (`vite.config.js`) leser `src/data/heroImages.js` og skriver et inline-script i `<head>` som preloader rutens hero-bilde med riktig srcset og sizes, Yellowtail bare på forsiden, og sidechunken (`modulepreload`) for ruten. `HeroPreload.jsx` og den faste preloaden i `index.html` er fjernet. (3) `aboutSection.page.heroImage` pekte på et annet bilde enn `/om-oss` faktisk viste; nå er det samme bilde og `OmOss` leser det fra data.
+- Resultat: Lighthouse mobil 90 på `/`, `/video` og `/utleie` (to kjøringer hver, LCP 3,4-3,5 s, CLS 0).
+
+### QA (punkt 9)
+
+- `npm run build` og `npm run lint` rene. 15 ruter på 320, 375, 768, 1024 og 1440 px: ingen horisontal overflow, ingen konsollfeil. axe-core (wcag2a/aa, 2.1, best-practice) på alle ruter ved 375 og 1440 px: 0 funn.
+- Lighthouse mobil mot `npm run preview`: `/` 90, `/video` 90, `/utleie` 90 (to kjøringer hver), tilgjengelighet 100, beste praksis 100, CLS 0, LCP 3,4-3,5 s, SEO 69 på grunn av `noindex`.
+- Ingen eksterne kall før klikk på noen rute. Etter klikk: Facebook-reel laster (720×1280, `readyState` 4), Snapchat-profilen vises i iframen.
+- Søk etter tankestrek, forbudte ord og verktøyord i `src/`, `public/`, `index.html` og docs: null treff i synlig innhold.
+- Skjermbilder i `docs/qa/skjermbilder/runde-3/` (50 filer, palett-komprimert).
