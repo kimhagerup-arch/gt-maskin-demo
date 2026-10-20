@@ -1,4 +1,5 @@
 import PageHero from "../components/PageHero";
+import SnapchatSection from "../components/SnapchatSection";
 import SocialLinks from "../components/SocialLinks";
 import VideoShowcase from "../components/VideoShowcase";
 import { seo, videoSection } from "../data/siteContent";
@@ -34,6 +35,12 @@ export default function Video() {
           </div>
         </section>
       )}
+
+      <section className="section-pad border-t border-brand-border-dark bg-brand-primary-dark text-brand-text-inverse">
+        <div className="container-site">
+          <SnapchatSection />
+        </div>
+      </section>
 
       <section className="section-pad bg-brand-bg text-brand-text">
         <div className="container-site">

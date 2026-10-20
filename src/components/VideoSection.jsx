@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { videoSection } from "../data/siteContent";
 import Icon from "./Icon";
 import SectionHeader from "./SectionHeader";
+import SnapchatSection from "./SnapchatSection";
 import VideoShowcase from "./VideoShowcase";
 
 /** Forsidens videoseksjon: hovedspiller, spilleliste som slider og Snapchat-blokk nederst. */
@@ -38,6 +39,8 @@ export default function VideoSection({ videos = [], id = "video" }) {
             </h3>
           }
         />
+
+        <SnapchatSection className="mt-2 md:mt-4" />
       </div>
     </section>
   );

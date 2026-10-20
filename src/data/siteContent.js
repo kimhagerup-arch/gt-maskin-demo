@@ -154,7 +154,7 @@ export const videoSection = {
     gridTitle: "Alle videoer",
     moreKicker: "Mer fra oss",
     moreTitle: "Følg GT Maskin",
-    moreText: "Følg oss på Facebook og Snapchat for det siste fra verkstedet.",
+    moreText: "Følg oss på Facebook for det siste fra verkstedet.",
     moreFacebook: "Mer på Facebook",
     moreSnapchat: "Følg oss på Snapchat",
     snapchatQrHint: "Skann QR-koden i Snapchat",
@@ -529,7 +529,7 @@ export const notFoundPage = {
 export const privacyPage = {
   kicker: "Personvern",
   title: "Personvern",
-  updated: "Sist oppdatert: september 2026",
+  updated: "Sist oppdatert: oktober 2026",
   sections: [
     {
       title: "Ingen sporing, ingen informasjonskapsler",
@@ -545,7 +545,7 @@ export const privacyPage = {
     },
     {
       title: "Eksterne lenker",
-      text: "Lenker til Facebook, Messenger, Snapchat, norsemantrail.com og Google Maps åpner tjenestene deres i nye faner. Der gjelder de respektive tjenestenes personvernregler. Innebygde videoer fra Facebook og YouTube lastes først når du klikker på avspilling, og først da sendes det data til disse tjenestene.",
+      text: "Lenker til Facebook, Messenger, Snapchat og Google Maps åpner tjenestene deres i nye faner. Der gjelder de respektive tjenestenes personvernregler. Innebygde videoer fra Facebook og YouTube og Snapchat-profilen lastes først når du selv klikker på avspilling eller «Vis Snapchat-profilen», og først da sendes det data til disse tjenestene.",
     },
     {
       title: "Kontakt",
@@ -598,13 +598,21 @@ export const socialLinks = {
   snapchat: "Følg oss på Snapchat",
   snapchatOpen: "Åpne i Snapchat",
   snapchatQr: "Skann QR-koden i Snapchat",
-  snapchatPending: "[Snapchat-brukernavn bekreftes av Gjermund]",
   follow: "Følg oss",
   heroFollow: "Følg verkstedet på Facebook og Snapchat",
   facebookAria: "GT Maskin på Facebook",
   snapchatAria: "GT Maskin på Snapchat",
   qrDialogTitle: "Skann for å følge oss på Snapchat",
   qrDialogClose: "Lukk",
+};
+
+export const snapchatSection = {
+  kicker: "Snapchat",
+  title: "GT Maskin på Snapchat",
+  lead: "Følg oss på Snapchat for flere videoer.",
+  cardText: "Profilkort og de nyeste historiene, hentet fra Snapchat når du ber om det.",
+  showProfile: "Vis Snapchat-profilen",
+  embedTitle: "GT Maskin på Snapchat",
 };
 
 export const placeholderLabels = {

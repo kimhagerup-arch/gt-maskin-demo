@@ -3,15 +3,15 @@ import { getChannel } from "../data/channels";
 import { socialLinks } from "../data/siteContent";
 import { cx } from "../lib/format";
 import SnapchatQrDialog from "./SnapchatQrDialog";
-import { FacebookMark, SnapchatMark } from "./SocialLinks";
+import { FacebookMark, SnapchatMark } from "./SocialMarks";
 
 /**
- * Små ikonlenker til Facebook og Snapchat for header, mobilmeny og hero.
- * Facebook lenker ut. Snapchat lenker til snapchat.com/add/<brukernavn> når
- * channels.js har url, ellers åpner den en dialog med QR-koden.
+ * Små ikonknapper til Facebook og Snapchat for header, mobilmeny og hero,
+ * alltid i merkefargene. Facebook lenker ut. Snapchat lenker direkte under md
+ * og åpner QR-dialogen (med lenke) fra md, der en telefon ikke er for hånden.
  * Ikonene er dekor, aria-label er navnet. Ingen eksterne kall.
  */
-export default function SocialIcons({ size = "md", tone = "dark", label, className }) {
+export default function SocialIcons({ size = "md", label, tone = "dark", className }) {
   const facebook = getChannel("facebook");
   const snapchat = getChannel("snapchat");
   const [qrOpen, setQrOpen] = useState(false);
@@ -19,13 +19,9 @@ export default function SocialIcons({ size = "md", tone = "dark", label, classNa
 
   const box = size === "sm" ? "h-9 w-9" : "h-11 w-11";
   const iconSize = size === "sm" ? 16 : 18;
-  const base = cx(
-    "flex items-center justify-center border transition-colors",
-    box,
-    tone === "dark"
-      ? "border-brand-border-dark-strong text-brand-text-inverse hover:border-brand-accent-light hover:text-brand-accent-light"
-      : "border-brand-border-strong text-brand-text hover:border-brand-primary hover:text-brand-accent-deep",
-  );
+  const base = cx("flex items-center justify-center transition-[filter]", box);
+  const facebookClass = cx(base, "bg-brand-facebook text-brand-on-facebook hover:brightness-110");
+  const snapchatClass = cx(base, "bg-brand-snapchat hover:brightness-95");
 
   return (
     <div className={cx("flex items-center gap-2", className)}>
@@ -46,46 +42,46 @@ export default function SocialIcons({ size = "md", tone = "dark", label, classNa
               href={facebook.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={base}
+              className={facebookClass}
               aria-label={socialLinks.facebookAria}
             >
               <FacebookMark size={iconSize} />
             </a>
           </li>
         )}
-        {snapchat &&
-          (snapchat.url ? (
-            <li>
-              <a
-                href={snapchat.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={base}
-                aria-label={socialLinks.snapchatAria}
-              >
-                <SnapchatMark size={iconSize} />
-              </a>
-            </li>
-          ) : (
-            <li>
-              <button
-                ref={snapButtonRef}
-                type="button"
-                onClick={() => setQrOpen(true)}
-                className={base}
-                aria-label={socialLinks.snapchatAria}
-                aria-haspopup="dialog"
-                aria-expanded={qrOpen}
-              >
-                <SnapchatMark size={iconSize} />
-              </button>
-              <SnapchatQrDialog
-                open={qrOpen}
-                onClose={() => setQrOpen(false)}
-                returnFocusRef={snapButtonRef}
-              />
-            </li>
-          ))}
+        {snapchat?.url && (
+          <li className="md:hidden">
+            <a
+              href={snapchat.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={snapchatClass}
+              aria-label={socialLinks.snapchatAria}
+            >
+              <SnapchatMark size={iconSize} />
+            </a>
+          </li>
+        )}
+        {snapchat?.qrImage && (
+          <li className={cx(snapchat.url && "hidden md:block")}>
+            <button
+              ref={snapButtonRef}
+              type="button"
+              onClick={() => setQrOpen(true)}
+              className={snapchatClass}
+              aria-label={socialLinks.snapchatAria}
+              aria-haspopup="dialog"
+              aria-expanded={qrOpen}
+            >
+              <SnapchatMark size={iconSize} />
+            </button>
+            <SnapchatQrDialog
+              open={qrOpen}
+              onClose={() => setQrOpen(false)}
+              returnFocusRef={snapButtonRef}
+            />
+          </li>
+        )}
       </ul>
     </div>
   );
