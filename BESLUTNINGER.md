@@ -70,7 +70,7 @@ reperasjon → reparasjon · amrikanske → amerikanske · rustene → rustne ·
 - Ny tekst er hentet fra `_kilder/INNHOLD-RAATEKST.md` del B. Der del B mangler tekst (detaljseksjonene på /verksted, kundemottak-seksjonen på /om-oss, personvern, ingress på undersider) er teksten satt sammen av kundens egne formuleringer uten nye fakta.
 - Seksjonen «Maskiner og traktor» på /verksted bygger på `verksted7.jpg` (traktor på verkstedgulvet) og vedtektsfestet formål (maskinentreprenør). Teksten har en synlig plassholder: «[Bekreftes av Gjermund: hvilke maskiner dere tar inn]».
 - Facebook-tallet (1 023 liker siden, 31 har vært her) vises i feed-hodet med dato «Tall fra Facebook 22. september 2026». Ingressen sier «Over 1 000».
-- Alle priser, ansatte ut over Gjermund, milepæler etter 2012, produkter, biler til salgs, videoer og anmeldelser er plassholdere i klammer.
+- Alle priser, ansatte ut over Gjermund, milepæler etter 2012, produkter, biler til salgs og anmeldelser er plassholdere i klammer. Videoene er ekte fra 20.10.2026 (se «Ekte videoer fra Facebook»).
 - Personvernteksten er skrevet ut fra den korte bestillingen i del B (ingen sporing, ingen cookies, skjemaer sender kun det brukeren fyller inn, handlekurv i sessionStorage).
 
 ## 6. Seksjonsrytme forsiden
@@ -149,7 +149,7 @@ Etter tiltak: ytelse 90-96 (/, to kjøringer), 94 (/deler), 96 (/kontakt), tilgj
 
 ### Innholdsfilen fra kunden mangler
 
-`_kilder/INNHOLD-FRA-GJERMUND.md` skulle være eneste kilde for nytt innhold i runden (scooterdomenet, Snapchat, Facebook-innlegg, videolenker, nytt hovedbilde). Filen finnes ikke. Etter oppdragets regel er strukturen bygd ferdig, plassholderne beholdt, og ingenting gjettet. Hva som mangler står i STATUS.md.
+`_kilder/INNHOLD-FRA-GJERMUND.md` skulle være eneste kilde for nytt innhold i runden (scooterdomenet, Snapchat, Facebook-innlegg, videolenker, nytt hovedbilde). Filen fantes ikke da runden ble bygd. Etter oppdragets regel ble strukturen bygd ferdig, plassholderne beholdt, og ingenting gjettet. Filen ble opprettet 19.10.2026 med videolenkene (se «Ekte videoer fra Facebook»). Hva som fortsatt mangler står i STATUS.md.
 
 ### Feed
 
@@ -160,7 +160,7 @@ Etter tiltak: ytelse 90-96 (/, to kjøringer), 94 (/deler), 96 (/kontakt), tilgj
 ### Video
 
 - Kilder: `youtube` (youtube-nocookie.com), `facebook` (facebook.com/plugins/video.php med `show_text=false`), `mp4` og `snapchat`. Snapchat kan ikke bygges inn og vises som kort med poster og «Se på Snapchat».
-- Spillerens ramme er alltid 16:9 så siden ikke flytter seg når en stående video (`aspect: "9:16"`) monteres; den sentreres inne i rammen på svart flate.
+- Spillerens ramme har fast forhold så siden ikke flytter seg når video monteres. Liggende video: 16:9. Stående video i hovedspilleren: 4:5 på mobil og 16:9 fra 768 px, med posteren uskarp og dempet bak og selve videoen skarp i en 9:16-kolonne midt i rammen, både før og etter klikk. Stående video i kort og rutenett: 9:16 (erstatter den tidligere regelen om alltid 16:9, som ga en smal stripe på mobil).
 - Ingen eksterne miniatyrer lastes før klikk. Den gamle YouTube-miniatyr-fallbacken (i.ytimg.com) er fjernet; poster må være et lokalt bilde.
 - Varighet og dato vises bare når de er kjent (`null` skjules), så ingenting gjettes.
 - Hero-bildet på `/video` er `fasade-dag-bilpark` (31 kB på 800 px). Første valg, firmabilen, veide 101 kB og ga Lighthouse 87; byttet ga 90.
@@ -257,3 +257,12 @@ Boksen «Kustom Speedshop i Alta» var en hvit tekstboks. Den er byttet med et e
 | Undertekst (12-13 px) | `brand-text-inverse` | 12,66:1 | 12,49:1 | 14,51:1 | bestått |
 
 - QA: build og lint rene. axe-core på `/` ved 375 og 1440 px: 0 funn. Lighthouse mobil på `/` mot `npm run preview`, to kjøringer: ytelse 90, tilgjengelighet 100, beste praksis 100, LCP 3,5 s, CLS 0, TBT 60 ms (SEO 69 skyldes `noindex`). Ingen konsollfeil og ingen horisontal overflow på 375, 1024, 1280 og 1440 px. Skjermbilder: `docs/qa/skjermbilder/runde-2/hero-emblem-{375,1024,1440}.png`.
+
+## Ekte videoer fra Facebook (20.10.2026)
+
+- Kilde: seks reel-lenker i `_kilder/INNHOLD-FRA-GJERMUND.md`, kopiert fra facebook.com/GtMaskinas/reels/ 19.10.2026. Lagt inn i `src/data/videos.js` i samme rekkefølge, første lenke er `featured`. De fire plassholderne er fjernet.
+- Kunden har ikke sendt titler, beskrivelser, datoer eller varigheter, så ingenting av dette er laget. Tittelen «Video fra GT Maskin» nummerert 1-6 brukes bare der komponentene trenger tekst (spilleliste, aria-label, iframe-title). `date` og `duration` er null og skjules.
+- Poster: eksisterende bilder fra manifestet (kobber cabriolet, V8-motor, gul Camaro, rød Impala, traktor, Mustang). Byttes når kunden sender stillbilder fra hver video.
+- Reel-lenker (`facebook.com/reel/<id>`) spiller ikke i `plugins/video.php`. `src` i dataene er den fulle reel-lenken, og `VideoPlayer` skriver den om til `facebook.com/GtMaskinas/videos/<id>/` ved montering. Handlen leses fra `channels.js`, ikke hardkodet. Fortsatt ingen eksterne kall før klikk (verifisert: null forespørsler utenfor localhost før play, deretter facebook.com og fbcdn.net).
+- Rutenettet «Flere videoer» på `/video` bruker stående kort i 2 / 3 / 5 kolonner (375 / 640 / 1024 px) når alle videoene er 9:16, ellers det gamle 1 / 2 / 3-rutenettet. Spillelistekortene på forsiden er gjort kompakte (96×60 px miniatyr) så fem kort fyller omtrent samme høyde som spilleren på desktop.
+- QA i headless Chrome mot `npm run preview`, 375 og 1440 px: axe-core 0 funn på `/` og `/video`, ingen horisontal overflow, ingen konsollfeil. Avspilling: etter klikk på play monteres pluginen og videoen (720×1280) lastes; i headless krevde pluginen ett klikk til før `currentTime` gikk fra 0 til 3,9 og videre til 6,9 sekunder. Skjermbilder i `docs/qa/skjermbilder/video/`.

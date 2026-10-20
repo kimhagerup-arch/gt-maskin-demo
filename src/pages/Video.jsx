@@ -7,12 +7,15 @@ import VideoPlayer from "../components/VideoPlayer";
 import { seo, videoSection } from "../data/siteContent";
 import { videos } from "../data/videos";
 import { useSeoMeta } from "../hooks/useSeoMeta";
+import { cx } from "../lib/format";
 
 export default function Video() {
   useSeoMeta(seo.video);
   const t = videoSection.page;
   const featured = videos.find((v) => v.featured) || videos[0];
   const rest = videos.filter((v) => v.id !== featured?.id);
+  const portraitGrid = rest.length > 0 && rest.every((v) => v.aspect === "9:16");
+  const columns = portraitGrid ? 5 : 3;
 
   return (
     <>
@@ -40,12 +43,28 @@ export default function Video() {
         <section className="section-pad border-t border-brand-border-dark bg-brand-primary-dark text-brand-text-inverse">
           <div className="container-site flex flex-col gap-8 md:gap-10">
             <SectionHeader kicker={t.kicker} title={t.gridTitle} />
-            <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+            <ul
+              className={cx(
+                "grid gap-3 md:gap-6",
+                portraitGrid
+                  ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
+                  : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+              )}
+            >
               {rest.map((video, i) => (
-                <Reveal as="li" key={video.id} delay={(i % 3) * 60} className="flex flex-col gap-3">
+                <Reveal
+                  as="li"
+                  key={video.id}
+                  delay={(i % columns) * 60}
+                  className="flex flex-col gap-3"
+                >
                   <VideoPlayer
                     video={video}
-                    sizes="(min-width: 1024px) 384px, (min-width: 768px) 50vw, 100vw"
+                    sizes={
+                      portraitGrid
+                        ? "(min-width: 1280px) 230px, (min-width: 640px) 33vw, 50vw"
+                        : "(min-width: 1024px) 384px, (min-width: 768px) 50vw, 100vw"
+                    }
                   />
                   <VideoMeta video={video} />
                 </Reveal>

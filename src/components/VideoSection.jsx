@@ -8,7 +8,11 @@ import SectionHeader from "./SectionHeader";
 import VideoMeta from "./VideoMeta";
 import VideoPlayer from "./VideoPlayer";
 
-/** Forsidens videoseksjon: stor spiller og spilleliste. Spilleren byttes ved valg. */
+/**
+ * Forsidens videoseksjon: stor spiller og spilleliste. Spilleren byttes ved valg.
+ * Spillelistekortene er kompakte (60 px miniatyr) så fem kort fyller omtrent
+ * samme høyde som 16:9-spilleren på desktop.
+ */
 export default function VideoSection({ videos = [], id = "video" }) {
   const initial = videos.find((v) => v.featured) || videos[0];
   const [activeId, setActiveId] = useState(initial?.id);
@@ -66,15 +70,15 @@ export default function VideoSection({ videos = [], id = "video" }) {
                   key={video.id}
                   type="button"
                   onClick={() => setActiveId(video.id)}
-                  className="flex min-w-0 flex-1 items-center gap-3.5 overflow-hidden border border-brand-border-dark bg-brand-primary-light p-3 text-left transition-colors hover:border-brand-accent-light md:p-4"
+                  className="flex min-w-0 flex-1 items-center gap-3.5 overflow-hidden border border-brand-border-dark bg-brand-primary-light p-3 text-left transition-colors hover:border-brand-accent-light"
                 >
-                  <span className="relative h-[72px] w-[112px] shrink-0 overflow-hidden bg-brand-primary-soft bg-stripes-dark">
+                  <span className="relative h-[60px] w-24 shrink-0 overflow-hidden bg-brand-primary-soft bg-stripes-dark">
                     {thumb && (
                       <img
                         src={thumb.smallest}
                         alt=""
-                        width={112}
-                        height={72}
+                        width={96}
+                        height={60}
                         loading="lazy"
                         decoding="async"
                         className="h-full w-full object-cover opacity-80"

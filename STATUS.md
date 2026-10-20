@@ -1,10 +1,12 @@
 # STATUS
 
-Sist oppdatert: 19.10.2026. Branch `dev`. `npm run build` og `npm run lint` er rene. Alle ruter verifisert i headless Chrome på 375, 768, 1024 og 1440 px uten konsollfeil og uten horisontal overflow. axe-core: 0 funn. Lighthouse mobil: ytelse 90-93, tilgjengelighet 100, beste praksis 100, CLS 0. Se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 2».
+Sist oppdatert: 20.10.2026. Branch `dev`. `npm run build` og `npm run lint` er rene. Alle ruter verifisert i headless Chrome på 375, 768, 1024 og 1440 px uten konsollfeil og uten horisontal overflow. axe-core: 0 funn. Lighthouse mobil: ytelse 90-93, tilgjengelighet 100, beste praksis 100, CLS 0. Se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 2».
 
 **Demoen er klar til å vises.** Et tynt, lukkbart utkastbanner øverst forteller at tekst i klammer fylles inn sammen med kunden.
 
 Rask retting 07.10.2026 (tre commits etter runde 2): telefonnummeret vises som «+47 911 14 628» overalt; Facebook og Snapchat ligger som ikonknapper i header (fra 1024 px), mobilmeny og hero, der Snapchat åpner en QR-dialog til brukernavnet er kjent; safari-banneret på forsiden og `/utleie` har fjellbakgrunn og tre animerte snøscootere (pauses utenfor viewport, én stille scooter ved redusert bevegelse). **Før go-live**: bytt den frilagte produsent-scooteren (`ac-profil.jpg`, kun demo) med GT Maskins egne scootere, og sjekk lisensen på bakgrunnsbildet `Mountain_scootering_Finnmark.jpg` og fyll inn kreditlinjen «Foto: [Fotograf, lisens]». Se BESLUTNINGER.md og BILDELISTE.md.
+
+Ekte videoer 20.10.2026: de seks Facebook-reelene fra `_kilder/INNHOLD-FRA-GJERMUND.md` ligger i `src/data/videos.js` og spiller i spilleren på forsiden og `/video` (verifisert avspilling i headless Chrome). Stående video vises i 9:16-kolonne med uskarp poster bak i hovedspilleren, og som stående kort i rutenettet. Build, lint og axe (0 funn) rene på 375 og 1440 px. Skjermbilder i `docs/qa/skjermbilder/video/`. Titler, stillbilder og datoer for videoene mangler fortsatt fra kunden.
 
 Rask designretting 08.10.2026: boksen «Kustom Speedshop i Alta» i hero er byttet med et kustom-emblem (mørkt skilt med dobbel kant, nagler, egen pinstriping i SVG, «Kustom» i selvhostet Yellowtail). Kontrast AA på all tekst, axe 0 funn, Lighthouse mobil 90 og CLS 0 på forsiden. Se BESLUTNINGER.md, seksjon «Rask designretting (08.10.2026)».
 
@@ -16,14 +18,14 @@ Demoen ble pushet til GitHub og deployet på Vercel 8. oktober 2026 (gjort av Ki
 - Live: https://gt-maskin-demo.vercel.app
 - `X-Robots-Tag: noindex` fra `vercel.json` er verifisert på den live siden. Fjernes først ved go-live på gtmaskin.com.
 
-## Viktig: innholdsfilen fra kunden mangler
+## Viktig: innhold som fortsatt mangler fra kunden
 
-Runde 2 skulle hente nytt innhold fra `_kilder/INNHOLD-FRA-GJERMUND.md` (scooterdomenet, Snapchat-brukernavn, Facebook-innlegg, videolenker, eventuelt nytt hovedbilde og hero-video). Filen finnes ikke i repoet. Strukturen for alt dette er bygd ferdig, men innholdet står som plassholdere:
+Runde 2 skulle hente nytt innhold fra `_kilder/INNHOLD-FRA-GJERMUND.md` (scooterdomenet, Snapchat-brukernavn, Facebook-innlegg, videolenker, eventuelt nytt hovedbilde og hero-video). Filen ble opprettet 19.10.2026 og inneholder foreløpig bare videolenkene (lagt inn 20.10.2026). Strukturen for resten er bygd ferdig, men innholdet står som plassholdere:
 
 | Mangler | Plassholder nå | Legges inn slik |
 |---|---|---|
 | Ekte Facebook-innlegg (dato, tekst, permalenke, bilde) | 6 plassholderkort med ekte verkstedbilder bak | Bilde i `assets-raw/`, `PHOTOS` i `scripts/prepare-images.mjs` med mappe `feed`, objekt i `src/data/socialFeed.js`. Ved minst 3 ekte innlegg forsvinner plassholderkortene av seg selv |
-| Videolenker (Facebook, YouTube, Snapchat) | 4 plassholdere med play deaktivert | `src/data/videos.js`: `source`, `src`, `aspect`, lokal `poster`. Spilleren er testet mot ekte lenker |
+| Titler, stillbilder og datoer for de seks videoene | Tittel «Video fra GT Maskin 1-6», eksisterende verkstedbilder som poster, dato og varighet skjult | `src/data/videos.js`: `title`, `poster` (nytt bilde via `PHOTOS` i `scripts/prepare-images.mjs`), `date`, `duration` |
 | Snapchat-brukernavn og profiltype | Kun QR-kode, ingen lenke, tekst «[Snapchat-brukernavn bekreftes av Gjermund]» | `src/data/channels.js`: `username`, `profileType`, `url: https://www.snapchat.com/add/<brukernavn>` |
 | Hva som ligger på scooterdomenet | Variant B valgt: utleie samlet på `/utleie` med forespørselsskjema, domenet nevnes ikke | Hvis domenet har et bookingsystem kunden vil beholde: legg lenken tilbake i `src/data/rental.js` og `companyFacts.js` (variant A) |
 | Nytt hovedbilde til hero | `herobilde-fasade.jpg` valgt etter sammenligning på 1440 px / 2x | Nytt bilde i `assets-raw/`, `PHOTOS`, `hero.image` i `siteContent.js`, preload i `index.html` |
@@ -51,12 +53,12 @@ Runde 2 skulle hente nytt innhold fra `_kilder/INNHOLD-FRA-GJERMUND.md` (scooter
 
 Felles: utkastbanner (lukkes, husket i sessionStorage), sticky header med «Butikk» og «Video» i menyen, mobilmeny, sticky mobil-CTA som skjules ved alle skjemaer, footer med lenkekolonner og kanalknapper (Facebook, Messenger, Snapchat med QR), «Levert av KOVISION».
 
-Teknisk: som runde 1, pluss `VideoPlayer` (YouTube via youtube-nocookie, Facebook via plugins/video.php, mp4, Snapchat som lenke ut, alt først ved klikk), `SocialLinks`, `IconField`, `Placeholder` med felles stil, `HeroPreload` (preloader undersidens hero-bilde fra hovedchunken), `useHideStickyBar`, handlekurv nøklet på slug + størrelse.
+Teknisk: som runde 1, pluss `VideoPlayer` (YouTube via youtube-nocookie, Facebook via plugins/video.php der reel-lenker skrives om til `/GtMaskinas/videos/<id>/`, mp4, Snapchat som lenke ut, alt først ved klikk, stående video i 9:16-kolonne med uskarp poster bak), `SocialLinks`, `IconField`, `Placeholder` med felles stil, `HeroPreload` (preloader undersidens hero-bilde fra hovedchunken), `useHideStickyBar`, handlekurv nøklet på slug + størrelse.
 
 ## Plassholdere og mock
 
 - Feed: 6 kort merket PLASSHOLDER. Ingen ekte innlegg (se tabellen over).
-- Video: 4 plassholdere, play deaktivert til `src` settes. Kilder støttet: facebook, youtube, mp4, snapchat.
+- Video: 6 ekte Facebook-reels, ikke plassholdere. Titler er nummerert og posterne er eksisterende bilder til kunden sender titler og stillbilder. Kilder støttet: facebook (også reel-lenker), youtube, mp4, snapchat.
 - Biler til salgs: `cars` er tom. To eksempelkort merket PLASSHOLDER i seksjonen «Slik presenteres bilene».
 - Produkter: 8 deler og 4 klær og utstyr, alle plassholdere med pris «[PRIS]». Klær har `sizes: []` (størrelser bekreftes).
 - Utleie: priser «[PRIS]» og «[vilkår]». ATV og vanlig tilhenger har ikke bilde (ikonfelt).
@@ -69,7 +71,7 @@ Teknisk: som runde 1, pluss `VideoPlayer` (YouTube via youtube-nocookie, Faceboo
 
 ## KOVISION må gjøre manuelt
 
-1. Skaffe `_kilder/INNHOLD-FRA-GJERMUND.md` eller tilsvarende fra Gjermund, og legge inn innholdet i tabellen øverst.
+1. Få resten av innholdet fra Gjermund inn i `_kilder/INNHOLD-FRA-GJERMUND.md` og legge det inn etter tabellen øverst. For videoene: titler, et stillbilde per video og gjerne dato.
 2. Avklare årstall med Gjermund: logoen viser «2008», selskapet er stiftet 2012.
 3. Få bekreftet utleiepriser og vilkår (prisene fra 2022 er ikke brukt).
 4. Få liste over biler til salgs med bilder, og avklare om bil1-3 er til salgs. Når første bil legges i `cars`, forsvinner eksempelkortene.
