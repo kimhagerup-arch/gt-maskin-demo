@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { safari } from "../data/rental";
+import { rentalBanner } from "../data/rental";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { cx } from "../lib/format";
 import { getImage } from "../lib/images";
 import Button from "./Button";
-import Picture from "./Picture";
 
 /** Tre scootere i kolonne: størrelse, høyde over bunnen, forsinkelse og varighet. */
 const SLEDS = [
@@ -32,16 +31,18 @@ const SLEDS = [
 ];
 
 /**
- * Safari-banner med fjellbakgrunn og tre snøscootere som kjører over snøflaten.
- * Kun transform og opacity animeres. Animasjonen kjører bare mens banneret er i
- * viewport, og ved prefers-reduced-motion står én scooter stille. Scooterne er
+ * Utleiebanner: egen SVG-illustrasjon av fjell og vidde bak, tre snøscootere
+ * som kjører over snøflaten foran. Kun transform og opacity animeres.
+ * Animasjonen kjører bare mens banneret er i viewport, og ved
+ * prefers-reduced-motion står én scooter stille. Scooterne og bakgrunnen er
  * dekor (alt="" og aria-hidden), teksten og knappen ligger over.
+ * `cta`: { label, to } eller { label, href }.
  */
-export default function SafariBanner() {
+export default function RentalBanner({ cta }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const [inView, setInView] = useState(false);
-  const sled = getImage(safari.sledImage);
+  const sled = getImage(rentalBanner.sledImage);
 
   useEffect(() => {
     const el = ref.current;
@@ -62,18 +63,20 @@ export default function SafariBanner() {
   return (
     <div
       ref={ref}
-      data-safari
+      data-rental-banner
       className="relative isolate min-h-[300px] overflow-hidden border border-brand-border-dark bg-brand-primary text-brand-text-inverse md:min-h-[320px]"
     >
-      {/* Bakgrunn */}
+      {/* Bakgrunn: SVG-illustrasjon, skalerer uten forvrengning */}
       <div className="absolute inset-0" aria-hidden="true">
-        <Picture
-          src={safari.image}
+        <img
+          src={rentalBanner.image}
           alt=""
-          sizes="(min-width: 1280px) 1200px, 100vw"
-          className="h-full w-full"
-          imgClassName="h-full w-full object-cover"
-          objectPosition="50% 62%"
+          width={1600}
+          height={640}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+          className="h-full w-full object-cover object-[50%_70%]"
         />
         <div className="absolute inset-0 bg-brand-primary/80 md:bg-transparent md:bg-gradient-to-r md:from-brand-primary/95 md:via-brand-primary/70 md:to-brand-primary/5" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-brand-primary/50 to-transparent" />
@@ -86,21 +89,21 @@ export default function SafariBanner() {
             <div
               key={s.id}
               className={cx(
-                "safari-lane absolute inset-x-0",
+                "scooter-lane absolute inset-x-0",
                 s.bottom,
-                reduced && "safari-lane-static",
+                reduced && "scooter-lane-static",
                 running && "is-running",
               )}
               style={{ animationDelay: s.delay, animationDuration: s.duration, zIndex: 3 - i }}
             >
               <div
-                className={cx("safari-sled relative", s.width)}
+                className={cx("scooter-sled relative", s.width)}
                 style={{ animationDelay: s.delay }}
               >
-                <span className="safari-shadow absolute -bottom-1 left-[8%] right-[8%] h-3 rounded-[50%] bg-brand-primary/60 blur-[5px]" />
+                <span className="absolute -bottom-1 left-[8%] right-[8%] h-3 rounded-[50%] bg-brand-primary/60 blur-[5px]" />
                 <span
                   className={cx(
-                    "safari-snow absolute -left-[10%] bottom-[2%] h-[30%] w-[28%] rounded-[50%] bg-brand-bg/45 blur-[6px]",
+                    "scooter-snow absolute -left-[10%] bottom-[2%] h-[30%] w-[28%] rounded-[50%] bg-brand-bg/45 blur-[6px]",
                     running && "is-running",
                   )}
                   style={{ animationDelay: s.delay }}
@@ -108,12 +111,12 @@ export default function SafariBanner() {
                 <picture className="relative block">
                   <source
                     type="image/webp"
-                    srcSet={`${safari.sledImage}-400.webp 400w, ${safari.sledImage}-800.webp 800w`}
+                    srcSet={`${rentalBanner.sledImage}-400.webp 400w, ${rentalBanner.sledImage}-800.webp 800w`}
                     sizes="210px"
                   />
                   <img
-                    src={`${safari.sledImage}-400.png`}
-                    srcSet={`${safari.sledImage}-400.png 400w, ${safari.sledImage}-800.png 800w`}
+                    src={`${rentalBanner.sledImage}-400.png`}
+                    srcSet={`${rentalBanner.sledImage}-400.png 400w, ${rentalBanner.sledImage}-800.png 800w`}
                     sizes="210px"
                     width={sled.width}
                     height={sled.height}
@@ -132,25 +135,18 @@ export default function SafariBanner() {
 
       {/* Innhold */}
       <div className="relative z-10 flex max-w-xl flex-col gap-4 px-6 pb-32 pt-8 md:px-10 md:py-12">
-        <p className="kicker text-brand-accent-light">{safari.kicker}</p>
-        <h3 className="font-display text-4xl tracking-wide md:text-5xl">{safari.title}</h3>
+        <p className="kicker text-brand-accent-light">{rentalBanner.kicker}</p>
+        <h3 className="font-display text-4xl tracking-wide md:text-5xl">{rentalBanner.title}</h3>
         <p
-          data-safari-text
+          data-rental-banner-text
           className="max-w-md text-base leading-relaxed text-brand-text-inverse md:text-[17px]"
         >
-          {safari.text}
+          {rentalBanner.text}
         </p>
-        <Button href={safari.url} external arrow size="sm" className="self-start">
-          {safari.ctaLabel}
+        <Button to={cta.to} href={cta.href} arrow size="sm" className="self-start">
+          {cta.label}
         </Button>
       </div>
-
-      <p
-        data-safari-credit
-        className="absolute bottom-2 right-3 z-10 bg-brand-primary px-2 py-0.5 text-[11px] text-brand-text-inverse"
-      >
-        {safari.credit}
-      </p>
     </div>
   );
 }

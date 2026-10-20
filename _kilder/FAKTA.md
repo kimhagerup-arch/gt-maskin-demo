@@ -26,7 +26,7 @@ Verifisert 22.09.2026 mot proff.no, utdanning.no, 1881.no, 180.no, gulesider.no,
 - Facebook: https://www.facebook.com/GtMaskinas (snippet: «1,023 likes · 31 were here»). Skriv «over 1 000 liker siden» eller vis tallet i `channels.js` merket med dato.
 - Dagens nettside: https://www.gtmaskin.com
 - Utleie: https://www.snoscooterutleie.com
-- Snøscootersafari: https://www.norsemantrail.com
+- Snøscootersafari (norsemantrail.com): avsluttet. GT Maskin slutter med snøscootersafari, opplyst 20.10.2026. Nevnes ikke på siden. Utleien fortsetter.
 
 ## Tjenester (fra kundens egne tekster)
 
@@ -36,7 +36,7 @@ Verifisert 22.09.2026 mot proff.no, utdanning.no, 1881.no, 180.no, gulesider.no,
 - Alt fra gamle veteranbiler til nye bruksbiler.
 - Biler til salgs: «til tider veldig fine biler stående inne i butikk/kundemottak».
 - Utleie av snøscootere, ATV, tilhenger og biltransporthenger. Snøscooterutleie gjennom hele scootersesongen.
-- Snøscootersafari om vinteren (Norseman Trail).
+- Snøscootersafari: avsluttet (opplyst 20.10.2026), skal ikke nevnes.
 
 ## Omtale fra tredjepart
 

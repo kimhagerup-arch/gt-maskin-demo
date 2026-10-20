@@ -3,9 +3,9 @@ import Icon from "../components/Icon";
 import IconField from "../components/IconField";
 import PageHero from "../components/PageHero";
 import Picture from "../components/Picture";
+import RentalBanner from "../components/RentalBanner";
 import RentalForm from "../components/RentalForm";
 import Reveal from "../components/Reveal";
-import SafariBanner from "../components/SafariBanner";
 import { rental } from "../data/rental";
 import { rentalSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
@@ -13,7 +13,7 @@ import { cx, formatPrice } from "../lib/format";
 
 /**
  * Samlesiden for utleie: snøscooter 60 og 120 hk, ATV, tilhenger og
- * biltransporthenger, safari (norsemantrail.com) og utleieforespørsel.
+ * biltransporthenger, utleiebanner og utleieforespørsel.
  */
 export default function Utleie() {
   useSeoMeta(seo.utleie);
@@ -128,10 +128,10 @@ export default function Utleie() {
         </div>
       </section>
 
-      {/* Safari */}
+      {/* Utleiebanner */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
         <div className="container-site flex flex-col gap-6">
-          <SafariBanner />
+          <RentalBanner cta={{ label: rentalSection.bookLabel, href: formHref }} />
         </div>
       </section>
 

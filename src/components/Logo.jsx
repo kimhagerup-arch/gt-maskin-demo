@@ -52,8 +52,9 @@ export default function Logo({ size = "md", showTagline = true, className, linkC
       <span className="flex flex-col gap-0.5 leading-none md:gap-1">
         <span className={cx("font-display leading-none", wordmark)}>{companyFacts.wordmark}</span>
         {showTagline && (
-          <span className="text-[9px] font-semibold tracking-[0.25em] text-brand-muted-inverse md:text-[11px]">
-            {companyFacts.tagline}
+          <span className="whitespace-nowrap text-[9px] font-semibold tracking-[0.15em] text-brand-muted-inverse sm:tracking-[0.25em] md:text-[11px]">
+            {companyFacts.taglineParts[0]}
+            <span className="hidden xs:inline"> · {companyFacts.taglineParts[1]}</span>
           </span>
         )}
       </span>

@@ -9,9 +9,9 @@ import HomeHero from "../components/HomeHero";
 import Icon from "../components/Icon";
 import Picture from "../components/Picture";
 import ProductCard from "../components/ProductCard";
+import RentalBanner from "../components/RentalBanner";
 import RentalCard from "../components/RentalCard";
 import Reveal from "../components/Reveal";
-import SafariBanner from "../components/SafariBanner";
 import SectionHeader from "../components/SectionHeader";
 import ServiceCards from "../components/ServiceCards";
 import SocialFeed from "../components/SocialFeed";
@@ -21,7 +21,7 @@ import { brands } from "../data/brands";
 import { cars } from "../data/cars";
 import { channels } from "../data/channels";
 import { products } from "../data/products";
-import { rental } from "../data/rental";
+import { rental, rentalBanner } from "../data/rental";
 import {
   aboutSection,
   carsSection,
@@ -187,7 +187,7 @@ export default function Home() {
               </Reveal>
             ))}
           </ul>
-          <SafariBanner />
+          <RentalBanner cta={rentalBanner.ctaHome} />
         </div>
       </section>
 

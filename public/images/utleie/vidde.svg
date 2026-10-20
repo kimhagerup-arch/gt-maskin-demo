@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" preserveAspectRatio="xMidYMid slice" role="img" aria-label="">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#55657a"/>
+      <stop offset="0.55" stop-color="#8d9bab"/>
+      <stop offset="1" stop-color="#b7c1ca"/>
+    </linearGradient>
+    <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b7c1ca" stop-opacity="0"/>
+      <stop offset="1" stop-color="#b7c1ca" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="plain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6eaed"/>
+      <stop offset="0.5" stop-color="#d3d9df"/>
+      <stop offset="1" stop-color="#bfc7ce"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dfe5ea" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#dfe5ea" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Himmel -->
+  <rect width="1600" height="640" fill="url(#sky)"/>
+  <ellipse cx="1180" cy="150" rx="320" ry="80" fill="#c9d2da" opacity="0.07"/>
+  <ellipse cx="420" cy="110" rx="380" ry="60" fill="#c9d2da" opacity="0.05"/>
+
+  <!-- Fjernt fjell -->
+  <path fill="#8c98a6" d="M0 392 L110 338 L190 356 L300 302 L390 334 L470 318 L560 352 L660 296 L760 340 L850 322 L960 358 L1060 300 L1150 332 L1250 312 L1350 350 L1450 316 L1520 340 L1600 318 L1600 640 L0 640 Z"/>
+  <rect y="300" width="1600" height="120" fill="url(#haze)"/>
+
+  <!-- Midtre fjell -->
+  <path fill="#69768a" d="M0 452 L90 406 L170 430 L280 378 L380 424 L460 402 L560 446 L680 386 L790 436 L880 414 L990 452 L1100 396 L1190 432 L1290 406 L1400 450 L1500 412 L1600 440 L1600 640 L0 640 Z"/>
+  <path fill="url(#face)" d="M280 378 L380 424 L300 430 Z M680 386 L790 436 L700 440 Z M1100 396 L1190 432 L1120 436 Z M1500 412 L1600 440 L1520 442 Z"/>
+
+  <!-- Nært fjell -->
+  <path fill="#4d5867" d="M0 506 L130 462 L240 488 L360 440 L470 482 L580 456 L700 500 L820 452 L940 490 L1040 466 L1160 504 L1280 460 L1390 494 L1480 472 L1600 508 L1600 640 L0 640 Z"/>
+  <path fill="url(#face)" d="M360 440 L470 482 L372 490 Z M820 452 L940 490 L830 496 Z M1280 460 L1390 494 L1290 500 Z"/>
+
+  <!-- Vidda -->
+  <path fill="url(#plain)" d="M0 520 C 260 508, 540 526, 800 516 C 1060 506, 1340 522, 1600 512 L1600 640 L0 640 Z"/>
+  <path fill="#f1f4f6" opacity="0.55" d="M0 548 C 300 538, 520 556, 820 544 C 1100 534, 1300 552, 1600 540 L1600 552 C 1300 564, 1100 546, 820 556 C 520 568, 300 550, 0 560 Z"/>
+  <path fill="#aeb8c1" opacity="0.35" d="M0 586 C 240 578, 480 596, 760 586 C 1040 576, 1320 594, 1600 582 L1600 592 C 1320 604, 1040 586, 760 596 C 480 606, 240 588, 0 596 Z"/>
+  <ellipse cx="340" cy="612" rx="220" ry="9" fill="#f3f5f7" opacity="0.5"/>
+  <ellipse cx="1120" cy="620" rx="260" ry="10" fill="#f3f5f7" opacity="0.45"/>
+  <ellipse cx="760" cy="570" rx="150" ry="6" fill="#aeb8c1" opacity="0.3"/>
+</svg>

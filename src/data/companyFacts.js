@@ -4,6 +4,8 @@ export const companyFacts = {
   shortName: "GT Maskin",
   wordmark: "GT MASKIN",
   tagline: "KUSTOM SPEEDSHOP · ALTA",
+  // Under 380 px vises bare første del i header, så undertittelen holder én linje.
+  taglineParts: ["KUSTOM SPEEDSHOP", "ALTA"],
   descriptor: "Kustom Speedshop",
   orgNr: "997 864 239",
   founded: 2012,
@@ -35,8 +37,6 @@ export const companyFacts = {
   links: {
     facebook: "https://www.facebook.com/GtMaskinas",
     website: "https://www.gtmaskin.com",
-    safari: "https://www.norsemantrail.com",
-    safariLabel: "norsemantrail.com",
     kovision: "https://kovision.no",
   },
   approvals: ["Godkjent bilverksted", "Godkjent lærebedrift"],

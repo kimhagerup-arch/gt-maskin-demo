@@ -55,9 +55,9 @@ export const services = [
   {
     slug: "utleie",
     icon: "Snowflake",
-    title: "Utleie og safari",
-    text: "Snøscooter, ATV, tilhenger og biltransporthenger. Guidet snøscootersafari gjennom hele vintersesongen.",
-    short: "Snøscooter, ATV, tilhenger og safari.",
+    title: "Utleie",
+    text: "Snøscooter, ATV, tilhenger og biltransporthenger. Snøscooterutleie gjennom hele scootersesongen.",
+    short: "Snøscooter, ATV, tilhenger og biltransporthenger.",
     to: "/utleie",
     image: "/images/utleie/snoscootere-oppstilt",
     imageAlt: "Snøscootere oppstilt i snøen",

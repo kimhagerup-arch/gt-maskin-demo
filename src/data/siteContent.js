@@ -37,7 +37,7 @@ export const seo = {
   utleie: {
     title: "Snøscooterutleie, ATV og henger i Alta | GT Maskin AS",
     description:
-      "Leie av snøscooter, ATV, tilhenger og biltransporthenger i Alta. Snøscootersafari om vinteren.",
+      "Leie av snøscooter, ATV, tilhenger og biltransporthenger i Alta. Snøscooterutleie gjennom hele scootersesongen.",
   },
   omOss: {
     title: "Om GT Maskin AS, Kustom Speedshop i Alta siden 2012",
@@ -350,7 +350,7 @@ export const rentalSection = {
     title: "Snøscooter, ATV og henger",
     lead: "Vi driver med utleie av snøscootere, ATV, tilhenger og biltransporthenger. Snøscooterutleie gjennom hele scootersesongen. Send en forespørsel med datoer, så bekrefter vi pris og tilgjengelighet.",
     heroImage: "/images/utleie/snoscootere-oppstilt",
-    heroAlt: "Snøscootere oppstilt i snøen foran Norseman Trail-hengeren",
+    heroAlt: "Snøscootere oppstilt i snøen foran en henger",
     shortcutsLabel: "Snarveier",
     priceNote: "Priser og vilkår er ikke lagt inn ennå og bekreftes når du sender forespørsel.",
   },
@@ -571,7 +571,6 @@ export const footer = {
         { label: "Snøscooter", to: "/utleie#scooter-60" },
         { label: "ATV og henger", to: "/utleie#atv" },
         { label: "Utleieforespørsel", to: "/utleie#utleieforesporsel" },
-        { label: "Snøscootersafari", href: "https://www.norsemantrail.com" },
       ],
     },
     {
