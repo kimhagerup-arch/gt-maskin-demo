@@ -79,6 +79,13 @@
   --brand-border-dark: 46 43 39; /* #2E2B27 */
   --brand-border-dark-strong: 58 54 49; /* #3A3631 */
   --brand-outline: 74 70 63; /* #4A463F */
+
+  /* Kanalfarger. Merkene farges ikke om: Facebook-blått med hvitt merke,
+     Snapchat-gult med hvitt spøkelse i svart kontur. */
+  --brand-facebook: 8 102 255; /* #0866FF */
+  --brand-on-facebook: 255 255 255; /* #FFFFFF */
+  --brand-snapchat: 255 252 0; /* #FFFC00 */
+  --brand-on-snapchat: 0 0 0; /* #000000 */
 }
 
 @layer base {
@@ -177,6 +184,24 @@
 
   .link-underline {
     @apply inline-flex items-center gap-2.5 border-b-2 pb-1 font-bold transition-colors duration-150;
+  }
+
+  /* Hovedspilleren for stående video: høyden styrer, bredden følger 9:16.
+     Mobil: maks 70 % av skjermhøyden, så sticky-linjen aldri dekker play.
+     Desktop: maks 640 px og aldri høyere enn skjermen minus header og luft. */
+  .player-portrait {
+    height: min(70vh, calc((100vw - 3rem) * 16 / 9));
+    height: min(70svh, calc((100vw - 3rem) * 16 / 9));
+  }
+  @screen md {
+    .player-portrait {
+      height: min(640px, calc(100vh - 136px));
+      height: min(640px, calc(100svh - 136px));
+    }
+    .player-landscape {
+      max-height: min(640px, calc(100vh - 136px));
+      max-height: min(640px, calc(100svh - 136px));
+    }
   }
 }
 

@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+      screens: {
+        xs: "380px",
+      },
       colors: {
         brand: {
           primary: "rgb(var(--brand-primary) / <alpha-value>)",
@@ -27,6 +30,10 @@ export default {
           "border-dark-strong": "rgb(var(--brand-border-dark-strong) / <alpha-value>)",
           outline: "rgb(var(--brand-outline) / <alpha-value>)",
           footer: "rgb(var(--brand-footer) / <alpha-value>)",
+          facebook: "rgb(var(--brand-facebook) / <alpha-value>)",
+          "on-facebook": "rgb(var(--brand-on-facebook) / <alpha-value>)",
+          snapchat: "rgb(var(--brand-snapchat) / <alpha-value>)",
+          "on-snapchat": "rgb(var(--brand-on-snapchat) / <alpha-value>)",
         },
         kovision: {
           cyan: "#22d3c8",
