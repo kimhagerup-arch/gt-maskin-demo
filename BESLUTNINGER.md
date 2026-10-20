@@ -107,7 +107,7 @@ Kritisk gjennomgang av innhold, bilder, visuelt, tilgjengelighet og ytelse. Full
 ### Innhold mot kildene
 
 - Alle datafiler i `src/data/` er lest mot `FAKTA.md` og del B. Tall, navn, adresse, åpningstider, telefon, e-post og lenker finnes i kildene. Følgende var egne formuleringer og er strammet inn:
-  - `/om-oss`, kundemottaket: «bygd av entusiaster, for entusiaster» og «som regel en fin bil eller to» er byttet til kundens ord: «innbydende og kreativt» og «til tider svært fine biler».
+  - `/om-oss`, kundemottaket: «bygd av entusiaster, for entusiaster» og «som regel en fin bil eller to» er byttet til kundens ord: «innbydende og kreativt» og «til tider svært fine biler». (Endret igjen 21.10.2026, se «Om oss med Gjermunds egne ord».)
   - `/biler-til-salgs`, CTA-tekst: «vi skaffer deler og tar service på bilen du kjøper» er fjernet (påstand kunden ikke har kommet med). Nå: «Ta kontakt, vi vet hva som er på vei inn.»
   - Hardkodede strenger i JSX («Les mer», «Lager», «Folkene bak GT Maskin», CTA på om oss, valideringsmelding i kassen) er flyttet til `siteContent.js`.
 - Årstall: logoen viser 2008, selskapet er stiftet 2012. Til Gjermund har svart: hero-kicker er «Godkjent bilverksted · Alta», boksen i hero er «Kustom Speedshop i Alta», faktaboksen er «2012 / GT Maskin AS stiftet», og tidslinjen starter med «[ÅR]: [Oppstart, bekreftes av Gjermund]» før 2012. Spørsmålet ligger i STATUS.md og BILDELISTE.md.
@@ -367,3 +367,8 @@ Branch `feature/runde-3`. Fakta sjekket 20.10.2026 (Snapchat, merkefarger, safar
 ### QA
 
 - Build og lint rene. `/`, `/video`, `/kontakt` og `/utleie` på 320, 375, 768, 1024, 1440 og 1920 px: ingen horisontal overflow, ingen konsollfeil. axe-core ved 375, 1440 og 1920 px: 0 funn. Lighthouse mobil: `/` 92 og `/video` 90 (to kjøringer hver, pluss `/utleie` 90), tilgjengelighet 100, beste praksis 100, CLS 0. Skjermbilder i `docs/qa/skjermbilder/runde-3b/` (15 filer).
+
+## Om oss med Gjermunds egne ord (21.10.2026)
+
+- «Innbydende og kreativt» er ordene til Alta Amcar Klubb og står nå bare i sitatet på `/om-oss`. Avsnitt 2 i «Om oss» (forsiden og `/om-oss`) er byttet til Gjermunds egne ord (kilde: `_kilder/INNHOLD-FRA-GJERMUND.md`): «Vi er entusiaster, ikke bare på amerikanske biler, men på alle spesielle biler. Vi tar vare på bilen din, gamle som nye, blanke som rustne. I butikken og kundemottaket står det til tider veldig fine biler, så stikk gjerne innom. Trenger du hjelp til noe, er det bare å ta kontakt.»
+- Seksjonen «Kundemottaket» på `/om-oss` har tittelen «Stikk gjerne innom» og de to siste setningene fra samme avsnitt som ingress, så teksten ikke gjentas i sin helhet på samme side. Sitatet fra Alta Amcar Klubb er uendret.

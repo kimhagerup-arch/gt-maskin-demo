@@ -388,7 +388,7 @@ export const aboutSection = {
   title: "Entusiaster på biler siden 2012",
   paragraphs: [
     "GT Maskin AS ble etablert i Alta i 2012 av Gjermund Thomassen. I dag er vi et godkjent bilverksted og godkjent lærebedrift, med et moderne verksted i Myggveien 3 på Aronneskjosen.",
-    "Vi er entusiaster, ikke bare på amerikanske biler, men på alle spesielle biler. Kundemottaket er innbydende og kreativt, og det står til tider svært fine biler inne hos oss. Trenger du hjelp til noe, er det bare å ta kontakt.",
+    "Vi er entusiaster, ikke bare på amerikanske biler, men på alle spesielle biler. Vi tar vare på bilen din, gamle som nye, blanke som rustne. I butikken og kundemottaket står det til tider veldig fine biler, så stikk gjerne innom. Trenger du hjelp til noe, er det bare å ta kontakt.",
   ],
   facts: [
     { value: "2012", label: "GT Maskin AS stiftet" },
@@ -405,9 +405,9 @@ export const aboutSection = {
     heroImage: "/images/bygg/fasade-dag-klassikere",
     heroAlt: "Bygget til GT Maskin på dagtid med amerikanske klassikere foran",
     receptionKicker: "Kundemottaket",
-    receptionTitle: "Innbydende og kreativt",
+    receptionTitle: "Stikk gjerne innom",
     receptionText:
-      "Kundemottaket i Myggveien er innbydende og kreativt: bardisk, bilsofa, gammel bensinpumpe og til tider svært fine biler inne på gulvet.",
+      "I butikken og kundemottaket står det til tider veldig fine biler, så stikk gjerne innom. Trenger du hjelp til noe, er det bare å ta kontakt.",
     quote: {
       text: "Innbydende og kreativt kundemottak. Kan bistå med service og vedlikehold, gode tips og råd!",
       source: "Alta Amcar Klubb",
