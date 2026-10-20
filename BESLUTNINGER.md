@@ -335,3 +335,35 @@ Branch `feature/runde-3`. Fakta sjekket 20.10.2026 (Snapchat, merkefarger, safar
 - Ingen eksterne kall før klikk på noen rute. Etter klikk: Facebook-reel laster (720×1280, `readyState` 4), Snapchat-profilen vises i iframen.
 - Søk etter tankestrek, forbudte ord og verktøyord i `src/`, `public/`, `index.html` og docs: null treff i synlig innhold.
 - Skjermbilder i `docs/qa/skjermbilder/runde-3/` (50 filer, palett-komprimert).
+
+## Runde 3b (21.10.2026): seksjonshoder, runde ikonknapper, radius, Snapchat-telefon
+
+### Seksjonshodemønster
+
+- `SectionHeader` har nå ett mønster for alle seksjoner: kicker, tittel og ingress venstrejustert i én blokk, ingressen maks 60 tegn bred (`max-w-[60ch]`). Handlinger (knapper, tall, lenker) sendes inn som `actions` og står under ingressen på mobil i full bredde, og fra 768 px i en egen kolonne til høyre som er bunnjustert mot tekstblokken og venstrejustert innad. Den gamle `aside`-varianten med høyrejustert brødtekst er fjernet fra alle fem bruksstedene (feed, video, biler til salgs, deler, utleie).
+- «Live fra GT Maskin»: ingressen er «Her ser du det siste fra verkstedet, hentet automatisk fra Facebook.» (tallet er tatt ut av setningen). Tallene står som én kompakt linje med det blå Facebook-merket («1 023 liker siden · 31 har vært her») og «Tall fra Facebook 22. september 2026» i liten tekst under, deretter knappen «Følg oss på Facebook» i Facebook-blått med hvit tekst (ny `Button`-variant `facebook`, og `snapchat` til senere bruk).
+
+### Runde ikonknapper og merkefarger
+
+- Alle ikonknapper for Facebook og Snapchat er runde og 44 × 44 px på alle bredder: blå sirkel med hvit f, gul sirkel med hvitt spøkelse i svart kontur. Gjelder header, mobilmeny, hero, footer, kontakt, `/video` og QR-dialogen (`SocialIcons`, `SnapchatQrDialog`). Det lille kildemerket (`SourceMark`) er også rundt og brukes nå i feedkortene i stedet for et mørkt strekikon.
+- Tekstknapper: Facebook og Messenger blå med hvit tekst, Snapchat gul med svart tekst, alle med 10 px hjørner.
+- Målt med `getComputedStyle` i headless Chrome på `/`, `/video`, `/kontakt`, `/utleie`, mobilmenyen og QR-dialogen (83 flater): alle Facebook-flater `rgb(8, 102, 255)`, alle Snapchat-flater `rgb(255, 252, 0)`, alle ikonknapper 44 × 44 px med radius 9999 px. Eneste treff utenom er rene tekstlenker («Åpne innlegget på Facebook» i kortene, «Åpne i Snapchat» under QR-koden), som ikke er flater.
+
+### Hjørneradius
+
+- Tokens i `index.css` og `tailwind.config.js`: `--radius-button` 10 px (`rounded-button`), `--radius-field` 8 px (`rounded-field`), `--radius-pill` 9999 px (`rounded-pill`).
+- 10 px: `Button` (alle varianter, «Bestill time», CTA-er, skjemaknapper), kanalknapper i `SocialLinks`, Snapchat-knappene, produktkortets «Legg i kurv» / «Velg størrelse», kartknappen i adressekortet.
+- 8 px: `input-dark` og `textarea-dark` (alle skjemafelt), søkefeltet i butikken, QR-rammene.
+- Helt runde: merkechips, kategorichips og gruppeveksleren i butikken, snarveiene på `/verksted` og `/utleie`, godkjenningschips, lenkeraden under «Deler og nettbutikk», sliderpilene, kurvens pluss/minus og lukk, galleripilene, menyknappen, kurvknappen og telefonknappen i header, lukk i mobilmeny og dialog, ikonknappene.
+- Kort, bilder, plassholdere og ikonfliser i innhold beholder rette kanter. Bunnlinja med «Ring» og «Bestill time» på mobil beholder rette kanter mot skjermkanten.
+- Fokusmarkeringen er `outline` på `:focus-visible` og følger `border-radius` i moderne nettlesere; skjemafeltene bruker `ring` (box-shadow), som også følger hjørnene.
+
+### Snapchat-seksjonen
+
+- Desktop: tekst til venstre (kicker «Snapchat», tittel «GT Maskin på Snapchat», ingress «Korte videoer fra verkstedet. Følg oss for mer.», gul knapp «Følg @gtmaskin-as» med spøkelset, QR med «Skann med Snapchat-kameraet»), telefonramme til høyre (maks 360 px bred, 9:16, 6 px mørk kant, 28 px hjørner, skygge). Før klikk viser telefonen den gule Camaroen (`camaro-gul-front`, bil2.jpg) med mørk toning nederst, gult merke med @gtmaskin-as øverst, stor gul knapp «Se snapene» og «Lastes fra Snapchat når du trykker.» i liten tekst. Ved klikk lastes profilvisningen inne i rammen (verifisert: profilkort og historier vises i 348 px bredde).
+- Mobil: tekst, telefon (maks 340 px, sentrert), gul knapp «Følg @gtmaskin-as» i full bredde under. Ingen QR.
+- Setningen «Profilkort og de nyeste historiene, hentet fra Snapchat når du ber om det.» er fjernet. Fortsatt ingen eksterne kall før klikk (verifisert på alle fire ruter).
+
+### QA
+
+- Build og lint rene. `/`, `/video`, `/kontakt` og `/utleie` på 320, 375, 768, 1024, 1440 og 1920 px: ingen horisontal overflow, ingen konsollfeil. axe-core ved 375, 1440 og 1920 px: 0 funn. Lighthouse mobil: `/` 92 og `/video` 90 (to kjøringer hver, pluss `/utleie` 90), tilgjengelighet 100, beste praksis 100, CLS 0. Skjermbilder i `docs/qa/skjermbilder/runde-3b/` (15 filer).

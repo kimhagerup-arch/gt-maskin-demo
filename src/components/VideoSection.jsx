@@ -15,19 +15,15 @@ export default function VideoSection({ videos = [], id = "video" }) {
         <SectionHeader
           kicker={videoSection.kicker}
           title={videoSection.title}
-          aside={
-            <div className="flex flex-col gap-3 md:items-end">
-              <p className="max-w-[420px] text-base leading-relaxed text-brand-muted-inverse md:text-right md:text-[17px]">
-                {videoSection.lead}
-              </p>
-              <Link
-                to={videoSection.allVideos.to}
-                className="link-underline border-brand-accent-light text-brand-text-inverse hover:text-brand-accent-light"
-              >
-                {videoSection.allVideos.label}
-                <Icon name="ArrowRight" size={18} strokeWidth={2.2} />
-              </Link>
-            </div>
+          lead={videoSection.lead}
+          actions={
+            <Link
+              to={videoSection.allVideos.to}
+              className="link-underline self-start border-brand-accent-light text-brand-text-inverse hover:text-brand-accent-light"
+            >
+              {videoSection.allVideos.label}
+              <Icon name="ArrowRight" size={18} strokeWidth={2.2} />
+            </Link>
           }
         />
 

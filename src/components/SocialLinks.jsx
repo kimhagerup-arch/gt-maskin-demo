@@ -24,7 +24,7 @@ function LinkButton({ href, platform, children }) {
       target="_blank"
       rel="noopener noreferrer"
       className={cx(
-        "inline-flex h-11 items-center gap-2.5 px-4 text-sm font-bold transition-[filter]",
+        "inline-flex h-11 items-center gap-2.5 rounded-button px-4 text-sm font-bold transition-[filter]",
         CHANNEL_BUTTON[platform],
       )}
     >
@@ -89,7 +89,7 @@ export default function SocialLinks({ tone = "dark", include = ORDER, qr = "neve
 
       {showQr && (
         <div className={cx("flex items-center gap-4", qr === "desktop" && "hidden md:flex")}>
-          <div className="h-24 w-24 shrink-0 bg-brand-snapchat p-1">
+          <div className="h-24 w-24 shrink-0 rounded-field bg-brand-snapchat p-1">
             {ready && (
               <Picture
                 src={snapchat.qrImage}
@@ -108,8 +108,8 @@ export default function SocialLinks({ tone = "dark", include = ORDER, qr = "neve
                 dark ? "text-brand-text-inverse" : "text-brand-text",
               )}
             >
-              <span className="inline-flex h-6 w-6 items-center justify-center bg-brand-snapchat">
-                <SnapchatMark size={16} />
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-pill bg-brand-snapchat">
+                <SnapchatMark size={18} />
               </span>
               {socialLinks.snapchat}
             </span>

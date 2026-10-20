@@ -86,6 +86,12 @@
   --brand-on-facebook: 255 255 255; /* #FFFFFF */
   --brand-snapchat: 255 252 0; /* #FFFC00 */
   --brand-on-snapchat: 0 0 0; /* #000000 */
+
+  /* Hjørner. Knapper og lenkeknapper 10 px, skjemafelt 8 px, chips, filterknapper,
+     sliderpiler og ikonknapper helt runde. Kort og bilder har rette kanter. */
+  --radius-button: 10px;
+  --radius-field: 8px;
+  --radius-pill: 9999px;
 }
 
 @layer base {
@@ -176,7 +182,7 @@
   }
 
   .input-dark {
-    @apply h-12 w-full border border-brand-border-dark-strong bg-brand-primary px-3.5 text-base text-brand-text-inverse outline-none transition-colors duration-150 focus:border-brand-accent-light focus-visible:ring-2 focus-visible:ring-brand-accent-light focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary-light;
+    @apply h-12 w-full rounded-field border border-brand-border-dark-strong bg-brand-primary px-3.5 text-base text-brand-text-inverse outline-none transition-colors duration-150 focus:border-brand-accent-light focus-visible:ring-2 focus-visible:ring-brand-accent-light focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary-light;
   }
   .textarea-dark {
     @apply input-dark h-32 resize-none py-3;

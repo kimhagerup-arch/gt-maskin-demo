@@ -34,7 +34,7 @@ export default function Verksted() {
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className="inline-flex h-10 items-center border border-brand-outline px-3 font-semibold text-brand-text-inverse transition-colors hover:border-brand-accent-light"
+                className="inline-flex h-10 items-center rounded-pill border border-brand-outline px-3.5 font-semibold text-brand-text-inverse transition-colors hover:border-brand-accent-light"
               >
                 {s.title}
               </a>
@@ -150,7 +150,7 @@ export default function Verksted() {
               {companyFacts.approvals.map((a) => (
                 <li
                   key={a}
-                  className="inline-flex h-9 items-center gap-1.5 border border-brand-border-dark-strong px-3 text-sm font-semibold"
+                  className="inline-flex h-9 items-center gap-1.5 rounded-pill border border-brand-border-dark-strong px-3.5 text-sm font-semibold"
                 >
                   <Icon
                     name="Check"

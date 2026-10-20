@@ -111,7 +111,7 @@ export const trust = [
 export const feedSection = {
   kicker: "Siste fra Facebook",
   title: "Live fra GT Maskin",
-  lead: "Over 1 000 liker GT Maskin på Facebook. Her ser du det siste fra verkstedet, hentet automatisk.",
+  lead: "Her ser du det siste fra verkstedet, hentet automatisk fra Facebook.",
   cta: { label: "Følg oss på Facebook" },
   placeholderTag: "Plassholder",
   placeholderCaption: "[Innleggstekst hentes automatisk fra Facebook-siden]",
@@ -608,10 +608,14 @@ export const socialLinks = {
 export const snapchatSection = {
   kicker: "Snapchat",
   title: "GT Maskin på Snapchat",
-  lead: "Følg oss på Snapchat for flere videoer.",
-  cardText: "Profilkort og de nyeste historiene, hentet fra Snapchat når du ber om det.",
-  showProfile: "Vis Snapchat-profilen",
+  lead: "Korte videoer fra verkstedet. Følg oss for mer.",
+  follow: "Følg",
+  seeSnaps: "Se snapene",
+  loadNote: "Lastes fra Snapchat når du trykker.",
+  qrHint: "Skann med Snapchat-kameraet",
   embedTitle: "GT Maskin på Snapchat",
+  // Lokalt stående bilde i telefonrammen før klikk (gul Camaro, bil2.jpg).
+  posterImage: "/images/biler/camaro-gul-front",
 };
 
 export const placeholderLabels = {

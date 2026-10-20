@@ -90,7 +90,7 @@ export default function CarGallery({ images = [], alts = [], title, placeholderL
             <button
               type="button"
               onClick={() => go(-1)}
-              className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center bg-brand-primary/85 text-brand-text-inverse transition-colors hover:bg-brand-accent hover:text-brand-primary"
+              className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-pill bg-brand-primary/85 text-brand-text-inverse transition-colors hover:bg-brand-accent hover:text-brand-primary"
               aria-label={t.prev}
             >
               <Icon name="ChevronLeft" size={24} strokeWidth={2.2} />
@@ -98,7 +98,7 @@ export default function CarGallery({ images = [], alts = [], title, placeholderL
             <button
               type="button"
               onClick={() => go(1)}
-              className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center bg-brand-primary/85 text-brand-text-inverse transition-colors hover:bg-brand-accent hover:text-brand-primary"
+              className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-pill bg-brand-primary/85 text-brand-text-inverse transition-colors hover:bg-brand-accent hover:text-brand-primary"
               aria-label={t.next}
             >
               <Icon name="ChevronRight" size={24} strokeWidth={2.2} />

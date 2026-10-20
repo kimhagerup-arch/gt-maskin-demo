@@ -1,5 +1,13 @@
 # ARBEIDSLOGG
 
+## 21.10.2026: runde 3b, seksjonshoder, runde ikonknapper, radius, Snapchat-telefon
+
+- `SectionHeader` med felles mønster (`lead` og `actions`, aldri høyrejustert brødtekst); fem bruksssteder lagt om. Feed: ny ingress, talllinje med blått merke, dato under, blå knapp (`Button` variant `facebook`).
+- Runde 44 px ikonknapper i merkefargene overalt; `SourceMark` rund og brukt i feedkortene. Farger målt med `getComputedStyle` på 83 flater: `rgb(8, 102, 255)` og `rgb(255, 252, 0)`.
+- Radius-tokens `rounded-button` (10 px), `rounded-field` (8 px), `rounded-pill`; brukt på knapper, skjemafelt, chips, filtre, sliderpiler og ikonknapper. Bunnlinja på mobil uendret.
+- `SnapchatSection` med telefonramme (360 × 640), lokalt Camaro-bilde, «Se snapene», «Følg @gtmaskin-as», QR på desktop. Ingen eksterne kall før klikk.
+- QA: build og lint rene, fire ruter × seks bredder uten overflow og konsollfeil, axe 0 funn, Lighthouse mobil `/` 92 og `/video` 90 (to kjøringer hver, pluss `/utleie` 90), tilgjengelighet 100, beste praksis 100, CLS 0, 15 skjermbilder i `docs/qa/skjermbilder/runde-3b/`.
+
 ## 20.10.2026: runde 3, videovisning, merkefarger, Snapchat, safari ut
 
 Branch `feature/runde-3` fra `dev`. Fakta sjekket 20.10.2026 i `_kilder/INNHOLD-FRA-GJERMUND.md`.

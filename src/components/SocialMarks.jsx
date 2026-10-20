@@ -44,7 +44,7 @@ export function SnapchatMark({ size = 18, className }) {
 }
 
 /**
- * Lite kvadratisk merke i kanalens farge, til kildeetiketter og knapper.
+ * Lite rundt merke i kanalens farge, til kildeetiketter og knapper.
  * Facebook: hvit f på blått. Snapchat: spøkelse på gult. Andre kilder: ingenting.
  */
 export function SourceMark({ source, size = 16, className }) {
@@ -52,13 +52,13 @@ export function SourceMark({ source, size = 16, className }) {
     return (
       <span
         className={cx(
-          "inline-flex shrink-0 items-center justify-center rounded-[2px] bg-brand-facebook text-brand-on-facebook",
+          "inline-flex shrink-0 items-center justify-center rounded-pill bg-brand-facebook text-brand-on-facebook",
           className,
         )}
         style={{ width: size, height: size }}
         aria-hidden="true"
       >
-        <FacebookMark size={Math.round(size * 0.72)} />
+        <FacebookMark size={Math.round(size * 0.6)} />
       </span>
     );
   }
@@ -66,13 +66,13 @@ export function SourceMark({ source, size = 16, className }) {
     return (
       <span
         className={cx(
-          "inline-flex shrink-0 items-center justify-center rounded-[2px] bg-brand-snapchat",
+          "inline-flex shrink-0 items-center justify-center rounded-pill bg-brand-snapchat",
           className,
         )}
         style={{ width: size, height: size }}
         aria-hidden="true"
       >
-        <SnapchatMark size={Math.round(size * 0.8)} />
+        <SnapchatMark size={Math.round(size * 0.7)} />
       </span>
     );
   }

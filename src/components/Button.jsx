@@ -3,7 +3,7 @@ import { cx } from "../lib/format";
 import Icon from "./Icon";
 
 const BASE =
-  "inline-flex items-center justify-center gap-2.5 font-bold transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2.5 rounded-button font-bold transition-[color,background-color,border-color,filter] duration-150 disabled:cursor-not-allowed disabled:opacity-60";
 
 const SIZES = {
   md: "h-12 px-6 text-base md:h-14 md:px-7 md:text-[17px]",
@@ -17,6 +17,8 @@ const VARIANTS = {
     "border-[1.5px] border-brand-outline text-brand-text-inverse hover:border-brand-muted-inverse",
   dark: "bg-brand-primary text-brand-text-inverse hover:bg-brand-primary-light",
   light: "bg-brand-bg text-brand-primary hover:bg-brand-surface",
+  facebook: "bg-brand-facebook text-brand-on-facebook hover:brightness-110",
+  snapchat: "bg-brand-snapchat text-brand-on-snapchat hover:brightness-95",
 };
 
 /**

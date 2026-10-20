@@ -74,7 +74,7 @@ export default function ProductCard({ product }) {
           {needsSize ? (
             <Link
               to={`/deler/${product.slug}`}
-              className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap bg-brand-primary px-3 text-[13px] font-bold text-brand-text-inverse transition-colors hover:bg-brand-primary-light md:px-3.5"
+              className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-button bg-brand-primary px-3 text-[13px] font-bold text-brand-text-inverse transition-colors hover:bg-brand-primary-light md:px-3.5"
             >
               {partsSection.product.sizeChoose}
             </Link>
@@ -86,7 +86,7 @@ export default function ProductCard({ product }) {
                 setAdded(true);
               }}
               className={cx(
-                "inline-flex h-10 items-center gap-1.5 whitespace-nowrap px-3 text-[13px] font-bold transition-colors md:px-3.5",
+                "inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-button px-3 text-[13px] font-bold transition-colors md:px-3.5",
                 added
                   ? "bg-brand-accent text-brand-primary"
                   : "bg-brand-primary text-brand-text-inverse hover:bg-brand-primary-light",

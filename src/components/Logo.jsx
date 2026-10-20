@@ -7,7 +7,8 @@ const LOGO_KEY = "/images/logo/gt-maskin-logo";
 
 /**
  * Logo (trimmet, gjennomsiktig bakgrunn) ved siden av tekstmerket.
- * Uten logofil vises et monogram i aksentfarge.
+ * Uten logofil vises et monogram i aksentfarge. Logoen hentes med lav prioritet
+ * så den ikke konkurrerer med hero-bildet (LCP) om båndbredden ved første last.
  */
 export default function Logo({ size = "md", showTagline = true, className, linkClassName }) {
   const image = getImage(LOGO_KEY);
@@ -36,6 +37,7 @@ export default function Logo({ size = "md", showTagline = true, className, linkC
             alt=""
             className={cx("shrink-0 object-contain", box, className)}
             decoding="async"
+            fetchpriority="low"
           />
         </picture>
       ) : (

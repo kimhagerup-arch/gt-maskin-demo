@@ -61,10 +61,10 @@ export default function Home() {
           <SectionHeader
             kicker={carsSection.kicker}
             title={carsSection.title}
-            aside={
+            actions={
               <Link
                 to={carsSection.link.to}
-                className="link-underline border-brand-accent-light text-brand-text-inverse hover:text-brand-accent-light"
+                className="link-underline self-start border-brand-accent-light text-brand-text-inverse hover:text-brand-accent-light"
               >
                 {carsSection.link.label}
                 <Icon name="ArrowRight" size={18} strokeWidth={2.2} />
@@ -104,10 +104,10 @@ export default function Home() {
             tone="light"
             kicker={partsSection.kicker}
             title={partsSection.title}
-            aside={
+            actions={
               <Link
                 to={partsSection.link.to}
-                className="link-underline border-brand-accent-deep text-brand-text hover:text-brand-accent-deep"
+                className="link-underline self-start border-brand-accent-deep text-brand-text hover:text-brand-accent-deep"
               >
                 {partsSection.link.label}
                 <Icon name="ArrowRight" size={18} strokeWidth={2.2} />
@@ -127,7 +127,7 @@ export default function Home() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="inline-flex h-9 items-center gap-1.5 border border-brand-border-strong px-3.5 font-semibold text-brand-text transition-colors hover:border-brand-primary hover:text-brand-accent-deep"
+                  className="inline-flex h-9 items-center gap-1.5 rounded-pill border border-brand-border-strong px-3.5 font-semibold text-brand-text transition-colors hover:border-brand-primary hover:text-brand-accent-deep"
                 >
                   {link.label}
                   <Icon name="ArrowRight" size={14} strokeWidth={2.2} />
@@ -165,19 +165,15 @@ export default function Home() {
           <SectionHeader
             kicker={rentalSection.kicker}
             title={rentalSection.title}
-            aside={
-              <div className="flex flex-col gap-3 md:items-end">
-                <p className="max-w-[420px] text-base leading-relaxed text-brand-muted-inverse md:text-right md:text-[17px]">
-                  {rentalSection.lead}
-                </p>
-                <Link
-                  to={rentalSection.link.to}
-                  className="link-underline border-brand-accent-light text-brand-text-inverse hover:text-brand-accent-light"
-                >
-                  {rentalSection.link.label}
-                  <Icon name="ArrowRight" size={18} strokeWidth={2.2} />
-                </Link>
-              </div>
+            lead={rentalSection.lead}
+            actions={
+              <Link
+                to={rentalSection.link.to}
+                className="link-underline self-start border-brand-accent-light text-brand-text-inverse hover:text-brand-accent-light"
+              >
+                {rentalSection.link.label}
+                <Icon name="ArrowRight" size={18} strokeWidth={2.2} />
+              </Link>
             }
           />
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">

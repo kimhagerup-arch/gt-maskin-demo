@@ -40,6 +40,11 @@ export default {
           gold: "#d4a843",
         },
       },
+      borderRadius: {
+        button: "var(--radius-button)",
+        field: "var(--radius-field)",
+        pill: "var(--radius-pill)",
+      },
       fontFamily: {
         display: ['"Bebas Neue"', "Impact", "sans-serif"],
         sans: ["Barlow", "system-ui", "sans-serif"],

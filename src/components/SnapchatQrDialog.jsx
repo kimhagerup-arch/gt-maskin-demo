@@ -70,18 +70,18 @@ export default function SnapchatQrDialog({ open, onClose, returnFocusRef }) {
           ref={closeRef}
           type="button"
           onClick={onClose}
-          className="absolute right-2 top-2 flex h-10 w-10 items-center justify-center text-brand-muted-inverse transition-colors hover:text-brand-text-inverse"
+          className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-pill text-brand-muted-inverse transition-colors hover:bg-brand-primary hover:text-brand-text-inverse"
           aria-label={socialLinks.qrDialogClose}
         >
           <Icon name="X" size={20} strokeWidth={2} />
         </button>
-        <span className="mt-4 flex h-12 w-12 items-center justify-center bg-brand-snapchat">
-          <SnapchatMark size={28} />
+        <span className="mt-4 flex h-14 w-14 items-center justify-center rounded-pill bg-brand-snapchat">
+          <SnapchatMark size={32} />
         </span>
         <h2 id="snapchat-qr-tittel" className="text-lg font-bold">
           {socialLinks.qrDialogTitle}
         </h2>
-        <div className="h-44 w-44 bg-brand-snapchat p-1.5">
+        <div className="h-44 w-44 rounded-field bg-brand-snapchat p-1.5">
           <Picture
             src={snapchat.qrImage}
             alt={snapchat.qrAlt}
@@ -99,7 +99,7 @@ export default function SnapchatQrDialog({ open, onClose, returnFocusRef }) {
             href={snapchat.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 items-center gap-2 bg-brand-snapchat px-4 text-sm font-bold text-brand-on-snapchat transition-[filter] hover:brightness-95"
+            className="inline-flex h-11 items-center gap-2 rounded-button bg-brand-snapchat px-4 text-sm font-bold text-brand-on-snapchat transition-[filter] hover:brightness-95"
           >
             <SnapchatMark size={16} />
             {socialLinks.snapchatOpen}

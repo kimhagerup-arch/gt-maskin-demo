@@ -33,7 +33,7 @@ export default function HomeHero() {
               {hero.secondary.label}
             </Button>
           </div>
-          <SocialIcons size="sm" label={socialLinks.heroFollow} className="flex-wrap" />
+          <SocialIcons label={socialLinks.heroFollow} stack />
         </div>
 
         <div className="relative lg:col-span-5 lg:col-start-8">

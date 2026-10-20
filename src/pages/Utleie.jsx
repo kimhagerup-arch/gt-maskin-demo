@@ -39,7 +39,7 @@ export default function Utleie() {
               <a
                 key={item.slug}
                 href={`#${item.slug}`}
-                className="inline-flex h-10 items-center border border-brand-outline px-3 font-semibold text-brand-text-inverse transition-colors hover:border-brand-accent-light"
+                className="inline-flex h-10 items-center rounded-pill border border-brand-outline px-3.5 font-semibold text-brand-text-inverse transition-colors hover:border-brand-accent-light"
               >
                 {item.title}
               </a>

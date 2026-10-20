@@ -185,3 +185,17 @@ SEO under 100 skyldes `noindex` (bevisst til go-live).
 1. Titler, stillbilder og datoer for de seks videoene, og resten av tabellen i STATUS.md.
 2. Bytte produsentbildet av scooteren (`ac-profil.jpg`) før go-live.
 3. Sjekke i en vanlig nettleser om Facebook-reelen starter av seg selv etter klikk på play; i headless krever pluginen ett klikk til.
+
+## Runde 3b (21.10.2026): seksjonshoder, runde ikonknapper, radius, Snapchat-telefon
+
+Skjermbilder i `docs/qa/skjermbilder/runde-3b/` (15 filer: header, hero, «Live fra GT Maskin», Snapchat-seksjonen før og etter klikk, skjema, mobilmeny, QR-dialog og kontaktsiden, på 375 og 1440 px).
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene |
+| `/`, `/video`, `/kontakt`, `/utleie` × 320, 375, 768, 1024, 1440, 1920 px | `scrollWidth` lik viewport, ingen konsollfeil eller -advarsler |
+| axe-core ved 375, 1440 og 1920 px | 0 funn |
+| Eksterne kall før klikk | ingen |
+| Lighthouse mobil | `/` 92 og `/video` 90 (to kjøringer hver, pluss `/utleie` 90), tilgjengelighet 100, beste praksis 100, CLS 0 |
+| Merkefarger (`getComputedStyle`, 83 flater på fire ruter, mobilmeny og dialog) | Facebook `rgb(8, 102, 255)` overalt, Snapchat `rgb(255, 252, 0)` overalt, ikonknapper 44 × 44 px, radius 9999 px |
+| Snapchat-telefon etter klikk | profilvisningen lastes i rammen og viser profilkort og historier |

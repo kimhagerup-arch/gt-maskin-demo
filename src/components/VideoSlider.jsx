@@ -48,7 +48,7 @@ export default function VideoSlider({ title, label, children, className }) {
   };
 
   const arrow =
-    "flex h-11 w-11 items-center justify-center border border-brand-border-dark-strong text-brand-text-inverse transition-colors hover:border-brand-accent-light hover:text-brand-accent-light disabled:cursor-default disabled:opacity-35 disabled:hover:border-brand-border-dark-strong disabled:hover:text-brand-text-inverse";
+    "flex h-11 w-11 items-center justify-center rounded-pill border border-brand-border-dark-strong text-brand-text-inverse transition-colors hover:border-brand-accent-light hover:text-brand-accent-light disabled:cursor-default disabled:opacity-35 disabled:hover:border-brand-border-dark-strong disabled:hover:text-brand-text-inverse";
 
   return (
     <div className={cx("flex flex-col gap-4", className)}>

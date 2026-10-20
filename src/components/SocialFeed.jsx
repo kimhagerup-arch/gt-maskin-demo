@@ -3,9 +3,9 @@ import { feedSection } from "../data/siteContent";
 import { formatDate, formatNumber } from "../lib/format";
 import Button from "./Button";
 import FeedCard from "./FeedCard";
-import Icon from "./Icon";
 import Reveal from "./Reveal";
 import SectionHeader from "./SectionHeader";
+import { SourceMark } from "./SocialMarks";
 
 /** Minste antall ekte innlegg før plassholderkortene droppes. */
 const MIN_REAL = 3;
@@ -35,6 +35,8 @@ export default function SocialFeed({ posts = [], channels = [], limit = 6, id = 
 
   if (!visible.length) return null;
 
+  const hasCheckins = channel?.checkins !== undefined && channel?.checkins !== null;
+
   return (
     <section id={id} className="section-pad bg-brand-bg text-brand-text">
       <div className="container-site flex flex-col gap-8 md:gap-10">
@@ -42,33 +44,38 @@ export default function SocialFeed({ posts = [], channels = [], limit = 6, id = 
           tone="light"
           kicker={feedSection.kicker}
           title={feedSection.title}
-          aside={
-            <div className="flex flex-col gap-3 md:items-end">
-              <p className="max-w-[420px] text-base leading-relaxed text-brand-muted md:text-right md:text-[17px]">
-                {feedSection.lead}
-              </p>
-              {channel && (
-                <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold text-brand-muted md:justify-end">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Icon name="Facebook" size={15} strokeWidth={2} />
-                    {formatNumber(channel.followers)} {channel.followersLabel}
-                  </span>
-                  {channel.checkins !== undefined && channel.checkins !== null && (
+          lead={feedSection.lead}
+          actions={
+            channel && (
+              <>
+                <p className="flex flex-col gap-1">
+                  <span className="inline-flex items-center gap-2 text-[15px] font-semibold text-brand-text">
+                    <SourceMark source="facebook" size={20} />
                     <span>
-                      {formatNumber(channel.checkins)} {feedSection.checkinsSuffix}
+                      {formatNumber(channel.followers)} {channel.followersLabel}
+                      {hasCheckins && (
+                        <>
+                          {" · "}
+                          {formatNumber(channel.checkins)} {feedSection.checkinsSuffix}
+                        </>
+                      )}
                     </span>
-                  )}
-                  <span className="font-normal">
-                    ({feedSection.verifiedPrefix} {formatDate(channel.verifiedAt)})
+                  </span>
+                  <span className="text-[13px] text-brand-muted">
+                    {feedSection.verifiedPrefix} {formatDate(channel.verifiedAt)}
                   </span>
                 </p>
-              )}
-              {channel && (
-                <Button href={channel.url} external variant="dark" size="sm" arrow>
+                <Button
+                  href={channel.url}
+                  external
+                  variant="facebook"
+                  size="sm"
+                  className="w-full md:w-auto"
+                >
                   {feedSection.cta.label}
                 </Button>
-              )}
-            </div>
+              </>
+            )
           }
         />
 

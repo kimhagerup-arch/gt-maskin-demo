@@ -80,7 +80,7 @@ export default function ContactCard({ showImage = true, showChannels = false, cl
             <span className="text-sm font-semibold text-brand-text-inverse">
               {companyFacts.address.full}
             </span>
-            <span className="inline-flex h-10 items-center gap-2 bg-brand-accent px-3.5 text-[13px] font-bold text-brand-primary">
+            <span className="inline-flex h-10 items-center gap-2 rounded-button bg-brand-accent px-3.5 text-[13px] font-bold text-brand-primary">
               {contactPage.mapsCta}
               <Icon name="ExternalLink" size={15} strokeWidth={2.2} />
             </span>
