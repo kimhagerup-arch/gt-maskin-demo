@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { rentalBanner } from "../data/rental";
+import { useAfterLoad } from "../hooks/useAfterLoad";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { cx } from "../lib/format";
 import { getImage } from "../lib/images";
@@ -41,6 +42,7 @@ const SLEDS = [
 export default function RentalBanner({ cta }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
+  const ready = useAfterLoad();
   const [inView, setInView] = useState(false);
   const sled = getImage(rentalBanner.sledImage);
 
@@ -82,8 +84,10 @@ export default function RentalBanner({ cta }) {
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-brand-primary/50 to-transparent" />
       </div>
 
-      {/* Scootere */}
-      {sled && (
+      {/* Scootere: monteres først når siden er lastet (dekor, skal ikke konkurrere
+          med hero-bildet). Ikke loading="lazy": Chrome ga DevTools-issue for lazy
+          bilder i det animerte laget. Én 21 kB webp deles av alle tre. */}
+      {sled && ready && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           {sleds.map((s, i) => (
             <div
@@ -121,7 +125,6 @@ export default function RentalBanner({ cta }) {
                     width={sled.width}
                     height={sled.height}
                     alt=""
-                    loading="lazy"
                     decoding="async"
                     draggable={false}
                     className="h-auto w-full drop-shadow-[0_6px_6px_rgba(0,0,0,0.35)]"

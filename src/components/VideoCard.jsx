@@ -1,4 +1,5 @@
 import { videoSection } from "../data/siteContent";
+import { useAfterLoad } from "../hooks/useAfterLoad";
 import { cx } from "../lib/format";
 import Icon from "./Icon";
 import Picture from "./Picture";
@@ -8,9 +9,11 @@ import VideoMeta from "./VideoMeta";
 /**
  * Kort i videolisten. Hele kortet er en knapp som laster videoen i
  * hovedspilleren. Aktivt kort markeres med aksentkant og «Spiller nå».
- * Stående video gir 9:16-kort, liggende 16:9.
+ * Stående video gir 9:16-kort, liggende 16:9. Miniatyrene monteres først når
+ * siden er lastet, så de ikke konkurrerer med hero-bildet (boksen har fast forhold).
  */
 export default function VideoCard({ video, active = false, onSelect }) {
+  const ready = useAfterLoad();
   const portrait = video.aspect === "9:16";
   const isSnapchat = video.source === "snapchat";
   return (
@@ -37,7 +40,7 @@ export default function VideoCard({ video, active = false, onSelect }) {
             portrait ? "aspect-[9/16]" : "aspect-video",
           )}
         >
-          {video.poster ? (
+          {video.poster && ready ? (
             <Picture
               src={video.poster}
               alt=""
@@ -48,6 +51,8 @@ export default function VideoCard({ video, active = false, onSelect }) {
                 active ? "opacity-70" : "opacity-90 group-hover:opacity-100",
               )}
             />
+          ) : video.poster ? (
+            <span className="block h-full w-full bg-brand-primary-soft" aria-hidden="true" />
           ) : (
             <Placeholder label="[Videoposter]" className="h-full w-full" />
           )}

@@ -402,8 +402,8 @@ export const aboutSection = {
   image: "/images/butikk/kundemottak-sofa-cabriolet",
   imageAlt: "Kundemottaket hos GT Maskin med bilsofa, cabriolet og hyller",
   page: {
-    heroImage: "/images/hero/verksted-hero-klassiker",
-    heroAlt: "Amerikansk klassiker fotografert i sort-hvitt fra lav vinkel",
+    heroImage: "/images/bygg/fasade-dag-klassikere",
+    heroAlt: "Bygget til GT Maskin på dagtid med amerikanske klassikere foran",
     receptionKicker: "Kundemottaket",
     receptionTitle: "Innbydende og kreativt",
     receptionText:

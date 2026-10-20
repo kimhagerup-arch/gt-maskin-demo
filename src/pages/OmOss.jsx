@@ -35,8 +35,8 @@ export default function OmOss() {
         kicker={aboutSection.kicker}
         title={aboutSection.title}
         lead={aboutSection.paragraphs[0]}
-        image="/images/bygg/fasade-dag-klassikere"
-        imageAlt="Bygget til GT Maskin på dagtid med amerikanske klassikere foran"
+        image={p.heroImage}
+        imageAlt={p.heroAlt}
         imagePosition="60% 60%"
       />
 

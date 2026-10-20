@@ -44,17 +44,11 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <link
-      rel="preload"
-      as="image"
-      type="image/webp"
-      imagesrcset="/images/hero/fasade-kveld-skilt-400.webp 400w, /images/hero/fasade-kveld-skilt-800.webp 800w, /images/hero/fasade-kveld-skilt-1278.webp 1278w"
-      imagesizes="(min-width: 1024px) 480px, 100vw"
-      fetchpriority="high"
-    />
     <link rel="preload" href="/fonts/bebas-neue-400-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/barlow-400-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/yellowtail-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Rutens hero-bilde og rutespesifikke fonter preloades av inline-scriptet
+         som vite.config.js (gtm-hero-preload) setter inn her, fra src/data/heroImages.js. -->
+    <!-- hero-preload -->
   </head>
   <body>
     <div id="root"></div>

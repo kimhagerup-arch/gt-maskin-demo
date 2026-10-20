@@ -1,5 +1,6 @@
 import { channels } from "../data/channels";
 import { socialLinks } from "../data/siteContent";
+import { useAfterLoad } from "../hooks/useAfterLoad";
 import { cx } from "../lib/format";
 import Icon from "./Icon";
 import Picture from "./Picture";
@@ -39,6 +40,9 @@ function LinkButton({ href, platform, children }) {
  */
 export default function SocialLinks({ tone = "dark", include = ORDER, qr = "never", className }) {
   const dark = tone === "dark";
+  // QR-bildet (footer, kontakt) monteres først når siden er lastet, så det ikke
+  // konkurrerer med hero-bildet. Boksen har fast størrelse.
+  const ready = useAfterLoad();
   const list = ORDER.filter((p) => include.includes(p))
     .map((p) => channels.find((c) => c.platform === p))
     .filter(Boolean);
@@ -86,14 +90,16 @@ export default function SocialLinks({ tone = "dark", include = ORDER, qr = "neve
       {showQr && (
         <div className={cx("flex items-center gap-4", qr === "desktop" && "hidden md:flex")}>
           <div className="h-24 w-24 shrink-0 bg-brand-snapchat p-1">
-            <Picture
-              src={snapchat.qrImage}
-              alt={snapchat.qrAlt}
-              sizes="96px"
-              imgClassName="h-full w-full object-contain"
-              tone="light"
-              fallbackLabel="[QR]"
-            />
+            {ready && (
+              <Picture
+                src={snapchat.qrImage}
+                alt={snapchat.qrAlt}
+                sizes="96px"
+                imgClassName="h-full w-full object-contain"
+                tone="light"
+                fallbackLabel="[QR]"
+              />
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <span

@@ -32,7 +32,8 @@ export default function Footer() {
     <footer className="border-t border-brand-border-dark bg-brand-primary-dark text-brand-muted-inverse">
       <div className="container-site flex flex-col gap-10 py-12 md:py-14">
         <div className="grid gap-10 md:grid-cols-12 md:gap-8">
-          {/* Firma */}
+          {/* Firma. Logoen lastes ikke lazy: samme fil som i header (allerede lastet),
+              og Chrome gir DevTools-issue for lazy bilder nær viewport på korte sider. */}
           <div className="flex flex-col gap-4 md:col-span-5 lg:col-span-4">
             <div className="flex items-center gap-3 text-brand-text-inverse">
               <span className="flex h-14 w-14 items-center justify-center border border-brand-border-dark bg-brand-primary-light p-1.5">
@@ -49,7 +50,6 @@ export default function Footer() {
                       height={logo.sizes[0].h}
                       alt=""
                       className="h-full w-full object-contain"
-                      loading="lazy"
                       decoding="async"
                     />
                   </picture>
