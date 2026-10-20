@@ -20,7 +20,7 @@ export default function BrandChips({ prefix, brands, tone = "light", className }
           <li
             key={brand}
             className={cx(
-              "inline-flex h-9 items-center border px-3.5 text-sm font-semibold",
+              "inline-flex h-9 items-center rounded-pill border px-3.5 text-sm font-semibold",
               dark
                 ? "border-brand-border-dark-strong text-brand-text-inverse"
                 : "border-brand-border-strong text-brand-text",

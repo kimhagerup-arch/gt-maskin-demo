@@ -87,12 +87,6 @@ const PHOTOS = [
   ["bil3.jpg", "biler", "corvette-sort-utenfor", "Sort Corvette utenfor verkstedet"],
 
   ["snowmobile.jpg", "utleie", "snoscootere-oppstilt", "Snøscootere oppstilt i snøen"],
-  [
-    "Mountain_scootering_Finnmark.jpg",
-    "utleie",
-    "safari-fjell",
-    "Snøscooter på vidda i Finnmark med fjell bak",
-  ],
   ["tilhenger.jpg", "utleie", "biltransporthenger-skra", "Biltransporthenger sett skrått forfra"],
   ["tilhenger2.jpg", "utleie", "biltransporthenger-side", "Biltransporthenger fra siden"],
 
@@ -292,7 +286,7 @@ async function cutOut(input, isBg, trimThreshold = 10) {
 }
 
 /**
- * Snøscooter til safari-banneret: ac-profil.jpg er produsentens profilbilde på
+ * Snøscooter til utleiebanneret: ac-profil.jpg er produsentens profilbilde på
  * hvit bakgrunn (kun demo, byttes før go-live). Lyse, umettede piksler som henger
  * sammen med kanten fjernes, bildet trimmes og leveres som webp og png med
  * gjennomsiktighet i 400 og 800 px bredde.
@@ -315,7 +309,7 @@ async function processScooter() {
   };
   const { png, cleared } = await cutOut(input, isLightBg, 6);
   console.log(`ac-profil.jpg: ${cleared} bakgrunnspiksler gjort gjennomsiktige`);
-  const base = path.join(dir, "safari-scooter");
+  const base = path.join(dir, "scooter-profil");
   const sizes = [];
   for (const w of [800, 400]) {
     const pipeline = sharp(png).resize({ width: w, withoutEnlargement: true });
@@ -323,14 +317,14 @@ async function processScooter() {
     await pipeline.clone().webp({ quality: 86, alphaQuality: 90 }).toFile(`${base}-${w}.webp`);
     sizes.push({ w: info.width, h: info.height });
   }
-  manifest["/images/utleie/safari-scooter"] = {
+  manifest["/images/utleie/scooter-profil"] = {
     width: sizes[0].w,
     height: sizes[0].h,
     sizes,
     description: "Snøscooter i profil, frilagt (produsentbilde, kun demo)",
     format: "png",
   };
-  console.log(`ac-profil.jpg -> utleie/safari-scooter (${sizes.map((s) => s.w).join(", ")})`);
+  console.log(`ac-profil.jpg -> utleie/scooter-profil (${sizes.map((s) => s.w).join(", ")})`);
 }
 
 mkdirSync(path.join(OUT, "feed"), { recursive: true });

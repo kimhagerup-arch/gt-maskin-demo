@@ -1,14 +1,17 @@
 import { cx } from "../lib/format";
 
 /**
- * Kicker med strek, H2 og valgfri ingress eller høyre-slot (lenke/knapp).
- * tone: "dark" på mørk flate, "light" på lys flate.
+ * Felles seksjonshode: kicker, tittel og ingress venstrejustert i én blokk
+ * (ingressen maks ca. 60 tegn bred). Handlinger (knapper, tall, lenker) står
+ * under ingressen på mobil, i full bredde, og fra md i en egen kolonne til
+ * høyre som er bunnjustert mot tekstblokken og venstrejustert innad.
+ * Aldri høyrejustert brødtekst. tone: "dark" på mørk flate, "light" på lys.
  */
 export default function SectionHeader({
   kicker,
   title,
   lead,
-  aside,
+  actions,
   tone = "dark",
   as: Heading = "h2",
   className,
@@ -18,11 +21,11 @@ export default function SectionHeader({
   return (
     <div
       className={cx(
-        "flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-12",
+        "flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-12",
         className,
       )}
     >
-      <div className="flex flex-col gap-3 md:gap-4">
+      <div className="flex min-w-0 flex-col gap-3 md:gap-4">
         {kicker && (
           <p className={cx("kicker", dark ? "text-brand-accent-light" : "text-brand-accent-deep")}>
             {kicker}
@@ -37,18 +40,22 @@ export default function SectionHeader({
         >
           {title}
         </Heading>
+        {lead && (
+          <p
+            className={cx(
+              "max-w-[60ch] text-base leading-relaxed md:text-[17px]",
+              dark ? "text-brand-muted-inverse" : "text-brand-muted",
+            )}
+          >
+            {lead}
+          </p>
+        )}
       </div>
-      {lead && (
-        <p
-          className={cx(
-            "max-w-[440px] text-base leading-relaxed md:text-[17px]",
-            dark ? "text-brand-muted-inverse" : "text-brand-muted",
-          )}
-        >
-          {lead}
-        </p>
+      {actions && (
+        <div className="flex flex-col items-stretch gap-3 md:shrink-0 md:items-start">
+          {actions}
+        </div>
       )}
-      {aside && <div className="min-w-0 md:max-w-[50%] md:shrink-0">{aside}</div>}
     </div>
   );
 }

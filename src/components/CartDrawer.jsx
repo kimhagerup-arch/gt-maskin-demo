@@ -62,7 +62,7 @@ export default function CartDrawer() {
             ref={closeRef}
             type="button"
             onClick={cart.close}
-            className="flex h-11 w-11 items-center justify-center border border-brand-border-dark-strong"
+            className="flex h-11 w-11 items-center justify-center rounded-pill border border-brand-border-dark-strong"
             aria-label={t.close}
           >
             <Icon name="X" size={22} strokeWidth={2} />
@@ -108,11 +108,11 @@ export default function CartDrawer() {
                       {formatPrice(item.price)} {partsSection.card.priceSuffix}
                     </span>
                     <div className="mt-1 flex items-center gap-2">
-                      <div className="inline-flex items-center border border-brand-border-dark-strong">
+                      <div className="inline-flex items-center rounded-pill border border-brand-border-dark-strong">
                         <button
                           type="button"
                           onClick={() => cart.setQty(item.key, item.qty - 1)}
-                          className="flex h-9 w-9 items-center justify-center hover:bg-brand-primary-light"
+                          className="flex h-9 w-9 items-center justify-center rounded-pill hover:bg-brand-primary-light"
                           aria-label={`Færre ${item.title}`}
                         >
                           <Icon name="Minus" size={16} strokeWidth={2} />
@@ -123,7 +123,7 @@ export default function CartDrawer() {
                         <button
                           type="button"
                           onClick={() => cart.setQty(item.key, item.qty + 1)}
-                          className="flex h-9 w-9 items-center justify-center hover:bg-brand-primary-light"
+                          className="flex h-9 w-9 items-center justify-center rounded-pill hover:bg-brand-primary-light"
                           aria-label={`Flere ${item.title}`}
                         >
                           <Icon name="Plus" size={16} strokeWidth={2} />

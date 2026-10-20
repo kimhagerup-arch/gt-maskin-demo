@@ -68,7 +68,7 @@ export default function MobileMenu({ id, open, onClose, returnFocusRef }) {
         <button
           type="button"
           onClick={onClose}
-          className="flex h-11 w-11 items-center justify-center border border-brand-border-dark-strong text-brand-text-inverse"
+          className="flex h-11 w-11 items-center justify-center rounded-pill border border-brand-border-dark-strong text-brand-text-inverse"
           aria-label={nav.menuClose}
         >
           <Icon name="X" size={22} strokeWidth={2} />

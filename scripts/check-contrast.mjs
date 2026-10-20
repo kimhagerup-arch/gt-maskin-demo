@@ -21,6 +21,10 @@ const colors = {
   placeholder: "#9C9487",
   footer: "#8F877A",
   white: "#FFFFFF",
+  facebook: "#0866FF",
+  onFacebook: "#FFFFFF",
+  snapchat: "#FFFC00",
+  onSnapchat: "#000000",
 };
 
 function lum(hex) {
@@ -59,6 +63,9 @@ const pairs = [
   ["placeholder", "primarySoft", "Plassholdertekst på plassholder mørk"],
   ["footer", "primaryDark", "Copyright-linje i footer"],
   ["textInverse", "primaryDark", "Tekst i footer"],
+  ["onFacebook", "facebook", "Hvit tekst og merke på Facebook-blått (knapper, Messenger)"],
+  ["onSnapchat", "snapchat", "Svart tekst på Snapchat-gult (knapper, kort)"],
+  ["snapchat", "onSnapchat", "Gul tekst på svart knapp i Snapchat-kortet"],
 ];
 
 let allOk = true;

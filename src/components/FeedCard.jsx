@@ -3,9 +3,10 @@ import { cx, formatDate, formatNumber } from "../lib/format";
 import Icon from "./Icon";
 import Picture from "./Picture";
 import Placeholder from "./Placeholder";
+import { SourceMark } from "./SocialMarks";
 
+/** Plattformer uten eget merke i SocialMarks får et lucide-ikon. Facebook får det blå merket. */
 const PLATFORM_ICON = {
-  facebook: "Facebook",
   instagram: "Images",
   youtube: "Video",
 };
@@ -95,7 +96,11 @@ export default function FeedCard({ post, channelName }) {
 
       <div className="flex flex-1 flex-col gap-2.5 px-5 py-5 md:px-6">
         <p className="flex items-center gap-2 text-[13px] font-bold tracking-[0.06em] text-brand-muted">
-          <Icon name={PLATFORM_ICON[post.platform] || "Facebook"} size={16} strokeWidth={2} />
+          {PLATFORM_ICON[post.platform] ? (
+            <Icon name={PLATFORM_ICON[post.platform]} size={16} strokeWidth={2} />
+          ) : (
+            <SourceMark source="facebook" size={18} />
+          )}
           <span className="uppercase">{channelName}</span>
           <span aria-hidden="true">·</span>
           <time dateTime={post.date || undefined}>

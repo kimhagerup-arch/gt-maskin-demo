@@ -1,5 +1,32 @@
 # ARBEIDSLOGG
 
+## 21.10.2026: runde 3b, seksjonshoder, runde ikonknapper, radius, Snapchat-telefon
+
+- `SectionHeader` med felles mønster (`lead` og `actions`, aldri høyrejustert brødtekst); fem bruksssteder lagt om. Feed: ny ingress, talllinje med blått merke, dato under, blå knapp (`Button` variant `facebook`).
+- Runde 44 px ikonknapper i merkefargene overalt; `SourceMark` rund og brukt i feedkortene. Farger målt med `getComputedStyle` på 83 flater: `rgb(8, 102, 255)` og `rgb(255, 252, 0)`.
+- Radius-tokens `rounded-button` (10 px), `rounded-field` (8 px), `rounded-pill`; brukt på knapper, skjemafelt, chips, filtre, sliderpiler og ikonknapper. Bunnlinja på mobil uendret.
+- `SnapchatSection` med telefonramme (360 × 640), lokalt Camaro-bilde, «Se snapene», «Følg @gtmaskin-as», QR på desktop. Ingen eksterne kall før klikk.
+- QA: build og lint rene, fire ruter × seks bredder uten overflow og konsollfeil, axe 0 funn, Lighthouse mobil `/` 92 og `/video` 90 (to kjøringer hver, pluss `/utleie` 90), tilgjengelighet 100, beste praksis 100, CLS 0, 15 skjermbilder i `docs/qa/skjermbilder/runde-3b/`.
+
+## 20.10.2026: runde 3, videovisning, merkefarger, Snapchat, safari ut
+
+Branch `feature/runde-3` fra `dev`. Fakta sjekket 20.10.2026 i `_kilder/INNHOLD-FRA-GJERMUND.md`.
+
+**Gjort, per punkt**
+
+1. Video: `VideoPlayer` høydestyrt for 9:16 (`.player-portrait`: mobil maks 70 svh, desktop maks 640 px og under skjermen minus header), poster fyller rammen, tittel bare under/ved siden av. Desktop: dempet flate (maks 880 px) med `VideoMeta` (tittel, kildeetikett, «Se på Facebook»). `autoplay=true` og `allow="autoplay; encrypted-media; picture-in-picture"`; i headless krever Facebook-pluginen likevel eget klikk (notert).
+2. Slider: `VideoSlider` (scroll-snap, sveip, piler fra md med `aria-label` «Forrige videoer» / «Neste videoer», deaktivert i endene, `ResizeObserver`), `VideoCard` (knapp med `aria-pressed`, «Spiller nå»), `VideoShowcase` (felles for forsiden og `/video`, valg bytter spiller og ruller den inn, reduced motion respektert).
+3. Merkefarger: tokens `brand-facebook`, `brand-on-facebook`, `brand-snapchat`, `brand-on-snapchat`; `SocialMarks.jsx` med `FacebookMark`, `SnapchatMark` (hvit med svart kontur) og `SourceMark`; brukt i `SocialIcons`, `SocialLinks`, `SnapchatQrDialog`, `VideoMeta`. Kontrastrader lagt i `check-contrast.mjs` og BESLUTNINGER.md.
+4. Snapchat: `channels.js` med brukernavn, url og `embedUrl`; `SnapchatSection` (gult kort, iframe 416×692 ved klikk) nederst i videoseksjonen og på `/video`; QR-dialog beholdt på desktop med lenke; plassholderen fjernet; personverntekst oppdatert.
+5. Safari ut: alle tekster, lenker, SEO og tidslinje renset; `RentalBanner` med `public/images/utleie/vidde.svg` (egen illustrasjon, 3 kB) i stedet for foto og kreditlinje; scooterbildet omdøpt til `scooter-profil`; `FAKTA.md` notert.
+6. Header: undertittel på én linje med `taglineParts`, brekkpunkt `xs` (380 px).
+7. Konsoll og issues gjennomgått (tabell i QA-rapporten); `loading="lazy"` fjernet fra scooterbildene.
+8. Ingen andre fiks.
+9. QA: build og lint rene; 15 ruter på fem bredder uten overflow og konsollfeil; axe 0 funn; Lighthouse mobil `/` 90, `/video` 90, `/utleie` 90, tilgjengelighet og beste praksis 100, CLS 0; ingen eksterne kall før klikk; reel og Snapchat-profil verifisert etter klikk; null treff på tankestrek, forbudte ord og verktøyord; 50 skjermbilder.
+10. STATUS.md, BESLUTNINGER.md, BILDELISTE.md, QA-RAPPORT.md, KONTEKST.md og denne loggen oppdatert.
+
+**Rapport**: `docs/qa/QA-RAPPORT.md`, seksjon «Runde 3». **Beslutninger**: BESLUTNINGER.md, seksjon «Runde 3».
+
 ## 08.10.2026: kustom-emblem i hero
 
 **Gjort**

@@ -37,7 +37,7 @@ export const seo = {
   utleie: {
     title: "Snøscooterutleie, ATV og henger i Alta | GT Maskin AS",
     description:
-      "Leie av snøscooter, ATV, tilhenger og biltransporthenger i Alta. Snøscootersafari om vinteren.",
+      "Leie av snøscooter, ATV, tilhenger og biltransporthenger i Alta. Snøscooterutleie gjennom hele scootersesongen.",
   },
   omOss: {
     title: "Om GT Maskin AS, Kustom Speedshop i Alta siden 2012",
@@ -111,7 +111,7 @@ export const trust = [
 export const feedSection = {
   kicker: "Siste fra Facebook",
   title: "Live fra GT Maskin",
-  lead: "Over 1 000 liker GT Maskin på Facebook. Her ser du det siste fra verkstedet, hentet automatisk.",
+  lead: "Her ser du det siste fra verkstedet, hentet automatisk fra Facebook.",
   cta: { label: "Følg oss på Facebook" },
   placeholderTag: "Plassholder",
   placeholderCaption: "[Innleggstekst hentes automatisk fra Facebook-siden]",
@@ -139,6 +139,8 @@ export const videoSection = {
   placeholderTag: "Plassholder",
   playlistLabel: "Spilleliste",
   nowPlaying: "Spiller nå",
+  prev: "Forrige videoer",
+  next: "Neste videoer",
   allVideos: { label: "Se alle videoer", to: "/video" },
   seeOnSnapchat: "Se på Snapchat",
   seeOnFacebook: "Se på Facebook",
@@ -149,10 +151,10 @@ export const videoSection = {
     heroImage: "/images/bygg/fasade-dag-bilpark",
     heroAlt: "Bygget til GT Maskin på dagtid med mange biler foran",
     featuredTitle: "Siste video",
-    gridTitle: "Flere videoer",
+    gridTitle: "Alle videoer",
     moreKicker: "Mer fra oss",
     moreTitle: "Følg GT Maskin",
-    moreText: "Følg oss på Facebook og Snapchat for det siste fra verkstedet.",
+    moreText: "Følg oss på Facebook for det siste fra verkstedet.",
     moreFacebook: "Mer på Facebook",
     moreSnapchat: "Følg oss på Snapchat",
     snapchatQrHint: "Skann QR-koden i Snapchat",
@@ -348,7 +350,7 @@ export const rentalSection = {
     title: "Snøscooter, ATV og henger",
     lead: "Vi driver med utleie av snøscootere, ATV, tilhenger og biltransporthenger. Snøscooterutleie gjennom hele scootersesongen. Send en forespørsel med datoer, så bekrefter vi pris og tilgjengelighet.",
     heroImage: "/images/utleie/snoscootere-oppstilt",
-    heroAlt: "Snøscootere oppstilt i snøen foran Norseman Trail-hengeren",
+    heroAlt: "Snøscootere oppstilt i snøen foran en henger",
     shortcutsLabel: "Snarveier",
     priceNote: "Priser og vilkår er ikke lagt inn ennå og bekreftes når du sender forespørsel.",
   },
@@ -386,7 +388,7 @@ export const aboutSection = {
   title: "Entusiaster på biler siden 2012",
   paragraphs: [
     "GT Maskin AS ble etablert i Alta i 2012 av Gjermund Thomassen. I dag er vi et godkjent bilverksted og godkjent lærebedrift, med et moderne verksted i Myggveien 3 på Aronneskjosen.",
-    "Vi er entusiaster, ikke bare på amerikanske biler, men på alle spesielle biler. Kundemottaket er innbydende og kreativt, og det står til tider svært fine biler inne hos oss. Trenger du hjelp til noe, er det bare å ta kontakt.",
+    "Vi er entusiaster, ikke bare på amerikanske biler, men på alle spesielle biler. Vi tar vare på bilen din, gamle som nye, blanke som rustne. I butikken og kundemottaket står det til tider veldig fine biler, så stikk gjerne innom. Trenger du hjelp til noe, er det bare å ta kontakt.",
   ],
   facts: [
     { value: "2012", label: "GT Maskin AS stiftet" },
@@ -400,12 +402,12 @@ export const aboutSection = {
   image: "/images/butikk/kundemottak-sofa-cabriolet",
   imageAlt: "Kundemottaket hos GT Maskin med bilsofa, cabriolet og hyller",
   page: {
-    heroImage: "/images/hero/verksted-hero-klassiker",
-    heroAlt: "Amerikansk klassiker fotografert i sort-hvitt fra lav vinkel",
+    heroImage: "/images/bygg/fasade-dag-klassikere",
+    heroAlt: "Bygget til GT Maskin på dagtid med amerikanske klassikere foran",
     receptionKicker: "Kundemottaket",
-    receptionTitle: "Innbydende og kreativt",
+    receptionTitle: "Stikk gjerne innom",
     receptionText:
-      "Kundemottaket i Myggveien er innbydende og kreativt: bardisk, bilsofa, gammel bensinpumpe og til tider svært fine biler inne på gulvet.",
+      "I butikken og kundemottaket står det til tider veldig fine biler, så stikk gjerne innom. Trenger du hjelp til noe, er det bare å ta kontakt.",
     quote: {
       text: "Innbydende og kreativt kundemottak. Kan bistå med service og vedlikehold, gode tips og råd!",
       source: "Alta Amcar Klubb",
@@ -527,7 +529,7 @@ export const notFoundPage = {
 export const privacyPage = {
   kicker: "Personvern",
   title: "Personvern",
-  updated: "Sist oppdatert: september 2026",
+  updated: "Sist oppdatert: oktober 2026",
   sections: [
     {
       title: "Ingen sporing, ingen informasjonskapsler",
@@ -543,7 +545,7 @@ export const privacyPage = {
     },
     {
       title: "Eksterne lenker",
-      text: "Lenker til Facebook, Messenger, Snapchat, norsemantrail.com og Google Maps åpner tjenestene deres i nye faner. Der gjelder de respektive tjenestenes personvernregler. Innebygde videoer fra Facebook og YouTube lastes først når du klikker på avspilling, og først da sendes det data til disse tjenestene.",
+      text: "Lenker til Facebook, Messenger, Snapchat og Google Maps åpner tjenestene deres i nye faner. Der gjelder de respektive tjenestenes personvernregler. Innebygde videoer fra Facebook og YouTube og Snapchat-profilen lastes først når du selv klikker på avspilling eller «Vis Snapchat-profilen», og først da sendes det data til disse tjenestene.",
     },
     {
       title: "Kontakt",
@@ -569,7 +571,6 @@ export const footer = {
         { label: "Snøscooter", to: "/utleie#scooter-60" },
         { label: "ATV og henger", to: "/utleie#atv" },
         { label: "Utleieforespørsel", to: "/utleie#utleieforesporsel" },
-        { label: "Snøscootersafari", href: "https://www.norsemantrail.com" },
       ],
     },
     {
@@ -596,13 +597,25 @@ export const socialLinks = {
   snapchat: "Følg oss på Snapchat",
   snapchatOpen: "Åpne i Snapchat",
   snapchatQr: "Skann QR-koden i Snapchat",
-  snapchatPending: "[Snapchat-brukernavn bekreftes av Gjermund]",
   follow: "Følg oss",
   heroFollow: "Følg verkstedet på Facebook og Snapchat",
   facebookAria: "GT Maskin på Facebook",
   snapchatAria: "GT Maskin på Snapchat",
   qrDialogTitle: "Skann for å følge oss på Snapchat",
   qrDialogClose: "Lukk",
+};
+
+export const snapchatSection = {
+  kicker: "Snapchat",
+  title: "GT Maskin på Snapchat",
+  lead: "Korte videoer fra verkstedet. Følg oss for mer.",
+  follow: "Følg",
+  seeSnaps: "Se snapene",
+  loadNote: "Lastes fra Snapchat når du trykker.",
+  qrHint: "Skann med Snapchat-kameraet",
+  embedTitle: "GT Maskin på Snapchat",
+  // Lokalt stående bilde i telefonrammen før klikk (gul Camaro, bil2.jpg).
+  posterImage: "/images/biler/camaro-gul-front",
 };
 
 export const placeholderLabels = {

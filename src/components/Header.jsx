@@ -51,7 +51,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2 md:gap-3 xl:gap-4">
-          <SocialIcons size="sm" className="hidden lg:flex" />
+          <SocialIcons className="hidden lg:flex" />
           <a
             href={companyFacts.phone.href}
             className="hidden items-center gap-2 text-base font-bold tracking-[0.02em] text-brand-text-inverse transition-colors hover:text-brand-accent-light xl:inline-flex"
@@ -64,11 +64,11 @@ export default function Header() {
             <button
               type="button"
               onClick={cart.open}
-              className="relative flex h-11 w-11 items-center justify-center border border-brand-border-dark-strong text-brand-text-inverse transition-colors hover:border-brand-accent-light"
+              className="relative flex h-11 w-11 items-center justify-center rounded-pill border border-brand-border-dark-strong text-brand-text-inverse transition-colors hover:border-brand-accent-light"
               aria-label={`${nav.cartLabel}, ${cart.count} ${cart.count === 1 ? "vare" : "varer"}`}
             >
               <Icon name="ShoppingCart" size={20} strokeWidth={2} />
-              <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center bg-brand-accent px-1 text-[11px] font-bold text-brand-primary">
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-pill bg-brand-accent px-1 text-[11px] font-bold text-brand-primary">
                 {cart.count}
               </span>
             </button>
@@ -76,7 +76,7 @@ export default function Header() {
 
           <a
             href={companyFacts.phone.href}
-            className="flex h-11 w-11 items-center justify-center bg-brand-accent text-brand-primary md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-pill bg-brand-accent text-brand-primary md:hidden"
             aria-label={`Ring ${companyFacts.phone.display}`}
           >
             <Icon name="Phone" size={20} strokeWidth={2} />
@@ -89,7 +89,7 @@ export default function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className="flex h-11 w-11 items-center justify-center border border-brand-border-dark-strong text-brand-text-inverse lg:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-pill border border-brand-border-dark-strong text-brand-text-inverse lg:hidden"
             aria-label={open ? nav.menuClose : nav.menuOpen}
             aria-expanded={open}
             aria-controls={MENU_ID}

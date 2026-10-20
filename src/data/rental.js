@@ -1,6 +1,6 @@
 // Utleie. Priser og vilkår er plassholdere til Gjermund har bekreftet.
 // All utleie samles på /utleie med en utleieforespørsel på siden (ingen ekstern booking).
-// Safari bestilles på norsemantrail.com.
+// Snøscootersafari er avsluttet (opplyst av kunden 20.10.2026) og nevnes ikke.
 // Objekter uten bilde (image: null) vises med et ikonfelt, ikke tom plassholder.
 
 export const rental = [
@@ -59,15 +59,18 @@ export const rentalTypes = [
   { value: "annet", label: "Annet / usikker" },
 ];
 
-export const safari = {
-  kicker: "Snøscootersafari",
-  title: "Snøscootersafari i Finnmark",
-  text: "Om vinteren kjører vi guidede snøscooterturer, se Norseman Trail.",
-  ctaLabel: "norsemantrail.com",
-  url: "https://www.norsemantrail.com",
-  // Bakgrunn: lisens sjekkes og krediteres før go-live (se BILDELISTE.md).
-  image: "/images/utleie/safari-fjell",
+/**
+ * Utleiebanneret (forsiden og /utleie). Tekstene er kundens egne utleieformuleringer,
+ * ingen nye fakta. Knappen settes der banneret brukes: «Se utleie» på forsiden,
+ * «Send utleieforespørsel» på /utleie.
+ */
+export const rentalBanner = {
+  kicker: "Snøscooterutleie",
+  title: "Gjennom hele scootersesongen",
+  text: "Snøscooterutleie gjennom hele scootersesongen, ATV og hengere resten av året. Send en utleieforespørsel, så tar vi kontakt.",
+  // Egen SVG-illustrasjon av fjell og vidde (public/images/utleie/vidde.svg), ingen fotokreditt.
+  image: "/images/utleie/vidde.svg",
   // Frilagt produsentbilde, kun demo. Byttes med GT Maskins egne scootere før go-live.
-  sledImage: "/images/utleie/safari-scooter",
-  credit: "Foto: [Fotograf, lisens]",
+  sledImage: "/images/utleie/scooter-profil",
+  ctaHome: { label: "Se utleie", to: "/utleie" },
 };

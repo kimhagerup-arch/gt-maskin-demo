@@ -141,3 +141,61 @@ Kun forsiden er berørt. Skjermbilder av hero i `docs/qa/skjermbilder/runde-2/he
 | Mobil 375 px | emblemet ligger i flyt under bildet, ingen overlapp med tekst eller knapper, ingen horisontal overflow |
 | Hover og redusert bevegelse | glans fades inn på 0,3 s fra 768 px; med `prefers-reduced-motion` er overgangen 0,00001 s |
 | Konsollfeil | ingen |
+
+## Runde 3 (20.10.2026): videovisning, merkefarger, Snapchat, safari ut
+
+Branch `feature/runde-3`, mot `npm run preview` i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-3/` (50 filer: alle ruter på 375 og 1440 px, `/`, `/video` og `/utleie` også på 320, 768 og 1024 px, pluss reel som spiller og Snapchat-profilen etter klikk).
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene |
+| 15 ruter × 320, 375, 768, 1024, 1440 px | `scrollWidth` lik viewport overalt, ingen konsollfeil eller -advarsler fra vår kode |
+| axe-core på alle ruter ved 375 og 1440 px | 0 funn |
+| Eksterne kall før klikk | ingen, på alle ruter og bredder |
+| Facebook-reel etter klikk på play (`/video` 1440, `/` 375) | plugin-iframe montert, video 720×1280 lastet (`readyState` 4). Autoplay starter ikke i headless; pluginen trenger ett klikk til (se BESLUTNINGER.md) |
+| Snapchat-profil etter klikk på «Vis Snapchat-profilen» | iframe 416×692 mot `/@gtmaskin-as/embed` viser profilkortet med navn, sted, «Amerikansk bilverksted» og historier |
+| Slider | kortvalg bytter video og markerer kortet (`aria-pressed`), spilleren rulles inn; piler blar ett kort og er deaktivert i endene; sporet kan sveipes på 375 px med neste kort synlig i kanten |
+| Snapchat-knapper | header fra 768 px åpner dialog (QR, @gtmaskin-as, «Åpne i Snapchat»), Escape lukker og fokus går tilbake; mobilmeny lenker direkte til profilen |
+| Header 320, 360, 375, 390, 430 px | undertittelen på én linje, «· ALTA» skjult under 380 px |
+| Tankestrek, forbudte ord, verktøyord | null treff i synlig innhold |
+| Kontrast (`scripts/check-contrast.mjs`) | alle kombinasjoner AA, inkludert de nye kanalfargene (4,82:1 og 19,18:1) |
+
+### Lighthouse (mobil, `npm run preview`)
+
+| Rute | Ytelse (2 kjøringer) | Tilgjengelighet | Beste praksis | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|
+| `/` | 90, 90 | 100 | 100 | 69 | 3,5 s | 0 | 20-30 ms |
+| `/video` | 90, 90 | 100 | 100 | 69 | 3,5 s | 0 | 0 ms |
+| `/utleie` | 90, 90 | 100 | 100 | 69 | 3,4 s | 0 | 0 ms |
+
+SEO under 100 skyldes `noindex` (bevisst til go-live).
+
+### Konsoll og DevTools-issues
+
+| Kilde | Funn | Håndtering |
+|---|---|---|
+| Vår kode | ingen konsollfeil eller -advarsler. Én DevTools-issue, `LazyLoadImageIssue`, for de tre scooterbildene i utleiebanneret på hver last, og sporadisk for footer-logoen på korte sider. | Rettet: scooterbildene og miniatyrene monteres etter `load` uten `loading="lazy"`, footer-logoen lastes eagert (samme fil som i header). Etter retting er meldingen sporadisk: i siste fullkjøring 4 av 75 laster (forsiden 3, `/video` 1), i 47 kontrollaster med samme prosedyre null. Den er en rådgivende melding fra Chrome om lazy-bilder nær viewport i lastøyeblikket, ikke en feil, og gir ingen utslag i Lighthouse |
+| Facebook (etter klikk på reel) | ingen konsollfeil, -advarsler eller DevTools-issues fra Facebook-pluginen i testen | Facebooks iframe, ikke noe vi kan endre |
+| Snapchat (etter klikk på profil) | `CookieIssue` (56-64 per side) fra Snapchats egen profilvisning: tredjeparts-cookies i iframen | Snapchats iframe (profilvisningen laster også Google Analytics og Tag Manager hos seg), ikke noe vi kan endre |
+
+### Gjenstående
+
+1. Titler, stillbilder og datoer for de seks videoene, og resten av tabellen i STATUS.md.
+2. Bytte produsentbildet av scooteren (`ac-profil.jpg`) før go-live.
+3. Sjekke i en vanlig nettleser om Facebook-reelen starter av seg selv etter klikk på play; i headless krever pluginen ett klikk til.
+
+## Runde 3b (21.10.2026): seksjonshoder, runde ikonknapper, radius, Snapchat-telefon
+
+Skjermbilder i `docs/qa/skjermbilder/runde-3b/` (15 filer: header, hero, «Live fra GT Maskin», Snapchat-seksjonen før og etter klikk, skjema, mobilmeny, QR-dialog og kontaktsiden, på 375 og 1440 px).
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene |
+| `/`, `/video`, `/kontakt`, `/utleie` × 320, 375, 768, 1024, 1440, 1920 px | `scrollWidth` lik viewport, ingen konsollfeil eller -advarsler |
+| axe-core ved 375, 1440 og 1920 px | 0 funn |
+| Eksterne kall før klikk | ingen |
+| Lighthouse mobil | `/` 92 og `/video` 90 (to kjøringer hver, pluss `/utleie` 90), tilgjengelighet 100, beste praksis 100, CLS 0 |
+| Merkefarger (`getComputedStyle`, 83 flater på fire ruter, mobilmeny og dialog) | Facebook `rgb(8, 102, 255)` overalt, Snapchat `rgb(255, 252, 0)` overalt, ikonknapper 44 × 44 px, radius 9999 px |
+| Snapchat-telefon etter klikk | profilvisningen lastes i rammen og viser profilkort og historier |

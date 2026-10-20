@@ -1,6 +1,6 @@
 // Kanalfakta. Facebook-tallene er fra Facebook-snippet, verifisert dato under.
-// Snapchat: brukernavn og profiltype er ikke mottatt fra kunden. Til det kommer vises
-// kun QR-koden, uten lenke. url settes til https://www.snapchat.com/add/<brukernavn>.
+// Snapchat: offentlig profil, sjekket 20.10.2026. embedUrl er Snapchats profilvisning
+// (profilkort og nyeste historier), montert først når brukeren klikker (SnapchatSection).
 // Messenger: avledet av Facebook-sidens adresse (facebook.com/GtMaskinas -> m.me/GtMaskinas).
 export const channels = [
   {
@@ -20,9 +20,11 @@ export const channels = [
   {
     platform: "snapchat",
     name: "Snapchat",
-    username: null,
-    profileType: null,
-    url: null,
+    username: "gtmaskin-as",
+    profileType: "public",
+    url: "https://www.snapchat.com/@gtmaskin-as",
+    embedUrl: "https://www.snapchat.com/@gtmaskin-as/embed",
+    verifiedAt: "2026-10-20",
     qrImage: "/images/some/snapchat-qr",
     qrAlt: "Snapchat-QR-kode for GT Maskin",
   },

@@ -49,28 +49,28 @@ export function embedUrl(video, autoplay) {
 }
 
 /**
- * Én videospiller. Posteren er alltid et lokalt bilde, og ingenting eksternt
+ * Hovedspilleren. Posteren er alltid et lokalt bilde, og ingenting eksternt
  * lastes før brukeren trykker play. Da monteres iframe (YouTube, Facebook)
  * eller <video> (mp4). Snapchat kan ikke bygges inn og lenker ut.
  *
- * Rammen har fast forhold så siden ikke flytter seg når video monteres:
- * - liggende video: 16:9.
- * - stående video (9:16) i stor spiller: 4:5 på mobil, 16:9 fra md. Posteren
- *   fyller rammen uskarpt bak, og selve videoen står skarp i en 9:16-kolonne
- *   midt i rammen, både før og etter klikk.
- * - stående video i kort og rutenett: rammen er 9:16.
+ * Rammen har fast størrelse så siden ikke flytter seg når video monteres:
+ * - stående video (9:16): høyden styrer. Mobil maks 70 % av skjermhøyden,
+ *   desktop maks 640 px og aldri høyere enn skjermen minus header
+ *   (`.player-portrait` i index.css). Posteren fyller hele rammen.
+ * - liggende video: full bredde i 16:9, med samme makshøyde på desktop.
+ * Tittelen står ikke oppå bildet; den vises én gang ved siden av eller under
+ * spilleren (VideoMeta).
  */
-export default function VideoPlayer({ video, sizes = "100vw", large = false, className }) {
+export default function VideoPlayer({ video, className }) {
   const reduced = useReducedMotion();
   const [playing, setPlaying] = useState(false);
   const isSnapchat = video.source === "snapchat";
   const canPlay = Boolean(video.src) && !isSnapchat;
   const portrait = video.aspect === "9:16";
-  const stage = portrait && large;
 
   const frameClass = cx(
-    "relative w-full overflow-hidden bg-brand-primary-soft",
-    stage ? "aspect-[4/5] md:aspect-video" : portrait ? "aspect-[9/16]" : "aspect-video",
+    "relative mx-auto max-w-full overflow-hidden bg-brand-primary-soft",
+    portrait ? "player-portrait aspect-[9/16]" : "player-landscape aspect-video w-full",
     className,
   );
 
@@ -94,17 +94,14 @@ export default function VideoPlayer({ video, sizes = "100vw", large = false, cla
     }
     return (
       <div className={cx(frameClass, "bg-black")}>
-        {stage && <Backdrop video={video} sizes={sizes} />}
-        <div className="relative flex h-full w-full justify-center">
-          <iframe
-            className={cx("h-full", stage ? "aspect-[9/16]" : "w-full")}
-            src={embedUrl(video, autoplay)}
-            title={video.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
-        </div>
+        <iframe
+          className="h-full w-full"
+          src={embedUrl(video, autoplay)}
+          title={video.title}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
       </div>
     );
   }
@@ -113,58 +110,40 @@ export default function VideoPlayer({ video, sizes = "100vw", large = false, cla
     <>
       <span
         className={cx(
-          "flex items-center justify-center rounded-full bg-brand-accent text-brand-primary transition-transform",
-          large ? "h-16 w-16 md:h-[88px] md:w-[88px]" : "h-14 w-14",
+          "flex h-16 w-16 items-center justify-center rounded-full bg-brand-accent text-brand-primary transition-transform md:h-20 md:w-20",
           canPlay || (isSnapchat && video.src) ? "group-hover:scale-105" : "opacity-80",
         )}
       >
         <Icon
           name={isSnapchat ? "ExternalLink" : "Play"}
-          size={large ? 34 : 26}
+          size={32}
           strokeWidth={isSnapchat ? 2.2 : 0}
           className={cx(!isSnapchat && "ml-1 fill-current")}
         />
       </span>
-      <span
-        className={cx(
-          "max-w-md px-4 text-center font-semibold tracking-wider",
-          large ? "text-[13px]" : "text-xs",
-          video.placeholder ? "text-brand-placeholder" : "text-brand-text-inverse",
-        )}
-      >
-        {isSnapchat ? videoSection.seeOnSnapchat : video.title}
-      </span>
+      {isSnapchat && (
+        <span className="px-4 text-center text-[13px] font-semibold tracking-wider text-brand-text-inverse">
+          {videoSection.seeOnSnapchat}
+        </span>
+      )}
     </>
-  );
-
-  const poster = video.poster ? (
-    <Picture
-      src={video.poster}
-      alt={video.posterAlt || ""}
-      sizes={stage ? "40vw" : sizes}
-      className="h-full w-full"
-      imgClassName={cx("h-full w-full object-cover", video.placeholder && "opacity-80")}
-    />
-  ) : (
-    <Placeholder label="[Videoposter]" className="h-full w-full" />
   );
 
   return (
     <div className={cx(frameClass, "border border-brand-border-dark")}>
-      {stage ? (
-        <>
-          <Backdrop video={video} sizes={sizes} />
-          <div className="relative flex h-full w-full justify-center">
-            <div className="aspect-[9/16] h-full overflow-hidden border-x border-brand-border-dark">
-              {poster}
-            </div>
-          </div>
-        </>
+      {video.poster ? (
+        <Picture
+          src={video.poster}
+          alt={video.posterAlt || ""}
+          sizes={portrait ? "(min-width: 768px) 360px, 100vw" : "(min-width: 1280px) 1200px, 100vw"}
+          className="h-full w-full"
+          imgClassName={cx("h-full w-full object-cover", video.placeholder && "opacity-80")}
+        />
       ) : (
-        poster
+        <Placeholder label="[Videoposter]" className="h-full w-full" />
       )}
       <div
-        className="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-brand-primary/70 via-transparent to-transparent"
         aria-hidden="true"
       />
 
@@ -191,30 +170,11 @@ export default function VideoPlayer({ video, sizes = "100vw", large = false, cla
           disabled={!canPlay}
           aria-disabled={!canPlay}
           className="group absolute inset-0 flex flex-col items-center justify-center gap-4 text-brand-text-inverse"
-          aria-label={
-            isSnapchat ? videoSection.seeOnSnapchat : `${videoSection.play}: ${video.title}`
-          }
+          aria-label={`${videoSection.play}: ${video.title}`}
         >
           {control}
         </button>
       )}
-    </div>
-  );
-}
-
-/** Uskarp, dempet utgave av posteren som fyller rammen bak en stående video. Kun lokalt bilde. */
-function Backdrop({ video, sizes }) {
-  if (!video.poster) return null;
-  return (
-    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      <Picture
-        src={video.poster}
-        alt=""
-        sizes={sizes}
-        className="h-full w-full"
-        imgClassName="h-full w-full scale-110 object-cover opacity-40 blur-2xl"
-      />
-      <div className="absolute inset-0 bg-brand-primary/40" />
     </div>
   );
 }

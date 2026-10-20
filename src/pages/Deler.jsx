@@ -70,7 +70,7 @@ export default function Deler() {
 
   const chipClass = (active) =>
     cx(
-      "h-10 shrink-0 border px-4 text-sm font-semibold transition-colors",
+      "h-10 shrink-0 rounded-pill border px-4 text-sm font-semibold transition-colors",
       active
         ? "border-brand-primary bg-brand-primary text-brand-text-inverse"
         : "border-brand-border-strong bg-transparent text-brand-text hover:border-brand-primary",
@@ -86,7 +86,7 @@ export default function Deler() {
         <div className="container-site flex flex-col gap-6 md:gap-8">
           {/* Gruppeveksler */}
           <div
-            className="grid grid-cols-2 border border-brand-border-strong bg-brand-card p-1 sm:inline-grid sm:self-start"
+            className="grid grid-cols-2 rounded-pill border border-brand-border-strong bg-brand-card p-1 sm:inline-grid sm:self-start"
             role="group"
             aria-label={t.groupLabel}
           >
@@ -99,7 +99,7 @@ export default function Deler() {
                   onClick={() => setGroup(g.slug)}
                   aria-pressed={active}
                   className={cx(
-                    "h-11 px-5 text-[15px] font-bold transition-colors sm:min-w-[180px]",
+                    "h-11 rounded-pill px-5 text-[15px] font-bold transition-colors sm:min-w-[180px]",
                     active
                       ? "bg-brand-primary text-brand-text-inverse"
                       : "text-brand-text hover:bg-brand-surface",
@@ -157,7 +157,7 @@ export default function Deler() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={gt.searchPlaceholder}
-                  className="h-11 w-full border border-brand-border-strong bg-brand-card pl-10 pr-3 text-base text-brand-text placeholder:text-brand-muted focus:border-brand-primary focus:outline-none"
+                  className="h-11 w-full rounded-field border border-brand-border-strong bg-brand-card pl-10 pr-3 text-base text-brand-text placeholder:text-brand-muted focus:border-brand-primary focus:outline-none"
                 />
               </div>
               {cart.count > 0 && (

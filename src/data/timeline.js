@@ -17,12 +17,12 @@ export const timeline = [
   },
   {
     year: "[ÅR]",
-    text: "[Milepæl, f.eks. oppstart snøscooterutleie og safari]",
+    text: "[Milepæl, f.eks. oppstart snøscooterutleie]",
     placeholder: true,
   },
   {
     year: "I dag",
-    text: "Kustom Speedshop med verksted, delesalg, biler til salgs, utleie og safari.",
+    text: "Kustom Speedshop med verksted, delesalg, biler til salgs og utleie.",
     placeholder: false,
   },
 ];

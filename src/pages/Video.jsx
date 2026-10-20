@@ -1,21 +1,14 @@
 import PageHero from "../components/PageHero";
-import Reveal from "../components/Reveal";
-import SectionHeader from "../components/SectionHeader";
+import SnapchatSection from "../components/SnapchatSection";
 import SocialLinks from "../components/SocialLinks";
-import VideoMeta from "../components/VideoMeta";
-import VideoPlayer from "../components/VideoPlayer";
+import VideoShowcase from "../components/VideoShowcase";
 import { seo, videoSection } from "../data/siteContent";
 import { videos } from "../data/videos";
 import { useSeoMeta } from "../hooks/useSeoMeta";
-import { cx } from "../lib/format";
 
 export default function Video() {
   useSeoMeta(seo.video);
   const t = videoSection.page;
-  const featured = videos.find((v) => v.featured) || videos[0];
-  const rest = videos.filter((v) => v.id !== featured?.id);
-  const portraitGrid = rest.length > 0 && rest.every((v) => v.aspect === "9:16");
-  const columns = portraitGrid ? 5 : 3;
 
   return (
     <>
@@ -29,50 +22,25 @@ export default function Video() {
         compact
       />
 
-      {featured && (
+      {videos.length > 0 && (
         <section className="section-pad bg-brand-primary text-brand-text-inverse">
           <div className="container-site flex flex-col gap-4">
             <h2 className="sr-only">{t.featuredTitle}</h2>
-            <VideoPlayer video={featured} large sizes="(min-width: 1280px) 1200px, 100vw" />
-            <VideoMeta video={featured} titleClassName="text-lg md:text-xl" />
+            <VideoShowcase
+              videos={videos}
+              listTitle={
+                <h2 className="font-display text-3xl tracking-wide md:text-4xl">{t.gridTitle}</h2>
+              }
+            />
           </div>
         </section>
       )}
 
-      {rest.length > 0 && (
-        <section className="section-pad border-t border-brand-border-dark bg-brand-primary-dark text-brand-text-inverse">
-          <div className="container-site flex flex-col gap-8 md:gap-10">
-            <SectionHeader kicker={t.kicker} title={t.gridTitle} />
-            <ul
-              className={cx(
-                "grid gap-3 md:gap-6",
-                portraitGrid
-                  ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
-                  : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
-              )}
-            >
-              {rest.map((video, i) => (
-                <Reveal
-                  as="li"
-                  key={video.id}
-                  delay={(i % columns) * 60}
-                  className="flex flex-col gap-3"
-                >
-                  <VideoPlayer
-                    video={video}
-                    sizes={
-                      portraitGrid
-                        ? "(min-width: 1280px) 230px, (min-width: 640px) 33vw, 50vw"
-                        : "(min-width: 1024px) 384px, (min-width: 768px) 50vw, 100vw"
-                    }
-                  />
-                  <VideoMeta video={video} />
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
+      <section className="section-pad border-t border-brand-border-dark bg-brand-primary-dark text-brand-text-inverse">
+        <div className="container-site">
+          <SnapchatSection />
+        </div>
+      </section>
 
       <section className="section-pad bg-brand-bg text-brand-text">
         <div className="container-site">
@@ -82,12 +50,7 @@ export default function Video() {
               <h2 className="font-display text-4xl tracking-wide md:text-5xl">{t.moreTitle}</h2>
               <p className="max-w-xl text-brand-muted">{t.moreText}</p>
             </div>
-            <SocialLinks
-              tone="light"
-              qr="always"
-              include={["facebook", "snapchat"]}
-              className="shrink-0"
-            />
+            <SocialLinks tone="light" include={["facebook"]} className="shrink-0" />
           </div>
         </div>
       </section>

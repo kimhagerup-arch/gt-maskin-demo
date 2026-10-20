@@ -79,6 +79,19 @@
   --brand-border-dark: 46 43 39; /* #2E2B27 */
   --brand-border-dark-strong: 58 54 49; /* #3A3631 */
   --brand-outline: 74 70 63; /* #4A463F */
+
+  /* Kanalfarger. Merkene farges ikke om: Facebook-blått med hvitt merke,
+     Snapchat-gult med hvitt spøkelse i svart kontur. */
+  --brand-facebook: 8 102 255; /* #0866FF */
+  --brand-on-facebook: 255 255 255; /* #FFFFFF */
+  --brand-snapchat: 255 252 0; /* #FFFC00 */
+  --brand-on-snapchat: 0 0 0; /* #000000 */
+
+  /* Hjørner. Knapper og lenkeknapper 10 px, skjemafelt 8 px, chips, filterknapper,
+     sliderpiler og ikonknapper helt runde. Kort og bilder har rette kanter. */
+  --radius-button: 10px;
+  --radius-field: 8px;
+  --radius-pill: 9999px;
 }
 
 @layer base {
@@ -169,7 +182,7 @@
   }
 
   .input-dark {
-    @apply h-12 w-full border border-brand-border-dark-strong bg-brand-primary px-3.5 text-base text-brand-text-inverse outline-none transition-colors duration-150 focus:border-brand-accent-light focus-visible:ring-2 focus-visible:ring-brand-accent-light focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary-light;
+    @apply h-12 w-full rounded-field border border-brand-border-dark-strong bg-brand-primary px-3.5 text-base text-brand-text-inverse outline-none transition-colors duration-150 focus:border-brand-accent-light focus-visible:ring-2 focus-visible:ring-brand-accent-light focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary-light;
   }
   .textarea-dark {
     @apply input-dark h-32 resize-none py-3;
@@ -178,10 +191,28 @@
   .link-underline {
     @apply inline-flex items-center gap-2.5 border-b-2 pb-1 font-bold transition-colors duration-150;
   }
+
+  /* Hovedspilleren for stående video: høyden styrer, bredden følger 9:16.
+     Mobil: maks 70 % av skjermhøyden, så sticky-linjen aldri dekker play.
+     Desktop: maks 640 px og aldri høyere enn skjermen minus header og luft. */
+  .player-portrait {
+    height: min(70vh, calc((100vw - 3rem) * 16 / 9));
+    height: min(70svh, calc((100vw - 3rem) * 16 / 9));
+  }
+  @screen md {
+    .player-portrait {
+      height: min(640px, calc(100vh - 136px));
+      height: min(640px, calc(100svh - 136px));
+    }
+    .player-landscape {
+      max-height: min(640px, calc(100vh - 136px));
+      max-height: min(640px, calc(100svh - 136px));
+    }
+  }
 }
 
-/* Safari-banner: scootere kjører over snøflaten. Kun transform og opacity. */
-@keyframes safari-drive {
+/* Utleiebanner: scootere kjører over snøflaten. Kun transform og opacity. */
+@keyframes scooter-drive {
   from {
     transform: translate3d(-50%, 0, 0);
   }
@@ -189,7 +220,7 @@
     transform: translate3d(100%, 0, 0);
   }
 }
-@keyframes safari-bob {
+@keyframes scooter-bob {
   0%,
   100% {
     transform: translate3d(0, 0, 0) rotate(-0.8deg);
@@ -198,7 +229,7 @@
     transform: translate3d(0, -3px, 0) rotate(0.8deg);
   }
 }
-@keyframes safari-snow {
+@keyframes scooter-snow {
   0% {
     transform: translate3d(0, 0, 0) scale(0.7);
     opacity: 0;
@@ -211,46 +242,46 @@
     opacity: 0;
   }
 }
-.safari-lane {
+.scooter-lane {
   width: 100%;
   transform: translate3d(-50%, 0, 0);
-  animation-name: safari-drive;
+  animation-name: scooter-drive;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-play-state: paused;
   will-change: transform;
 }
-.safari-lane.is-running {
+.scooter-lane.is-running {
   animation-play-state: running;
 }
-.safari-lane-static,
-.safari-lane-static.is-running {
+.scooter-lane-static,
+.scooter-lane-static.is-running {
   animation: none;
   transform: translate3d(12%, 0, 0);
 }
-.safari-sled {
-  animation: safari-bob 1.6s ease-in-out infinite;
+.scooter-sled {
+  animation: scooter-bob 1.6s ease-in-out infinite;
   animation-play-state: paused;
   transform-origin: 50% 100%;
 }
-.is-running .safari-sled {
+.is-running .scooter-sled {
   animation-play-state: running;
 }
-.safari-snow {
+.scooter-snow {
   opacity: 0;
-  animation: safari-snow 1.1s ease-out infinite;
+  animation: scooter-snow 1.1s ease-out infinite;
   animation-play-state: paused;
 }
-.safari-snow.is-running {
+.scooter-snow.is-running {
   animation-play-state: running;
 }
 @media (prefers-reduced-motion: reduce) {
-  .safari-lane,
-  .safari-sled,
-  .safari-snow {
+  .scooter-lane,
+  .scooter-sled,
+  .scooter-snow {
     animation: none;
   }
-  .safari-snow {
+  .scooter-snow {
     opacity: 0.6;
   }
 }

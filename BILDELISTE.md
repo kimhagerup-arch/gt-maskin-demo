@@ -2,7 +2,7 @@
 
 Bilder som fortsatt mangler, med ønsket motiv, hvor de brukes, format og størrelse. Alle leveres til `assets-raw/`, legges inn i `PHOTOS`-listen i `scripts/prepare-images.mjs` og kjøres gjennom `npm run images`.
 
-Sist oppdatert 07.10.2026 (runde 2). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND.md` som skulle peke på nye bilder (Facebook-innlegg, videoposter, nytt hovedbilde) finnes ikke, så ingen nye bilder er lagt inn i denne runden.
+Sist oppdatert 20.10.2026 (runde 3). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND.md` inneholder til nå videolenker og Snapchat-fakta, ingen nye bilder. Safari-banneret er blitt et utleiebanner med egen SVG-illustrasjon som bakgrunn, så fotoet og lisensspørsmålet er borte.
 
 ## Mangler
 
@@ -19,9 +19,8 @@ Sist oppdatert 07.10.2026 (runde 2). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 | Biler til salgs, 3-6 bilder per bil (front, side, bak, interiør) | `/biler-til-salgs`, detaljside med galleri, forsiden | jpg | min. 1600 px bred, 4:3 | Merke, modell, årsmodell, km, motor og pris må følge med. Galleriet tar flere bilder per bil (`images` og `imageAlts`) |
 | Produktbilder, deler | `/deler`, produktside, handlekurv | jpg eller png | min. 1200 px, 4:3, nøytral bakgrunn | Navn, merke, pris, varenummer og passer-til må følge med |
 | Produktbilder, klær og capser | `/deler?gruppe=klaer`, produktside | jpg eller png | min. 1200 px, 4:3 eller 3:4 | Navn, merke, pris og størrelser må følge med. `butikk-klaer` og `butikk-capser` brukes bak PLASSHOLDER-etiketten nå |
-| GT Maskins egne snøscootere i profil, frilagt eller på jevn bakgrunn | Animert safari-banner (forsiden og `/utleie`) | png med gjennomsiktighet, eller jpg på hvit bakgrunn | min. 1400 px bred | `ac-profil.jpg` som brukes nå er produsentens bilde og kun for demo. Byttes før go-live |
-| Lisens og fotograf for bakgrunnsbildet i safari-banneret | Safari-banner | | | `Mountain_scootering_Finnmark.jpg` brukes nå med kreditlinje «Foto: [Fotograf, lisens]». Lisensen sjekkes og fotografen krediteres før go-live, eller bildet byttes med eget safaribilde |
-| Bilder fra snøscootersafari (tur, guide, nordlys) | Safari-banner på forsiden og `/utleie` | jpg | min. 1600 px bred | Kan erstatte bakgrunnsbildet over |
+| GT Maskins egne snøscootere i profil, frilagt eller på jevn bakgrunn | Animert utleiebanner (forsiden og `/utleie`) | png med gjennomsiktighet, eller jpg på hvit bakgrunn | min. 1400 px bred | `ac-profil.jpg` som brukes nå er produsentens bilde og kun for demo. Byttes før go-live |
+| Vinterbilde fra vidda med GT Maskins scootere (valgfritt) | Utleiebanner på forsiden og `/utleie` | jpg | min. 1600 px bred, liggende | Banneret har nå en egen SVG-illustrasjon (`public/images/utleie/vidde.svg`, 3 kB) som fungerer uten foto. Et eget bilde kan erstatte den senere |
 | Lærling i arbeid | Om oss (lærebedrift), feed-plassholder 6 | jpg | min. 1600 px bred | |
 
 ## Spørsmål til Gjermund
@@ -29,10 +28,10 @@ Sist oppdatert 07.10.2026 (runde 2). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 1. Er bilene på `bil1.jpg` (rød Cadillac), `bil2.jpg` (gul Camaro SS) og `bil3.jpg` (sort Corvette) til salgs, kundebiler eller egne? De brukes i dag kun i galleriet på `/verksted`.
 2. Kan logoene til Amsoil, Fluid Film, Carhartt, Chevrolet, Dodge, Ram, Ford, Cadillac og Tesla brukes på siden? I dag vises kun navnene som tekst.
 3. Hva står «2008» på logoen for? Når startet virksomheten?
-4. Finnes det bilder eller video fra snøscootersafari (Norseman Trail) som kan brukes?
+4. Utgår: snøscootersafarien er avsluttet (opplyst 20.10.2026).
 5. Er det greit at bildene fra Facebook brukes slik de er i demoen (personer i bakgrunnen på `butikk.jpg`, `butikk5.jpg`, `butikk7.jpg`, `verksted4.jpg`, `verksted10.jpg`)?
-6. Snapchat: brukernavn og om profilen er privat eller offentlig, så QR-koden kan få en lenke ved siden av.
-7. Hvilke videoer på Facebook, YouTube og Snapchat skal med på videosiden?
+6. Besvart 20.10.2026: Snapchat-brukernavn gtmaskin-as, offentlig profil. Lagt inn.
+7. Delvis besvart 19.10.2026: seks Facebook-reels er lagt inn. Titler og stillbilder per video mangler fortsatt.
 
 ## Bilder i bruk (fra `assets-raw/`)
 
@@ -72,5 +71,5 @@ Sist oppdatert 07.10.2026 (runde 2). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 | utside1.jpg | PageHero, galleri | `/om-oss`, `/verksted` |
 | firmabil.jpg | Galleri | `/verksted` |
 | snapchat.jpg | Snapchat-QR | Footer, `/kontakt`, `/video`, QR-dialog fra header, mobilmeny og hero |
-| Mountain_scootering_Finnmark.jpg | Bakgrunn i safari-banner (`/images/utleie/safari-fjell`). Lisens sjekkes før go-live | Forside, `/utleie` |
-| ac-profil.jpg | Frilagt scooter i safari-banner (`/images/utleie/safari-scooter`). Produsentbilde, kun demo | Forside, `/utleie` |
+| Mountain_scootering_Finnmark.jpg | Ikke lenger i bruk (fjernet fra `public/` i runde 3, erstattet av `vidde.svg`) | |
+| ac-profil.jpg | Frilagt scooter i utleiebanneret (`/images/utleie/scooter-profil`). Produsentbilde, kun demo, byttes før go-live | Forside, `/utleie` |
