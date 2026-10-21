@@ -58,7 +58,7 @@ export default function Footer() {
                   <span className="font-display text-2xl text-brand-accent-light">GT</span>
                 )}
               </span>
-              <span className="font-display text-[26px] tracking-[0.08em]">
+              <span className="font-display text-[26px] tracking-[0.08em]" translate="no">
                 {companyFacts.name.toUpperCase()}
               </span>
             </div>
@@ -106,7 +106,7 @@ export default function Footer() {
         {/* Bunnlinje */}
         <div className="flex flex-col gap-3 border-t border-brand-border-dark pt-6 text-[13px] text-brand-footer md:flex-row md:items-center md:justify-between">
           <p>
-            © {year} {companyFacts.name}. {footer.copyright}
+            © {year} <span translate="no">{companyFacts.name}</span>. {footer.copyright}
           </p>
           <p className="flex items-center gap-3">
             <Link

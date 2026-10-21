@@ -114,10 +114,15 @@ export default function Produkt() {
           </div>
 
           <div className="flex flex-col gap-5 lg:col-span-5">
-            <span className="text-xs font-bold uppercase tracking-[0.15em] text-brand-muted">
+            <span
+              className="text-xs font-bold uppercase tracking-[0.15em] text-brand-muted"
+              translate="no"
+            >
               {product.brand}
             </span>
-            <h1 className="font-display text-5xl tracking-wide md:text-6xl">{product.title}</h1>
+            <h1 className="font-display text-5xl tracking-wide md:text-6xl" translate="no">
+              {product.title}
+            </h1>
             <p className="font-display text-4xl text-brand-accent-deep">
               {formatPrice(product.price)} {partsSection.card.priceSuffix}
             </p>

@@ -30,7 +30,9 @@ export default function ProductCard({ product }) {
     <article className="flex h-full flex-col border border-brand-border bg-brand-card transition-colors hover:border-brand-accent">
       <Link to={`/deler/${product.slug}`} className="relative block aspect-[4/3] overflow-hidden">
         {/* Lenketeksten er tittelen; ekte produktbilder har derfor tom alt. */}
-        <span className="sr-only">{product.title}</span>
+        <span className="sr-only" translate="no">
+          {product.title}
+        </span>
         {imageKey ? (
           <Picture
             src={imageKey}
@@ -59,10 +61,13 @@ export default function ProductCard({ product }) {
         )}
       </Link>
       <div className="flex flex-1 flex-col gap-1 px-4 pb-4 pt-4 md:px-5 md:pb-5">
-        <span className="text-xs font-bold uppercase tracking-[0.12em] text-brand-muted">
+        <span
+          className="text-xs font-bold uppercase tracking-[0.12em] text-brand-muted"
+          translate="no"
+        >
           {product.brand}
         </span>
-        <h3 className="text-base font-bold md:text-[17px]">
+        <h3 className="text-base font-bold md:text-[17px]" translate="no">
           <Link to={`/deler/${product.slug}`} className="hover:text-brand-accent-deep">
             {product.title}
           </Link>

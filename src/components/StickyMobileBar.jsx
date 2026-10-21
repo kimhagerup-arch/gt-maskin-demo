@@ -35,7 +35,7 @@ export default function StickyMobileBar() {
         tabIndex={hidden ? -1 : 0}
       >
         <Icon name="Phone" size={18} strokeWidth={2} className="text-brand-accent-light" />
-        {nav.mobileCall}
+        <span translate="no">{nav.mobileCall}</span>
       </a>
       <Link
         to={nav.cta.to}
