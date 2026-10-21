@@ -5,7 +5,7 @@ import { cx } from "../lib/format";
 import Icon from "./Icon";
 
 /** Liten dialog med veiledning for iPhone og iPad (Safari har ingen installeringsprompt). */
-function InstallDialog({ open, onClose, returnFocusRef }) {
+export function InstallDialog({ open, onClose, returnFocusRef }) {
   const closeRef = useRef(null);
   const panelRef = useRef(null);
 

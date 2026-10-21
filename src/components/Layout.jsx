@@ -3,6 +3,7 @@ import CartDrawer from "./CartDrawer";
 import DraftBanner from "./DraftBanner";
 import Footer from "./Footer";
 import Header from "./Header";
+import InstallPrompt from "./InstallPrompt";
 import StickyMobileBar from "./StickyMobileBar";
 
 export default function Layout() {
@@ -21,6 +22,7 @@ export default function Layout() {
       </main>
       <Footer />
       <StickyMobileBar />
+      <InstallPrompt />
       <CartDrawer />
     </div>
   );

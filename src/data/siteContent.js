@@ -638,6 +638,10 @@ export const snapchatSection = {
 /** «Legg GT Maskin på hjemskjermen» (footer og mobilmeny). */
 export const installApp = {
   label: "Legg GT Maskin på hjemskjermen",
+  boxTitle: "Legg GT Maskin på hjemskjermen",
+  boxText: "Åpne siden som app, rett fra mobilen.",
+  add: "Legg til",
+  notNow: "Ikke nå",
   iosTitle: "Legg til på Hjem-skjerm",
   iosSteps: [
     "Trykk på Del-knappen nederst i Safari.",
