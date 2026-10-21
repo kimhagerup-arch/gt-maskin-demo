@@ -3,14 +3,15 @@ import { useAfterLoad } from "../hooks/useAfterLoad";
 import { cx } from "../lib/format";
 import Icon from "./Icon";
 import Picture from "./Picture";
-import Placeholder from "./Placeholder";
 import VideoMeta from "./VideoMeta";
+import VideoPoster from "./VideoPoster";
 
 /**
  * Kort i videolisten. Hele kortet er en knapp som laster videoen i
  * hovedspilleren. Aktivt kort markeres med aksentkant og «Spiller nå».
  * Stående video gir 9:16-kort, liggende 16:9. Miniatyrene monteres først når
  * siden er lastet, så de ikke konkurrerer med hero-bildet (boksen har fast forhold).
+ * Video uten eget stillbilde får den designede posteren (mørk flate, tittel, play).
  */
 export default function VideoCard({ video, active = false, onSelect }) {
   const ready = useAfterLoad();
@@ -54,7 +55,7 @@ export default function VideoCard({ video, active = false, onSelect }) {
           ) : video.poster ? (
             <span className="block h-full w-full bg-brand-primary-soft" aria-hidden="true" />
           ) : (
-            <Placeholder label="[Videoposter]" className="h-full w-full" />
+            <VideoPoster video={video} compact />
           )}
           <span className="absolute inset-0 flex items-center justify-center text-brand-text-inverse">
             <span

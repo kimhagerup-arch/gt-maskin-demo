@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getChannel } from "../data/channels";
 import { videoSection } from "../data/siteContent";
-import { useReducedMotion } from "../hooks/useReducedMotion";
 import { cx } from "../lib/format";
 import { getImage } from "../lib/images";
 import Icon from "./Icon";
 import Picture from "./Picture";
-import Placeholder from "./Placeholder";
+import VideoPoster from "./VideoPoster";
 
 const FACEBOOK_PLUGIN = "https://www.facebook.com/plugins/video.php";
 const YOUTUBE_EMBED = "https://www.youtube-nocookie.com/embed";
 const FACEBOOK_REEL = /^https?:\/\/(?:www\.)?facebook\.com\/reel\/(\d+)/;
+const EMBED_ALLOW = "autoplay; encrypted-media; picture-in-picture; fullscreen";
 
 /** Sidens Facebook-handle, lest fra kanaldataene (facebook.com/<handle>). */
 function facebookHandle() {
@@ -30,40 +30,96 @@ export function facebookEmbedHref(src) {
   return `https://www.facebook.com/${handle}/videos/${match[1]}/`;
 }
 
-/** Bygger embed-URL for kilder som kan bygges inn. Snapchat kan ikke og gir null. */
-export function embedUrl(video, autoplay) {
+/**
+ * Bygger embed-URL for kilder som kan bygges inn. Brukeren har allerede trykket
+ * play når URL-en brukes, så autoplay og playsinline er alltid på. Snapchat kan
+ * ikke bygges inn og gir null.
+ */
+export function embedUrl(video) {
   if (!video?.src) return null;
-  const auto = autoplay ? 1 : 0;
   if (video.source === "youtube") {
-    return `${YOUTUBE_EMBED}/${encodeURIComponent(video.src)}?autoplay=${auto}&rel=0`;
+    return `${YOUTUBE_EMBED}/${encodeURIComponent(video.src)}?autoplay=1&playsinline=1&rel=0`;
   }
   if (video.source === "facebook") {
     const params = new URLSearchParams({
       href: facebookEmbedHref(video.src),
       show_text: "false",
-      autoplay: auto ? "true" : "false",
+      autoplay: "true",
     });
     return `${FACEBOOK_PLUGIN}?${params.toString()}`;
   }
   return null;
 }
 
+/** Diskret lasteindikator i merkefarger, vist på den mørke flaten til videoen er klar. */
+function LoadingMark({ hidden }) {
+  return (
+    <div
+      className={cx(
+        "pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300",
+        hidden ? "opacity-0" : "opacity-100",
+      )}
+      aria-hidden={hidden}
+    >
+      <span className="h-12 w-12 animate-spin rounded-full border-4 border-brand-border-dark-strong border-t-brand-accent" />
+      <span className="text-[13px] font-semibold tracking-wider text-brand-muted-inverse">
+        {videoSection.loading}
+      </span>
+    </div>
+  );
+}
+
+/** Egen mp4: spilles direkte i en video-tag, inline, med kontroller. Tones inn når den spiller. */
+function Mp4Player({ video, onReady, ready }) {
+  const ref = useRef(null);
+  const poster = getImage(video.poster);
+
+  // autoPlay-attributtet holder i de fleste nettlesere; play() er sikring der
+  // attributtet ignoreres etter at elementet ble montert av et trykk.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const attempt = el.play();
+    if (attempt?.catch) attempt.catch(() => {});
+  }, []);
+
+  return (
+    // biome-ignore lint/a11y/useMediaCaption: kundens videoer har ikke teksting ennå
+    <video
+      ref={ref}
+      className={cx(
+        "h-full w-full transition-opacity duration-300",
+        ready ? "opacity-100" : "opacity-0",
+      )}
+      controls
+      autoPlay
+      playsInline
+      preload="auto"
+      poster={poster?.src}
+      src={video.src}
+      onLoadedData={onReady}
+      onPlaying={onReady}
+      aria-label={video.title}
+    />
+  );
+}
+
 /**
- * Hovedspilleren. Posteren er alltid et lokalt bilde, og ingenting eksternt
- * lastes før brukeren trykker play. Da monteres iframe (YouTube, Facebook)
- * eller <video> (mp4). Snapchat kan ikke bygges inn og lenker ut.
+ * Hovedspilleren. Før trykk vises videoens eget stillbilde, eller en designet
+ * poster (mørk flate, tittel, play) når den ikke har noe. Ingenting eksternt
+ * lastes før brukeren trykker play.
  *
- * Rammen har fast størrelse så siden ikke flytter seg når video monteres:
- * - stående video (9:16): høyden styrer. Mobil maks 70 % av skjermhøyden,
- *   desktop maks 640 px og aldri høyere enn skjermen minus header
- *   (`.player-portrait` i index.css). Posteren fyller hele rammen.
- * - liggende video: full bredde i 16:9, med samme makshøyde på desktop.
- * Tittelen står ikke oppå bildet; den vises én gang ved siden av eller under
- * spilleren (VideoMeta).
+ * Ett trykk starter videoen: mp4 spilles direkte i en video-tag med playsinline,
+ * YouTube får autoplay=1 og playsinline=1, Facebook-pluginen autoplay=true, alle
+ * med allow="autoplay; encrypted-media; picture-in-picture; fullscreen". Mens
+ * spilleren laster, vises en mørk flate i samme ramme med en diskret
+ * lasteindikator, og iframen tones inn ved onLoad. Rammen har fast størrelse,
+ * så ingenting flytter seg (stående: `.player-portrait`, liggende: 16:9).
+ * Snapchat kan ikke bygges inn og lenker ut.
  */
 export default function VideoPlayer({ video, className }) {
-  const reduced = useReducedMotion();
   const [playing, setPlaying] = useState(false);
+  const [ready, setReady] = useState(false);
   const isSnapchat = video.source === "snapchat";
   const canPlay = Boolean(video.src) && !isSnapchat;
   const portrait = video.aspect === "9:16";
@@ -75,33 +131,26 @@ export default function VideoPlayer({ video, className }) {
   );
 
   if (playing && canPlay) {
-    const autoplay = !reduced;
-    if (video.source === "mp4") {
-      const poster = getImage(video.poster);
-      return (
-        <div className={cx(frameClass, "bg-black")}>
-          {/* biome-ignore lint/a11y/useMediaCaption: kundens videoer har ikke teksting ennå */}
-          <video
-            className="h-full w-full"
-            controls
-            autoPlay={autoplay}
-            preload="none"
-            poster={poster?.src}
-            src={video.src}
-          />
-        </div>
-      );
-    }
+    const markReady = () => setReady(true);
     return (
-      <div className={cx(frameClass, "bg-black")}>
-        <iframe
-          className="h-full w-full"
-          src={embedUrl(video, autoplay)}
-          title={video.title}
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowFullScreen
-          referrerPolicy="strict-origin-when-cross-origin"
-        />
+      <div className={cx(frameClass, "bg-brand-primary")}>
+        <LoadingMark hidden={ready} />
+        {video.source === "mp4" ? (
+          <Mp4Player video={video} onReady={markReady} ready={ready} />
+        ) : (
+          <iframe
+            className={cx(
+              "relative h-full w-full transition-opacity duration-300",
+              ready ? "opacity-100" : "opacity-0",
+            )}
+            src={embedUrl(video)}
+            title={video.title}
+            allow={EMBED_ALLOW}
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+            onLoad={markReady}
+          />
+        )}
       </div>
     );
   }
@@ -132,20 +181,24 @@ export default function VideoPlayer({ video, className }) {
   return (
     <div className={cx(frameClass, "border border-brand-border-dark")}>
       {video.poster ? (
-        <Picture
-          src={video.poster}
-          alt={video.posterAlt || ""}
-          sizes={portrait ? "(min-width: 768px) 360px, 100vw" : "(min-width: 1280px) 1200px, 100vw"}
-          className="h-full w-full"
-          imgClassName={cx("h-full w-full object-cover", video.placeholder && "opacity-80")}
-        />
+        <>
+          <Picture
+            src={video.poster}
+            alt={video.posterAlt || ""}
+            sizes={
+              portrait ? "(min-width: 768px) 360px, 100vw" : "(min-width: 1280px) 1200px, 100vw"
+            }
+            className="h-full w-full"
+            imgClassName={cx("h-full w-full object-cover", video.placeholder && "opacity-80")}
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-brand-primary/70 via-transparent to-transparent"
+            aria-hidden="true"
+          />
+        </>
       ) : (
-        <Placeholder label="[Videoposter]" className="h-full w-full" />
+        <VideoPoster video={video} />
       )}
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-brand-primary/70 via-transparent to-transparent"
-        aria-hidden="true"
-      />
 
       {video.placeholder && (
         <span className="absolute left-0 top-0 bg-brand-primary px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-accent-light">

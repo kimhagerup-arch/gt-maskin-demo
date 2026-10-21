@@ -1,5 +1,20 @@
 # ARBEIDSLOGG
 
+## 21.10.2026: runde 4, video med ett trykk, slidere, Snapchat, app og butikkbilder
+
+Branch `feature/runde-4` fra `dev`. Nye filer i `assets-raw/` (butikkbilder og `hero.mp4`) og `_kilder/PRISER-FRA-TAVLENE.md` kom inn under runden.
+
+**Kartlegging av videoflyten før endring** (headless Chrome mot `npm run preview`, `/video`, 375 og 1440 px):
+
+- Facebook (de seks reelene): før trykk viste rammen et lånt verkstedbilde (`verksted-cabriolet-kobber-400.webp`). Ved trykk ble bildet byttet mot svart flate og iframe mot `plugins/video.php?autoplay=true` montert etter 38-104 ms. Pluginen var lastet etter 0,45 s (1440) og 1,1 s (375) og viste da Facebooks eget stillbilde av videoen med egen play-knapp. `<video>` i pluginen hadde `readyState` 4, men sto i pause (`currentTime` 0) i 20 sekunder: ett trykk til var nødvendig. Sekvensen for brukeren var altså lånt bilde, svart, Facebooks bilde, trykk, video.
+- YouTube (kode, ingen data i `videos.js`): iframe mot `youtube-nocookie.com/embed/<id>?autoplay=1&rel=0` uten `playsinline`, så iPhone kunne åpne videoen i fullskjerm i stedet for i rammen.
+- mp4 (kode, ingen data): `<video controls autoPlay preload="none">` uten `playsinline`, montert ved trykk, uten lasteflate.
+- Felles: `allow="autoplay; encrypted-media; picture-in-picture"` uten `fullscreen`, ingen lasteindikator, ingen inntoning. Rammen hadde fast størrelse, så ingen layoutforskyvning.
+
+**Gjort, per punkt**
+
+1. Video: `VideoPlayer` viser mørk flate med lasteindikator (ring i `brand-accent`, «Laster video») fra trykk til `onLoad`, og toner inn iframe/video. mp4 i `<video playsInline autoPlay>` med `play()` som sikring, YouTube med `autoplay=1&playsinline=1`, Facebook med `autoplay=true`, alle med `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`. Ny `VideoPoster` (mørk flate, kildemerke, tittel, play) for videoer uten eget stillbilde; de seks reelene har `poster: null` i stedet for lånte bilder. Butikkvideoen (`hero.mp4`, 17 s, poster `butikk-hero-poster`) ligger først som «Butikken». Målt etter endring (375 og 1440): mp4 spiller etter 0,36-0,40 s, YouTube etter 3,2-3,6 s, Facebook-pluginen er lastet etter 0,8-1,1 s men står fortsatt i pause i headless (se BESLUTNINGER.md). Ingen eksterne kall før trykk, ingen layoutforskyvning (rammen måler det samme før og etter).
+
 ## 21.10.2026: runde 3b, seksjonshoder, runde ikonknapper, radius, Snapchat-telefon
 
 - `SectionHeader` med felles mønster (`lead` og `actions`, aldri høyrejustert brødtekst); fem bruksssteder lagt om. Feed: ny ingress, talllinje med blått merke, dato under, blå knapp (`Button` variant `facebook`).

@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAfterLoad } from "../hooks/useAfterLoad";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { cx } from "../lib/format";
-import { getImage } from "../lib/images";
 import Picture from "./Picture";
 
+/** true når brukeren har bedt om å spare data (Save-Data). */
+function savesData() {
+  if (typeof navigator === "undefined") return false;
+  return Boolean(navigator.connection?.saveData);
+}
+
 /**
- * Hero-medie: mp4 hvis `video` er satt (autoplay, muted, loop, poster),
- * ellers stillbilde. Ved prefers-reduced-motion vises bare posteren.
+ * Hero-medie. Posteren (stillbildet) er LCP-elementet og vises med en gang.
+ * Hvis `video` er satt, monteres en stum, loopende mp4 over posteren først
+ * etter window load, og ikke ved prefers-reduced-motion eller Save-Data.
+ * Videoen tones inn når første bilde er klart, så posteren aldri blinker.
+ * Feiler videoen, blir posteren stående.
  */
 export default function HeroMedia({
   image,
@@ -16,36 +25,48 @@ export default function HeroMedia({
   objectPosition = "18% 50%",
 }) {
   const reduced = useReducedMotion();
+  const loaded = useAfterLoad();
   const [videoFailed, setVideoFailed] = useState(false);
-  const poster = getImage(image);
-  const showVideo = Boolean(video) && !reduced && !videoFailed;
+  const [videoReady, setVideoReady] = useState(false);
+  const [saveData, setSaveData] = useState(false);
+
+  useEffect(() => {
+    setSaveData(savesData());
+  }, []);
+
+  const showVideo = Boolean(video) && loaded && !reduced && !saveData && !videoFailed;
 
   return (
     <div className={cx("relative overflow-hidden bg-brand-primary-soft", className)}>
-      {showVideo ? (
+      <Picture
+        src={image}
+        alt={imageAlt}
+        sizes="(min-width: 1024px) 480px, 100vw"
+        priority
+        objectPosition={objectPosition}
+        className="h-full w-full"
+        fallbackLabel="[HOVEDBILDE: prosjektbil i verkstedet]"
+      />
+      {showVideo && (
         <video
-          className="h-full w-full object-cover"
+          className={cx(
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
+            videoReady ? "opacity-100" : "opacity-0",
+          )}
           style={{ objectPosition }}
           autoPlay
           muted
           loop
           playsInline
-          poster={poster?.src}
+          preload="auto"
+          disablePictureInPicture
+          onPlaying={() => setVideoReady(true)}
           onError={() => setVideoFailed(true)}
-          aria-label={imageAlt}
+          aria-hidden="true"
+          tabIndex={-1}
         >
           <source src={video} type="video/mp4" />
         </video>
-      ) : (
-        <Picture
-          src={image}
-          alt={imageAlt}
-          sizes="(min-width: 1024px) 480px, 100vw"
-          priority
-          objectPosition={objectPosition}
-          className="h-full w-full"
-          fallbackLabel="[HOVEDBILDE: prosjektbil i verkstedet]"
-        />
       )}
     </div>
   );

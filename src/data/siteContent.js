@@ -94,9 +94,9 @@ export const hero = {
     place: "Alta",
     text: "Amerikanske biler, custom-prosjekter og delesalg.",
   },
-  image: "/images/hero/fasade-kveld-skilt",
-  imageAlt: "Fasaden til GT Maskin i Myggveien i kveldslys, med skilt og klassikere i vinduene",
-  imagePosition: "64% 42%",
+  image: "/images/hero/butikk-hero-poster",
+  imageAlt: "Butikken hos GT Maskin: moped, gammelt kasseapparat og klesstativ",
+  imagePosition: "50% 50%",
   video: "/video/hero.mp4",
 };
 
@@ -136,6 +136,8 @@ export const videoSection = {
   title: "GT Maskin på film",
   lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien.",
   play: "Spill av video",
+  loading: "Laster video",
+  posterKicker: "Video",
   placeholderTag: "Plassholder",
   playlistLabel: "Spilleliste",
   nowPlaying: "Spiller nå",

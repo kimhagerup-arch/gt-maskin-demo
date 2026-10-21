@@ -10,26 +10,42 @@
 //   "mp4"       src = "/video/fil.mp4", lastes med preload="none".
 //   "snapchat"  src = lenke til Snapchat. Kan ikke bygges inn: kortet viser poster og «Se på Snapchat».
 //
-// poster er alltid en lokal manifest-nøkkel. Ingen eksterne miniatyrer lastes før klikk.
+// poster er alltid en lokal manifest-nøkkel, eller null. Ingen eksterne miniatyrer lastes før klikk.
 // Kunden har ikke sendt titler, beskrivelser, datoer eller varigheter. Tittelen er derfor
 // «Video fra GT Maskin» nummerert, og brukes bare der komponentene trenger tekst
 // (spilleliste, aria-label, iframe-title). duration og date er null og skjules.
-// Posterne er eksisterende bilder fra manifestet til kunden sender stillbilder fra hver video.
+// poster er null til kunden sender stillbilder fra hver video: da viser spilleren og
+// kortene en designet poster (mørk flate, tittel, play) i stedet for et lånt verkstedbilde.
+// Butikkvideoen (hero.mp4, 17 s uten lyd, fotografert i butikken 21.10.2026) ligger først
+// og er den videoen som alltid spiller med ett trykk. Posteren er første bilde i videoen.
 
 const TITLE = "Video fra GT Maskin";
 
 export const videos = [
+  {
+    id: "butikken",
+    title: "Butikken",
+    source: "mp4",
+    src: "/video/hero.mp4",
+    aspect: "16:9",
+    poster: "/images/hero/butikk-hero-poster",
+    posterAlt: "Butikken hos GT Maskin: moped, gammelt kasseapparat og klesstativ",
+    duration: "0:17",
+    date: "2026-10-21",
+    featured: true,
+    placeholder: false,
+  },
   {
     id: "fb-1",
     title: `${TITLE} 1`,
     source: "facebook",
     src: "https://www.facebook.com/reel/896290050086392",
     aspect: "9:16",
-    poster: "/images/verksted/verksted-cabriolet-kobber",
-    posterAlt: "Kobberfarget cabriolet på løftebukk",
+    poster: null,
+    posterAlt: "",
     duration: null,
     date: null,
-    featured: true,
+    featured: false,
     placeholder: false,
   },
   {
@@ -38,8 +54,8 @@ export const videos = [
     source: "facebook",
     src: "https://www.facebook.com/reel/1056360530550925",
     aspect: "9:16",
-    poster: "/images/verksted/motor-v8-benk",
-    posterAlt: "Nyoverhalt V8-motor på pall",
+    poster: null,
+    posterAlt: "",
     duration: null,
     date: null,
     featured: false,
@@ -51,8 +67,8 @@ export const videos = [
     source: "facebook",
     src: "https://www.facebook.com/reel/1822698342075092",
     aspect: "9:16",
-    poster: "/images/biler/camaro-gul-front",
-    posterAlt: "Gul Camaro SS sett forfra",
+    poster: null,
+    posterAlt: "",
     duration: null,
     date: null,
     featured: false,
@@ -64,8 +80,8 @@ export const videos = [
     source: "facebook",
     src: "https://www.facebook.com/reel/1804793080686764",
     aspect: "9:16",
-    poster: "/images/verksted/verksted-impala-motorblokk",
-    posterAlt: "Rød Chevrolet Impala inne i verkstedet",
+    poster: null,
+    posterAlt: "",
     duration: null,
     date: null,
     featured: false,
@@ -77,8 +93,8 @@ export const videos = [
     source: "facebook",
     src: "https://www.facebook.com/reel/1805982323722905",
     aspect: "9:16",
-    poster: "/images/verksted/verksted-traktor",
-    posterAlt: "Traktor inne i verkstedet",
+    poster: null,
+    posterAlt: "",
     duration: null,
     date: null,
     featured: false,
@@ -90,8 +106,8 @@ export const videos = [
     source: "facebook",
     src: "https://www.facebook.com/reel/1528613745686828",
     aspect: "9:16",
-    poster: "/images/verksted/verksted-mustang-loftebukk",
-    posterAlt: "Lyseblå Mustang foran løftebukk",
+    poster: null,
+    posterAlt: "",
     duration: null,
     date: null,
     featured: false,
