@@ -29,11 +29,12 @@ export default function ProductCard({ product }) {
   return (
     <article className="flex h-full flex-col border border-brand-border bg-brand-card transition-colors hover:border-brand-accent">
       <Link to={`/deler/${product.slug}`} className="relative block aspect-[4/3] overflow-hidden">
+        {/* Lenketeksten er tittelen; ekte produktbilder har derfor tom alt. */}
         <span className="sr-only">{product.title}</span>
         {imageKey ? (
           <Picture
             src={imageKey}
-            alt={product.image ? product.title : `Eksempel: ${product.placeholderLabel}`}
+            alt={product.image ? "" : `Eksempel: ${product.placeholderLabel}`}
             sizes="(min-width: 1024px) 282px, (min-width: 640px) 50vw, 100vw"
             className="h-full w-full"
             imgClassName={cx("h-full w-full object-cover", product.placeholder && "saturate-[.85]")}

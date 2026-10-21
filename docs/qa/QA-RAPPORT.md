@@ -199,3 +199,50 @@ Skjermbilder i `docs/qa/skjermbilder/runde-3b/` (15 filer: header, hero, «Live 
 | Lighthouse mobil | `/` 92 og `/video` 90 (to kjøringer hver, pluss `/utleie` 90), tilgjengelighet 100, beste praksis 100, CLS 0 |
 | Merkefarger (`getComputedStyle`, 83 flater på fire ruter, mobilmeny og dialog) | Facebook `rgb(8, 102, 255)` overalt, Snapchat `rgb(255, 252, 0)` overalt, ikonknapper 44 × 44 px, radius 9999 px |
 | Snapchat-telefon etter klikk | profilvisningen lastes i rammen og viser profilkort og historier |
+
+## Runde 4 (21.10.2026): video med ett trykk, slidere, Snapchat, app og butikkbilder
+
+Branch `feature/runde-4`, mot `npm run preview` (produksjonsbygg med service worker aktiv) i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-4/` (31 filer): forsiden med header og begge sliderne på 375 og 1440 px, sliderseksjonene, Snapchat-kortet før, under og etter trykk (pluss timeout-tilstanden), videokort under lasting, videospilleren med butikkvideoen, den designede posteren, installeringsknappen i footer og mobilmeny, iPhone-dialogen, offline-siden, hero med video på 375/1024/1440, header på 1024/1280, prisblokken, klær og utstyr, kundemottaket og butikkbildene.
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene før hver commit |
+| `/`, `/verksted`, `/deler`, `/video`, `/biler-til-salgs`, `/kontakt` × 375, 768, 1440 px | `scrollWidth` lik viewport overalt, ingen konsollfeil eller -advarsler |
+| axe-core ved 375 og 1440 px på de seks rutene | ett mindre funn (`image-redundant-alt` på produktbildet Wunder-Baum), rettet: ekte produktbilder i kortene har tom `alt` siden lenken har tittelen. 0 funn etter retting |
+| Eksterne kall før trykk, med service worker aktiv | ingen, på alle seks ruter og tre bredder. Service worker rører ikke eksterne kall |
+| Butikkvideoen (mp4) etter ett trykk, 375 og 1440 | mørk flate med lasteindikator og «Laster video», ingen bilder i rammen, video spiller etter 0,38-0,44 s (`paused` false, `playsInline` true), rammen like stor før og etter |
+| Facebook-reel etter ett trykk, 375 og 1440 | lasteflate, iframe tonet inn etter 0,7-1,2 s med `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`, men `<video>` i pluginen står i pause i headless: krever ett trykk til inne i rammen (kjent begrensning, se BESLUTNINGER.md). Må sjekkes på iPhone |
+| YouTube etter ett trykk (midlertidig testoppføring i dev, ikke committet) | spiller etter 3,2-3,6 s med `autoplay=1&playsinline=1` |
+| Snapchat-kortet | ingen eksterne kall før trykk; på `pointerdown` på «Se historiene her» monteres iframen (første forespørsel til snapchat.com etter 11-20 ms) bak skjelettet; profilkortet med historier tones inn etter 0,6-1,5 s; med snapchat.com blokkert viser rammen «Snapchat svarer ikke akkurat nå.» og «Åpne i Snapchat» etter 8 s. «Åpne i Snapchat» går til `snapchat.com/add/gtmaskin-as` med `target="_blank"` og `rel="noopener noreferrer"`, og står først og størst (56 px) på mobil |
+| Slidere på 320 og 375 px | kortene er 223/268 px brede og innenfor skjermen med neste kort synlig i kanten; sveip flytter prikken (`aria-current`), klikk på prikk 4 ruller kort 4 inn til venstrekanten, Tab til kort 1 ruller sporet tilbake, loddrett sveip over sporet ruller siden (ikke sporet). 768 og 1440 px: `display: grid`, prikker skjult |
+| Header 1024 og 1280 px | seks menypunkter, ikoner og «Bestill time» på én linje uten brudd |
+| Manifest og installerbarhet (CDP `Page.getAppManifest`, `Page.getInstallabilityErrors`) | manifestet leses uten feil (standalone, nb, tre ikoner), tom liste med installerbarhetsfeil, Chrome sendte `beforeinstallprompt` selv |
+| Service worker | aktiv og kontrollerende etter første last, cache `gtm-<versjon>` med `offline.html` og logo, fem `/assets/`-filer i cache etter andre side, ingen HTML i cache |
+| Offline (preview-serveren stoppet etter at SW var installert) | navigering til `/verksted` gir `offline.html` («Ingen nett akkurat nå. Sjekk dekningen og prøv igjen.») |
+| Installeringsknapp | vises i footer og nederst i mobilmenyen når prompt finnes; iPhone-UA uten prompt gir dialog med tre steg, Escape lukker og fokus går tilbake; med `display-mode: standalone` er knappen borte |
+| Tankestrek, forbudte ord, verktøyord i `src`, `public`, `index.html`, docs, STATUS, BESLUTNINGER, BILDELISTE | null treff i synlig innhold |
+
+### Lighthouse (mobil, `npm run preview`, service worker aktiv)
+
+| Rute | Ytelse (2 kjøringer) | Tilgjengelighet | Beste praksis | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|
+| `/` | 90, 90 | 100 | 100 | 69 | 3,4-3,5 s | 0 | 30-40 ms |
+| `/video` | 92, 91 | 100 | 100 | 69 | 3,1-3,3 s | 0 | 10 ms |
+
+Minst like gode tall som i runde 3 (90/90) og 3b (92/90). SEO under 100 skyldes `noindex` (bevisst til go-live). LCP på forsiden er posteren til butikkvideoen; videoen (3,4 MB) lastes først etter `load` og påvirker ikke LCP.
+
+### Konsoll og DevTools-issues
+
+| Kilde | Funn | Håndtering |
+|---|---|---|
+| Vår kode | ingen konsollfeil eller -advarsler. `LazyLoadImageIssue` dukket opp 13 ganger på forsiden ved 768 og 1440 px i QA-scriptet, men ikke i to kontrollkjøringer med samme laste- og rulleprosedyre uten fullsideskjermbilde. Meldingen utløses av at skjermbildeverktøyet strekker viewporten til hele siden, så alle lazy-bilder havner «i viewport» på én gang | ikke en feil på siden, rådgivende melding fra Chrome. Mobil (375 px) var ren |
+| Facebook og Snapchat etter trykk | som i runde 3: cookie-issues fra Snapchats iframe, ingen fra Facebook i testen | deres iframes |
+
+### Gjenstående
+
+1. Teste på ekte telefon: Facebook-video med ett trykk på iPhone, sliderne, Snapchat-kortet, installering på Android og iPhone, offline-siden (liste i STATUS.md).
+2. Gjermund bekrefter prisene fra tavlene og hva timeprisen gjelder, og sender titler og stillbilder til de seks reelene, størrelser for T-skjorte og bilder av kopp og nøkkelring.
+3. Nye verkstedbilder uten personer i bakgrunnen (`verksted4.jpg`, `verksted10.jpg`).
+

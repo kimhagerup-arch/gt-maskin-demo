@@ -372,3 +372,62 @@ Branch `feature/runde-3`. Fakta sjekket 20.10.2026 (Snapchat, merkefarger, safar
 
 - «Innbydende og kreativt» er ordene til Alta Amcar Klubb og står nå bare i sitatet på `/om-oss`. Avsnitt 2 i «Om oss» (forsiden og `/om-oss`) er byttet til Gjermunds egne ord (kilde: `_kilder/INNHOLD-FRA-GJERMUND.md`): «Vi er entusiaster, ikke bare på amerikanske biler, men på alle spesielle biler. Vi tar vare på bilen din, gamle som nye, blanke som rustne. I butikken og kundemottaket står det til tider veldig fine biler, så stikk gjerne innom. Trenger du hjelp til noe, er det bare å ta kontakt.»
 - Seksjonen «Kundemottaket» på `/om-oss` har tittelen «Stikk gjerne innom» og de to siste setningene fra samme avsnitt som ingress, så teksten ikke gjentas i sin helhet på samme side. Sitatet fra Alta Amcar Klubb er uendret.
+
+## Runde 4 (21.10.2026): video med ett trykk, slidere, Snapchat, app og butikkbilder
+
+Branch `feature/runde-4`. Merges til `dev` av Kim-Ove etter gjennomsyn. Nye kilder: butikkbilder og `hero.mp4` i `assets-raw/`, `_kilder/PRISER-FRA-TAVLENE.md` med bildene i `_kilder/tavler-2026-10-21/`.
+
+### Video som åpner med ett trykk (punkt 1)
+
+- Kartleggingen før endring står i `docs/ARBEIDSLOGG.md`. Kort: de seks reelene viste et lånt verkstedbilde, så svart flate, så Facebooks eget stillbilde, og trengte ett trykk til. Det var «de gamle bildene» kunden mente.
+- De lånte posterne er fjernet (`poster: null` på reelene). Video uten eget stillbilde får en designet poster (`VideoPoster`: mørk flate med stille striper, kildemerke, tittel og play), både i hovedspilleren og i kortene. Når kunden sender stillbilder, settes `poster` igjen og den designede posteren forsvinner av seg selv.
+- Fra trykk til video: rammen beholder størrelsen (CLS 0 målt før og etter), flaten er mørk (`brand-primary-soft`) med en ring i `brand-accent` og teksten «Laster video». Iframe og video monteres med `opacity-0` og tones inn på 300 ms ved `onLoad` (iframe) eller `onLoadedData`/`onPlaying` (mp4).
+- Autoplay etter trykk gjelder også ved `prefers-reduced-motion`: trykket er brukerens eget valg, og innstillingen handler om bevegelse som ikke er bedt om. Hero-videoen følger innstillingen (se under).
+- Facebook: `plugins/video.php` med `autoplay=true` og `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`. I headless Chrome er pluginen lastet etter 0,8-1,1 s, men `<video>` i den står i pause til brukeren trykker én gang til inne i pluginen. Facebook styrer dette i sin iframe, og det samme må forventes på iPhone (Safari krever at trykket skjer inne i rammen for video med lyd). **Kjent begrensning: Facebook-videoene kan trenge ett trykk til på iPhone.** Bør sjekkes på en ekte telefon. mp4 (butikkvideoen) og YouTube starter med ett trykk (målt 0,4 s og 3,2-3,6 s).
+- Butikkvideoen (`hero.mp4`, 17 s, 3,4 MB, uten lyd) ligger først i `videos.js` som «Butikken» med `featured: true`, så videoseksjonen alltid har én video som spiller med ett trykk. Varighet «0:17» og dato 21.10.2026 er fra filen og opptaket.
+
+### Slider på mobil (punkt 2)
+
+- Én komponent, `MobileSlider`, uten bibliotek. Under 768 px: `overflow-x: auto`, `scroll-snap-type: x mandatory`, sporet går ut til skjermkanten (`-mx-6 px-6 scroll-px-6`), kortene er 82 % brede (60 % fra 640 px) så neste kort stikker inn fra høyre. Fra 768 px: `display: grid` med samme kolonner som før, prikkene skjules.
+- Prikker: knapper med `aria-label` «Gå til kort 2 av 6» og `aria-current` på den aktive, 44 px høye trykkflater med 10 px prikk (aktiv 24 px bred i `brand-accent`). Aktiv prikk regnes ut fra kortet som ligger nærmest sporets venstrekant (rAF-strupet `scroll`-lytter).
+- Vertikal rulling kapres aldri: ingen touch-håndtering i kode, bare nettleserens egen rulling. Sporet har `overflow-y: hidden` og 12 px loddrett innmarg, så `reveal`-animasjonens translate aldri gir loddrett rulling inne i sporet. Målt: en loddrett sveip over sporet ruller siden (134 px), ikke sporet.
+- Tab: kortet som får fokus rulles inn (`scrollTo` på sporet, `behavior: auto` ved `prefers-reduced-motion`). Ingen kort klippes på 320 px (kort 223 px, høyre kant 247 px) eller 375 px (kort 268 px, høyre kant 292 px).
+- `Reveal` ligger inne i `MobileSlider` (`as="li"`), så feed og tjenester beholder inn-toningen.
+
+### «Biler til salgs» tones ned (punkt 3)
+
+- Punktet er tatt ut av `nav.items` (header og mobilmeny deler listen). Footer-lenken, ruten, «Vi skaffer»-skjemaet og detaljsidene er uendret. Forsidens «Vi skaffer»-boks er veien inn.
+- Tjenestekortet «Biler til salgs» er blitt «Vi skaffer» med lenke til `/biler-til-salgs#vi-skaffer`. Tittel og tekst leses fra `carsSection.wanted` i `siteContent.js` (kicker «Vi skaffer», ingressen «Si hva du leter etter, så tar vi kontakt. Vi vet hva som er på vei inn.»), ikonet er `Search`. Ingen nye løfter.
+- Header med seks menypunkter verifisert på 1024 og 1280 px uten brudd.
+
+### Snapchat (punkt 4)
+
+- Før trykk vises et lokalt profilkort: logoen (samme filer som header og footer) med gult Snapchat-merke, «GT Maskin på Snapchat», @gtmaskin-as og to knapper. Ingen eksterne kall, ingen preconnect (verifisert: null forespørsler utenfor localhost før trykk).
+- «Åpne i Snapchat» er hovedknapp, først og størst (56 px) på mobil, og går til `https://www.snapchat.com/add/gtmaskin-as` (`channels.js`, `addUrl`), som åpner appen direkte på mobil. `target="_blank"` og `rel="noopener noreferrer"`.
+- «Se historiene her» bytter kortet med telefonrammen. Iframen monteres allerede på `pointerdown` (målt: første forespørsel til snapchat.com 18-20 ms etter trykkstart), skjult med `opacity-0`, mens rammen viser en lokal skjelett-tilstand (profilhode, fire pulserende story-ringer i `brand-accent`, fire flater). Iframen tones inn ved `onLoad` (målt 0,6-1,5 s). Kommer ikke `onLoad` innen 8 sekunder, viser rammen «Snapchat svarer ikke akkurat nå.» og «Åpne i Snapchat» i stedet for evig lasting (verifisert ved å blokkere snapchat.com).
+- QR-koden med «Skann med Snapchat-kameraet» står fortsatt i tekstkolonnen på desktop. Den gule «Følg @gtmaskin-as»-knappen og Camaro-bildet i telefonen fra runde 3b er tatt ut; kortet dekker begge.
+
+### App på mobilen (punkt 5)
+
+- `public/manifest.webmanifest` (erstatter `site.webmanifest`): name «GT Maskin AS», short_name «GT Maskin», lang «nb», start_url og scope «/», display «standalone», theme_color og background_color `#151412` (`brand-primary`). Ikoner 192, 512 og 512 maskable (logoen innenfor den trygge sonen, 20 % luft) lages av `scripts/generate-favicons.mjs` fra samme logo som favicon. `index.html` lenker manifestet og har `theme-color`, `apple-touch-icon`, `apple-mobile-web-app-title` og `mobile-web-app-capable`.
+- `public/sw.js` uten bibliotek. Sidenavigering: nettverk først, `offline.html` bare når `fetch` feiler, HTML legges aldri i cache. `/assets/` (hash i navnet): cache først. Eksterne kall rører vi ikke (ingen `respondWith`), så Facebook, YouTube og Snapchat caches aldri. `offline.html` og logoen precaches ved install. `skipWaiting` ved install, sletting av alle andre cacher og `clients.claim` ved activate.
+- Cachenavnet er `gtm-<versjon>`, der versjonen stemples inn av Vite-pluginen `gtm-sw-version` i `closeBundle` (plassholderen `__GTM_BUILD__` i `public/sw.js`). Hvert bygg gir nytt navn, så gamle cacher ryddes ved neste besøk. `vercel.json` setter `Cache-Control: no-cache` på `/sw.js` og `/manifest.webmanifest`, så oppdateringer når fram med en gang.
+- Service worker registreres bare i produksjonsbygg (`import.meta.env.PROD`), etter `load`, så den ikke konkurrerer med hero-bildet. `npm run preview` er et produksjonsbygg, så den er aktiv der.
+- `public/offline.html` er en frittstående side og kan ikke bruke Tailwind; fargene er brand-tokenenes hex-verdier, kommentert i filen. Fontene er ikke precachet, så siden bruker systemfonter (Impact som display-fallback, som i `tailwind.config.js`). Teksten er «Ingen nett akkurat nå. Sjekk dekningen og prøv igjen.» med en «Prøv igjen»-knapp.
+- `InstallButton` («Legg GT Maskin på hjemskjermen») i footer og nederst i mobilmenyen. `useInstallPrompt` fanger `beforeinstallprompt` allerede ved modul-lasting (så hendelsen ikke går tapt før React er montert) og kaller `prompt()` ved trykk. iPhone og iPad (UA, eller MacIntel med berøring) får en liten dialog med tre steg («Trykk på Del-knappen nederst i Safari», «Velg Legg til på Hjem-skjerm», «Trykk Legg til»), med fokusfelle, Escape og fokus tilbake. Knappen skjules i `display-mode: standalone` (og `navigator.standalone`), og i nettlesere som verken har prompt eller er iOS, så den aldri peker på noe som ikke finnes.
+- Verifisert i headless Chrome mot `npm run preview`: `Page.getInstallabilityErrors` gir tom liste, manifestet leses uten feil, service worker aktiv etter first load, `/assets/` i cache etter andre side, `offline.html` vises når serveren stoppes, Chrome sendte `beforeinstallprompt` selv. Ingen push-varsler i denne runden.
+
+### Nye bilder og video fra butikken (punkt 6)
+
+- 18 nye bilder og `hero.mp4` lå i `assets-raw/` (kom inn under runden). Alle er åpnet og motivet bekreftet mot tabellen i oppdraget. Ingen personer i bakgrunnen. Skilt fra Mobil, Kendall, Carhartt, Chevrolet, Cadillac, Shell, Texaco og Route 66 er en del av butikkinteriøret i fotoene; ingen logofiler er kopiert.
+- Hero: posteren (`butikk-hero-poster`, første bilde i videoen) er LCP-elementet og vises med en gang, preloadet av `gtm-hero-preload`. Videoen monteres over posteren først etter `load`, ikke ved `prefers-reduced-motion` eller `Save-Data` (`navigator.connection.saveData`), stum, loop, `playsinline`, og tones inn på 700 ms ved `onPlaying`, så posteren aldri blinker. Utsnittet er sjekket på 375 (16:10), 1024 (4:3) og 1440 px (480 × 560): rundturen fungerer i alle tre, så videoen er beholdt i hero. `herobilde-fasade` brukes fortsatt på `/kontakt`, `/bestill` og som OG-bilde.
+- Byttet ut: `butikk.jpg` (oljehylle) med `butikk-mobil-vegg` i Deler-seksjonen på `/verksted` (pluss `butikk-hylle-amsoil` som bilde 2) og i butikkbildene på `/deler`; `butikk5.jpg` (sofa og cabriolet) med `kundemottak-disk-chevrolet` i «Om oss» på forsiden og på `/om-oss`; `butikk7.jpg` (cabriolet i kundemottaket) med `butikk-kasseapparat-national` på `/om-oss` og `kundemottak-hyller-bar` i feed-plassholder 3. `verksted4.jpg` og `verksted10.jpg` står til nye verkstedbilder kommer. De gamle filene ligger fortsatt i `public/images/butikk/` (scriptet lager dem), men ingen side peker på dem.
+- `/om-oss`, «Stikk gjerne innom»: seks bilder (disken, hyller og bar, National-kasseapparatet, bensinpumpa, motorbordet, Texaco-pumpa). Butikkbildene på `/deler`: Mobil-veggen, Stetson-capser, bordet med T-skjorter og capser, kjemihylla. Hyllebildene ligger bak plassholderproduktene for motordel, drivverksdel og tilbehør i «Deler». Resten (amsoil-diesel, severe-gear, route66-krakk, de tre andre kasseapparatene) er klargjort i manifestet, men ikke i bruk ennå.
+
+### Priser fra tavlene (punkt 7)
+
+- Kilde: `_kilder/PRISER-FRA-TAVLENE.md`, kolonnen «Slik på nettsiden», avskrift av tavlene fotografert i butikken 21. oktober 2026 (`_kilder/tavler-2026-10-21/`). **Prisene bekreftes av Gjermund før go-live.**
+- `/verksted` har blokken «Faste priser» (`src/data/prices.js`, fem rader i samme rekkefølge som filen) med teksten «Prisene står på tavla i butikken (21. oktober 2026).». Timeprisen står på samme tavle som Vipps-koden; hva den gjelder bekreftes av Gjermund.
+- «Klær og utstyr» har fått ekte varer med pris: T-skjorte 299, Caps 399, Stetson caps 599, Kopp 250, Nøkkelring 99, og Wunder-Baum 35 under «Tilbehør» i «Deler». Størrelser for T-skjorte står som «[Størrelser bekreftes]» (`sizes: []`). Varemerke er bare satt der tavla sier det (Stetson, Wunder-Baum). Varenummer, lagerstatus og beskrivelse er ukjent og vises som før (`[varenummer]`, «Spør om lagerstatus», «[Produktbeskrivelse legges inn …]»). Kopp og nøkkelring har ikke bilde ennå.
+- Ikke brukt: «Bok 399,-» (uklart hvilken bok) og Vipps-nummeret (brukes ikke uten at Gjermund ber om det).
+- Produktbilder i kortene har tom `alt` når varen er ekte, fordi lenken allerede har tittelen som skjult tekst (axe `image-redundant-alt`, funnet på Wunder-Baum og rettet).
