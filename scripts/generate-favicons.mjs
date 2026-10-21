@@ -1,7 +1,8 @@
 /**
- * Lager favicon-sett fra den trimmede logoen:
- * favicon.ico (16/32/48), icon-192.png, icon-512.png, apple-touch-icon.png (180).
- * Logoen legges på mørk brand-primary-bakgrunn med litt luft rundt.
+ * Lager favicon-sett og app-ikoner fra den trimmede logoen:
+ * favicon.ico (16/32/48), icon-192.png, icon-512.png, icon-512-maskable.png
+ * (logoen innenfor den trygge sonen, 20 % luft) og apple-touch-icon.png (180).
+ * Logoen legges på mørk brand-primary-bakgrunn. Skriver også public/manifest.webmanifest.
  *
  * Krever at scripts/prepare-images.mjs er kjørt først.
  * Kjør: npm run favicons
@@ -69,25 +70,33 @@ writeFileSync(path.join(OUT, "favicon.ico"), buildIco(icoPngs));
 
 writeFileSync(path.join(OUT, "icon-192.png"), await square(192, 0.08));
 writeFileSync(path.join(OUT, "icon-512.png"), await square(512, 0.08));
+writeFileSync(path.join(OUT, "icon-512-maskable.png"), await square(512, 0.2));
 writeFileSync(path.join(OUT, "apple-touch-icon.png"), await square(180, 0.1));
 
 // Enkel SVG-favicon med monogram som fallback for nettlesere som foretrekker SVG.
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#151412"/><text x="32" y="45" text-anchor="middle" font-family="Impact, 'Arial Black', sans-serif" font-size="36" fill="#F08003">GT</text></svg>`;
 writeFileSync(path.join(OUT, "favicon.svg"), svg);
 
+// Manifest for «legg på hjemskjermen»: standalone, norsk, farger fra brand-tokens
+// (brand-primary #151412, se src/index.css).
 writeFileSync(
-  path.join(OUT, "site.webmanifest"),
+  path.join(OUT, "manifest.webmanifest"),
   `${JSON.stringify(
     {
       name: "GT Maskin AS",
       short_name: "GT Maskin",
+      description: "Bilverksted i Alta for amerikanske biler, custom-prosjekter og delesalg.",
+      lang: "nb",
+      start_url: "/",
+      scope: "/",
+      display: "standalone",
+      theme_color: "#151412",
+      background_color: "#151412",
       icons: [
         { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
         { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
+        { src: "/icon-512-maskable.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
       ],
-      theme_color: "#151412",
-      background_color: "#151412",
-      display: "browser",
     },
     null,
     2,
@@ -95,5 +104,5 @@ writeFileSync(
 );
 
 console.log(
-  "Favicons skrevet til public/: favicon.ico, favicon.svg, icon-192.png, icon-512.png, apple-touch-icon.png, site.webmanifest",
+  "Skrevet til public/: favicon.ico, favicon.svg, icon-192.png, icon-512.png, icon-512-maskable.png, apple-touch-icon.png, manifest.webmanifest",
 );

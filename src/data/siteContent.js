@@ -631,6 +631,18 @@ export const snapchatSection = {
   embedTitle: "GT Maskin på Snapchat",
 };
 
+/** «Legg GT Maskin på hjemskjermen» (footer og mobilmeny). */
+export const installApp = {
+  label: "Legg GT Maskin på hjemskjermen",
+  iosTitle: "Legg til på Hjem-skjerm",
+  iosSteps: [
+    "Trykk på Del-knappen nederst i Safari.",
+    "Velg Legg til på Hjem-skjerm.",
+    "Trykk Legg til. GT Maskin får eget ikon og åpner i fullskjerm.",
+  ],
+  close: "Lukk",
+};
+
 export const placeholderLabels = {
   image: "[Bilde]",
   video: "[Video]",

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { companyFacts } from "../data/companyFacts";
 import { footer } from "../data/siteContent";
 import { getImage } from "../lib/images";
+import InstallButton from "./InstallButton";
 import ReviewBadges from "./ReviewBadges";
 import SocialLinks from "./SocialLinks";
 
@@ -98,6 +99,7 @@ export default function Footer() {
               {footer.followTitle}
             </p>
             <SocialLinks tone="dark" qr="always" />
+            <InstallButton className="mt-2 self-start" />
           </div>
         </div>
 
