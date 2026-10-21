@@ -68,15 +68,22 @@ const placeholder = (n, group, category, label, extra = {}) => ({
 
 export const products = [
   placeholder(1, "deler", "US-biler", "[Eksempel: del til US-bil]"),
-  placeholder(2, "deler", "Motor og drivverk", "[Eksempel: motordel]"),
+  placeholder(2, "deler", "Motor og drivverk", "[Eksempel: motordel]", {
+    placeholderImage: "/images/butikk/butikk-hylle-amsoil",
+  }),
   placeholder(3, "deler", "Bremser", "[Eksempel: bremsedel]"),
   placeholder(4, "deler", "Tesla", "[Eksempel: del til Tesla]"),
   placeholder(5, "deler", "Understell", "[Eksempel: understellsdel]"),
-  placeholder(6, "deler", "Tilbehør", "[Eksempel: tilbehør]"),
+  placeholder(6, "deler", "Tilbehør", "[Eksempel: tilbehør]", {
+    placeholderImage: "/images/butikk/butikk-hylle-kjemi",
+  }),
   placeholder(7, "deler", "US-biler", "[Eksempel: del til US-bil]"),
-  placeholder(8, "deler", "Motor og drivverk", "[Eksempel: drivverksdel]"),
+  placeholder(8, "deler", "Motor og drivverk", "[Eksempel: drivverksdel]", {
+    placeholderImage: "/images/butikk/butikk-hylle-girolje",
+  }),
 
   // Klær og utstyr. placeholderImage er et ekte butikkbilde bak PLASSHOLDER-etiketten.
+  // (Deler over: hyllebildene fra butikken bak etiketten der kategorien passer.)
   placeholder(9, "klaer", "Klær", "[Eksempel: jakke]", {
     sizes: [],
     placeholderImage: "/images/butikk/butikk-klaer",

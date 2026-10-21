@@ -15,11 +15,12 @@ import { partsSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
 import { cx } from "../lib/format";
 
+// Butikkbilder fotografert 21.10.2026 (ingen personer i bakgrunnen).
 const STORE_IMAGES = [
-  { image: "/images/butikk/butikk-oljehylle", alt: "Oljehylle i butikken hos GT Maskin" },
-  { image: "/images/butikk/butikk-rustbeskyttelse", alt: "Hylle med rustbeskyttelse i butikken" },
-  { image: "/images/butikk/butikk-klaer", alt: "Arbeidsklær på stativ i butikken" },
-  { image: "/images/butikk/butikk-capser", alt: "Capser i butikken" },
+  { image: "/images/butikk/butikk-mobil-vegg", alt: "Butikken med capser, klær og oljehyller" },
+  { image: "/images/butikk/butikk-stetson-capser", alt: "Capser på hylla i butikken" },
+  { image: "/images/butikk/butikk-bord-klaer-capser", alt: "Bord med T-skjorter og capser" },
+  { image: "/images/butikk/butikk-hylle-kjemi", alt: "Hylle med rustbeskyttelse og kjemi" },
 ];
 
 function normalize(s) {

@@ -66,7 +66,7 @@ export const socialFeed = [
     permalink: "https://www.facebook.com/GtMaskinas",
     placeholder: true,
     placeholderLabel: "Bil til salgs i kundemottaket",
-    placeholderImage: "/images/butikk/kundemottak-cabriolet-hyller",
+    placeholderImage: "/images/butikk/kundemottak-hyller-bar",
   },
   {
     id: "placeholder-4",

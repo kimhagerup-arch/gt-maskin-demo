@@ -411,8 +411,8 @@ export const aboutSection = {
   peopleLabel: "Folkene",
   timelineLabel: "Tidslinje",
   link: { label: "Les mer om oss", to: "/om-oss" },
-  image: "/images/butikk/kundemottak-sofa-cabriolet",
-  imageAlt: "Kundemottaket hos GT Maskin med bilsofa, cabriolet og hyller",
+  image: "/images/butikk/kundemottak-disk-chevrolet",
+  imageAlt: "Kundemottaket hos GT Maskin med disken, Chevrolet-skiltet og tavlene",
   page: {
     heroImage: "/images/bygg/fasade-dag-klassikere",
     heroAlt: "Bygget til GT Maskin på dagtid med amerikanske klassikere foran",

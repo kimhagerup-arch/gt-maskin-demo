@@ -9,20 +9,29 @@ import SectionHeader from "../components/SectionHeader";
 import { aboutSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
 
+// Bilder fra kundemottaket (fotografert 21.10.2026, ingen personer i bakgrunnen).
 const RECEPTION_IMAGES = [
   {
-    image: "/images/butikk/kundemottak-sofa-cabriolet",
-    alt: "Kundemottaket med bilsofa, cabriolet og hyller",
+    image: "/images/butikk/kundemottak-disk-chevrolet",
+    alt: "Kundemottaket med disken, Chevrolet-skiltet og tavlene",
   },
   {
     image: "/images/butikk/kundemottak-hyller-bar",
     alt: "Kundemottaket med hyller, bardisk og bilsofa",
   },
-  { image: "/images/butikk/kundemottak-cabriolet-hyller", alt: "Cabriolet inne i kundemottaket" },
+  {
+    image: "/images/butikk/butikk-kasseapparat-national",
+    alt: "Gammelt National-kasseapparat i kundemottaket",
+  },
   {
     image: "/images/butikk/kundemottak-disk-bensinpumpe",
     alt: "Disken med gammel bensinpumpe og bilsofa",
   },
+  {
+    image: "/images/butikk/butikk-motorbord",
+    alt: "Bord bygd av motordeler, med Cadillac- og Shell-skilt",
+  },
+  { image: "/images/butikk/butikk-texaco-pumpe", alt: "Gammel Texaco-pumpe i butikken" },
 ];
 
 export default function OmOss() {
