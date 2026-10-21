@@ -76,8 +76,8 @@ function Skeleton() {
 /**
  * «GT Maskin på Snapchat». Et lokalt profilkort vises med en gang, uten
  * eksterne kall: logo, tittel, brukernavn og to knapper. «Åpne i Snapchat»
- * (hovedknapp, først og størst på mobil) går til snapchat.com/add/<brukernavn>,
- * som åpner appen på mobil. «Se historiene her» bytter kortet med telefonrammen:
+ * (hovedknapp, først og størst på mobil) går til den offentlige profilen
+ * snapchat.com/@<brukernavn>, samme adresse som innbyggingen bruker. «Se historiene her» bytter kortet med telefonrammen:
  * iframen mot Snapchats profilvisning begynner å laste allerede på pointerdown,
  * rammen viser en lokal skjelett-tilstand til onLoad, og iframen tones inn.
  * Kommer ikke onLoad innen 8 sekunder, viser rammen «Åpne i Snapchat» i stedet.
@@ -99,12 +99,11 @@ export default function SnapchatSection({ className }) {
 
   if (!snapchat?.embedUrl) return null;
   const t = snapchatSection;
-  const addUrl = snapchat.addUrl || snapchat.url;
   const show = () => setShown(true);
 
   const openButton = (extra) => (
     <a
-      href={addUrl}
+      href={snapchat.url}
       target="_blank"
       rel="noopener noreferrer"
       className={cx(
