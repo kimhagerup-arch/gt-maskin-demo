@@ -621,13 +621,14 @@ export const snapchatSection = {
   kicker: "Snapchat",
   title: "GT Maskin på Snapchat",
   lead: "Korte videoer fra verkstedet. Følg oss for mer.",
-  follow: "Følg",
-  seeSnaps: "Se snapene",
-  loadNote: "Lastes fra Snapchat når du trykker.",
+  // Lokalt profilkort (ingen eksterne kall): logo, tittel, brukernavn og to knapper.
+  cardTitle: "GT Maskin på Snapchat",
+  open: "Åpne i Snapchat",
+  seeStories: "Se historiene her",
+  loading: "Henter historiene fra Snapchat",
+  timeoutText: "Snapchat svarer ikke akkurat nå.",
   qrHint: "Skann med Snapchat-kameraet",
   embedTitle: "GT Maskin på Snapchat",
-  // Lokalt stående bilde i telefonrammen før klikk (gul Camaro, bil2.jpg).
-  posterImage: "/images/biler/camaro-gul-front",
 };
 
 export const placeholderLabels = {

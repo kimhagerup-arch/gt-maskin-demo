@@ -23,6 +23,8 @@ export const channels = [
     username: "gtmaskin-as",
     profileType: "public",
     url: "https://www.snapchat.com/@gtmaskin-as",
+    // «Legg til»-lenken åpner Snapchat-appen direkte på mobil.
+    addUrl: "https://www.snapchat.com/add/gtmaskin-as",
     embedUrl: "https://www.snapchat.com/@gtmaskin-as/embed",
     verifiedAt: "2026-10-20",
     qrImage: "/images/some/snapchat-qr",
