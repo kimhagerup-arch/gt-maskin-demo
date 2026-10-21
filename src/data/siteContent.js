@@ -64,11 +64,12 @@ export const seo = {
   },
 };
 
+// «Biler til salgs» er tatt ut av header og mobilmeny (runde 4). Ruten finnes
+// fortsatt, veien inn er «Vi skaffer»-boksen på forsiden og lenken i footer.
 export const nav = {
   items: [
     { label: "Verksted", to: "/verksted" },
     { label: "Butikk", to: "/deler" },
-    { label: "Biler til salgs", to: "/biler-til-salgs" },
     { label: "Video", to: "/video" },
     { label: "Utleie", to: "/utleie" },
     { label: "Om oss", to: "/om-oss" },
