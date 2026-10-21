@@ -455,6 +455,10 @@ export const workshopPage = {
   lead: "Godkjent bilverksted i Myggveien 3. Service, feilsøking, reparasjon og custom-prosjekter. Amerikanske biler er spesialiteten, men vi tar de fleste merker.",
   heroImage: "/images/hero/verksted-hero-klassiker",
   heroAlt: "Amerikansk klassiker fotografert i sort-hvitt fra lav vinkel",
+  pricesKicker: "Priser",
+  pricesTitle: "Faste priser",
+  pricesNote: "Prisene står på tavla i butikken (21. oktober 2026).",
+  priceSuffix: "kr",
   processKicker: "Slik jobber vi",
   processTitle: "Enkelt fra første kontakt",
   process: [
