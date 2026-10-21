@@ -93,6 +93,7 @@ export default function BrandWall({
                   width={brand.w}
                   height={brand.h}
                   loading={priority ? "eager" : "lazy"}
+                  fetchpriority="low"
                   decoding="async"
                   translate="no"
                   className="max-h-[60%] w-auto max-w-full object-contain"

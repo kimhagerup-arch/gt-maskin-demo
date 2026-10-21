@@ -4,6 +4,9 @@ import { useReducedMotion } from "../hooks/useReducedMotion";
 import { cx } from "../lib/format";
 import Picture from "./Picture";
 
+/** Videoen monteres først så lenge etter window load, så den ikke konkurrerer med posteren (LCP). */
+const VIDEO_DELAY_MS = 2500;
+
 /** true når brukeren har bedt om å spare data (Save-Data). */
 function savesData() {
   if (typeof navigator === "undefined") return false;
@@ -13,7 +16,7 @@ function savesData() {
 /**
  * Hero-medie (brukes som bakgrunn i PageHero på /deler). Posteren (stillbildet)
  * er LCP-elementet og vises med en gang. Hvis `video` er satt, monteres en stum,
- * loopende mp4 over posteren først etter window load, og ikke ved
+ * loopende mp4 over posteren først 2,5 s etter window load, og ikke ved
  * prefers-reduced-motion eller Save-Data. Videoen tones inn når første bilde er
  * klart, så posteren aldri blinker. Feiler videoen, blir posteren stående.
  */
@@ -31,12 +34,19 @@ export default function HeroMedia({
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [saveData, setSaveData] = useState(false);
+  const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     setSaveData(savesData());
   }, []);
 
-  const showVideo = Boolean(video) && loaded && !reduced && !saveData && !videoFailed;
+  useEffect(() => {
+    if (!loaded) return undefined;
+    const timer = window.setTimeout(() => setSettled(true), VIDEO_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [loaded]);
+
+  const showVideo = Boolean(video) && settled && !reduced && !saveData && !videoFailed;
 
   return (
     <div className={cx("relative overflow-hidden bg-brand-primary-soft", className)}>

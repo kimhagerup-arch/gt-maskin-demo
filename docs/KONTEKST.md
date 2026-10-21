@@ -29,6 +29,17 @@
 - `src/data/imageManifest.js` skrives av `scripts/prepare-images.mjs`. Varianter: full (maks 1920), 800 og 400 px, webp + jpg.
 - `src/lib/images.js` `getImage(key)` gir `src`, `srcSet`, `webpSrcSet`, `sizes`, `smallest`. `Picture` bygger `<picture>`.
 
+## Lagt til i runde 4c
+
+| Hva | Rolle |
+|---|---|
+| `index.css` | `section-pad` 32/72 px, `container-site` 16 px sidemarg på mobil, `.marquee-frame`/`.marquee-bulbs-*` (lyspærer, keyframes `marquee-x`/`marquee-y`), `.neon-text`, `.hero-zoom`/`.hero-zoom-on` |
+| `HeroSlideshow`, `src/data/heroSlides.js` | Bildeshow i forsidens hero: krysstoning hvert 5. s, zoom, pause ved hover/fokus/skjult fane, sveip, prikker, reduced motion. Første bilde eager og forhåndslastet (`heroImages.js` `/`), resten 2,5 s etter load (`REST_DELAY_MS`), automatisk bytte starter da. Tekster i `hero.slideshow*`, neon-linje `hero.neonLine` |
+| `PageHero` | `video`-prop: bakgrunn via `HeroMedia` (poster LCP, video etter load). Brukt på `/deler` med `partsSection.page.heroImage/heroVideo/heroPosition` |
+| `HeroMedia` | Nå bakgrunnskomponent med `sizes` og `imgClassName`; videoen monteres 2,5 s etter load (`VIDEO_DELAY_MS`); ikke lenger i `HomeHero` |
+| `SocialFeed` / `FeedCard` | Kompakt topp uten `SectionHeader`; kort med bilde og tittel, «Eksempel»-pille (`feedSection.exampleTag`), ekte innlegg viser tekst og dato |
+| `MobileSlider`, `VideoSlider` | Sporet går ut til 16 px-kanten (`-mx-4 px-4 scroll-px-4`) |
+
 ## Lagt til i runde 4b
 
 | Hva | Rolle |

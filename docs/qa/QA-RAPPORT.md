@@ -284,3 +284,37 @@ Ingen konsollfeil fra vår kode. `LazyLoadImageIssue` dukket opp for logoene i h
 2. Avklare logobruken med Gjermund før go-live, og få originalfiler for Amsoil, Fluid Film og Wunder-Baum.
 3. Originalfilene til de seks reelene fra Gjermund, så videoene spiller med ett trykk.
 
+
+## Runde 4c (22.10.2026): mindre luft, bildeshow i USA-stil og butikkvideo på butikksiden
+
+Samme branch, mot `npm run preview` i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-4c/` (8 filer): forsiden med bildeshowet på 375 og 1440 px, forsiden i full høyde, Facebook-feeden på 375 px (også rullet til kanten) og 1440 px, og `/deler` med videohero på 375 og 1440 px.
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene før hver commit |
+| `/`, `/deler`, `/video` × 375, 768, 1440 px | `scrollWidth` lik viewport, ingen konsollfeil eller -advarsler |
+| axe-core ved 375 og 1440 px | 0 funn |
+| Bildeshowet (1440) | bytter fra bilde 1 til 2 etter 2,5 s pluss 5 s; står stille i 5,6 s ved hover, ved skjult fane og etter fokus/klikk på en prikk; prikk 3 gir bilde 3; aktivt bilde har `transform: scale(1,079)`; pærene har animasjonen `marquee-x`; rammen 486 × 560 px før og etter |
+| Bildeshowet (375, berøring) | sveip mot venstre gir neste bilde (0 til 1) |
+| `prefers-reduced-motion` | ingen bytte etter 5,8 s, ingen zoom-klasse, pæreanimasjon 0,01 ms |
+| Lasting | første bilde forhåndslastet (`imagesrcset` med `verksted-hero-klassiker`), de sju andre bildene forespurt 2,5 s etter `load`. Første Lighthouse-måling ga 77 (LCP 6,1 s) fordi bildene kom før første maling; rettet, se BESLUTNINGER.md |
+| Feed på 375 px | sporet 0 til 375 px, første kort ved 16 px, siste kort rullet til 359 px, `scrollWidth` lik viewport og `scrollX` 0; `container-site` 16 px, `section-pad` 32 px |
+| Eksterne kall før trykk | ingen på de tre rutene |
+| Tankestrek, forbudte ord, verktøyord | null treff i synlig innhold |
+
+### Lighthouse (mobil, `npm run preview`, service worker aktiv, tre kjøringer)
+
+| Rute | Ytelse | Tilgjengelighet | Beste praksis | SEO | LCP | CLS |
+|---|---|---|---|---|---|---|
+| `/` | 93, 93 (og én kjøring på 67 med TBT 1 010 ms rett etter omstart av Chrome, før oppvarming) | 100 | 100 | 69 | 2,1-2,3 s | 0 |
+| `/deler` | 89, 86, 90, deretter 87, 88, 84 i en ny serie | 100 | 100 | 69 | 3,4-4,1 s | 0 |
+
+Forsiden holder kravet (93). `/deler` ligger på 84-90 og er ikke stabilt over 90: LCP-elementet er nå posteren til butikkvideoen (48 kB webp på mobil) på en side der tekst-LCP allerede lå på 3,6 s (88 i runde 4b, 85 på runde 4-committen). Resten av tiden er renderingsstien (render-blokkerende CSS, ca. 600 ms i Lighthouse) og fontene, som er felles for alle sider og utenfor denne runden. Mulige løft senere: lettere poster (egen kvalitet for hero-bilder i `prepare-images.mjs`) og kritisk CSS inline. Notert i STATUS.md. SEO under 100 skyldes `noindex`. LCP på forsiden er overskriften (bildeshowet står under teksten på mobil), på `/deler` posteren.
+
+### Gjenstående
+
+1. `/deler` under 90 i Lighthouse (se over).
+2. Flere bilder av biler fra Gjermund til bildeshowet, og bekreftelse på om de røde klassikerne er samme bil.
+3. Teste på Samsung (liste i STATUS.md).

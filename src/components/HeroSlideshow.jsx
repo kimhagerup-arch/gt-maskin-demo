@@ -7,6 +7,9 @@ import Picture from "./Picture";
 
 const INTERVAL_MS = 5000;
 const SWIPE_PX = 40;
+/** De andre bildene monteres først så lenge etter window load, så de ikke
+ * konkurrerer med første bilde og teksten om båndbredden (LCP). */
+const REST_DELAY_MS = 2500;
 
 /**
  * Bildeshow med bilene i forsidens hero, i en ramme med lyspærer som løper
@@ -16,7 +19,8 @@ const SWIPE_PX = 40;
  * bytte, og pærene står stille.
  *
  * Ytelse: første bilde lastes eagert (LCP, forhåndslastet av gtm-hero-preload),
- * resten monteres etter window load. Alle lag er absolutt plassert i en boks
+ * resten monteres 2,5 s etter window load, så de ikke konkurrerer med første
+ * bilde og teksten (på en rask linje kommer load før første maling). Alle lag er absolutt plassert i en boks
  * med fast størrelse, så ingenting flytter seg (CLS 0).
  */
 export default function HeroSlideshow({ slides = [], className, sizes }) {
@@ -27,8 +31,15 @@ export default function HeroSlideshow({ slides = [], className, sizes }) {
   const [hidden, setHidden] = useState(
     () => typeof document !== "undefined" && document.visibilityState === "hidden",
   );
+  const [restReady, setRestReady] = useState(false);
   const touch = useRef(null);
   const count = slides.length;
+
+  useEffect(() => {
+    if (!loaded) return undefined;
+    const timer = window.setTimeout(() => setRestReady(true), REST_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [loaded]);
 
   const go = useCallback((next) => setIndex(((next % count) + count) % count), [count]);
 
@@ -41,10 +52,10 @@ export default function HeroSlideshow({ slides = [], className, sizes }) {
   // Automatisk bytte: bare når resten av bildene er lastet, ikke pauset,
   // fanen er synlig og brukeren ikke har bedt om redusert bevegelse.
   useEffect(() => {
-    if (reduced || paused || hidden || !loaded || count < 2) return undefined;
+    if (reduced || paused || hidden || !restReady || count < 2) return undefined;
     const timer = window.setInterval(() => setIndex((i) => (i + 1) % count), INTERVAL_MS);
     return () => window.clearInterval(timer);
-  }, [reduced, paused, hidden, loaded, count]);
+  }, [reduced, paused, hidden, restReady, count]);
 
   const onPointerDown = (e) => {
     if (e.pointerType === "mouse") return;
@@ -90,7 +101,7 @@ export default function HeroSlideshow({ slides = [], className, sizes }) {
       >
         {slides.map((slide, i) => {
           const active = i === index;
-          const mount = i === 0 || loaded;
+          const mount = i === 0 || restReady;
           return (
             <div
               key={slide.image}

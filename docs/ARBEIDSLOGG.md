@@ -1,5 +1,15 @@
 # ARBEIDSLOGG
 
+## 22.10.2026: runde 4c, mindre luft, bildeshow i USA-stil og butikkvideo på butikksiden
+
+Samme branch, `feature/runde-4`, etter runde 4b.
+
+1. Luft: `section-pad` 32/72 px, `container-site` 16 px på mobil, seksjonsgap 6/8, egne paddinger i hero, PageHero, `/verksted`, `/utleie`, tillitsstripen, footer og utleiebanneret strammet i samme forhold, sliderne ut til 16 px-kanten (`MobileSlider`, `VideoSlider`, `.player-portrait`). Tekst kortet ned (våre egne linjer, ikke Gjermunds): feed-ingressen, «Hva vi gjør»-ingressen, videoseksjonens ingress på forsiden, setningen om lasting på `/video`, Snapchat-ingressen, gruppeingressene og butikkingressen på `/deler`, og den ekstra linjen i utleieskjemaet. Gjennomgått på `/`, `/deler`, `/video`, `/verksted`, `/utleie` og `/om-oss` ved 375 og 1440 px.
+2. Feed: `SocialFeed` med lokalt seksjonshode (kicker, tittel, talllinje, liten blå knapp på raden fra 768 px), `FeedCard` med bilde og tittel, «Eksempel»-pille i stedet for PLASSHOLDER-feltet, ingen tekst i hakeparentes, `translate="no"` på sidenavnet. Målt på 375 px: første kort ved 16 px, siste kort rulles til 359 px, `scrollWidth` lik viewport.
+3. Butikkvideo: `PageHero` fikk `video` (bakgrunn via `HeroMedia` med `sizes` og `imgClassName`), `/deler` bruker `partsSection.page.heroImage/heroVideo`, skiltveggen i egen stripe under heroen, `heroImages.js` oppdatert for `/` og `/deler`, `HomeHero` uten video.
+4. Bildeshow: `HeroSlideshow` og `heroSlides.js` (åtte biler), marquee-ramme, neon og zoom i `index.css`, `hero.neonLine` og etiketter i `siteContent.js`. Verifisert i headless Chrome: bytte etter 5 s, pause ved hover, fokus og skjult fane, prikk-klikk, sveip på mobil (0 til 1), zoom-transform 1,079 på aktivt bilde, pærer animert; ved reduced motion ingen bytte, ingen zoom-klasse og animasjon 0,01 ms. Første bilde forhåndslastet. Lighthouse ga først 77 fordi de sju andre bildene ble forespurt rett etter `load`, før første maling; nå monteres de 2,5 s etter `load` (også butikkvideoen på `/deler`), og pærene blinker med `opacity` i stedet for `background-position`.
+5. QA: se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 4c».
+
 ## 21.10.2026: runde 4b, retting etter test på Samsung
 
 Samme branch, `feature/runde-4`. Kim-Oves funn: 4-5 trykk før en Facebook-video spilte, Snapchat-lenken åpnet kameraet, «Kan ikke installere denne appen» i den innloggede forhåndsvisningen, ønske om pop-up for installering, merkelogoer i stedet for tekstbrikker, og Chrome-oversetting av merkenavn.
