@@ -10,6 +10,7 @@ import Reveal from "../components/Reveal";
 import SectionHeader from "../components/SectionHeader";
 import { useCart } from "../context/CartContext";
 import { brands } from "../data/brands";
+import { heroVideo } from "../data/imageManifest";
 import { categorySlug, getGroup, groups, products } from "../data/products";
 import { partsSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
@@ -79,9 +80,23 @@ export default function Deler() {
 
   return (
     <>
-      <PageHero kicker={t.kicker} title={t.title} lead={t.lead} compact>
-        <BrandWall items={brands.parts} label={partsSection.brandsPrefix} tone="dark" priority />
-      </PageHero>
+      <PageHero
+        kicker={t.kicker}
+        title={t.title}
+        lead={t.lead}
+        image={t.heroImage}
+        imageAlt={t.heroAlt}
+        imagePosition={t.heroPosition}
+        video={heroVideo}
+        compact
+      />
+
+      {/* Skiltveggen med delemerkene, rett under videoheroen */}
+      <section className="border-b border-brand-border-dark bg-brand-primary-light py-6 text-brand-text-inverse md:py-8">
+        <div className="container-site">
+          <BrandWall items={brands.parts} label={partsSection.brandsPrefix} tone="dark" priority />
+        </div>
+      </section>
 
       <section className="section-pad bg-brand-bg text-brand-text">
         <div className="container-site flex flex-col gap-6 md:gap-8">
@@ -111,8 +126,6 @@ export default function Deler() {
               );
             })}
           </div>
-
-          <p className="max-w-2xl text-[17px] leading-relaxed text-brand-muted">{gt.lead}</p>
 
           {/* Kategorier og søk */}
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -205,8 +218,8 @@ export default function Deler() {
 
       {/* Butikken i Myggveien */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
-          <SectionHeader kicker={t.storeKicker} title={t.storeTitle} lead={t.storeText} />
+        <div className="container-site flex flex-col gap-6 md:gap-8">
+          <SectionHeader kicker={t.storeKicker} title={t.storeTitle} />
           <BrandWall items={brands.store} label={t.storeBrandsPrefix} tone="dark" />
           <ul className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
             {STORE_IMAGES.map((img, i) => (

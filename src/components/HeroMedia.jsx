@@ -11,18 +11,20 @@ function savesData() {
 }
 
 /**
- * Hero-medie. Posteren (stillbildet) er LCP-elementet og vises med en gang.
- * Hvis `video` er satt, monteres en stum, loopende mp4 over posteren først
- * etter window load, og ikke ved prefers-reduced-motion eller Save-Data.
- * Videoen tones inn når første bilde er klart, så posteren aldri blinker.
- * Feiler videoen, blir posteren stående.
+ * Hero-medie (brukes som bakgrunn i PageHero på /deler). Posteren (stillbildet)
+ * er LCP-elementet og vises med en gang. Hvis `video` er satt, monteres en stum,
+ * loopende mp4 over posteren først etter window load, og ikke ved
+ * prefers-reduced-motion eller Save-Data. Videoen tones inn når første bilde er
+ * klart, så posteren aldri blinker. Feiler videoen, blir posteren stående.
  */
 export default function HeroMedia({
   image,
-  imageAlt,
+  imageAlt = "",
   video,
   className,
-  objectPosition = "18% 50%",
+  imgClassName = "h-full w-full object-cover",
+  sizes = "100vw",
+  objectPosition = "50% 50%",
 }) {
   const reduced = useReducedMotion();
   const loaded = useAfterLoad();
@@ -41,11 +43,12 @@ export default function HeroMedia({
       <Picture
         src={image}
         alt={imageAlt}
-        sizes="(min-width: 1024px) 480px, 100vw"
+        sizes={sizes}
         priority
         objectPosition={objectPosition}
         className="h-full w-full"
-        fallbackLabel="[HOVEDBILDE: prosjektbil i verkstedet]"
+        imgClassName={imgClassName}
+        fallbackLabel=""
       />
       {showVideo && (
         <video
