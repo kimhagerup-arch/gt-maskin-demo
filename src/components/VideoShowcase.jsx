@@ -9,8 +9,9 @@ import VideoSlider from "./VideoSlider";
 
 /**
  * Hovedspiller pluss videoliste som slider. Brukes på forsiden og på /video.
- * Valg i listen bytter video i spilleren (tilbake til poster, ingen eksterne
- * kall før play) og ruller spilleren inn i synsfeltet når den er utenfor.
+ * Valg i listen bytter video i spilleren og starter den med en gang (mp4
+ * spiller, Facebook-spilleren lastes), og ruller spilleren inn i synsfeltet
+ * når den er utenfor. Ingen eksterne kall før brukeren har trykket.
  * Desktop: spilleren står på en dempet flate med tittel, kilde og lenke ved
  * siden av (stående video) eller under (liggende). Mobil: spilleren alene,
  * tekst under.
@@ -20,6 +21,8 @@ export default function VideoShowcase({ videos = [], listTitle, className }) {
   const stageRef = useRef(null);
   const initial = videos.find((v) => v.featured) || videos[0];
   const [activeId, setActiveId] = useState(initial?.id);
+  // Valgt fra et kort: spilleren starter med en gang (ingen poster og play-knapp imellom).
+  const [autoStart, setAutoStart] = useState(false);
 
   if (!videos.length) return null;
   const active = videos.find((v) => v.id === activeId) || initial;
@@ -27,6 +30,7 @@ export default function VideoShowcase({ videos = [], listTitle, className }) {
 
   const select = (id) => {
     setActiveId(id);
+    setAutoStart(true);
     const el = stageRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -48,7 +52,7 @@ export default function VideoShowcase({ videos = [], listTitle, className }) {
             : "md:flex md:flex-col md:gap-6",
         )}
       >
-        <VideoPlayer key={active.id} video={active} />
+        <VideoPlayer key={active.id} video={active} autoStart={autoStart} />
         <VideoMeta video={active} className="mt-4 md:mt-0" />
       </div>
 

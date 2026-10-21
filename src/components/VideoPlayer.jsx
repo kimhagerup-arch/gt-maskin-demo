@@ -51,16 +51,13 @@ export function embedUrl(video) {
   return null;
 }
 
-/** Diskret lasteindikator i merkefarger, vist på den mørke flaten til videoen er klar. */
-function LoadingMark({ hidden }) {
+/**
+ * Diskret lasteindikator i merkefarger, vist på den mørke flaten til videoen er
+ * klar. Fjernes helt ved onLoad, så ingen egne lag ligger over spilleren etterpå.
+ */
+function LoadingMark() {
   return (
-    <div
-      className={cx(
-        "pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300",
-        hidden ? "opacity-0" : "opacity-100",
-      )}
-      aria-hidden={hidden}
-    >
+    <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-3">
       <span className="h-12 w-12 animate-spin rounded-full border-4 border-brand-border-dark-strong border-t-brand-accent" />
       <span className="text-[13px] font-semibold tracking-wider text-brand-muted-inverse">
         {videoSection.loading}
@@ -109,7 +106,8 @@ function Mp4Player({ video, onReady, ready }) {
  * poster (mørk flate, tittel, play) når den ikke har noe. Ingenting eksternt
  * lastes før brukeren trykker play.
  *
- * Ett trykk starter videoen: mp4 spilles direkte i en video-tag med playsinline,
+ * Ett trykk starter videoen (fra et kort via `autoStart`, eller på play-knappen
+ * her): mp4 spilles direkte i en video-tag med playsinline,
  * YouTube får autoplay=1 og playsinline=1, Facebook-pluginen autoplay=true, alle
  * med allow="autoplay; encrypted-media; picture-in-picture; fullscreen". Mens
  * spilleren laster, vises en mørk flate i samme ramme med en diskret
@@ -117,8 +115,9 @@ function Mp4Player({ video, onReady, ready }) {
  * så ingenting flytter seg (stående: `.player-portrait`, liggende: 16:9).
  * Snapchat kan ikke bygges inn og lenker ut.
  */
-export default function VideoPlayer({ video, className }) {
-  const [playing, setPlaying] = useState(false);
+export default function VideoPlayer({ video, className, autoStart = false }) {
+  // autoStart: valgt fra et kort, spilleren monteres med en gang uten poster.
+  const [playing, setPlaying] = useState(autoStart);
   const [ready, setReady] = useState(false);
   const isSnapchat = video.source === "snapchat";
   const canPlay = Boolean(video.src) && !isSnapchat;
@@ -134,7 +133,7 @@ export default function VideoPlayer({ video, className }) {
     const markReady = () => setReady(true);
     return (
       <div className={cx(frameClass, "bg-brand-primary")}>
-        <LoadingMark hidden={ready} />
+        {!ready && <LoadingMark />}
         {video.source === "mp4" ? (
           <Mp4Player video={video} onReady={markReady} ready={ready} />
         ) : (
