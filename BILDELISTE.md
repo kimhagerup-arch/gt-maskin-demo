@@ -10,6 +10,7 @@ Sist oppdatert 21.10.2026 (runde 4). Nye bilder og video fra butikken, fotografe
 |---|---|---|---|---|
 | Bilder fra ekte Facebook-innlegg (ett per innlegg, første bilde ved karusell) | Feed på forsiden | jpg | som lastet ned fra Facebook | Mappe `feed` i `PHOTOS`, nøkkel `/images/feed/<kort-slug>`. Dato, tekst ordrett og permalenke må følge med |
 | Videoposter for de seks Facebook-reelene (ett stillbilde per video) | Videoseksjonen og `/video` | jpg | 1080×1920 (9:16) | Spilleren laster ingen eksterne miniatyrer før klikk. Uten eget bilde vises nå en designet poster (mørk flate, tittel og play), ikke et lånt verkstedbilde. Butikkvideoen har egen poster |
+| Flere bilder av biler til bildeshowet på forsiden: prosjekter, biler inne til arbeid og ferdige biler | Forsiden, hero (bildeshow, 480×560 på desktop, 16:10 på mobil) | jpg | min. 1600 px bred, helst liggende | Uten personer. Legges i `assets-raw/`, `PHOTOS` og `src/data/heroSlides.js`. I dag åtte bilder fra repoet, noen bare 750-960 px brede |
 | Nye verkstedbilder uten personer i bakgrunnen (erstatter `verksted4.jpg` og `verksted10.jpg`) | `/verksted`, «Europeiske biler og Tesla» og «Veteran og classic» | jpg | min. 1600 px bred | De to bildene står til nye kommer, se spørsmål 5 |
 | ATV | `/utleie` og utleiekort på forsiden | jpg | min. 1600 px bred, 16:10 | Vises nå som designet ikonfelt, ikke tom plassholder |
 | Vanlig tilhenger (ikke biltransporthenger) | `/utleie`, kortet «Tilhenger og biltransporthenger» | jpg | min. 1600 px bred | Kun biltransporthenger finnes |
