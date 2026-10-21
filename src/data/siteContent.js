@@ -122,6 +122,7 @@ export const feedSection = {
   openPost: "Åpne innlegget på Facebook",
   readMore: "Les mer på Facebook",
   moreImages: "Flere bilder",
+  listLabel: "Innlegg fra Facebook",
 };
 
 export const servicesSection = {
@@ -129,6 +130,14 @@ export const servicesSection = {
   title: "Verksted, deler og prosjekter",
   lead: "Vi tar alt fra gamle veteranbiler til nye bruksbiler, med et moderne verksted som tar vare på bilen din, gamle som nye, blanke som rustne.",
   readMore: "Les mer",
+  listLabel: "Det vi gjør",
+};
+
+/** Prikkene under sliderne på mobil: «Gå til kort 2 av 6». */
+export const sliderLabels = {
+  goTo: "Gå til kort",
+  of: "av",
+  dotsLabel: "Velg kort",
 };
 
 export const videoSection = {
