@@ -431,3 +431,38 @@ Branch `feature/runde-4`. Merges til `dev` av Kim-Ove etter gjennomsyn. Nye kild
 - «Klær og utstyr» har fått ekte varer med pris: T-skjorte 299, Caps 399, Stetson caps 599, Kopp 250, Nøkkelring 99, og Wunder-Baum 35 under «Tilbehør» i «Deler». Størrelser for T-skjorte står som «[Størrelser bekreftes]» (`sizes: []`). Varemerke er bare satt der tavla sier det (Stetson, Wunder-Baum). Varenummer, lagerstatus og beskrivelse er ukjent og vises som før (`[varenummer]`, «Spør om lagerstatus», «[Produktbeskrivelse legges inn …]»). Kopp og nøkkelring har ikke bilde ennå.
 - Ikke brukt: «Bok 399,-» (uklart hvilken bok) og Vipps-nummeret (brukes ikke uten at Gjermund ber om det).
 - Produktbilder i kortene har tom `alt` når varen er ekte, fordi lenken allerede har tittelen som skjult tekst (axe `image-redundant-alt`, funnet på Wunder-Baum og rettet).
+
+## Runde 4b (21.10.2026): retting etter test på Samsung
+
+Fortsatt på `feature/runde-4`. Rettinger etter at Kim-Ove testet runde 4 på en Samsung i forhåndsvisningen.
+
+### Facebook-video: færre trykk (punkt 1)
+
+- Facebooks innebygde spiller starter ikke av seg selv på mobil, så ett trykk på Facebooks egen play-knapp vil alltid trengs. Det skal være det eneste trykket i tillegg til kortet: trykk på et kort i «Alle videoer» velger og starter videoen i hovedspilleren med en gang (`autoStart` i `VideoShowcase` og `VideoPlayer`), uten den designede posteren og vår oransje play-knapp imellom. mp4 spiller direkte (målt 0,43-0,45 s), Facebook-spilleren lastes direkte (iframe tonet inn etter 0,65-1,2 s). Hovedspilleren rulles inn som før, uten myk rulling ved `prefers-reduced-motion`.
+- Facebook-spilleren fyller rammen i riktig sideforhold (9:16 for reels, målt 0,56), så Facebooks play-knapp står midt i og er stor. Lasteindikatoren fjernes fra DOM ved `onLoad`, så ingen egne lag ligger over iframen etterpå (målt: null søsken ved siden av iframen). Den mørke lasteflaten og «ingen eksterne kall før trykk» er beholdt.
+- Play-knappen vår vises fortsatt bare i startposisjonen (før noe er valgt), der den første videoen («Butikken») står med poster.
+- **Ett trykk hele veien krever egne videofiler**, som «Butikken». Originalfilene til de seks reelene fra Gjermund står på listen før go-live (STATUS.md).
+
+### Snapchat: profilen direkte (punkt 2)
+
+- `/add/`-lenken fra runde 4 åpnet kameraet i Snapchat-appen først, deretter historier og kamera igjen før profilen. Alle «Åpne i Snapchat»-lenker (profilkortet, ikonene i header og hero, footer, QR-dialogen, kontaktsiden) går nå til den offentlige profilen `https://www.snapchat.com/@gtmaskin-as`, samme adresse som innbyggingen bruker uten `/embed`. Brukernavnet leses fra `channels.js` (`url`), `addUrl` er fjernet.
+- Kim-Ove ser venneprofilen fordi han er venn med GT Maskin på Snapchat. Andre ser den offentlige profilen.
+
+### App: installering og boks (punkt 3)
+
+- Forhåndsvisningen i Vercel er beskyttet med innlogging. Chrome hentet manifestet uten innloggingscookien, fikk innloggingssiden tilbake og sa «Kan ikke installere denne appen». `<link rel="manifest">` har nå `crossorigin="use-credentials"`, så cookien sendes med også for manifestet. Manifestet er gyldig (`Page.getAppManifest` uten feil, `Page.getInstallabilityErrors` tom), og den åpne demolenken har ingen beskyttelse.
+- Ny `InstallPrompt`: en liten boks på mobil (under 768 px) med «Legg GT Maskin på hjemskjermen», «Åpne siden som app, rett fra mobilen.», «Legg til» og «Ikke nå». Vises etter 20 sekunder på siden eller når brukeren har rullet forbi halve siden, det som kommer først (målt: ikke etter 15 s, vist etter 21 s; vist straks ved rulling til 60 %). Ikke på `/kasse` og `/bestill`, ikke mens et skjema har fokus (sjekkes ved visning, og boksen skjules hvis et skjemafelt får fokus mens den står), ikke når siden kjører som app, og bare når nettleseren kan installere (Android/Chrome: `beforeinstallprompt` har kommet) eller er iPhone/iPad.
+- «Legg til»: Android og Chrome bruker `beforeinstallprompt`; iPhone åpner veiledningen med Del-knappen (samme `InstallDialog` som knappen i footer). «Ikke nå», lukk eller Escape gir 14 dagers pause i `localStorage` (`gtm-app-boks-lukket`, med try/catch).
+- Plassering: `position: fixed` 68 px over bunnen, så bunnlinjen med «Ring» og «Bestill time» (56 px) ikke dekkes (målt: boksens bunn 744 px, linjens topp 755 px). Fanger ikke fokus (`section` med `aria-label`, ingen fokusflytting), flytter ikke innholdet (fixed, CLS 0 i Lighthouse). Knappene i footer og mobilmeny står som før.
+
+### Merkene med logo (punkt 4)
+
+- Kim-Ove har bestemt (21.10.2026) at demoen skal vise logoer, og at bruken avklares med Gjermund før go-live. Kommentaren i `brands.js` er oppdatert. Merkene er de som sto i `brands.js` (Chevrolet, Dodge, Ram, Ford, Cadillac, Tesla, Amsoil, Fluid Film, Carhartt) pluss Stetson og Wunder-Baum fra bildene i butikken. Skiltene i butikken (Shell, Texaco, Mobil, Route 66, National) er pynt og er ikke med.
+- Logoene ligger lokalt som SVG i `public/images/merker/` (åtte filer, 1,6-39 kB, ingen script eller eksterne referanser), hentet fra Wikimedia Commons med kilde og lisens per fil i `_kilder/LOGOER.md`. Ingen av dem er endret. Amsoil, Fluid Film og Wunder-Baum finnes ikke som ren SVG (Commons har bare det amerikanske «Little Trees»-merket, og produsentsidene ga ingen SVG), så navnet vises på platen i stedet.
+- `BrandWall`: skiltvegg med hvert merke på en lys plate med lik høyde (72 px på mobil, 96 px fra 768 px), fire små nagler i hjørnene og diskret skygge, navnet under. Logoene får lik visuell tyngde gjennom `logoHeight` per merke i `brands.js` (ordmerker 16-24 px, emblemer 40-60 px; Ford-filen har luft rundt ovalen og får derfor 60). `width`/`height` fra viewBox så ingenting flytter seg. 3 kolonner på 375 px, 4 fra 640 px, 6 fra 1024 px. Ingenting ruller av seg selv.
+- Brukt på `/deler` i stedet for tekstbrikkene: delemerkene i hero («Deler til») og butikkmerkene i butikkseksjonen («I butikken»). Forsiden: alle elleve i seksjonen «Deler og nettbutikk», rett under seksjonshodet, med etiketten «I butikken» (`partsSection.page.storeBrandsPrefix`); lenken «Gå til butikken» står allerede i seksjonshodet. Raden ligger der brikkene lå, så ingen seksjon er skjøvet lenger ned enn plateraden (ca. 230 px på mobil). `BrandChips` er fjernet.
+- Alt-teksten er merkenavnet. Lighthouse etter endring: se QA-rapporten.
+
+### Ikke oversett merkenavn (punkt 5)
+
+- Chrome på Samsung oversatte siden (Dodge ble «Unnvik», Ram «Vær», «Ring» «Ringe», «GT MASKIN» «GT-MASKIN») selv med `lang="nb"`. `translate="no"` er satt på merkenavn og logoer i `BrandWall`, produktnavn og varemerke i produktkort, produktside, handlekurv og kasse, firmanavnet i `Logo` (header og mobilmeny) og i footer (merke og copyright-linje), og «Ring» i bunnlinjen. Resten av siden kan fortsatt oversettes, så turister får teksten på sitt språk.

@@ -114,11 +114,7 @@ export default function Home() {
               </Link>
             }
           />
-          <BrandWall
-            items={brands.all}
-            label={partsSection.page.storeBrandsPrefix}
-            tone="light"
-          />
+          <BrandWall items={brands.all} label={partsSection.page.storeBrandsPrefix} tone="light" />
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
             <nav
               aria-label={partsSection.groupLinksLabel}

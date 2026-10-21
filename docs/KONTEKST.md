@@ -29,6 +29,17 @@
 - `src/data/imageManifest.js` skrives av `scripts/prepare-images.mjs`. Varianter: full (maks 1920), 800 og 400 px, webp + jpg.
 - `src/lib/images.js` `getImage(key)` gir `src`, `srcSet`, `webpSrcSet`, `sizes`, `smallest`. `Picture` bygger `<picture>`.
 
+## Lagt til i runde 4b
+
+| Hva | Rolle |
+|---|---|
+| `VideoShowcase` / `VideoPlayer` | `autoStart`: kortvalg monterer spilleren direkte (mp4 spiller, Facebook-iframe lastes). `LoadingMark` fjernes ved `onLoad` |
+| `InstallPrompt` | Boks på mobil («Legg GT Maskin på hjemskjermen», «Legg til», «Ikke nå») etter 20 s eller halve siden; vilkår og 14 dagers pause (`gtm-app-boks-lukket`). I `Layout` etter `StickyMobileBar`. Tekster i `installApp.box*`, `add`, `notNow`. `InstallDialog` er eksportert fra `InstallButton` |
+| `BrandWall` | Skiltvegg med logoer fra `brands.js` (`parts`, `store`, `all`; `logo`, `w`, `h`, `logoHeight`). Erstatter `BrandChips` (fjernet). SVG-er i `public/images/merker/`, kilder i `_kilder/LOGOER.md` |
+| `channels.snapchat.url` | Eneste Snapchat-lenke (offentlig profil). `addUrl` er fjernet |
+| `index.html` | `<link rel="manifest" crossorigin="use-credentials">` så manifestet hentes med cookie bak Vercel-innlogging |
+| `translate="no"` | På merkenavn, produktnavn, firmanavn og «Ring» (BrandWall, ProductCard, Produkt, CartDrawer, Kasse, Logo, Footer, StickyMobileBar) |
+
 ## Lagt til i runde 4
 
 | Hva | Rolle |

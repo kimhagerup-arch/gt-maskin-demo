@@ -1,5 +1,16 @@
 # ARBEIDSLOGG
 
+## 21.10.2026: runde 4b, retting etter test på Samsung
+
+Samme branch, `feature/runde-4`. Kim-Oves funn: 4-5 trykk før en Facebook-video spilte, Snapchat-lenken åpnet kameraet, «Kan ikke installere denne appen» i den innloggede forhåndsvisningen, ønske om pop-up for installering, merkelogoer i stedet for tekstbrikker, og Chrome-oversetting av merkenavn.
+
+1. Video: `VideoShowcase` setter `autoStart` ved kortvalg, `VideoPlayer` starter da med spilleren montert (ingen poster og play-knapp imellom), `LoadingMark` fjernes fra DOM ved `onLoad`. Målt: mp4 spiller etter 0,43-0,45 s, Facebook-iframen tonet inn etter 0,65-1,2 s og fyller rammen i 9:16 uten egne lag over; Facebooks egen play-knapp gjenstår.
+2. Snapchat: `addUrl` fjernet, alle «Åpne i Snapchat»-lenker bruker `channels.snapchat.url` (den offentlige profilen). Verifisert: bare én Snapchat-adresse i DOM på `/video`.
+3. App: `crossorigin="use-credentials"` på manifest-lenken; ny `InstallPrompt` i `Layout` (tid 20 s eller halve siden, ikke på `/kasse` og `/bestill`, ikke ved skjemafokus, ikke i standalone, bare med prompt eller iOS, 14 dagers pause i localStorage, fixed over bunnlinjen, Escape lukker, ingen fokusfelle). `InstallDialog` eksportert fra `InstallButton`. Verifisert alle vilkårene i headless Chrome.
+4. Merker: `brands.js` med logo, viewBox-mål og `logoHeight` per merke; åtte SVG-er fra Wikimedia Commons (søkt via API, lisens og opphav lest fra `extmetadata`, filene sjekket for script og eksterne referanser, rendret og kontrollert visuelt) i `public/images/merker/`, kilder i `_kilder/LOGOER.md`. `BrandWall` (plater, nagler, skygge, 3/4/6 kolonner) erstatter `BrandChips` på `/deler` (hero og butikkseksjon) og forsiden (alle merker under seksjonshodet i «Deler og nettbutikk»).
+5. `translate="no"` på merkenavn, produktnavn (kort, produktside, kurv, kasse), firmanavn (logo, footer) og «Ring».
+6. QA: se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 4b».
+
 ## 21.10.2026: runde 4, video med ett trykk, slidere, Snapchat, app og butikkbilder
 
 Branch `feature/runde-4` fra `dev`. Nye filer i `assets-raw/` (butikkbilder og `hero.mp4`) og `_kilder/PRISER-FRA-TAVLENE.md` kom inn under runden.

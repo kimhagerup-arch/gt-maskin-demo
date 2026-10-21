@@ -80,7 +80,7 @@ export default function Deler() {
   return (
     <>
       <PageHero kicker={t.kicker} title={t.title} lead={t.lead} compact>
-        <BrandWall items={brands.parts} label={partsSection.brandsPrefix} tone="dark" />
+        <BrandWall items={brands.parts} label={partsSection.brandsPrefix} tone="dark" priority />
       </PageHero>
 
       <section className="section-pad bg-brand-bg text-brand-text">

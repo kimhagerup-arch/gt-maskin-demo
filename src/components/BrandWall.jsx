@@ -22,7 +22,19 @@ function Rivet({ className }) {
   );
 }
 
-export default function BrandWall({ items = [], label, link, tone = "dark", className }) {
+/**
+ * priority: logoene lastes eagert (i hero på /deler, der de står i første skjermbilde).
+ * Navnet under platen er skjult for skjermlesere: alt-teksten på logoen er merkenavnet,
+ * og uten logo står navnet allerede på platen.
+ */
+export default function BrandWall({
+  items = [],
+  label,
+  link,
+  tone = "dark",
+  priority = false,
+  className,
+}) {
   const dark = tone === "dark";
   if (!items.length) return null;
 
@@ -80,7 +92,7 @@ export default function BrandWall({ items = [], label, link, tone = "dark", clas
                   alt={brand.name}
                   width={brand.w}
                   height={brand.h}
-                  loading="lazy"
+                  loading={priority ? "eager" : "lazy"}
                   decoding="async"
                   translate="no"
                   className="max-h-[60%] w-auto max-w-full object-contain"
@@ -101,6 +113,7 @@ export default function BrandWall({ items = [], label, link, tone = "dark", clas
                 dark ? "text-brand-muted-inverse" : "text-brand-muted",
               )}
               translate="no"
+              aria-hidden="true"
             >
               {brand.name}
             </span>

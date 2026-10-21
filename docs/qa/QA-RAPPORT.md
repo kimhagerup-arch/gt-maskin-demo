@@ -246,3 +246,41 @@ Minst like gode tall som i runde 3 (90/90) og 3b (92/90). SEO under 100 skyldes 
 2. Gjermund bekrefter prisene fra tavlene og hva timeprisen gjelder, og sender titler og stillbilder til de seks reelene, størrelser for T-skjorte og bilder av kopp og nøkkelring.
 3. Nye verkstedbilder uten personer i bakgrunnen (`verksted4.jpg`, `verksted10.jpg`).
 
+## Runde 4b (21.10.2026): retting etter test på Samsung
+
+Samme branch, mot `npm run preview` i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-4b/` (13 filer): skiltveggen på `/deler` (hero og butikkseksjon) og forsiden på 375 og 1440 px, forsiden i full høyde, app-boksen og iPhone-dialogen, og videospilleren etter trykk på et Facebook-kort og på «Butikken».
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene før hver commit |
+| `/`, `/deler`, `/video` × 375 og 1440 px | `scrollWidth` lik viewport, ingen konsollfeil eller -advarsler. Skiltveggen står i 3 kolonner på 375 px og 6 på 1440 px, navnene uten logo (Amsoil, Fluid Film, Wunder-Baum) på to linjer der platen er smal |
+| axe-core ved 375 og 1440 px | første kjøring ga `image-redundant-alt` (minor) på logoene, fordi navnet står under platen. Rettet: navnet under er `aria-hidden`, alt-teksten på logoen er merkenavnet. 0 funn etter retting, Lighthouse tilgjengelighet 100 |
+| Trykk på Facebook-kort i «Alle videoer» (375 og 1440) | spilleren monteres direkte, ingen poster eller egen play-knapp imellom, lasteflate med indikator, Facebook-iframen tonet inn etter 0,65-1,2 s, fyller rammen i 9:16 (målt 0,56), ingen egne elementer ved siden av iframen, hovedspilleren i synsfeltet. Facebooks egen play-knapp gjenstår |
+| Trykk på «Butikken» | video monteres direkte og spiller etter 0,43-0,45 s (`paused` false) |
+| Snapchat-lenker på `/video` | én adresse i DOM: `https://www.snapchat.com/@gtmaskin-as` |
+| Eksterne kall før trykk | ingen på `/`, `/deler` og `/video` (logoene lastes fra `/images/merker/`) |
+| Manifest | `crossorigin="use-credentials"` på lenken, `Page.getAppManifest` uten feil, `Page.getInstallabilityErrors` tom |
+| App-boksen | ikke synlig ved last; vist ved rulling forbi halve siden med tittel, linje og knappene «Legg til» / «Ikke nå»; bunn 744 px over bunnlinjens topp 755 px; ingen fokus flyttet inn; Escape lukker og lagrer tidspunkt; etter lukking ikke vist igjen; ikke på `/bestill`; ikke når et skjemafelt har fokus; ikke i standalone; uten rulling vist etter 20 s (ikke ved 15 s, vist ved 21 s); iPhone-UA: «Legg til» åpner veiledningen |
+| Tankestrek, forbudte ord, verktøyord i `src`, `public`, `index.html`, docs, STATUS, BESLUTNINGER, BILDELISTE, LOGOER | null treff i synlig innhold. SVG-filene har ingen script eller eksterne referanser |
+
+### Lighthouse (mobil, `npm run preview`, service worker aktiv, tre kjøringer)
+
+| Rute | Ytelse | Tilgjengelighet | Beste praksis | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|
+| `/` | 89, 90, 90 | 100 | 100 | 69 | 3,4-3,6 s | 0 | 40 ms |
+| `/deler` | 88, 88, 88 | 100 | 100 | 69 | 3,6-3,7 s | 0 | 0-10 ms |
+
+Forsiden er på nivå med runde 4 (90, 90). `/deler` ble ikke målt i runde 4; målt på runde 4-committen (548fed4) i samme sesjon gir den 85, 85, 85 med LCP 4,1 s, så siden er blitt litt raskere, ikke tregere. LCP-elementet på `/deler` er ingressen i hero (tekst), logoene er lastet etter 121-131 ms. SEO under 100 skyldes `noindex`.
+
+### Konsoll og DevTools-issues
+
+Ingen konsollfeil fra vår kode. `LazyLoadImageIssue` dukket opp for logoene i hero på `/deler` (de sto i første skjermbilde med `loading="lazy"`); rettet med `priority` (eager) på skiltveggen i hero. Resten av meldingene kommer av fullsideskjermbildene i QA-scriptet, som i runde 4.
+
+### Gjenstående
+
+1. Teste på Samsung-en (liste i STATUS.md): Facebook-kort med bare Facebooks play-knapp igjen, Snapchat-profilen, installering i den innloggede forhåndsvisningen, app-boksen, skiltveggen og oversetting.
+2. Avklare logobruken med Gjermund før go-live, og få originalfiler for Amsoil, Fluid Film og Wunder-Baum.
+3. Originalfilene til de seks reelene fra Gjermund, så videoene spiller med ett trykk.
+
