@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FactBoxes, TeamGrid, Timeline } from "../components/AboutBlocks";
 import BookingForm from "../components/BookingForm";
-import BrandChips from "../components/BrandChips";
+import BrandWall from "../components/BrandWall";
 import Button from "../components/Button";
 import CarCard from "../components/CarCard";
 import ContactCard from "../components/ContactCard";
@@ -114,8 +114,12 @@ export default function Home() {
               </Link>
             }
           />
+          <BrandWall
+            items={brands.all}
+            label={partsSection.page.storeBrandsPrefix}
+            tone="light"
+          />
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
-            <BrandChips prefix={partsSection.brandsPrefix} brands={brands.parts} />
             <nav
               aria-label={partsSection.groupLinksLabel}
               className="flex flex-wrap items-center gap-2 text-sm"

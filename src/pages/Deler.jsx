@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import BrandChips from "../components/BrandChips";
+import BrandWall from "../components/BrandWall";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
 import PageHero from "../components/PageHero";
@@ -80,7 +80,7 @@ export default function Deler() {
   return (
     <>
       <PageHero kicker={t.kicker} title={t.title} lead={t.lead} compact>
-        <BrandChips prefix={partsSection.brandsPrefix} brands={brands.parts} tone="dark" />
+        <BrandWall items={brands.parts} label={partsSection.brandsPrefix} tone="dark" />
       </PageHero>
 
       <section className="section-pad bg-brand-bg text-brand-text">
@@ -207,7 +207,7 @@ export default function Deler() {
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
         <div className="container-site flex flex-col gap-8 md:gap-10">
           <SectionHeader kicker={t.storeKicker} title={t.storeTitle} lead={t.storeText} />
-          <BrandChips prefix={t.storeBrandsPrefix} brands={brands.store} tone="dark" />
+          <BrandWall items={brands.store} label={t.storeBrandsPrefix} tone="dark" />
           <ul className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
             {STORE_IMAGES.map((img, i) => (
               <Reveal
