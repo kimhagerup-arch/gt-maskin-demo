@@ -71,7 +71,7 @@ export default function Produkt() {
 
   return (
     <section className="section-pad bg-brand-bg text-brand-text">
-      <div className="container-site flex flex-col gap-8">
+      <div className="container-site flex flex-col gap-6 md:gap-8">
         <Link
           to={backTo}
           className="inline-flex items-center gap-1.5 text-sm font-bold text-brand-muted hover:text-brand-text"

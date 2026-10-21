@@ -38,7 +38,7 @@ export default function Bil() {
 
   return (
     <section className="section-pad bg-brand-primary text-brand-text-inverse">
-      <div className="container-site flex flex-col gap-8">
+      <div className="container-site flex flex-col gap-6 md:gap-8">
         <Link
           to="/biler-til-salgs"
           className="inline-flex items-center gap-1.5 text-sm font-bold text-brand-muted-inverse hover:text-brand-text-inverse"

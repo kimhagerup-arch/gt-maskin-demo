@@ -13,13 +13,8 @@ export default function ServiceCards({ id = "tjenester" }) {
       id={id}
       className="section-pad border-t border-brand-border bg-brand-bg text-brand-text"
     >
-      <div className="container-site flex flex-col gap-8 md:gap-10">
-        <SectionHeader
-          tone="light"
-          kicker={servicesSection.kicker}
-          title={servicesSection.title}
-          lead={servicesSection.lead}
-        />
+      <div className="container-site flex flex-col gap-6 md:gap-8">
+        <SectionHeader tone="light" kicker={servicesSection.kicker} title={servicesSection.title} />
         <MobileSlider
           items={services}
           label={servicesSection.listLabel}

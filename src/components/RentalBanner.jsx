@@ -137,7 +137,7 @@ export default function RentalBanner({ cta }) {
       )}
 
       {/* Innhold */}
-      <div className="relative z-10 flex max-w-xl flex-col gap-4 px-6 pb-32 pt-8 md:px-10 md:py-12">
+      <div className="relative z-10 flex max-w-xl flex-col gap-4 px-5 pb-28 pt-6 md:px-10 md:py-10">
         <p className="kicker text-brand-accent-light">{rentalBanner.kicker}</p>
         <h3 className="font-display text-4xl tracking-wide md:text-5xl">{rentalBanner.title}</h3>
         <p

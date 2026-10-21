@@ -54,7 +54,7 @@ export default function Verksted() {
                 as="article"
                 key={section.id}
                 id={section.id}
-                className="grid scroll-mt-24 gap-6 py-12 md:gap-10 md:py-16 lg:grid-cols-12"
+                className="grid scroll-mt-24 gap-5 py-8 md:gap-8 md:py-12 lg:grid-cols-12"
               >
                 <div
                   className={cx(
@@ -121,7 +121,7 @@ export default function Verksted() {
       {/* Faste priser (fra tavla i butikken, bekreftes før go-live) */}
       {workshopPrices.length > 0 && (
         <section className="border-t border-brand-border bg-brand-surface text-brand-text">
-          <div className="container-site grid gap-6 py-12 md:grid-cols-12 md:gap-10 md:py-16">
+          <div className="container-site grid gap-5 py-8 md:grid-cols-12 md:gap-8 md:py-12">
             <div className="flex flex-col gap-3 md:col-span-4">
               <p className="kicker text-brand-accent-deep">{workshopPage.pricesKicker}</p>
               <h2 className="font-display text-4xl tracking-wide md:text-5xl">
@@ -148,7 +148,7 @@ export default function Verksted() {
 
       {/* Slik jobber vi */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader kicker={workshopPage.processKicker} title={workshopPage.processTitle} />
           <ol className="grid gap-3 md:grid-cols-3 md:gap-6">
             {workshopPage.process.map((step, i) => (
@@ -197,7 +197,7 @@ export default function Verksted() {
 
       {/* Galleri */}
       <section className="section-pad bg-brand-bg text-brand-text">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader
             tone="light"
             kicker={workshopPage.galleryKicker}

@@ -128,9 +128,6 @@ export default function SnapchatSection({ className }) {
         <h3 className="font-display text-4xl tracking-wide text-brand-text-inverse md:text-5xl">
           {t.title}
         </h3>
-        <p className="max-w-[60ch] text-[17px] leading-relaxed text-brand-muted-inverse">
-          {t.lead}
-        </p>
         {snapchat.qrImage && ready && (
           <div className="hidden items-center gap-3 pt-2 md:flex">
             <span className="h-16 w-16 shrink-0 rounded-field bg-brand-snapchat p-1">

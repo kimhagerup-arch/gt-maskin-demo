@@ -95,10 +95,13 @@ export const hero = {
     place: "Alta",
     text: "Amerikanske biler, custom-prosjekter og delesalg.",
   },
-  image: "/images/hero/butikk-hero-poster",
-  imageAlt: "Butikken hos GT Maskin: moped, gammelt kasseapparat og klesstativ",
-  imagePosition: "50% 50%",
-  video: "/video/hero.mp4",
+  // Linjen i tittelen som får neon-glød (0-basert): «amerikanske».
+  neonLine: 1,
+  // Bildeshowet med bilene ligger i heroSlides.js.
+  slideshowLabel: "Biler hos GT Maskin",
+  slideshowDots: "Velg bilde",
+  slideshowGoTo: "Vis bilde",
+  slideshowOf: "av",
 };
 
 export const trust = [
@@ -112,9 +115,9 @@ export const trust = [
 export const feedSection = {
   kicker: "Siste fra Facebook",
   title: "Live fra GT Maskin",
-  lead: "Her ser du det siste fra verkstedet, hentet automatisk fra Facebook.",
   cta: { label: "Følg oss på Facebook" },
   placeholderTag: "Plassholder",
+  exampleTag: "Eksempel",
   placeholderCaption: "[Innleggstekst hentes automatisk fra Facebook-siden]",
   dateFallback: "[dato]",
   followersSuffix: "liker siden",
@@ -129,7 +132,6 @@ export const feedSection = {
 export const servicesSection = {
   kicker: "Hva vi gjør",
   title: "Verksted, deler og prosjekter",
-  lead: "Vi tar alt fra gamle veteranbiler til nye bruksbiler, med et moderne verksted som tar vare på bilen din, gamle som nye, blanke som rustne.",
   readMore: "Les mer",
   listLabel: "Det vi gjør",
 };
@@ -144,7 +146,6 @@ export const sliderLabels = {
 export const videoSection = {
   kicker: "Video",
   title: "GT Maskin på film",
-  lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien.",
   play: "Spill av video",
   loading: "Laster video",
   posterKicker: "Video",
@@ -159,7 +160,7 @@ export const videoSection = {
   page: {
     kicker: "Video",
     title: "GT Maskin på film",
-    lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien. Videoene lastes først når du trykker på avspilling.",
+    lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien.",
     heroImage: "/images/bygg/fasade-dag-bilpark",
     heroAlt: "Bygget til GT Maskin på dagtid med mange biler foran",
     featuredTitle: "Siste video",
@@ -273,10 +274,14 @@ export const partsSection = {
     kicker: "Butikk",
     title: "Deler, klær og utstyr",
     lead: "Vi har godt delelager til de fleste amerikanske biler, også Tesla, og skaffer det vi ikke har på lager. I butikken står også oljer, kjemi, rustbeskyttelse, klær og capser. Finner du ikke det du leter etter, send oss en forespørsel.",
+    // Butikkvideoen (17 s fra butikken, 21.10.2026) som hero med posteren som LCP.
+    heroImage: "/images/hero/butikk-hero-poster",
+    heroAlt: "Butikken hos GT Maskin: moped, gammelt kasseapparat og klesstativ",
+    heroVideo: "/video/hero.mp4",
+    heroPosition: "50% 50%",
     groupLabel: "Velg del av butikken",
     groups: {
       deler: {
-        lead: "Deler til de fleste US-biler og Tesla. Finner du ikke delen her, send oss en forespørsel med merke, modell og årsmodell.",
         searchLabel: "Søk i deler",
         searchPlaceholder: "Søk etter del, merke eller kategori",
         resultsLabel: "deler",
@@ -284,7 +289,6 @@ export const partsSection = {
         requestCta: { label: "Send forespørsel om del", to: "/kontakt" },
       },
       klaer: {
-        lead: "Klær og capser står i hyllene i kundemottaket, blant annet fra Carhartt. Størrelser og utvalg bekreftes når du bestiller.",
         searchLabel: "Søk i klær og utstyr",
         searchPlaceholder: "Søk etter plagg, caps eller merke",
         resultsLabel: "varer",
@@ -297,8 +301,6 @@ export const partsSection = {
       "Nettbutikken er en demo. Bestillinger sendes som forespørsel, vi bekrefter pris, lagerstatus og frakt før noe betales.",
     storeKicker: "Butikken i Myggveien",
     storeTitle: "Stikk innom butikken",
-    storeText:
-      "Oljer, kjemi, rustbeskyttelse, klær og capser står i hyllene i kundemottaket. Det står til tider svært fine biler inne hos oss også.",
     storeBrandsPrefix: "I butikken",
   },
   product: {
@@ -372,7 +374,6 @@ export const rentalSection = {
     heading: "Spør om utleie",
     intro: "Fortell oss hva du vil leie og når, så tar vi kontakt og bekrefter.",
     title: "Send utleieforespørsel",
-    lead: "Vi svarer med pris og tilgjengelighet.",
     fields: {
       type: { label: "Hva vil du leie?", placeholder: "Velg type" },
       from: { label: "Fra dato" },
@@ -624,7 +625,6 @@ export const socialLinks = {
 export const snapchatSection = {
   kicker: "Snapchat",
   title: "GT Maskin på Snapchat",
-  lead: "Korte videoer fra verkstedet. Følg oss for mer.",
   // Lokalt profilkort (ingen eksterne kall): logo, tittel, brukernavn og to knapper.
   cardTitle: "GT Maskin på Snapchat",
   open: "Åpne i Snapchat",

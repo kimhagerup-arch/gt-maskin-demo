@@ -51,7 +51,7 @@ export default function OmOss() {
 
       {/* Historie og fakta */}
       <section className="section-pad bg-brand-bg text-brand-text">
-        <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-6">
+        <div className="container-site grid gap-8 lg:grid-cols-12 lg:gap-6">
           <div className="flex flex-col gap-6 lg:col-span-6">
             <p className="text-lg leading-relaxed">{aboutSection.paragraphs[0]}</p>
             <p className="text-[17px] leading-relaxed text-brand-muted">
@@ -70,7 +70,7 @@ export default function OmOss() {
 
       {/* Kundemottaket */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader
             kicker={p.receptionKicker}
             title={p.receptionTitle}
@@ -118,7 +118,7 @@ export default function OmOss() {
 
       {/* Folkene */}
       <section className="section-pad bg-brand-bg text-brand-text">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader tone="light" kicker={aboutSection.peopleLabel} title={p.peopleTitle} />
           <TeamGrid large className="md:max-w-3xl" />
         </div>
@@ -126,7 +126,7 @@ export default function OmOss() {
 
       {/* Godkjenninger og lærlinger */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader kicker={p.approvalsKicker} title={p.approvalsTitle} />
           <ul className="grid gap-3 md:grid-cols-2 md:gap-6">
             {p.approvals.map((a) => (

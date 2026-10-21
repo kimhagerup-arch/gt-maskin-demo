@@ -93,7 +93,7 @@ export default function MobileSlider({
         aria-label={label}
         onFocus={onFocus}
         className={cx(
-          "scrollbar-none relative -mx-6 -my-3 flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden scroll-px-6 px-6 py-3",
+          "scrollbar-none relative -mx-4 -my-3 flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden scroll-px-4 px-4 py-3",
           "md:mx-0 md:my-0 md:grid md:gap-6 md:overflow-visible md:px-0 md:py-0",
           gridClassName,
         )}

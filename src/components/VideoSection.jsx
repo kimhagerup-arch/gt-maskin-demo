@@ -11,11 +11,10 @@ export default function VideoSection({ videos = [], id = "video" }) {
 
   return (
     <section id={id} className="section-pad bg-brand-primary text-brand-text-inverse">
-      <div className="container-site flex flex-col gap-8 md:gap-10">
+      <div className="container-site flex flex-col gap-6 md:gap-8">
         <SectionHeader
           kicker={videoSection.kicker}
           title={videoSection.title}
-          lead={videoSection.lead}
           actions={
             <Link
               to={videoSection.allVideos.to}

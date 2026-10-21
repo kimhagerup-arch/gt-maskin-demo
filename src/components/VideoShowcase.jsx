@@ -42,7 +42,7 @@ export default function VideoShowcase({ videos = [], listTitle, className }) {
   };
 
   return (
-    <div className={cx("flex flex-col gap-8 md:gap-10", className)}>
+    <div className={cx("flex flex-col gap-6 md:gap-8", className)}>
       <div
         ref={stageRef}
         className={cx(
