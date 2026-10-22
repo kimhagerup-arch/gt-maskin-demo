@@ -22,6 +22,8 @@ export const channels = [
     name: "Snapchat",
     username: "gtmaskin-as",
     profileType: "public",
+    // url er den offentlige profilen og brukes av alle «Åpne i Snapchat»-lenker.
+    // (/add/-lenken ble prøvd i runde 4 og åpnet kameraet først; tatt ut i runde 4b.)
     url: "https://www.snapchat.com/@gtmaskin-as",
     embedUrl: "https://www.snapchat.com/@gtmaskin-as/embed",
     verifiedAt: "2026-10-20",

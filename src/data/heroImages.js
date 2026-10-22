@@ -3,11 +3,12 @@
 // hero-bilde (webp-srcset med samme `sizes` som komponenten), rutespesifikke
 // fonter og rutens kodesplittede sidechunk (modulepreload), så undersidene
 // slipper en ekstra rundtur. Importerer kun rene datafiler.
+import { heroSlides } from "./heroSlides";
 import {
   aboutSection,
   carsSection,
   contactPage,
-  hero,
+  partsSection,
   rentalSection,
   videoSection,
   workshopPage,
@@ -16,8 +17,9 @@ import {
 const PAGE_SIZES = "100vw";
 
 export const heroByPath = {
-  "/": { image: hero.image, sizes: "(min-width: 1024px) 480px, 100vw" },
+  "/": { image: heroSlides[0].image, sizes: "(min-width: 1024px) 480px, 100vw" },
   "/verksted": { image: workshopPage.heroImage, sizes: PAGE_SIZES },
+  "/deler": { image: partsSection.page.heroImage, sizes: PAGE_SIZES },
   "/biler-til-salgs": { image: carsSection.page.heroImage, sizes: PAGE_SIZES },
   "/video": { image: videoSection.page.heroImage, sizes: PAGE_SIZES },
   "/utleie": { image: rentalSection.page.heroImage, sizes: PAGE_SIZES },

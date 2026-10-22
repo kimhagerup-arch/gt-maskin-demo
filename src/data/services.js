@@ -1,5 +1,6 @@
 // Tjenestekort på forsiden og seksjoner på /verksted.
 // Ikoner er navn fra lucide-react og slås opp i komponenten.
+import { carsSection } from "./siteContent";
 
 export const services = [
   {
@@ -43,12 +44,13 @@ export const services = [
     imageAlt: "Amerikansk klassiker fotografert i sort-hvitt fra lav vinkel",
   },
   {
-    slug: "biler",
-    icon: "Tag",
-    title: "Biler til salgs",
-    text: "Det står til tider svært fine biler inne i butikk og kundemottak. Se hva som er inne nå, eller spør oss om det du leter etter.",
-    short: "Se hva som står inne nå, eller spør oss.",
-    to: "/biler-til-salgs",
+    // «Vi skaffer» i stedet for «Biler til salgs» (runde 4): tekst fra carsSection.wanted.
+    slug: "vi-skaffer",
+    icon: "Search",
+    title: carsSection.wanted.kicker,
+    text: carsSection.wanted.lead,
+    short: carsSection.wanted.lead,
+    to: `/biler-til-salgs#${carsSection.wanted.id}`,
     image: "/images/butikk/kundemottak-hyller-bar",
     imageAlt: "Kundemottaket med hyller, bardisk og bilsofa",
   },
@@ -121,10 +123,10 @@ export const workshopSections = [
     icon: "Package",
     title: "Deler",
     text: "Godt delelager til de fleste US-biler, også Tesla. Vi skaffer deler til både bruksbilen og entusiastbilen din. Finner du ikke delen i nettbutikken, send oss en forespørsel.",
-    image: "/images/butikk/butikk-oljehylle",
-    imageAlt: "Oljehylle i butikken hos GT Maskin",
-    image2: null,
-    image2Alt: "",
+    image: "/images/butikk/butikk-mobil-vegg",
+    imageAlt: "Butikken hos GT Maskin med capser, klær og oljehyller",
+    image2: "/images/butikk/butikk-hylle-amsoil",
+    image2Alt: "Hylle med motoroljer i butikken",
     link: { label: "Gå til nettbutikken", to: "/deler" },
   },
 ];

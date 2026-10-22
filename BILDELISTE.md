@@ -2,16 +2,16 @@
 
 Bilder som fortsatt mangler, med ønsket motiv, hvor de brukes, format og størrelse. Alle leveres til `assets-raw/`, legges inn i `PHOTOS`-listen i `scripts/prepare-images.mjs` og kjøres gjennom `npm run images`.
 
-Sist oppdatert 20.10.2026 (runde 3). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND.md` inneholder til nå videolenker og Snapchat-fakta, ingen nye bilder. Safari-banneret er blitt et utleiebanner med egen SVG-illustrasjon som bakgrunn, så fotoet og lisensspørsmålet er borte.
+Sist oppdatert 21.10.2026 (runde 4). Nye bilder og video fra butikken, fotografert 21.10.2026, er lagt inn (se «Butikkbilder 21.10.2026» nederst). Hero-videoen er levert. Safari-banneret er blitt et utleiebanner med egen SVG-illustrasjon som bakgrunn, så fotoet og lisensspørsmålet er borte.
 
 ## Mangler
 
 | Motiv | Brukes | Format | Størrelse | Kommentar |
 |---|---|---|---|---|
 | Bilder fra ekte Facebook-innlegg (ett per innlegg, første bilde ved karusell) | Feed på forsiden | jpg | som lastet ned fra Facebook | Mappe `feed` i `PHOTOS`, nøkkel `/images/feed/<kort-slug>`. Dato, tekst ordrett og permalenke må følge med |
-| Videoposter (ett stillbilde per video) | Videoseksjonen og `/video` | jpg | 1280×720 (16:9), for reels gjerne stående utsnitt også | Spilleren laster ingen eksterne miniatyrer før klikk, så hver video trenger et lokalt bilde. Uten eget bilde brukes et passende verkstedbilde |
-| Hovedbilde hero: prosjektbil i verkstedet eller fasaden, uten tekst i bildet | Forside, hero (480×560 på desktop, 16:10 på mobil) | jpg | min. 2000 px bred | `herobilde-fasade.jpg` (1278 px) er valgt nå fordi det er skarpere enn `herobilde.jpg` (886 px med innbakt tekst). Et nytt bilde i høyere oppløsning anbefales fortsatt |
-| Hero-video: 10-20 sekunder fra verkstedet, uten lyd | Forside, hero (autoplay, muted, loop) | mp4 (H.264) | 1920×1080, under 4 MB | Legg som `assets-raw/hero.mp4`, scriptet kopierer den |
+| Videoposter for de seks Facebook-reelene (ett stillbilde per video) | Videoseksjonen og `/video` | jpg | 1080×1920 (9:16) | Spilleren laster ingen eksterne miniatyrer før klikk. Uten eget bilde vises nå en designet poster (mørk flate, tittel og play), ikke et lånt verkstedbilde. Butikkvideoen har egen poster |
+| Flere bilder av biler til bildeshowet på forsiden: prosjekter, biler inne til arbeid og ferdige biler | Forsiden, hero (bildeshow, 480×560 på desktop, 16:10 på mobil) | jpg | min. 1600 px bred, helst liggende | Uten personer. Legges i `assets-raw/`, `PHOTOS` og `src/data/heroSlides.js`. I dag åtte bilder fra repoet, noen bare 750-960 px brede |
+| Nye verkstedbilder uten personer i bakgrunnen (erstatter `verksted4.jpg` og `verksted10.jpg`) | `/verksted`, «Europeiske biler og Tesla» og «Veteran og classic» | jpg | min. 1600 px bred | De to bildene står til nye kommer, se spørsmål 5 |
 | ATV | `/utleie` og utleiekort på forsiden | jpg | min. 1600 px bred, 16:10 | Vises nå som designet ikonfelt, ikke tom plassholder |
 | Vanlig tilhenger (ikke biltransporthenger) | `/utleie`, kortet «Tilhenger og biltransporthenger» | jpg | min. 1600 px bred | Kun biltransporthenger finnes |
 | Portrett Gjermund Thomassen | Om oss (forside og `/om-oss`) | jpg | min. 1200 px, 4:5 stående | Forsiden viser monogram «GT» til bildet kommer |
@@ -29,7 +29,7 @@ Sist oppdatert 20.10.2026 (runde 3). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 2. Kan logoene til Amsoil, Fluid Film, Carhartt, Chevrolet, Dodge, Ram, Ford, Cadillac og Tesla brukes på siden? I dag vises kun navnene som tekst.
 3. Hva står «2008» på logoen for? Når startet virksomheten?
 4. Utgår: snøscootersafarien er avsluttet (opplyst 20.10.2026).
-5. Er det greit at bildene fra Facebook brukes slik de er i demoen (personer i bakgrunnen på `butikk.jpg`, `butikk5.jpg`, `butikk7.jpg`, `verksted4.jpg`, `verksted10.jpg`)?
+5. Er det greit at bildene fra Facebook brukes slik de er i demoen (personer i bakgrunnen på `verksted4.jpg` og `verksted10.jpg`)? `butikk.jpg`, `butikk5.jpg` og `butikk7.jpg` er byttet ut med de nye butikkbildene fra 21.10.2026 og brukes ikke lenger.
 6. Besvart 20.10.2026: Snapchat-brukernavn gtmaskin-as, offentlig profil. Lagt inn.
 7. Delvis besvart 19.10.2026: seks Facebook-reels er lagt inn. Titler og stillbilder per video mangler fortsatt.
 
@@ -38,7 +38,7 @@ Sist oppdatert 20.10.2026 (runde 3). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 | Fil | Brukt som | Hvor |
 |---|---|---|
 | logo2.jpg | Logo (trimmet, gjennomsiktig) | Header, footer, favicon, OG |
-| herobilde-fasade.jpg | Hero på forsiden (nytt i runde 2), PageHero, adressekort, OG-bilde | Forside, `/kontakt`, `/bestill` |
+| herobilde-fasade.jpg | PageHero, adressekort, OG-bilde. Ikke lenger hero på forsiden (byttet med butikkvideoen i runde 4) | `/kontakt`, `/bestill` |
 | herobilde.jpg | Ikke lenger i hero (886 px, innbakt tekst). Ligger klargjort i `public/images/hero/` | |
 | hero.jpg | PageHero, tjenestekort «Veteran og classic» | `/verksted`, forside |
 | vinter-bil-fasadeskilt.jpg | PageHero | `/biler-til-salgs` |
@@ -53,16 +53,16 @@ Sist oppdatert 20.10.2026 (runde 3). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 | verksted9.jpg | Tjenestekort custom, custom-seksjon, feed-plassholder | Forside, `/verksted` |
 | verksted10.jpg | Veteran og classic | `/verksted` |
 | motor.jpg | Custom-seksjon | `/verksted` |
-| butikk.jpg | Deler-seksjon, butikkbilder | `/verksted`, `/deler` |
+| butikk.jpg | Ikke lenger i bruk (personer i bakgrunnen, byttet med `butikk-mobil-vegg.jpg` i runde 4). Ligger fortsatt i `public/images/butikk/` som `butikk-oljehylle` | |
 | butikk2.jpg | Butikkbilder | `/deler` |
 | butikk3.jpg | Tjenestekort deler, feed-plassholder | Forside |
 | butikk4.jpg | Stort butikkbilde, videoposter | Forside, `/video` |
-| butikk5.jpg | Om oss-bilde, kundemottaket | Forside, `/om-oss` |
-| butikk6.jpg | Tjenestekort biler til salgs, kundemottaket | Forside, `/om-oss` |
-| butikk7.jpg | Feed-plassholder, kundemottaket | Forside, `/om-oss` |
+| butikk5.jpg | Ikke lenger i bruk (personer i bakgrunnen, byttet med `butikk-disk.jpg`). Ligger som `kundemottak-sofa-cabriolet` | |
+| butikk6.jpg | Tjenestekort «Vi skaffer», kundemottaket, feed-plassholder | Forside, `/om-oss` |
+| butikk7.jpg | Ikke lenger i bruk (personer i bakgrunnen, byttet med `butikk-kasseapparat-national.jpg`). Ligger som `kundemottak-cabriolet-hyller` | |
 | butikk8.jpg | Kundemottaket | `/om-oss` |
-| butikk9.jpg | Butikkbilder (capser), plassholderbilde for capser og tilbehør | `/deler` |
-| butikk10.jpg | Butikkbilder (klær), plassholderbilde for klær | `/deler` |
+| butikk9.jpg | Produktbilde for «Caps» | `/deler` |
+| butikk10.jpg | Ikke lenger i bruk (byttet med de nye butikkbildene). Ligger som `butikk-klaer` | |
 | bil1.jpg, bil3.jpg | Galleri | `/verksted` |
 | bil2.jpg | Ikke brukt (stående, samme bil som verksted9) | |
 | snowmobile.jpg | PageHero, utleiekort, tjenestekort, feed- og videoplassholder | `/utleie`, forside, `/video` |
@@ -73,3 +73,27 @@ Sist oppdatert 20.10.2026 (runde 3). Innholdsfilen `_kilder/INNHOLD-FRA-GJERMUND
 | snapchat.jpg | Snapchat-QR | Footer, `/kontakt`, `/video`, QR-dialog fra header, mobilmeny og hero |
 | Mountain_scootering_Finnmark.jpg | Ikke lenger i bruk (fjernet fra `public/` i runde 3, erstattet av `vidde.svg`) | |
 | ac-profil.jpg | Frilagt scooter i utleiebanneret (`/images/utleie/scooter-profil`). Produsentbilde, kun demo, byttes før go-live | Forside, `/utleie` |
+
+## Butikkbilder 21.10.2026 (fra `assets-raw/`, ingen personer i bakgrunnen)
+
+Alle åpnet og motivet bekreftet 21.10.2026. Tredjeparts skilt (Mobil, Kendall, Carhartt, Chevrolet, Cadillac, Shell, Texaco, Route 66) er en del av butikkinteriøret i fotoene, ingen logofiler er kopiert.
+
+| Fil | Manifest-nøkkel | Brukt som | Hvor |
+|---|---|---|---|
+| hero.mp4 | `/video/hero.mp4` | Hero-video (stum, loop, etter load) og videoen «Butikken» først i videolisten | Forside, `/video` |
+| hero-poster.jpg | `hero/butikk-hero-poster` | Hero-bilde (LCP) og poster for «Butikken» | Forside, `/video` |
+| butikk-disk.jpg | `butikk/kundemottak-disk-chevrolet` | Om oss-bilde, kundemottaket | Forside, `/om-oss` |
+| butikk-mobil-vegg.jpg | `butikk/butikk-mobil-vegg` | Deler-seksjonen, butikkbilder | `/verksted`, `/deler` |
+| butikk-kasseapparat-national.jpg | `butikk/butikk-kasseapparat-national` | Kundemottaket | `/om-oss` |
+| butikk-stetson-capser.jpg | `butikk/butikk-stetson-capser` | Butikkbilder, produktbilde «Stetson caps» | `/deler` |
+| butikk-bord-klaer-capser.jpg | `butikk/butikk-bord-klaer-capser` | Butikkbilder, produktbilde «T-skjorte» | `/deler` |
+| butikk-hylle-amsoil.jpg | `butikk/butikk-hylle-amsoil` | Deler-seksjonen (bilde 2), bak plassholderproduktet «motordel» | `/verksted`, `/deler` |
+| butikk-hylle-amsoil-diesel.jpg | `butikk/butikk-hylle-amsoil-diesel` | Klargjort, ikke i bruk ennå | |
+| butikk-hylle-girolje.jpg | `butikk/butikk-hylle-girolje` | Bak plassholderproduktet «drivverksdel» | `/deler` |
+| butikk-hylle-severe-gear.jpg | `butikk/butikk-hylle-severe-gear` | Klargjort, ikke i bruk ennå | |
+| butikk-hylle-rustbeskyttelse.jpg | `butikk/butikk-hylle-kjemi` | Butikkbilder, bak plassholderproduktet «tilbehør» | `/deler` |
+| butikk-motorbord.jpg | `butikk/butikk-motorbord` | Kundemottaket (stemningsbilde) | `/om-oss` |
+| butikk-texaco-pumpe.jpg | `butikk/butikk-texaco-pumpe` | Kundemottaket (stemningsbilde) | `/om-oss` |
+| butikk-route66-krakk.jpg | `butikk/butikk-route66-krakk` | Klargjort, ikke i bruk ennå | |
+| butikk-kasseapparat-tre.jpg, -sort.jpg, -national-bak.jpg | `butikk/butikk-kasseapparat-*` | Klargjort for galleri, ikke i bruk ennå | |
+| butikk-wunderbaum.jpg | `produkter/wunder-baum` | Produktbilde «Wunder-Baum» | `/deler` |

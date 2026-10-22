@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#151412" />
+    <title>Ingen nett | GT Maskin AS</title>
+    <style>
+      /* Fargene er brand-tokens fra src/index.css: primary #151412, primary-light #1F1D1A,
+         border-dark #2E2B27, text-inverse #F3EFE7, muted-inverse #B9B2A6, accent #F08003. */
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 24px;
+        box-sizing: border-box;
+        background: #151412;
+        color: #f3efe7;
+        font-family: Barlow, system-ui, sans-serif;
+        text-align: center;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        max-width: 420px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 96px;
+        height: 96px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #2e2b27;
+        background: #1f1d1a;
+      }
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      h1 {
+        margin: 0;
+        font-family: Impact, "Arial Narrow Bold", sans-serif;
+        font-size: 36px;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+      p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.5;
+        color: #b9b2a6;
+      }
+      button {
+        margin-top: 4px;
+        height: 48px;
+        padding: 0 24px;
+        border: 0;
+        border-radius: 10px;
+        background: #f08003;
+        color: #151412;
+        font: inherit;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #d46f02;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="logo"><img src="/images/logo/gt-maskin-logo-256.png" alt="" width="76" height="76" /></span>
+      <h1>GT Maskin</h1>
+      <p>Ingen nett akkurat nå. Sjekk dekningen og prøv igjen.</p>
+      <button type="button" onclick="location.reload()">Prøv igjen</button>
+    </main>
+  </body>
+</html>

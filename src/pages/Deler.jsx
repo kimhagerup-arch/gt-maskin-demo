@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import BrandChips from "../components/BrandChips";
+import BrandWall from "../components/BrandWall";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
 import PageHero from "../components/PageHero";
@@ -10,16 +10,18 @@ import Reveal from "../components/Reveal";
 import SectionHeader from "../components/SectionHeader";
 import { useCart } from "../context/CartContext";
 import { brands } from "../data/brands";
+import { heroVideo } from "../data/imageManifest";
 import { categorySlug, getGroup, groups, products } from "../data/products";
 import { partsSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
 import { cx } from "../lib/format";
 
+// Butikkbilder fotografert 21.10.2026 (ingen personer i bakgrunnen).
 const STORE_IMAGES = [
-  { image: "/images/butikk/butikk-oljehylle", alt: "Oljehylle i butikken hos GT Maskin" },
-  { image: "/images/butikk/butikk-rustbeskyttelse", alt: "Hylle med rustbeskyttelse i butikken" },
-  { image: "/images/butikk/butikk-klaer", alt: "Arbeidsklær på stativ i butikken" },
-  { image: "/images/butikk/butikk-capser", alt: "Capser i butikken" },
+  { image: "/images/butikk/butikk-mobil-vegg", alt: "Butikken med capser, klær og oljehyller" },
+  { image: "/images/butikk/butikk-stetson-capser", alt: "Capser på hylla i butikken" },
+  { image: "/images/butikk/butikk-bord-klaer-capser", alt: "Bord med T-skjorter og capser" },
+  { image: "/images/butikk/butikk-hylle-kjemi", alt: "Hylle med rustbeskyttelse og kjemi" },
 ];
 
 function normalize(s) {
@@ -78,9 +80,23 @@ export default function Deler() {
 
   return (
     <>
-      <PageHero kicker={t.kicker} title={t.title} lead={t.lead} compact>
-        <BrandChips prefix={partsSection.brandsPrefix} brands={brands.parts} tone="dark" />
-      </PageHero>
+      <PageHero
+        kicker={t.kicker}
+        title={t.title}
+        lead={t.lead}
+        image={t.heroImage}
+        imageAlt={t.heroAlt}
+        imagePosition={t.heroPosition}
+        video={heroVideo}
+        compact
+      />
+
+      {/* Skiltveggen med delemerkene, rett under videoheroen */}
+      <section className="border-b border-brand-border-dark bg-brand-primary-light py-6 text-brand-text-inverse md:py-8">
+        <div className="container-site">
+          <BrandWall items={brands.parts} label={partsSection.brandsPrefix} tone="dark" priority />
+        </div>
+      </section>
 
       <section className="section-pad bg-brand-bg text-brand-text">
         <div className="container-site flex flex-col gap-6 md:gap-8">
@@ -110,8 +126,6 @@ export default function Deler() {
               );
             })}
           </div>
-
-          <p className="max-w-2xl text-[17px] leading-relaxed text-brand-muted">{gt.lead}</p>
 
           {/* Kategorier og søk */}
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -204,9 +218,9 @@ export default function Deler() {
 
       {/* Butikken i Myggveien */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
-          <SectionHeader kicker={t.storeKicker} title={t.storeTitle} lead={t.storeText} />
-          <BrandChips prefix={t.storeBrandsPrefix} brands={brands.store} tone="dark" />
+        <div className="container-site flex flex-col gap-6 md:gap-8">
+          <SectionHeader kicker={t.storeKicker} title={t.storeTitle} />
+          <BrandWall items={brands.store} label={t.storeBrandsPrefix} tone="dark" />
           <ul className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
             {STORE_IMAGES.map((img, i) => (
               <Reveal

@@ -1,4 +1,7 @@
-// Produkter i nettbutikk-mocken. Alle er plassholdere til produktutvalget er klart.
+// Produkter i nettbutikk-mocken. Delene er plassholdere til produktutvalget er klart.
+// «Klær og utstyr» og Wunder-Baum har navn og pris fra tavlene i butikken
+// (_kilder/PRISER-FRA-TAVLENE.md, 21.10.2026), bekreftes av Gjermund før go-live.
+// Varemerke, varenummer, lagerstatus og beskrivelse er ikke kjent (null).
 // Sortimentet er delt i to hovedgrupper: «Deler» og «Klær og utstyr».
 //
 // Slik legges et ekte produkt inn:
@@ -68,27 +71,64 @@ const placeholder = (n, group, category, label, extra = {}) => ({
 
 export const products = [
   placeholder(1, "deler", "US-biler", "[Eksempel: del til US-bil]"),
-  placeholder(2, "deler", "Motor og drivverk", "[Eksempel: motordel]"),
+  placeholder(2, "deler", "Motor og drivverk", "[Eksempel: motordel]", {
+    placeholderImage: "/images/butikk/butikk-hylle-amsoil",
+  }),
   placeholder(3, "deler", "Bremser", "[Eksempel: bremsedel]"),
   placeholder(4, "deler", "Tesla", "[Eksempel: del til Tesla]"),
   placeholder(5, "deler", "Understell", "[Eksempel: understellsdel]"),
-  placeholder(6, "deler", "Tilbehør", "[Eksempel: tilbehør]"),
+  {
+    slug: "wunder-baum",
+    group: "deler",
+    brand: "Wunder-Baum",
+    title: "Wunder-Baum",
+    category: "Tilbehør",
+    price: "35",
+    sku: null,
+    stock: null,
+    image: "/images/produkter/wunder-baum",
+    description: "",
+    fits: [],
+    sizes: null,
+    placeholder: false,
+  },
+  placeholder(6, "deler", "Tilbehør", "[Eksempel: tilbehør]", {
+    placeholderImage: "/images/butikk/butikk-hylle-kjemi",
+  }),
   placeholder(7, "deler", "US-biler", "[Eksempel: del til US-bil]"),
-  placeholder(8, "deler", "Motor og drivverk", "[Eksempel: drivverksdel]"),
+  placeholder(8, "deler", "Motor og drivverk", "[Eksempel: drivverksdel]", {
+    placeholderImage: "/images/butikk/butikk-hylle-girolje",
+  }),
 
-  // Klær og utstyr. placeholderImage er et ekte butikkbilde bak PLASSHOLDER-etiketten.
-  placeholder(9, "klaer", "Klær", "[Eksempel: jakke]", {
-    sizes: [],
-    placeholderImage: "/images/butikk/butikk-klaer",
-  }),
-  placeholder(10, "klaer", "Klær", "[Eksempel: arbeidsbukse]", {
-    sizes: [],
-    placeholderImage: "/images/butikk/butikk-klaer",
-  }),
-  placeholder(11, "klaer", "Capser og tilbehør", "[Eksempel: caps]", {
-    placeholderImage: "/images/butikk/butikk-capser",
-  }),
-  placeholder(12, "klaer", "Capser og tilbehør", "[Eksempel: tilbehør]", {
-    placeholderImage: "/images/butikk/butikk-capser",
-  }),
+  // Klær og utstyr: fra tavla i butikken. Størrelser er ikke bekreftet (sizes: []).
+  // Bildene er fra butikken 21.10.2026; kopp og nøkkelring har ikke bilde ennå.
+  ...[
+    ["t-skjorte", "T-skjorte", "Klær", "299", "/images/butikk/butikk-bord-klaer-capser", [], null],
+    ["caps", "Caps", "Capser og tilbehør", "399", "/images/butikk/butikk-capser", null, null],
+    [
+      "stetson-caps",
+      "Stetson caps",
+      "Capser og tilbehør",
+      "599",
+      "/images/butikk/butikk-stetson-capser",
+      null,
+      "Stetson",
+    ],
+    ["kopp", "Kopp", "Capser og tilbehør", "250", null, null, null],
+    ["nokkelring", "Nøkkelring", "Capser og tilbehør", "99", null, null, null],
+  ].map(([slug, title, category, price, image, sizes, brand]) => ({
+    slug,
+    group: "klaer",
+    brand,
+    title,
+    category,
+    price,
+    sku: null,
+    stock: null,
+    image,
+    description: "",
+    fits: [],
+    sizes,
+    placeholder: false,
+  })),
 ];

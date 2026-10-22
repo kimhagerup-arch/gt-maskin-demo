@@ -1,3 +1,5 @@
+import { readFileSync, writeFileSync } from "node:fs";
+import path from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { fontsByPath, heroByPath, pageByPath } from "./src/data/heroImages.js";
@@ -40,8 +42,32 @@ function heroPreloadPlugin() {
   };
 }
 
+/**
+ * Setter byggets versjon inn i public/sw.js (plassholderen __GTM_BUILD__) etter at
+ * dist/ er skrevet, så hvert bygg får nytt cachenavn og gamle cacher slettes.
+ */
+function serviceWorkerVersionPlugin() {
+  let outDir = "dist";
+  return {
+    name: "gtm-sw-version",
+    apply: "build",
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
+    closeBundle() {
+      const file = path.resolve(outDir, "sw.js");
+      try {
+        const source = readFileSync(file, "utf8");
+        writeFileSync(file, source.replace("__GTM_BUILD__", Date.now().toString(36)));
+      } catch {
+        // Ingen sw.js i public/, ingenting å stemple.
+      }
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), heroPreloadPlugin()],
+  plugins: [react(), heroPreloadPlugin(), serviceWorkerVersionPlugin()],
   build: {
     target: "es2020",
     sourcemap: false,

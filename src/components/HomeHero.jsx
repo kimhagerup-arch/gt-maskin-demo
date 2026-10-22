@@ -1,22 +1,28 @@
-import { heroVideo } from "../data/imageManifest";
+import { heroSlides } from "../data/heroSlides";
 import { hero, socialLinks } from "../data/siteContent";
+import { cx } from "../lib/format";
 import Button from "./Button";
-import HeroMedia from "./HeroMedia";
+import HeroSlideshow from "./HeroSlideshow";
 import KustomEmblem from "./KustomEmblem";
 import SocialIcons from "./SocialIcons";
 
+/**
+ * Forsidens hero: tekst og knapper til venstre, bildeshow med bilene i en
+ * marquee-ramme til høyre (under teksten på mobil). Én linje i overskriften
+ * har neon-glød i aksentfargen (hero.neonLine).
+ */
 export default function HomeHero() {
   return (
     <section className="bg-brand-primary">
-      <div className="container-site grid gap-8 py-10 md:gap-6 md:py-16 lg:grid-cols-12 lg:items-center lg:py-[72px]">
-        <div className="flex flex-col gap-5 md:gap-7 lg:col-span-7">
+      <div className="container-site grid gap-6 py-7 md:gap-6 md:py-12 lg:grid-cols-12 lg:items-center lg:py-14">
+        <div className="flex flex-col gap-4 md:gap-6 lg:col-span-7">
           <p className="kicker text-brand-accent-light">
             <span className="hidden md:inline">{hero.kicker}</span>
             <span className="md:hidden">{hero.kickerMobile}</span>
           </p>
           <h1 className="h1-hero text-brand-text-inverse">
             {hero.title.map((line, i) => (
-              <span key={line} className="block">
+              <span key={line} className={cx("block", i === hero.neonLine && "neon-text")}>
                 {line}
                 {i < hero.title.length - 1 && <span className="sr-only"> </span>}
               </span>
@@ -37,12 +43,10 @@ export default function HomeHero() {
         </div>
 
         <div className="relative lg:col-span-5 lg:col-start-8">
-          <HeroMedia
-            image={hero.image}
-            imageAlt={hero.imageAlt}
-            video={heroVideo}
-            objectPosition={hero.imagePosition}
-            className="aspect-[16/10] w-full border border-brand-border-dark md:aspect-[4/3] lg:aspect-auto lg:h-[560px]"
+          <HeroSlideshow
+            slides={heroSlides}
+            sizes="(min-width: 1024px) 480px, 100vw"
+            className="aspect-[16/10] w-full md:aspect-[4/3] lg:aspect-auto lg:h-[560px]"
           />
           <KustomEmblem
             badge={hero.badge}

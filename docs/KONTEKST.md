@@ -29,6 +29,44 @@
 - `src/data/imageManifest.js` skrives av `scripts/prepare-images.mjs`. Varianter: full (maks 1920), 800 og 400 px, webp + jpg.
 - `src/lib/images.js` `getImage(key)` gir `src`, `srcSet`, `webpSrcSet`, `sizes`, `smallest`. `Picture` bygger `<picture>`.
 
+## Lagt til i runde 4c
+
+| Hva | Rolle |
+|---|---|
+| `index.css` | `section-pad` 32/72 px, `container-site` 16 px sidemarg på mobil, `.marquee-frame`/`.marquee-bulbs-*` (lyspærer, keyframes `marquee-x`/`marquee-y`), `.neon-text`, `.hero-zoom`/`.hero-zoom-on` |
+| `HeroSlideshow`, `src/data/heroSlides.js` | Bildeshow i forsidens hero: krysstoning hvert 5. s, zoom, pause ved hover/fokus/skjult fane, sveip, prikker, reduced motion. Første bilde eager og forhåndslastet (`heroImages.js` `/`), resten 2,5 s etter load (`REST_DELAY_MS`), automatisk bytte starter da. Tekster i `hero.slideshow*`, neon-linje `hero.neonLine` |
+| `PageHero` | `video`-prop: bakgrunn via `HeroMedia` (poster LCP, video etter load). Brukt på `/deler` med `partsSection.page.heroImage/heroVideo/heroPosition` |
+| `HeroMedia` | Nå bakgrunnskomponent med `sizes` og `imgClassName`; videoen monteres 2,5 s etter load (`VIDEO_DELAY_MS`); ikke lenger i `HomeHero` |
+| `SocialFeed` / `FeedCard` | Kompakt topp uten `SectionHeader`; kort med bilde og tittel, «Eksempel»-pille (`feedSection.exampleTag`), ekte innlegg viser tekst og dato |
+| `MobileSlider`, `VideoSlider` | Sporet går ut til 16 px-kanten (`-mx-4 px-4 scroll-px-4`) |
+
+## Lagt til i runde 4b
+
+| Hva | Rolle |
+|---|---|
+| `VideoShowcase` / `VideoPlayer` | `autoStart`: kortvalg monterer spilleren direkte (mp4 spiller, Facebook-iframe lastes). `LoadingMark` fjernes ved `onLoad` |
+| `InstallPrompt` | Boks på mobil («Legg GT Maskin på hjemskjermen», «Legg til», «Ikke nå») etter 20 s eller halve siden; vilkår og 14 dagers pause (`gtm-app-boks-lukket`). I `Layout` etter `StickyMobileBar`. Tekster i `installApp.box*`, `add`, `notNow`. `InstallDialog` er eksportert fra `InstallButton` |
+| `BrandWall` | Skiltvegg med logoer fra `brands.js` (`parts`, `store`, `all`; `logo`, `w`, `h`, `logoHeight`). Erstatter `BrandChips` (fjernet). SVG-er i `public/images/merker/`, kilder i `_kilder/LOGOER.md` |
+| `channels.snapchat.url` | Eneste Snapchat-lenke (offentlig profil). `addUrl` er fjernet |
+| `index.html` | `<link rel="manifest" crossorigin="use-credentials">` så manifestet hentes med cookie bak Vercel-innlogging |
+| `translate="no"` | På merkenavn, produktnavn, firmanavn og «Ring» (BrandWall, ProductCard, Produkt, CartDrawer, Kasse, Logo, Footer, StickyMobileBar) |
+
+## Lagt til i runde 4
+
+| Hva | Rolle |
+|---|---|
+| `VideoPlayer` (omskrevet) | Ett trykk til video: mørk flate med lasteindikator fra trykk til `onLoad`, iframe/video tones inn. mp4 i `<video playsInline autoPlay>` med `play()` som sikring, YouTube `autoplay=1&playsinline=1&rel=0`, Facebook `autoplay=true`, alle med `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`. `embedUrl(video)` tar ikke lenger autoplay-parameter |
+| `VideoPoster` | Designet poster (mørk flate, kildemerke, tittel) for video uten `poster`. Brukes i spilleren og i `VideoCard` (`compact`) |
+| `MobileSlider` | Slider under 768 px (scroll-snap, prikker med `aria-label` «Gå til kort n av m», fokus ruller kortet inn), rutenett fra 768 px. `items`, `renderItem`, `keyOf`, `label`, `gridClassName`, `itemClassName`, `tone`. Brukes av `SocialFeed` og `ServiceCards`. Tekster i `sliderLabels` |
+| `SnapchatSection` (omskrevet) | Lokalt profilkort med «Åpne i Snapchat» (`channels.snapchat.addUrl`) og «Se historiene her». Iframe monteres på `pointerdown`, skjelett til `onLoad`, timeout 8 s. Tekster i `snapchatSection` |
+| `HeroMedia` (omskrevet) | Poster alltid (LCP), `<video>` over posteren etter `load` (`useAfterLoad`), ikke ved reduced motion eller `navigator.connection.saveData`, tones inn ved `onPlaying` |
+| `InstallButton`, `useInstallPrompt` | «Legg GT Maskin på hjemskjermen». Hooken fanger `beforeinstallprompt` ved modul-lasting, `prompt()` ved trykk; iOS får dialog med `installApp.iosSteps`; skjult i `display-mode: standalone`. I `Footer` og `MobileMenu` |
+| `src/data/prices.js` | `workshopPrices` (fem rader) til blokken «Faste priser» på `/verksted`. Tekster i `workshopPage.prices*` |
+| `src/data/products.js` | Ekte varer i «Klær og utstyr» og Wunder-Baum i «Deler». `placeholderImage` også på tre delplassholdere |
+| `public/manifest.webmanifest`, `public/sw.js`, `public/offline.html` | PWA. Manifest og ikoner (192, 512, 512 maskable, apple-touch 180) skrives av `scripts/generate-favicons.mjs`. SW: navigering nettverk først med `offline.html` som fallback, `/assets/` cache først, eksterne kall urørt, cachenavn `gtm-<versjon>` der Vite-pluginen `gtm-sw-version` (`vite.config.js`, `closeBundle`) bytter `__GTM_BUILD__` i `dist/sw.js`. Registrering i `src/main.jsx` kun i `import.meta.env.PROD`, etter `load`. `vercel.json`: `Cache-Control: no-cache` på `/sw.js` og `/manifest.webmanifest` |
+| `scripts/prepare-images.mjs` | 18 nye butikkbilder (mappe `butikk`, `hero/butikk-hero-poster`, `produkter/wunder-baum`) og `hero.mp4` til `public/video/` |
+| `nav.items` | Seks punkter; «Biler til salgs» er tatt ut. `services.js` leser «Vi skaffer»-kortet fra `carsSection.wanted` |
+
 ## Komponenter lagt til i runde 2
 
 | Komponent | Rolle |
@@ -66,7 +104,8 @@
 | Nettbutikk | Mock, forespørsel | Vipps eCom eller Stripe (fase 2) |
 | Reviews | `reviews.js` tom | Verifiserte tall, badge vises automatisk |
 | Video | `videos.js` med seks Facebook-reels, titler nummerert | Titler, stillbilder og datoer fra kunden |
-| Hero-video | `heroVideo: null` | Legg `hero.mp4` i `assets-raw/`, kjør `npm run images` |
+| Hero-video | `heroVideo: "/video/hero.mp4"` (butikkvideoen, 3,4 MB) | Ny fil i `assets-raw/`, kjør `npm run images` |
+| Push-varsler | Ingen (service worker har bare cache og offline) | Egen avklaring med kunden før noe legges til |
 | Scooterdomenet | Nevnes ikke | 301 til gtmaskin.com/utleie ved go-live |
 | Sporing | Ingen | Plausible eller Vercel Analytics ved go-live |
 | noindex | `index.html`, `vercel.json`, `public/robots.txt` (Facebook-forhåndsvisning sluppet inn) | Fjernes/endres ved go-live |

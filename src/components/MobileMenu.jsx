@@ -5,6 +5,7 @@ import { nav, socialLinks } from "../data/siteContent";
 import { cx } from "../lib/format";
 import Button from "./Button";
 import Icon from "./Icon";
+import InstallButton from "./InstallButton";
 import Logo from "./Logo";
 import SocialIcons from "./SocialIcons";
 
@@ -111,6 +112,7 @@ export default function MobileMenu({ id, open, onClose, returnFocusRef }) {
         <p className="text-center text-sm text-brand-muted-inverse">
           {companyFacts.address.full} · {companyFacts.hours.short}
         </p>
+        <InstallButton className="w-full" onDone={onClose} />
       </div>
     </div>
   );

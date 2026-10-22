@@ -436,6 +436,348 @@ export const imageManifest = {
     ],
     "description": "Arbeidsklær på stativ i butikken"
   },
+  "/images/hero/butikk-hero-poster": {
+    "width": 1920,
+    "height": 1080,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 1080
+      },
+      {
+        "w": 800,
+        "h": 450
+      },
+      {
+        "w": 400,
+        "h": 225
+      }
+    ],
+    "description": "Første bilde i butikkvideoen: moped, kasseapparat og klesstativ"
+  },
+  "/images/butikk/kundemottak-disk-chevrolet": {
+    "width": 1920,
+    "height": 1081,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 1081
+      },
+      {
+        "w": 800,
+        "h": 450
+      },
+      {
+        "w": 400,
+        "h": 225
+      }
+    ],
+    "description": "Kundemottaket: disken, Chevrolet-skiltet og tavlene"
+  },
+  "/images/butikk/butikk-mobil-vegg": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Mobil-skiltet, capser, klær og oljehyller"
+  },
+  "/images/butikk/butikk-kasseapparat-national": {
+    "width": 1920,
+    "height": 1440,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 1440
+      },
+      {
+        "w": 800,
+        "h": 600
+      },
+      {
+        "w": 400,
+        "h": 300
+      }
+    ],
+    "description": "Gammelt National-kasseapparat"
+  },
+  "/images/butikk/butikk-stetson-capser": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Stetson-capser på hylla i butikken"
+  },
+  "/images/butikk/butikk-bord-klaer-capser": {
+    "width": 1920,
+    "height": 1364,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 1364
+      },
+      {
+        "w": 800,
+        "h": 568
+      },
+      {
+        "w": 400,
+        "h": 284
+      }
+    ],
+    "description": "Bord med T-skjorter og capser"
+  },
+  "/images/butikk/butikk-hylle-amsoil": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Hylle med motoroljer"
+  },
+  "/images/butikk/butikk-hylle-amsoil-diesel": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Hylle med motoroljer og dieseloljer"
+  },
+  "/images/butikk/butikk-hylle-girolje": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Hylle med girolje, ATF og CVT"
+  },
+  "/images/butikk/butikk-hylle-severe-gear": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Hylle med girolje i poser"
+  },
+  "/images/butikk/butikk-hylle-kjemi": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Hylle med rustbeskyttelse og kjemi"
+  },
+  "/images/butikk/butikk-motorbord": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Bord bygd av motordeler, med Cadillac- og Shell-skilt"
+  },
+  "/images/butikk/butikk-texaco-pumpe": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Gammel Texaco-pumpe i butikken"
+  },
+  "/images/butikk/butikk-route66-krakk": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Route 66-skilt og Chevrolet-krakk ved disken"
+  },
+  "/images/butikk/butikk-kasseapparat-tre": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Gammelt kasseapparat i tre"
+  },
+  "/images/butikk/butikk-kasseapparat-sort": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Gammelt sort kasseapparat"
+  },
+  "/images/butikk/butikk-kasseapparat-national-bak": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "National-kasseapparatet sett bakfra"
+  },
+  "/images/produkter/wunder-baum": {
+    "width": 1920,
+    "height": 2560,
+    "sizes": [
+      {
+        "w": 1920,
+        "h": 2560
+      },
+      {
+        "w": 800,
+        "h": 1067
+      },
+      {
+        "w": 400,
+        "h": 533
+      }
+    ],
+    "description": "Wunder-Baum-stativ i butikken"
+  },
   "/images/biler/cadillac-rod-hekk": {
     "width": 960,
     "height": 720,
@@ -656,4 +998,4 @@ export const imageManifest = {
   }
 };
 
-export const heroVideo = null;
+export const heroVideo = "/video/hero.mp4";

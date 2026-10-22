@@ -64,11 +64,12 @@ export const seo = {
   },
 };
 
+// «Biler til salgs» er tatt ut av header og mobilmeny (runde 4). Ruten finnes
+// fortsatt, veien inn er «Vi skaffer»-boksen på forsiden og lenken i footer.
 export const nav = {
   items: [
     { label: "Verksted", to: "/verksted" },
     { label: "Butikk", to: "/deler" },
-    { label: "Biler til salgs", to: "/biler-til-salgs" },
     { label: "Video", to: "/video" },
     { label: "Utleie", to: "/utleie" },
     { label: "Om oss", to: "/om-oss" },
@@ -94,10 +95,13 @@ export const hero = {
     place: "Alta",
     text: "Amerikanske biler, custom-prosjekter og delesalg.",
   },
-  image: "/images/hero/fasade-kveld-skilt",
-  imageAlt: "Fasaden til GT Maskin i Myggveien i kveldslys, med skilt og klassikere i vinduene",
-  imagePosition: "64% 42%",
-  video: "/video/hero.mp4",
+  // Linjen i tittelen som får neon-glød (0-basert): «amerikanske».
+  neonLine: 1,
+  // Bildeshowet med bilene ligger i heroSlides.js.
+  slideshowLabel: "Biler hos GT Maskin",
+  slideshowDots: "Velg bilde",
+  slideshowGoTo: "Vis bilde",
+  slideshowOf: "av",
 };
 
 export const trust = [
@@ -111,9 +115,9 @@ export const trust = [
 export const feedSection = {
   kicker: "Siste fra Facebook",
   title: "Live fra GT Maskin",
-  lead: "Her ser du det siste fra verkstedet, hentet automatisk fra Facebook.",
   cta: { label: "Følg oss på Facebook" },
   placeholderTag: "Plassholder",
+  exampleTag: "Eksempel",
   placeholderCaption: "[Innleggstekst hentes automatisk fra Facebook-siden]",
   dateFallback: "[dato]",
   followersSuffix: "liker siden",
@@ -122,20 +126,29 @@ export const feedSection = {
   openPost: "Åpne innlegget på Facebook",
   readMore: "Les mer på Facebook",
   moreImages: "Flere bilder",
+  listLabel: "Innlegg fra Facebook",
 };
 
 export const servicesSection = {
   kicker: "Hva vi gjør",
   title: "Verksted, deler og prosjekter",
-  lead: "Vi tar alt fra gamle veteranbiler til nye bruksbiler, med et moderne verksted som tar vare på bilen din, gamle som nye, blanke som rustne.",
   readMore: "Les mer",
+  listLabel: "Det vi gjør",
+};
+
+/** Prikkene under sliderne på mobil: «Gå til kort 2 av 6». */
+export const sliderLabels = {
+  goTo: "Gå til kort",
+  of: "av",
+  dotsLabel: "Velg kort",
 };
 
 export const videoSection = {
   kicker: "Video",
   title: "GT Maskin på film",
-  lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien.",
   play: "Spill av video",
+  loading: "Laster video",
+  posterKicker: "Video",
   placeholderTag: "Plassholder",
   playlistLabel: "Spilleliste",
   nowPlaying: "Spiller nå",
@@ -147,7 +160,7 @@ export const videoSection = {
   page: {
     kicker: "Video",
     title: "GT Maskin på film",
-    lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien. Videoene lastes først når du trykker på avspilling.",
+    lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien.",
     heroImage: "/images/bygg/fasade-dag-bilpark",
     heroAlt: "Bygget til GT Maskin på dagtid med mange biler foran",
     featuredTitle: "Siste video",
@@ -261,10 +274,14 @@ export const partsSection = {
     kicker: "Butikk",
     title: "Deler, klær og utstyr",
     lead: "Vi har godt delelager til de fleste amerikanske biler, også Tesla, og skaffer det vi ikke har på lager. I butikken står også oljer, kjemi, rustbeskyttelse, klær og capser. Finner du ikke det du leter etter, send oss en forespørsel.",
+    // Butikkvideoen (17 s fra butikken, 21.10.2026) som hero med posteren som LCP.
+    heroImage: "/images/hero/butikk-hero-poster",
+    heroAlt: "Butikken hos GT Maskin: moped, gammelt kasseapparat og klesstativ",
+    heroVideo: "/video/hero.mp4",
+    heroPosition: "50% 50%",
     groupLabel: "Velg del av butikken",
     groups: {
       deler: {
-        lead: "Deler til de fleste US-biler og Tesla. Finner du ikke delen her, send oss en forespørsel med merke, modell og årsmodell.",
         searchLabel: "Søk i deler",
         searchPlaceholder: "Søk etter del, merke eller kategori",
         resultsLabel: "deler",
@@ -272,7 +289,6 @@ export const partsSection = {
         requestCta: { label: "Send forespørsel om del", to: "/kontakt" },
       },
       klaer: {
-        lead: "Klær og capser står i hyllene i kundemottaket, blant annet fra Carhartt. Størrelser og utvalg bekreftes når du bestiller.",
         searchLabel: "Søk i klær og utstyr",
         searchPlaceholder: "Søk etter plagg, caps eller merke",
         resultsLabel: "varer",
@@ -285,8 +301,6 @@ export const partsSection = {
       "Nettbutikken er en demo. Bestillinger sendes som forespørsel, vi bekrefter pris, lagerstatus og frakt før noe betales.",
     storeKicker: "Butikken i Myggveien",
     storeTitle: "Stikk innom butikken",
-    storeText:
-      "Oljer, kjemi, rustbeskyttelse, klær og capser står i hyllene i kundemottaket. Det står til tider svært fine biler inne hos oss også.",
     storeBrandsPrefix: "I butikken",
   },
   product: {
@@ -360,7 +374,6 @@ export const rentalSection = {
     heading: "Spør om utleie",
     intro: "Fortell oss hva du vil leie og når, så tar vi kontakt og bekrefter.",
     title: "Send utleieforespørsel",
-    lead: "Vi svarer med pris og tilgjengelighet.",
     fields: {
       type: { label: "Hva vil du leie?", placeholder: "Velg type" },
       from: { label: "Fra dato" },
@@ -399,8 +412,8 @@ export const aboutSection = {
   peopleLabel: "Folkene",
   timelineLabel: "Tidslinje",
   link: { label: "Les mer om oss", to: "/om-oss" },
-  image: "/images/butikk/kundemottak-sofa-cabriolet",
-  imageAlt: "Kundemottaket hos GT Maskin med bilsofa, cabriolet og hyller",
+  image: "/images/butikk/kundemottak-disk-chevrolet",
+  imageAlt: "Kundemottaket hos GT Maskin med disken, Chevrolet-skiltet og tavlene",
   page: {
     heroImage: "/images/bygg/fasade-dag-klassikere",
     heroAlt: "Bygget til GT Maskin på dagtid med amerikanske klassikere foran",
@@ -443,6 +456,10 @@ export const workshopPage = {
   lead: "Godkjent bilverksted i Myggveien 3. Service, feilsøking, reparasjon og custom-prosjekter. Amerikanske biler er spesialiteten, men vi tar de fleste merker.",
   heroImage: "/images/hero/verksted-hero-klassiker",
   heroAlt: "Amerikansk klassiker fotografert i sort-hvitt fra lav vinkel",
+  pricesKicker: "Priser",
+  pricesTitle: "Faste priser",
+  pricesNote: "Prisene står på tavla i butikken (21. oktober 2026).",
+  priceSuffix: "kr",
   processKicker: "Slik jobber vi",
   processTitle: "Enkelt fra første kontakt",
   process: [
@@ -608,14 +625,30 @@ export const socialLinks = {
 export const snapchatSection = {
   kicker: "Snapchat",
   title: "GT Maskin på Snapchat",
-  lead: "Korte videoer fra verkstedet. Følg oss for mer.",
-  follow: "Følg",
-  seeSnaps: "Se snapene",
-  loadNote: "Lastes fra Snapchat når du trykker.",
+  // Lokalt profilkort (ingen eksterne kall): logo, tittel, brukernavn og to knapper.
+  cardTitle: "GT Maskin på Snapchat",
+  open: "Åpne i Snapchat",
+  seeStories: "Se historiene her",
+  loading: "Henter historiene fra Snapchat",
+  timeoutText: "Snapchat svarer ikke akkurat nå.",
   qrHint: "Skann med Snapchat-kameraet",
   embedTitle: "GT Maskin på Snapchat",
-  // Lokalt stående bilde i telefonrammen før klikk (gul Camaro, bil2.jpg).
-  posterImage: "/images/biler/camaro-gul-front",
+};
+
+/** «Legg GT Maskin på hjemskjermen» (footer og mobilmeny). */
+export const installApp = {
+  label: "Legg GT Maskin på hjemskjermen",
+  boxTitle: "Legg GT Maskin på hjemskjermen",
+  boxText: "Åpne siden som app, rett fra mobilen.",
+  add: "Legg til",
+  notNow: "Ikke nå",
+  iosTitle: "Legg til på Hjem-skjerm",
+  iosSteps: [
+    "Trykk på Del-knappen nederst i Safari.",
+    "Velg Legg til på Hjem-skjerm.",
+    "Trykk Legg til. GT Maskin får eget ikon og åpner i fullskjerm.",
+  ],
+  close: "Lukk",
 };
 
 export const placeholderLabels = {

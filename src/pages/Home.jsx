@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FactBoxes, TeamGrid, Timeline } from "../components/AboutBlocks";
 import BookingForm from "../components/BookingForm";
-import BrandChips from "../components/BrandChips";
+import BrandWall from "../components/BrandWall";
 import Button from "../components/Button";
 import CarCard from "../components/CarCard";
 import ContactCard from "../components/ContactCard";
@@ -57,7 +57,7 @@ export default function Home() {
         id="biler"
         className="section-pad border-y border-brand-border-dark bg-brand-primary-dark text-brand-text-inverse"
       >
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader
             kicker={carsSection.kicker}
             title={carsSection.title}
@@ -99,7 +99,7 @@ export default function Home() {
 
       {/* 7. Deler og nettbutikk */}
       <section id="deler" className="section-pad bg-brand-bg text-brand-text">
-        <div className="container-site flex flex-col gap-8">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader
             tone="light"
             kicker={partsSection.kicker}
@@ -114,8 +114,8 @@ export default function Home() {
               </Link>
             }
           />
+          <BrandWall items={brands.all} label={partsSection.page.storeBrandsPrefix} tone="light" />
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
-            <BrandChips prefix={partsSection.brandsPrefix} brands={brands.parts} />
             <nav
               aria-label={partsSection.groupLinksLabel}
               className="flex flex-wrap items-center gap-2 text-sm"
@@ -161,7 +161,7 @@ export default function Home() {
 
       {/* 8. Utleie */}
       <section id="utleie" className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader
             kicker={rentalSection.kicker}
             title={rentalSection.title}
@@ -189,7 +189,7 @@ export default function Home() {
 
       {/* 9. Om oss, kortversjon */}
       <section id="om-oss" className="section-pad bg-brand-bg text-brand-text">
-        <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-6">
+        <div className="container-site grid gap-8 lg:grid-cols-12 lg:gap-6">
           <div className="flex flex-col gap-6 lg:col-span-6">
             <p className="kicker text-brand-accent-deep">{aboutSection.kicker}</p>
             <h2 className="h2-section">{aboutSection.title}</h2>
@@ -225,9 +225,9 @@ export default function Home() {
 
       {/* 10. Kontakt og bestilling */}
       <section id="kontakt" className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader kicker={contactPage.kicker} title={contactPage.title} />
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-6">
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-6">
             <ContactCard className="lg:col-span-5" />
             <BookingForm className="lg:col-span-6 lg:col-start-7" />
           </div>

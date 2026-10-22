@@ -40,7 +40,7 @@ export default function BilerTilSalgs() {
 
       {/* 2. Inne hos oss nå */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader kicker={t.nowKicker} title={t.nowTitle} />
           {forSale.length ? (
             <CarGrid items={forSale} />
@@ -55,7 +55,7 @@ export default function BilerTilSalgs() {
 
       {/* 3. Vi skaffer */}
       <section className="section-pad border-t border-brand-border-dark bg-brand-primary-dark text-brand-text-inverse">
-        <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-6">
+        <div className="container-site grid gap-8 lg:grid-cols-12 lg:gap-6">
           <div className="flex flex-col gap-4 lg:col-span-5">
             <p className="kicker text-brand-accent-light">{w.kicker}</p>
             <h2 className="h2-section">{w.title}</h2>
@@ -68,7 +68,7 @@ export default function BilerTilSalgs() {
       {/* 4. Solgte biler */}
       {sold.length > 0 && (
         <section className="section-pad bg-brand-primary text-brand-text-inverse">
-          <div className="container-site flex flex-col gap-8">
+          <div className="container-site flex flex-col gap-6 md:gap-8">
             <SectionHeader kicker={t.soldKicker} title={t.soldTitle} />
             <CarGrid items={sold} dense />
           </div>
@@ -78,7 +78,7 @@ export default function BilerTilSalgs() {
       {/* 5. Slik presenteres bilene (kun når ingen ekte biler finnes) */}
       {showExamples && (
         <section className="section-pad bg-brand-primary text-brand-text-inverse">
-          <div className="container-site flex flex-col gap-8">
+          <div className="container-site flex flex-col gap-6 md:gap-8">
             <SectionHeader
               kicker={t.examplesKicker}
               title={t.examplesTitle}

@@ -199,3 +199,122 @@ Skjermbilder i `docs/qa/skjermbilder/runde-3b/` (15 filer: header, hero, «Live 
 | Lighthouse mobil | `/` 92 og `/video` 90 (to kjøringer hver, pluss `/utleie` 90), tilgjengelighet 100, beste praksis 100, CLS 0 |
 | Merkefarger (`getComputedStyle`, 83 flater på fire ruter, mobilmeny og dialog) | Facebook `rgb(8, 102, 255)` overalt, Snapchat `rgb(255, 252, 0)` overalt, ikonknapper 44 × 44 px, radius 9999 px |
 | Snapchat-telefon etter klikk | profilvisningen lastes i rammen og viser profilkort og historier |
+
+## Runde 4 (21.10.2026): video med ett trykk, slidere, Snapchat, app og butikkbilder
+
+Branch `feature/runde-4`, mot `npm run preview` (produksjonsbygg med service worker aktiv) i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-4/` (31 filer): forsiden med header og begge sliderne på 375 og 1440 px, sliderseksjonene, Snapchat-kortet før, under og etter trykk (pluss timeout-tilstanden), videokort under lasting, videospilleren med butikkvideoen, den designede posteren, installeringsknappen i footer og mobilmeny, iPhone-dialogen, offline-siden, hero med video på 375/1024/1440, header på 1024/1280, prisblokken, klær og utstyr, kundemottaket og butikkbildene.
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene før hver commit |
+| `/`, `/verksted`, `/deler`, `/video`, `/biler-til-salgs`, `/kontakt` × 375, 768, 1440 px | `scrollWidth` lik viewport overalt, ingen konsollfeil eller -advarsler |
+| axe-core ved 375 og 1440 px på de seks rutene | ett mindre funn (`image-redundant-alt` på produktbildet Wunder-Baum), rettet: ekte produktbilder i kortene har tom `alt` siden lenken har tittelen. 0 funn etter retting |
+| Eksterne kall før trykk, med service worker aktiv | ingen, på alle seks ruter og tre bredder. Service worker rører ikke eksterne kall |
+| Butikkvideoen (mp4) etter ett trykk, 375 og 1440 | mørk flate med lasteindikator og «Laster video», ingen bilder i rammen, video spiller etter 0,38-0,44 s (`paused` false, `playsInline` true), rammen like stor før og etter |
+| Facebook-reel etter ett trykk, 375 og 1440 | lasteflate, iframe tonet inn etter 0,7-1,2 s med `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`, men `<video>` i pluginen står i pause i headless: krever ett trykk til inne i rammen (kjent begrensning, se BESLUTNINGER.md). Må sjekkes på iPhone |
+| YouTube etter ett trykk (midlertidig testoppføring i dev, ikke committet) | spiller etter 3,2-3,6 s med `autoplay=1&playsinline=1` |
+| Snapchat-kortet | ingen eksterne kall før trykk; på `pointerdown` på «Se historiene her» monteres iframen (første forespørsel til snapchat.com etter 11-20 ms) bak skjelettet; profilkortet med historier tones inn etter 0,6-1,5 s; med snapchat.com blokkert viser rammen «Snapchat svarer ikke akkurat nå.» og «Åpne i Snapchat» etter 8 s. «Åpne i Snapchat» går til `snapchat.com/add/gtmaskin-as` med `target="_blank"` og `rel="noopener noreferrer"`, og står først og størst (56 px) på mobil |
+| Slidere på 320 og 375 px | kortene er 223/268 px brede og innenfor skjermen med neste kort synlig i kanten; sveip flytter prikken (`aria-current`), klikk på prikk 4 ruller kort 4 inn til venstrekanten, Tab til kort 1 ruller sporet tilbake, loddrett sveip over sporet ruller siden (ikke sporet). 768 og 1440 px: `display: grid`, prikker skjult |
+| Header 1024 og 1280 px | seks menypunkter, ikoner og «Bestill time» på én linje uten brudd |
+| Manifest og installerbarhet (CDP `Page.getAppManifest`, `Page.getInstallabilityErrors`) | manifestet leses uten feil (standalone, nb, tre ikoner), tom liste med installerbarhetsfeil, Chrome sendte `beforeinstallprompt` selv |
+| Service worker | aktiv og kontrollerende etter første last, cache `gtm-<versjon>` med `offline.html` og logo, fem `/assets/`-filer i cache etter andre side, ingen HTML i cache |
+| Offline (preview-serveren stoppet etter at SW var installert) | navigering til `/verksted` gir `offline.html` («Ingen nett akkurat nå. Sjekk dekningen og prøv igjen.») |
+| Installeringsknapp | vises i footer og nederst i mobilmenyen når prompt finnes; iPhone-UA uten prompt gir dialog med tre steg, Escape lukker og fokus går tilbake; med `display-mode: standalone` er knappen borte |
+| Tankestrek, forbudte ord, verktøyord i `src`, `public`, `index.html`, docs, STATUS, BESLUTNINGER, BILDELISTE | null treff i synlig innhold |
+
+### Lighthouse (mobil, `npm run preview`, service worker aktiv)
+
+| Rute | Ytelse (2 kjøringer) | Tilgjengelighet | Beste praksis | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|
+| `/` | 90, 90 | 100 | 100 | 69 | 3,4-3,5 s | 0 | 30-40 ms |
+| `/video` | 92, 91 | 100 | 100 | 69 | 3,1-3,3 s | 0 | 10 ms |
+
+Minst like gode tall som i runde 3 (90/90) og 3b (92/90). SEO under 100 skyldes `noindex` (bevisst til go-live). LCP på forsiden er posteren til butikkvideoen; videoen (3,4 MB) lastes først etter `load` og påvirker ikke LCP.
+
+### Konsoll og DevTools-issues
+
+| Kilde | Funn | Håndtering |
+|---|---|---|
+| Vår kode | ingen konsollfeil eller -advarsler. `LazyLoadImageIssue` dukket opp 13 ganger på forsiden ved 768 og 1440 px i QA-scriptet, men ikke i to kontrollkjøringer med samme laste- og rulleprosedyre uten fullsideskjermbilde. Meldingen utløses av at skjermbildeverktøyet strekker viewporten til hele siden, så alle lazy-bilder havner «i viewport» på én gang | ikke en feil på siden, rådgivende melding fra Chrome. Mobil (375 px) var ren |
+| Facebook og Snapchat etter trykk | som i runde 3: cookie-issues fra Snapchats iframe, ingen fra Facebook i testen | deres iframes |
+
+### Gjenstående
+
+1. Teste på ekte telefon: Facebook-video med ett trykk på iPhone, sliderne, Snapchat-kortet, installering på Android og iPhone, offline-siden (liste i STATUS.md).
+2. Gjermund bekrefter prisene fra tavlene og hva timeprisen gjelder, og sender titler og stillbilder til de seks reelene, størrelser for T-skjorte og bilder av kopp og nøkkelring.
+3. Nye verkstedbilder uten personer i bakgrunnen (`verksted4.jpg`, `verksted10.jpg`).
+
+## Runde 4b (21.10.2026): retting etter test på Samsung
+
+Samme branch, mot `npm run preview` i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-4b/` (13 filer): skiltveggen på `/deler` (hero og butikkseksjon) og forsiden på 375 og 1440 px, forsiden i full høyde, app-boksen og iPhone-dialogen, og videospilleren etter trykk på et Facebook-kort og på «Butikken».
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene før hver commit |
+| `/`, `/deler`, `/video` × 375 og 1440 px | `scrollWidth` lik viewport, ingen konsollfeil eller -advarsler. Skiltveggen står i 3 kolonner på 375 px og 6 på 1440 px, navnene uten logo (Amsoil, Fluid Film, Wunder-Baum) på to linjer der platen er smal |
+| axe-core ved 375 og 1440 px | første kjøring ga `image-redundant-alt` (minor) på logoene, fordi navnet står under platen. Rettet: navnet under er `aria-hidden`, alt-teksten på logoen er merkenavnet. 0 funn etter retting, Lighthouse tilgjengelighet 100 |
+| Trykk på Facebook-kort i «Alle videoer» (375 og 1440) | spilleren monteres direkte, ingen poster eller egen play-knapp imellom, lasteflate med indikator, Facebook-iframen tonet inn etter 0,65-1,2 s, fyller rammen i 9:16 (målt 0,56), ingen egne elementer ved siden av iframen, hovedspilleren i synsfeltet. Facebooks egen play-knapp gjenstår |
+| Trykk på «Butikken» | video monteres direkte og spiller etter 0,43-0,45 s (`paused` false) |
+| Snapchat-lenker på `/video` | én adresse i DOM: `https://www.snapchat.com/@gtmaskin-as` |
+| Eksterne kall før trykk | ingen på `/`, `/deler` og `/video` (logoene lastes fra `/images/merker/`) |
+| Manifest | `crossorigin="use-credentials"` på lenken, `Page.getAppManifest` uten feil, `Page.getInstallabilityErrors` tom |
+| App-boksen | ikke synlig ved last; vist ved rulling forbi halve siden med tittel, linje og knappene «Legg til» / «Ikke nå»; bunn 744 px over bunnlinjens topp 755 px; ingen fokus flyttet inn; Escape lukker og lagrer tidspunkt; etter lukking ikke vist igjen; ikke på `/bestill`; ikke når et skjemafelt har fokus; ikke i standalone; uten rulling vist etter 20 s (ikke ved 15 s, vist ved 21 s); iPhone-UA: «Legg til» åpner veiledningen |
+| Tankestrek, forbudte ord, verktøyord i `src`, `public`, `index.html`, docs, STATUS, BESLUTNINGER, BILDELISTE, LOGOER | null treff i synlig innhold. SVG-filene har ingen script eller eksterne referanser |
+
+### Lighthouse (mobil, `npm run preview`, service worker aktiv, tre kjøringer)
+
+| Rute | Ytelse | Tilgjengelighet | Beste praksis | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|
+| `/` | 89, 90, 90 | 100 | 100 | 69 | 3,4-3,6 s | 0 | 40 ms |
+| `/deler` | 88, 88, 88 | 100 | 100 | 69 | 3,6-3,7 s | 0 | 0-10 ms |
+
+Forsiden er på nivå med runde 4 (90, 90). `/deler` ble ikke målt i runde 4; målt på runde 4-committen (548fed4) i samme sesjon gir den 85, 85, 85 med LCP 4,1 s, så siden er blitt litt raskere, ikke tregere. LCP-elementet på `/deler` er ingressen i hero (tekst), logoene er lastet etter 121-131 ms. SEO under 100 skyldes `noindex`.
+
+### Konsoll og DevTools-issues
+
+Ingen konsollfeil fra vår kode. `LazyLoadImageIssue` dukket opp for logoene i hero på `/deler` (de sto i første skjermbilde med `loading="lazy"`); rettet med `priority` (eager) på skiltveggen i hero. Resten av meldingene kommer av fullsideskjermbildene i QA-scriptet, som i runde 4.
+
+### Gjenstående
+
+1. Teste på Samsung-en (liste i STATUS.md): Facebook-kort med bare Facebooks play-knapp igjen, Snapchat-profilen, installering i den innloggede forhåndsvisningen, app-boksen, skiltveggen og oversetting.
+2. Avklare logobruken med Gjermund før go-live, og få originalfiler for Amsoil, Fluid Film og Wunder-Baum.
+3. Originalfilene til de seks reelene fra Gjermund, så videoene spiller med ett trykk.
+
+
+## Runde 4c (22.10.2026): mindre luft, bildeshow i USA-stil og butikkvideo på butikksiden
+
+Samme branch, mot `npm run preview` i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-4c/` (8 filer): forsiden med bildeshowet på 375 og 1440 px, forsiden i full høyde, Facebook-feeden på 375 px (også rullet til kanten) og 1440 px, og `/deler` med videohero på 375 og 1440 px.
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene før hver commit |
+| `/`, `/deler`, `/video` × 375, 768, 1440 px | `scrollWidth` lik viewport, ingen konsollfeil eller -advarsler |
+| axe-core ved 375 og 1440 px | 0 funn |
+| Bildeshowet (1440) | bytter fra bilde 1 til 2 etter 2,5 s pluss 5 s; står stille i 5,6 s ved hover, ved skjult fane og etter fokus/klikk på en prikk; prikk 3 gir bilde 3; aktivt bilde har `transform: scale(1,079)`; pærene har animasjonen `marquee-x`; rammen 486 × 560 px før og etter |
+| Bildeshowet (375, berøring) | sveip mot venstre gir neste bilde (0 til 1) |
+| `prefers-reduced-motion` | ingen bytte etter 5,8 s, ingen zoom-klasse, pæreanimasjon 0,01 ms |
+| Lasting | første bilde forhåndslastet (`imagesrcset` med `verksted-hero-klassiker`), de sju andre bildene forespurt 2,5 s etter `load`. Første Lighthouse-måling ga 77 (LCP 6,1 s) fordi bildene kom før første maling; rettet, se BESLUTNINGER.md |
+| Feed på 375 px | sporet 0 til 375 px, første kort ved 16 px, siste kort rullet til 359 px, `scrollWidth` lik viewport og `scrollX` 0; `container-site` 16 px, `section-pad` 32 px |
+| Eksterne kall før trykk | ingen på de tre rutene |
+| Tankestrek, forbudte ord, verktøyord | null treff i synlig innhold |
+
+### Lighthouse (mobil, `npm run preview`, service worker aktiv, tre kjøringer)
+
+| Rute | Ytelse | Tilgjengelighet | Beste praksis | SEO | LCP | CLS |
+|---|---|---|---|---|---|---|
+| `/` | 93, 93 (og én kjøring på 67 med TBT 1 010 ms rett etter omstart av Chrome, før oppvarming) | 100 | 100 | 69 | 2,1-2,3 s | 0 |
+| `/deler` | 89, 86, 90, deretter 87, 88, 84 i en ny serie | 100 | 100 | 69 | 3,4-4,1 s | 0 |
+
+Forsiden holder kravet (93). `/deler` ligger på 84-90 og er ikke stabilt over 90: LCP-elementet er nå posteren til butikkvideoen (48 kB webp på mobil) på en side der tekst-LCP allerede lå på 3,6 s (88 i runde 4b, 85 på runde 4-committen). Resten av tiden er renderingsstien (render-blokkerende CSS, ca. 600 ms i Lighthouse) og fontene, som er felles for alle sider og utenfor denne runden. Mulige løft senere: lettere poster (egen kvalitet for hero-bilder i `prepare-images.mjs`) og kritisk CSS inline. Notert i STATUS.md. SEO under 100 skyldes `noindex`. LCP på forsiden er overskriften (bildeshowet står under teksten på mobil), på `/deler` posteren.
+
+### Gjenstående
+
+1. `/deler` under 90 i Lighthouse (se over).
+2. Flere bilder av biler fra Gjermund til bildeshowet, og bekreftelse på om de røde klassikerne er samme bil.
+3. Teste på Samsung (liste i STATUS.md).

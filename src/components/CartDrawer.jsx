@@ -98,7 +98,9 @@ export default function CartDrawer() {
                     <span className="text-xs font-bold uppercase tracking-[0.12em] text-brand-muted-inverse">
                       {item.brand}
                     </span>
-                    <span className="truncate font-bold">{item.title}</span>
+                    <span className="truncate font-bold" translate="no">
+                      {item.title}
+                    </span>
                     {item.size && (
                       <span className="text-sm text-brand-muted-inverse">
                         {partsSection.checkout.size} {item.size}

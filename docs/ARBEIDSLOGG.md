@@ -1,5 +1,48 @@
 # ARBEIDSLOGG
 
+## 22.10.2026: runde 4c, mindre luft, bildeshow i USA-stil og butikkvideo på butikksiden
+
+Samme branch, `feature/runde-4`, etter runde 4b.
+
+1. Luft: `section-pad` 32/72 px, `container-site` 16 px på mobil, seksjonsgap 6/8, egne paddinger i hero, PageHero, `/verksted`, `/utleie`, tillitsstripen, footer og utleiebanneret strammet i samme forhold, sliderne ut til 16 px-kanten (`MobileSlider`, `VideoSlider`, `.player-portrait`). Tekst kortet ned (våre egne linjer, ikke Gjermunds): feed-ingressen, «Hva vi gjør»-ingressen, videoseksjonens ingress på forsiden, setningen om lasting på `/video`, Snapchat-ingressen, gruppeingressene og butikkingressen på `/deler`, og den ekstra linjen i utleieskjemaet. Gjennomgått på `/`, `/deler`, `/video`, `/verksted`, `/utleie` og `/om-oss` ved 375 og 1440 px.
+2. Feed: `SocialFeed` med lokalt seksjonshode (kicker, tittel, talllinje, liten blå knapp på raden fra 768 px), `FeedCard` med bilde og tittel, «Eksempel»-pille i stedet for PLASSHOLDER-feltet, ingen tekst i hakeparentes, `translate="no"` på sidenavnet. Målt på 375 px: første kort ved 16 px, siste kort rulles til 359 px, `scrollWidth` lik viewport.
+3. Butikkvideo: `PageHero` fikk `video` (bakgrunn via `HeroMedia` med `sizes` og `imgClassName`), `/deler` bruker `partsSection.page.heroImage/heroVideo`, skiltveggen i egen stripe under heroen, `heroImages.js` oppdatert for `/` og `/deler`, `HomeHero` uten video.
+4. Bildeshow: `HeroSlideshow` og `heroSlides.js` (åtte biler), marquee-ramme, neon og zoom i `index.css`, `hero.neonLine` og etiketter i `siteContent.js`. Verifisert i headless Chrome: bytte etter 5 s, pause ved hover, fokus og skjult fane, prikk-klikk, sveip på mobil (0 til 1), zoom-transform 1,079 på aktivt bilde, pærer animert; ved reduced motion ingen bytte, ingen zoom-klasse og animasjon 0,01 ms. Første bilde forhåndslastet. Lighthouse ga først 77 fordi de sju andre bildene ble forespurt rett etter `load`, før første maling; nå monteres de 2,5 s etter `load` (også butikkvideoen på `/deler`), og pærene blinker med `opacity` i stedet for `background-position`.
+5. QA: se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 4c».
+
+## 21.10.2026: runde 4b, retting etter test på Samsung
+
+Samme branch, `feature/runde-4`. Kim-Oves funn: 4-5 trykk før en Facebook-video spilte, Snapchat-lenken åpnet kameraet, «Kan ikke installere denne appen» i den innloggede forhåndsvisningen, ønske om pop-up for installering, merkelogoer i stedet for tekstbrikker, og Chrome-oversetting av merkenavn.
+
+1. Video: `VideoShowcase` setter `autoStart` ved kortvalg, `VideoPlayer` starter da med spilleren montert (ingen poster og play-knapp imellom), `LoadingMark` fjernes fra DOM ved `onLoad`. Målt: mp4 spiller etter 0,43-0,45 s, Facebook-iframen tonet inn etter 0,65-1,2 s og fyller rammen i 9:16 uten egne lag over; Facebooks egen play-knapp gjenstår.
+2. Snapchat: `addUrl` fjernet, alle «Åpne i Snapchat»-lenker bruker `channels.snapchat.url` (den offentlige profilen). Verifisert: bare én Snapchat-adresse i DOM på `/video`.
+3. App: `crossorigin="use-credentials"` på manifest-lenken; ny `InstallPrompt` i `Layout` (tid 20 s eller halve siden, ikke på `/kasse` og `/bestill`, ikke ved skjemafokus, ikke i standalone, bare med prompt eller iOS, 14 dagers pause i localStorage, fixed over bunnlinjen, Escape lukker, ingen fokusfelle). `InstallDialog` eksportert fra `InstallButton`. Verifisert alle vilkårene i headless Chrome.
+4. Merker: `brands.js` med logo, viewBox-mål og `logoHeight` per merke; åtte SVG-er fra Wikimedia Commons (søkt via API, lisens og opphav lest fra `extmetadata`, filene sjekket for script og eksterne referanser, rendret og kontrollert visuelt) i `public/images/merker/`, kilder i `_kilder/LOGOER.md`. `BrandWall` (plater, nagler, skygge, 3/4/6 kolonner) erstatter `BrandChips` på `/deler` (hero og butikkseksjon) og forsiden (alle merker under seksjonshodet i «Deler og nettbutikk»).
+5. `translate="no"` på merkenavn, produktnavn (kort, produktside, kurv, kasse), firmanavn (logo, footer) og «Ring».
+6. QA: se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 4b».
+
+## 21.10.2026: runde 4, video med ett trykk, slidere, Snapchat, app og butikkbilder
+
+Branch `feature/runde-4` fra `dev`. Nye filer i `assets-raw/` (butikkbilder og `hero.mp4`) og `_kilder/PRISER-FRA-TAVLENE.md` kom inn under runden.
+
+**Kartlegging av videoflyten før endring** (headless Chrome mot `npm run preview`, `/video`, 375 og 1440 px):
+
+- Facebook (de seks reelene): før trykk viste rammen et lånt verkstedbilde (`verksted-cabriolet-kobber-400.webp`). Ved trykk ble bildet byttet mot svart flate og iframe mot `plugins/video.php?autoplay=true` montert etter 38-104 ms. Pluginen var lastet etter 0,45 s (1440) og 1,1 s (375) og viste da Facebooks eget stillbilde av videoen med egen play-knapp. `<video>` i pluginen hadde `readyState` 4, men sto i pause (`currentTime` 0) i 20 sekunder: ett trykk til var nødvendig. Sekvensen for brukeren var altså lånt bilde, svart, Facebooks bilde, trykk, video.
+- YouTube (kode, ingen data i `videos.js`): iframe mot `youtube-nocookie.com/embed/<id>?autoplay=1&rel=0` uten `playsinline`, så iPhone kunne åpne videoen i fullskjerm i stedet for i rammen.
+- mp4 (kode, ingen data): `<video controls autoPlay preload="none">` uten `playsinline`, montert ved trykk, uten lasteflate.
+- Felles: `allow="autoplay; encrypted-media; picture-in-picture"` uten `fullscreen`, ingen lasteindikator, ingen inntoning. Rammen hadde fast størrelse, så ingen layoutforskyvning.
+
+**Gjort, per punkt**
+
+1. Video: `VideoPlayer` viser mørk flate med lasteindikator (ring i `brand-accent`, «Laster video») fra trykk til `onLoad`, og toner inn iframe/video. mp4 i `<video playsInline autoPlay>` med `play()` som sikring, YouTube med `autoplay=1&playsinline=1`, Facebook med `autoplay=true`, alle med `allow="autoplay; encrypted-media; picture-in-picture; fullscreen"`. Ny `VideoPoster` (mørk flate, kildemerke, tittel, play) for videoer uten eget stillbilde; de seks reelene har `poster: null` i stedet for lånte bilder. Butikkvideoen (`hero.mp4`, 17 s, poster `butikk-hero-poster`) ligger først som «Butikken». Målt etter endring (375 og 1440): mp4 spiller etter 0,36-0,40 s, YouTube etter 3,2-3,6 s, Facebook-pluginen er lastet etter 0,8-1,1 s men står fortsatt i pause i headless (se BESLUTNINGER.md). Ingen eksterne kall før trykk, ingen layoutforskyvning (rammen måler det samme før og etter).
+2. Slider: `MobileSlider` (scroll-snap, prikker med `aria-label` «Gå til kort n av m» og `aria-current`, fokus ruller kortet inn, `overflow-y: hidden` så sporet aldri ruller loddrett) brukt i `SocialFeed` og `ServiceCards`; fra 768 px uendret rutenett. Målt på 320 og 375 px: kort 223/268 px brede innenfor skjermen, prikken følger sveip, prikk-klikk ruller riktig kort inn, Tab ruller sporet tilbake, loddrett sveip over sporet ruller siden. 768 og 1440 px: `display: grid`, prikker skjult.
+3. «Biler til salgs» ut av `nav.items`; tjenestekortet er «Vi skaffer» (`carsSection.wanted`, lenke `/biler-til-salgs#vi-skaffer`, ikon `Search`). Header sjekket på 1024 og 1280 px.
+4. Snapchat: ny `SnapchatSection` med lokalt profilkort (logo, tittel, @gtmaskin-as, «Åpne i Snapchat» til `snapchat.com/add/gtmaskin-as`, «Se historiene her»), iframe på `pointerdown` (første forespørsel etter 18-20 ms), skjelett med story-ringer, inntoning ved `onLoad` (0,6-1,5 s), «Åpne i Snapchat» i rammen etter 8 s uten svar (verifisert med blokkert snapchat.com). Null eksterne kall før trykk.
+5. App: `manifest.webmanifest` (standalone, nb, ikoner 192/512/512 maskable/180 fra `generate-favicons.mjs`), `sw.js` (navigering nettverk først med `offline.html`, `/assets/` cache først, eksterne urørt, versjonert cachenavn stemplet av `gtm-sw-version`, skipWaiting og clients.claim), `offline.html`, registrering kun i prod etter load, `no-cache` på sw.js og manifest i `vercel.json`, `InstallButton` i footer og mobilmeny med `useInstallPrompt` (beforeinstallprompt, iOS-dialog, skjult i standalone). Verifisert: `Page.getInstallabilityErrors` tom, offline-siden vises når serveren stoppes, assets i cache, HTML aldri i cache.
+6. Bilder: 18 butikkbilder og `hero.mp4` i `PHOTOS` og `npm run images` (54 bilder i manifestet). Hero: poster som LCP, video etter load, ikke ved reduced motion eller Save-Data; utsnitt sjekket på 375, 1024 og 1440 px og beholdt. `butikk.jpg`, `butikk5.jpg` og `butikk7.jpg` byttet ut overalt. BILDELISTE.md oppdatert.
+7. Priser: `src/data/prices.js` og blokken «Faste priser» på `/verksted`; «Klær og utstyr» med T-skjorte, Caps, Stetson caps, Kopp, Nøkkelring og Wunder-Baum under tilbehør, med bilder fra punkt 6 der de passer. Kilde og forbehold i BESLUTNINGER.md.
+8. QA: se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 4».
+
 ## 21.10.2026: runde 3b, seksjonshoder, runde ikonknapper, radius, Snapchat-telefon
 
 - `SectionHeader` med felles mønster (`lead` og `actions`, aldri høyrejustert brødtekst); fem bruksssteder lagt om. Feed: ny ingress, talllinje med blått merke, dato under, blå knapp (`Button` variant `facebook`).

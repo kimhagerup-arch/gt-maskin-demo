@@ -17,7 +17,7 @@ export default function Kasse() {
 
   return (
     <section className="section-pad bg-brand-primary text-brand-text-inverse">
-      <div className="container-site flex flex-col gap-8 md:gap-10">
+      <div className="container-site flex flex-col gap-6 md:gap-8">
         <div className="flex flex-col gap-3">
           <p className="kicker text-brand-accent-light">{partsSection.kicker}</p>
           <h1 className="font-display text-[32px] leading-[0.95] tracking-wide md:text-7xl">
@@ -51,7 +51,9 @@ export default function Kasse() {
                       <span className="text-xs font-bold uppercase tracking-[0.12em] text-brand-muted-inverse">
                         {item.brand}
                       </span>
-                      <span className="truncate font-bold">{item.title}</span>
+                      <span className="truncate font-bold" translate="no">
+                        {item.title}
+                      </span>
                       <span className="text-sm text-brand-muted-inverse">
                         {item.size ? `${t.size} ${item.size} · ` : ""}
                         {t.qty}: {item.qty}

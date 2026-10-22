@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { companyFacts } from "../data/companyFacts";
 import { footer } from "../data/siteContent";
 import { getImage } from "../lib/images";
+import InstallButton from "./InstallButton";
 import ReviewBadges from "./ReviewBadges";
 import SocialLinks from "./SocialLinks";
 
@@ -30,7 +31,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-brand-border-dark bg-brand-primary-dark text-brand-muted-inverse">
-      <div className="container-site flex flex-col gap-10 py-12 md:py-14">
+      <div className="container-site flex flex-col gap-8 py-8 md:py-10">
         <div className="grid gap-10 md:grid-cols-12 md:gap-8">
           {/* Firma. Logoen lastes ikke lazy: samme fil som i header (allerede lastet),
               og Chrome gir DevTools-issue for lazy bilder nær viewport på korte sider. */}
@@ -57,7 +58,7 @@ export default function Footer() {
                   <span className="font-display text-2xl text-brand-accent-light">GT</span>
                 )}
               </span>
-              <span className="font-display text-[26px] tracking-[0.08em]">
+              <span className="font-display text-[26px] tracking-[0.08em]" translate="no">
                 {companyFacts.name.toUpperCase()}
               </span>
             </div>
@@ -98,13 +99,14 @@ export default function Footer() {
               {footer.followTitle}
             </p>
             <SocialLinks tone="dark" qr="always" />
+            <InstallButton className="mt-2 self-start" />
           </div>
         </div>
 
         {/* Bunnlinje */}
         <div className="flex flex-col gap-3 border-t border-brand-border-dark pt-6 text-[13px] text-brand-footer md:flex-row md:items-center md:justify-between">
           <p>
-            © {year} {companyFacts.name}. {footer.copyright}
+            © {year} <span translate="no">{companyFacts.name}</span>. {footer.copyright}
           </p>
           <p className="flex items-center gap-3">
             <Link

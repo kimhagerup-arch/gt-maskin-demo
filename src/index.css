@@ -143,12 +143,14 @@
 }
 
 @layer components {
+  /* Sidemarg 16 px på mobil (runde 4c), 40 px fra 768 px. */
   .container-site {
-    @apply mx-auto w-full max-w-container px-6 md:px-10 xl:px-0;
+    @apply mx-auto w-full max-w-container px-4 md:px-10 xl:px-0;
   }
 
+  /* Luft over og under seksjoner: 32 px på mobil, 72 px på desktop (runde 4c). */
   .section-pad {
-    @apply py-12 md:py-24;
+    @apply py-8 md:py-[72px];
   }
 
   .kicker {
@@ -196,8 +198,8 @@
      Mobil: maks 70 % av skjermhøyden, så sticky-linjen aldri dekker play.
      Desktop: maks 640 px og aldri høyere enn skjermen minus header og luft. */
   .player-portrait {
-    height: min(70vh, calc((100vw - 3rem) * 16 / 9));
-    height: min(70svh, calc((100vw - 3rem) * 16 / 9));
+    height: min(70vh, calc((100vw - 2rem) * 16 / 9));
+    height: min(70svh, calc((100vw - 2rem) * 16 / 9));
   }
   @screen md {
     .player-portrait {
@@ -284,6 +286,94 @@
   .scooter-snow {
     opacity: 0.6;
   }
+}
+
+/* Forsidens bildeshow: ramme med lyspærer som løper rundt (marquee), neon-glød
+   på én linje i overskriften og langsom zoom på aktivt bilde. Pærene er to lag
+   radial-gradienter (dempet og lys) som bytter plass i to steg per sekund. Ved
+   prefers-reduced-motion stopper den globale regelen animasjonene, så pærene
+   står stille og zoomen er av. */
+.marquee-frame {
+  padding: 14px;
+  background: rgb(var(--brand-primary-dark));
+  border: 1px solid rgb(var(--brand-outline));
+  box-shadow: 0 0 0 1px rgb(var(--brand-primary-dark)), 0 18px 40px
+    rgb(var(--brand-primary-dark) / 0.6);
+}
+.marquee-bulbs {
+  position: absolute;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgb(var(--brand-accent-deep)) 0 2px, transparent 2.6px);
+  background-repeat: repeat-x;
+}
+/* To lag med lyse pærer (annenhver), som bytter på å lyse via opacity, så
+   animasjonen går på kompositoren og ikke tegner om siden. */
+.marquee-bulbs::before,
+.marquee-bulbs::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgb(var(--brand-accent-light)) 0 2.2px, rgb(var(--brand-accent-light) / 0.35) 3px, transparent 4.5px);
+  background-repeat: inherit;
+  background-size: inherit;
+  animation: marquee-blink 1s steps(1) infinite;
+}
+.marquee-bulbs::after {
+  animation-delay: 0.5s;
+}
+.marquee-bulbs-x {
+  left: 0;
+  right: 0;
+  height: 14px;
+  background-size: 12px 14px;
+  background-position: 7px 50%;
+}
+.marquee-bulbs-x::before {
+  background-size: 24px 14px;
+  background-position: 7px 50%;
+}
+.marquee-bulbs-x::after {
+  background-size: 24px 14px;
+  background-position: 19px 50%;
+}
+.marquee-bulbs-y {
+  top: 14px;
+  bottom: 14px;
+  width: 14px;
+  background-repeat: repeat-y;
+  background-size: 14px 12px;
+  background-position: 50% 5px;
+}
+.marquee-bulbs-y::before {
+  background-size: 14px 24px;
+  background-position: 50% 5px;
+}
+.marquee-bulbs-y::after {
+  background-size: 14px 24px;
+  background-position: 50% 17px;
+}
+@keyframes marquee-blink {
+  0%,
+  49.9% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.25;
+  }
+}
+.neon-text {
+  color: rgb(var(--brand-accent-light));
+  text-shadow: 0 0 4px rgb(var(--brand-accent-light) / 0.9), 0 0 14px
+    rgb(var(--brand-accent) / 0.75), 0 0 36px rgb(var(--brand-accent) / 0.4);
+}
+.hero-zoom {
+  transform: scale(1);
+  transition: transform 6s linear;
+  will-change: transform;
+}
+.hero-zoom-on {
+  transform: scale(1.08);
 }
 
 @layer utilities {

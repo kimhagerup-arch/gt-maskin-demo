@@ -61,7 +61,7 @@ export default function Utleie() {
                 as="article"
                 key={item.slug}
                 id={item.slug}
-                className="grid scroll-mt-24 gap-6 py-12 md:gap-10 md:py-16 lg:grid-cols-12"
+                className="grid scroll-mt-24 gap-5 py-8 md:gap-8 md:py-12 lg:grid-cols-12"
               >
                 <div
                   className={cx(
@@ -137,7 +137,7 @@ export default function Utleie() {
 
       {/* Utleieforespørsel */}
       <section className="section-pad border-t border-brand-border-dark bg-brand-primary-dark text-brand-text-inverse">
-        <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-6">
+        <div className="container-site grid gap-8 lg:grid-cols-12 lg:gap-6">
           <div className="flex flex-col gap-4 lg:col-span-5">
             <p className="kicker text-brand-accent-light">{rentalSection.request.kicker}</p>
             <h2 className="h2-section">{rentalSection.request.heading}</h2>

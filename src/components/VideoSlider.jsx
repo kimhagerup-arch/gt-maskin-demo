@@ -78,7 +78,7 @@ export default function VideoSlider({ title, label, children, className }) {
       <ul
         ref={trackRef}
         aria-label={label}
-        className="scrollbar-none -mx-6 -my-1 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-6 px-6 py-1 md:mx-0 md:scroll-px-0 md:gap-4 md:px-0"
+        className="scrollbar-none -mx-4 -my-1 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-4 px-4 py-1 md:mx-0 md:scroll-px-0 md:gap-4 md:px-0"
       >
         {children}
       </ul>

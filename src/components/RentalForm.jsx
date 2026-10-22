@@ -98,7 +98,6 @@ export default function RentalForm({ className, initialType = "" }) {
         <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
           <div className="flex flex-col gap-1">
             <h2 className="text-xl font-bold md:text-[22px]">{t.title}</h2>
-            <p className="text-[15px] text-brand-muted-inverse">{t.lead}</p>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">

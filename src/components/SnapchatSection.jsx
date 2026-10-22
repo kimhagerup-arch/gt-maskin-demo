@@ -1,40 +1,118 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getChannel } from "../data/channels";
+import { companyFacts } from "../data/companyFacts";
 import { snapchatSection } from "../data/siteContent";
 import { useAfterLoad } from "../hooks/useAfterLoad";
 import { cx } from "../lib/format";
+import { getImage } from "../lib/images";
 import Icon from "./Icon";
 import Picture from "./Picture";
 import { SnapchatMark } from "./SocialMarks";
 
+const LOGO_KEY = "/images/logo/gt-maskin-logo";
+/** Så lenge venter vi på Snapchats onLoad før rammen viser «Åpne i Snapchat» i stedet. */
+const LOAD_TIMEOUT_MS = 8000;
+
+/** Logoen i en mørk badge, samme filer som header og footer (allerede lastet). */
+function LogoBadge() {
+  const logo = getImage(LOGO_KEY);
+  return (
+    <span className="flex h-20 w-20 items-center justify-center rounded-pill border border-brand-border-dark-strong bg-brand-primary-light p-2.5">
+      {logo ? (
+        <picture>
+          <source type="image/webp" srcSet={`${LOGO_KEY}-128.webp 1x, ${LOGO_KEY}-256.webp 2x`} />
+          <img
+            src={`${LOGO_KEY}-128.png`}
+            srcSet={`${LOGO_KEY}-128.png 1x, ${LOGO_KEY}-256.png 2x`}
+            width={logo.sizes[0].w}
+            height={logo.sizes[0].h}
+            alt=""
+            className="h-full w-full object-contain"
+            decoding="async"
+          />
+        </picture>
+      ) : (
+        <span className="font-display text-2xl text-brand-accent-light">GT</span>
+      )}
+    </span>
+  );
+}
+
+/** Lokal skjelett-tilstand i telefonrammen: profilhode og pulserende story-ringer. */
+function Skeleton() {
+  return (
+    <div className="absolute inset-0 flex flex-col gap-6 p-5 pt-7" aria-hidden="true">
+      <div className="flex items-center gap-4">
+        <span className="h-16 w-16 shrink-0 animate-pulse rounded-pill bg-brand-primary-soft" />
+        <span className="flex flex-1 flex-col gap-2">
+          <span className="h-3.5 w-2/3 animate-pulse rounded-pill bg-brand-primary-soft" />
+          <span className="h-3 w-1/2 animate-pulse rounded-pill bg-brand-primary-soft" />
+        </span>
+      </div>
+      <div className="flex gap-3">
+        {[0, 1, 2, 3].map((i) => (
+          <span
+            key={i}
+            className="flex h-14 w-14 shrink-0 animate-pulse items-center justify-center rounded-pill border-[3px] border-brand-accent"
+            style={{ animationDelay: `${i * 150}ms` }}
+          >
+            <span className="h-10 w-10 rounded-pill bg-brand-primary-soft" />
+          </span>
+        ))}
+      </div>
+      <div className="grid flex-1 grid-cols-2 gap-3">
+        {[0, 1, 2, 3].map((i) => (
+          <span
+            key={i}
+            className="animate-pulse rounded-field bg-brand-primary-soft"
+            style={{ animationDelay: `${i * 120}ms` }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /**
- * «GT Maskin på Snapchat»: tekst til venstre, telefonramme til høyre (360 × 640
- * på desktop, maks 340 px sentrert på mobil). Før klikk viser telefonen et lokalt
- * stående bilde med mørk toning, gult merke med brukernavnet og knappen «Se
- * snapene». Ved klikk monteres Snapchats profilvisning inne i rammen. Ingenting
- * lastes fra Snapchat før klikk. Mobil: tekst, telefon, gul knapp i full bredde.
+ * «GT Maskin på Snapchat». Et lokalt profilkort vises med en gang, uten
+ * eksterne kall: logo, tittel, brukernavn og to knapper. «Åpne i Snapchat»
+ * (hovedknapp, først og størst på mobil) går til den offentlige profilen
+ * snapchat.com/@<brukernavn>, samme adresse som innbyggingen bruker. «Se historiene her» bytter kortet med telefonrammen:
+ * iframen mot Snapchats profilvisning begynner å laste allerede på pointerdown,
+ * rammen viser en lokal skjelett-tilstand til onLoad, og iframen tones inn.
+ * Kommer ikke onLoad innen 8 sekunder, viser rammen «Åpne i Snapchat» i stedet.
+ * Ingen eksterne kall før brukeren trykker, heller ikke preconnect.
  */
 export default function SnapchatSection({ className }) {
   const snapchat = getChannel("snapchat");
   const [shown, setShown] = useState(false);
-  // Bildet i telefonen og QR-koden monteres etter window load, så de ikke konkurrerer
-  // med hero-bildet (et display:none-bilde lastes likevel av nettleseren).
+  const [loaded, setLoaded] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
+  // QR-koden monteres etter window load, så den ikke konkurrerer med hero-bildet.
   const ready = useAfterLoad();
+
+  useEffect(() => {
+    if (!shown || loaded) return undefined;
+    const timer = window.setTimeout(() => setTimedOut(true), LOAD_TIMEOUT_MS);
+    return () => window.clearTimeout(timer);
+  }, [shown, loaded]);
+
   if (!snapchat?.embedUrl) return null;
   const t = snapchatSection;
+  const show = () => setShown(true);
 
-  const followButton = (extra) => (
+  const openButton = (extra) => (
     <a
       href={snapchat.url}
       target="_blank"
       rel="noopener noreferrer"
       className={cx(
-        "inline-flex h-12 items-center justify-center gap-2.5 rounded-button bg-brand-snapchat px-6 text-base font-bold text-brand-on-snapchat transition-[filter] hover:brightness-95",
+        "inline-flex items-center justify-center gap-2.5 rounded-button bg-brand-snapchat font-bold text-brand-on-snapchat transition-[filter] hover:brightness-95",
         extra,
       )}
     >
       <SnapchatMark size={22} />
-      {t.follow} @{snapchat.username}
+      {t.open}
     </a>
   );
 
@@ -50,76 +128,82 @@ export default function SnapchatSection({ className }) {
         <h3 className="font-display text-4xl tracking-wide text-brand-text-inverse md:text-5xl">
           {t.title}
         </h3>
-        <p className="max-w-[60ch] text-[17px] leading-relaxed text-brand-muted-inverse">
-          {t.lead}
-        </p>
-        <div className="hidden flex-wrap items-center gap-6 pt-2 md:flex">
-          {followButton()}
-          {snapchat.qrImage && ready && (
-            <span className="inline-flex items-center gap-3">
-              <span className="h-16 w-16 shrink-0 rounded-field bg-brand-snapchat p-1">
-                <Picture
-                  src={snapchat.qrImage}
-                  alt={snapchat.qrAlt}
-                  sizes="64px"
-                  imgClassName="h-full w-full object-contain"
-                  tone="light"
-                  fallbackLabel="[QR]"
-                />
-              </span>
-              <span className="max-w-[14ch] text-[13px] leading-snug text-brand-muted-inverse">
-                {t.qrHint}
-              </span>
+        {snapchat.qrImage && ready && (
+          <div className="hidden items-center gap-3 pt-2 md:flex">
+            <span className="h-16 w-16 shrink-0 rounded-field bg-brand-snapchat p-1">
+              <Picture
+                src={snapchat.qrImage}
+                alt={snapchat.qrAlt}
+                sizes="64px"
+                imgClassName="h-full w-full object-contain"
+                tone="light"
+                fallbackLabel="[QR]"
+              />
             </span>
-          )}
-        </div>
+            <span className="max-w-[14ch] text-[13px] leading-snug text-brand-muted-inverse">
+              {t.qrHint}
+            </span>
+          </div>
+        )}
       </div>
 
-      <div className="flex flex-col items-center gap-5 md:col-span-6 lg:col-span-5">
-        <div className="relative aspect-[9/16] w-full max-w-[340px] overflow-hidden rounded-[28px] border-[6px] border-brand-primary-dark bg-brand-primary shadow-2xl shadow-brand-primary-dark/80 md:max-w-[360px]">
-          {shown ? (
+      <div className="flex flex-col items-center md:col-span-6 lg:col-span-5">
+        {shown ? (
+          <div className="relative aspect-[9/16] w-full max-w-[340px] overflow-hidden rounded-[28px] border-[6px] border-brand-primary-dark bg-brand-primary shadow-2xl shadow-brand-primary-dark/80 md:max-w-[360px]">
+            {!loaded && !timedOut && <Skeleton />}
+            {!loaded && timedOut && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
+                <span className="flex h-14 w-14 items-center justify-center rounded-pill bg-brand-snapchat">
+                  <SnapchatMark size={32} />
+                </span>
+                <p className="text-sm text-brand-muted-inverse">{t.timeoutText}</p>
+                {openButton("h-12 px-6 text-base")}
+              </div>
+            )}
+            <span className="sr-only" aria-live="polite">
+              {loaded || timedOut ? "" : t.loading}
+            </span>
             <iframe
               src={snapchat.embedUrl}
               title={t.embedTitle}
-              className="h-full w-full border-0 bg-brand-snapchat"
+              className={cx(
+                "relative h-full w-full border-0 bg-brand-snapchat transition-opacity duration-300",
+                loaded ? "opacity-100" : "opacity-0",
+              )}
               allow="encrypted-media; picture-in-picture"
               allowFullScreen
               referrerPolicy="strict-origin-when-cross-origin"
+              onLoad={() => setLoaded(true)}
             />
-          ) : (
-            <>
-              {ready && (
-                <Picture
-                  src={t.posterImage}
-                  alt=""
-                  sizes="360px"
-                  className="absolute inset-0 h-full w-full"
-                  imgClassName="h-full w-full object-cover"
-                  objectPosition="50% 40%"
-                />
-              )}
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-brand-primary via-brand-primary/35 to-brand-primary/10"
-                aria-hidden="true"
-              />
-              <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-pill bg-brand-snapchat py-1.5 pl-1.5 pr-3.5 text-sm font-bold text-brand-on-snapchat">
-                <SnapchatMark size={22} />@{snapchat.username}
+          </div>
+        ) : (
+          <div className="flex w-full max-w-[360px] flex-col items-center gap-5 border border-brand-border-dark bg-brand-primary p-6 text-center md:p-8">
+            <span className="relative">
+              <LogoBadge />
+              <span className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-pill bg-brand-snapchat">
+                <SnapchatMark size={22} />
               </span>
-              <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 p-5 text-center sm:p-6">
-                <button
-                  type="button"
-                  onClick={() => setShown(true)}
-                  className="inline-flex h-14 w-full items-center justify-center gap-2.5 rounded-button bg-brand-snapchat px-6 text-lg font-bold text-brand-on-snapchat transition-[filter] hover:brightness-95"
-                >
-                  <Icon name="Play" size={20} strokeWidth={0} className="fill-current" />
-                  {t.seeSnaps}
-                </button>
-                <span className="text-[13px] text-brand-muted-inverse">{t.loadNote}</span>
-              </div>
-            </>
-          )}
-        </div>
-        {followButton("w-full md:hidden")}
+            </span>
+            <span className="flex flex-col gap-1">
+              <span className="font-display text-3xl tracking-wide text-brand-text-inverse">
+                {t.cardTitle || companyFacts.shortName}
+              </span>
+              <span className="text-[15px] text-brand-muted-inverse">@{snapchat.username}</span>
+            </span>
+            <div className="flex w-full flex-col gap-3">
+              {openButton("h-14 w-full px-6 text-lg")}
+              <button
+                type="button"
+                onPointerDown={show}
+                onClick={show}
+                className="inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-button border-[1.5px] border-brand-outline px-6 text-base font-bold text-brand-text-inverse transition-colors hover:border-brand-muted-inverse"
+              >
+                <Icon name="Play" size={18} strokeWidth={0} className="fill-current" />
+                {t.seeStories}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -7,10 +7,11 @@ import Picture from "../components/Picture";
 import Reveal from "../components/Reveal";
 import SectionHeader from "../components/SectionHeader";
 import { companyFacts } from "../data/companyFacts";
+import { workshopPrices } from "../data/prices";
 import { workshopGallery, workshopSections } from "../data/services";
 import { seo, workshopPage } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
-import { cx } from "../lib/format";
+import { cx, formatPrice } from "../lib/format";
 
 export default function Verksted() {
   useSeoMeta(seo.verksted);
@@ -53,7 +54,7 @@ export default function Verksted() {
                 as="article"
                 key={section.id}
                 id={section.id}
-                className="grid scroll-mt-24 gap-6 py-12 md:gap-10 md:py-16 lg:grid-cols-12"
+                className="grid scroll-mt-24 gap-5 py-8 md:gap-8 md:py-12 lg:grid-cols-12"
               >
                 <div
                   className={cx(
@@ -117,9 +118,37 @@ export default function Verksted() {
         </div>
       </section>
 
+      {/* Faste priser (fra tavla i butikken, bekreftes før go-live) */}
+      {workshopPrices.length > 0 && (
+        <section className="border-t border-brand-border bg-brand-surface text-brand-text">
+          <div className="container-site grid gap-5 py-8 md:grid-cols-12 md:gap-8 md:py-12">
+            <div className="flex flex-col gap-3 md:col-span-4">
+              <p className="kicker text-brand-accent-deep">{workshopPage.pricesKicker}</p>
+              <h2 className="font-display text-4xl tracking-wide md:text-5xl">
+                {workshopPage.pricesTitle}
+              </h2>
+              <p className="text-sm text-brand-muted">{workshopPage.pricesNote}</p>
+            </div>
+            <dl className="flex flex-col divide-y divide-brand-border-strong border border-brand-border-strong bg-brand-card md:col-span-8">
+              {workshopPrices.map((row) => (
+                <div
+                  key={row.label}
+                  className="flex items-baseline justify-between gap-4 px-5 py-3.5 md:px-6"
+                >
+                  <dt className="text-[17px] font-semibold">{row.label}</dt>
+                  <dd className="whitespace-nowrap font-display text-2xl text-brand-accent-deep">
+                    {formatPrice(row.price)} {workshopPage.priceSuffix}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+      )}
+
       {/* Slik jobber vi */}
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader kicker={workshopPage.processKicker} title={workshopPage.processTitle} />
           <ol className="grid gap-3 md:grid-cols-3 md:gap-6">
             {workshopPage.process.map((step, i) => (
@@ -168,7 +197,7 @@ export default function Verksted() {
 
       {/* Galleri */}
       <section className="section-pad bg-brand-bg text-brand-text">
-        <div className="container-site flex flex-col gap-8 md:gap-10">
+        <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader
             tone="light"
             kicker={workshopPage.galleryKicker}
