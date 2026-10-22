@@ -404,3 +404,37 @@ Tilgjengelighet 100 og CLS 0 på alle. Ytelsen er under kravet om minst 90. For 
 2. Engelsk tekst gjennomgås av Gjermund.
 3. Teste på Samsung (liste i STATUS.md).
 
+## Runde 5c (22.10.2026): ekte flagg i vind, Ford i farger, kustom-skiltet foran og ny hero på video
+
+Samme branch, mot `npm run preview` i headless Chrome (WebGL via SwiftShader). Skjermbilder i `docs/qa/skjermbilder/runde-5c/` (10 filer): forsidens hero på 375 og 1440 px (norsk) og 1440 px (engelsk), heroen med redusert bevegelse og uten WebGL (stillbildet), heroen på `/video` på 375 og 1440 px, footeren på 375 og 1440 px, og skiltveggen med Ford og Cadillac.
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` (Biome og i18n-sjekken) | rene før hver commit |
+| Forsiden, `/video` og footeren × norsk og engelsk × 375, 768 og 1440 px | `scrollWidth` lik viewport på alle, ingen konsollfeil eller -advarsler |
+| Flagget (WebGL) | På alle seks visninger av forsiden: stillbildet først, WebGL-canvaset montert og tonet inn (opacity 1) etter load, i hero (hele seksjonen, for eksempel 1440 × 695 og 375 × 1039) og i footer (475 × 250, 323 × 170). Ett nett, ingen skjøter (se skjermbildene) |
+| Kustom-skiltet | `elementFromPoint` på fem punkter inne i skiltet gir skiltet selv på 375, 768 og 1440 px, begge språk (0 av 5 dekket; før rettingen 4-5 av 5) |
+| Uten WebGL (`--disable-3d-apis`) | Bare stillbildet med folder (ett canvas), ingen feil |
+| `prefers-reduced-motion` | Bare stillbildet, WebGL startes ikke, ingen feil |
+| 4x CPU-struping (412 px) | Ingen long tasks over 50 ms mens flagget vaiet i 3 s, ingen under rulling gjennom forsiden (150 rammer, 0 trege) |
+| `/video` | Posteren `butikk-hero-poster` (400/800/1920 px etter bredde) er LCP, videoen spiller etter load (`readyState` 4, ikke pauset), `/en/video` likt |
+| Skiltveggen | Ford vises 78 × 28 px fra den nye filen (1000 × 360), Cadillac 98 × 40 som før |
+| Kontrast over flagget | Regnet på verste punkt (hvit stripe ved 34 % over primær, så 85 % eller 75 % toning): overskrift 14,05:1 / 12,70:1, ingress 7,66:1 / 6,92:1, neon-linjen 7,38:1 / 6,67:1 (desktop / mobil). AA |
+
+### Lighthouse (mobil, `npm run preview`, to kjøringer)
+
+| Rute | Ytelse | Tilgjengelighet | Beste praksis | SEO | LCP | CLS |
+|---|---|---|---|---|---|---|
+| `/` | 84, 86 | 100 | 100 | 69 | 4,0-4,2 s | 0 |
+| `/video` | 90, 90 | 100 | 100 | 69 | 3,3 s | 0 |
+
+`/` er som før runden (85-86 i runde 5b); flagget ligger utenfor LCP-stien (stillbildet tegnes etter første tegning, WebGL etter load), og LCP-elementet er fortsatt overskriften. `/video` 90 (sist målt 90 i runde 3b, med det gamle bildet). SEO 69 skyldes `noindex`.
+
+### Gjenstående
+
+1. Lighthouse ytelse på `/` under 90 (se runde 5b).
+2. Cadillac i farger krever originalfil fra merket (se BESLUTNINGER.md).
+3. Teste på Samsung (liste i STATUS.md).
+

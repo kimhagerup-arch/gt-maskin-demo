@@ -2,6 +2,19 @@
 
 
 
+
+## 22.10.2026: runde 5c, ekte flagg i vind, Ford i farger, kustom-skiltet foran og ny hero på video
+
+Samme branch, `feature/runde-5`, etter runde 5b.
+
+1. `HomeHero`: kustom-skiltet med `relative z-20` (lå under rammen med `z-10`).
+2. `public/images/merker/ford.svg` byttet til den blå ovalen (Commons, PD), mål og høyde i `brands.js`, `_kilder/LOGOER.md` oppdatert. Cadillac beholdt (ensfarget gjeldende logo, fargeskjoldet finnes ikke som fri SVG).
+3. `WavingFlag` i WebGL (vertex shader med tre bølger og normal fra helningen, fragment shader med diffust lys, glans og skygge), `lib/flagTexture.js` (tekstur, bølgefunksjon, stillbilde med folder). Hele heroen på forsiden, footer med mindre flagg. Skivene og CSS-animasjonen fjernet.
+4. `/video`: `PageHero` med butikkvideoen (`videoSection.page.heroVideo`, `heroPosition`), poster forhåndslastet.
+5. QA: se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 5c».
+
+**Beslutninger**: BESLUTNINGER.md, seksjon «Runde 5c».
+
 ## 22.10.2026: runde 5b, engelsk med USA-flagg, neon og krom i headeren og flagg i vind
 
 Samme branch, `feature/runde-5`, etter runde 5.

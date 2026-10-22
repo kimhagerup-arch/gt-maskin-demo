@@ -43,7 +43,7 @@
 | `scripts/check-i18n.mjs` | Sammenligner formen på modulparene; i `npm run lint` og `npm run check:i18n` |
 | `App.jsx` | Samme ruter under `/` og `/en` (`LocaleRoot`); `/` med lagret engelsk går til `/en` |
 | `Header`, `FlagBand`, `NeonPlate`, `OpenSign`, `LangSwitch`, `LangStripe`, `FlagIcon` | Headeren i runde 5b. `lib/openingHours.js` (Europe/Oslo), `lib/vegas.js` (Vegas-modus og `is-hidden`) |
-| `WavingFlag`, `PinstripeDivider`, `LicensePlate`, `StructuredData` | Flagg i vind, kustom-ornament, bilskilt, JSON-LD |
+| `WavingFlag`, `PinstripeDivider`, `LicensePlate`, `StructuredData` | Flagg i vind (fra runde 5c i WebGL: `lib/flagTexture.js` tegner teksturen og stillbildet, komponenten har shaderne; props `opacity`, `crop` (left/right/center), `speed`), kustom-ornament, bilskilt, JSON-LD |
 | `vite.config.js` | `gtm-sitemap` skriver `dist/sitemap.xml`; preload-scriptet leser stien uten `/en` |
 | `lib/format.js` | `formatPrice` med valuta per språk («1 595 kr» / «NOK 1,595»), `formatNumber`, `formatDate` etter språk |
 | Tokens | `flag-red/white/blue`, `neon`, `neon-deep`, `neon-red`, `chrome-light/chrome/chrome-dark` |

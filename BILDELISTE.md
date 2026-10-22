@@ -42,7 +42,7 @@ Sist oppdatert 21.10.2026 (runde 4). Nye bilder og video fra butikken, fotografe
 | herobilde.jpg | Ikke lenger i hero (886 px, innbakt tekst). Ligger klargjort i `public/images/hero/` | |
 | hero.jpg | PageHero, tjenestekort «Veteran og classic» | `/verksted`, forside |
 | vinter-bil-fasadeskilt.jpg | PageHero | `/biler-til-salgs` |
-| utside2.jpg | PageHero (nytt i runde 2, 31 kB på 800 px) | `/video` |
+| utside2.jpg | Ikke lenger i hero på `/video` (byttet med butikkvideoen i runde 5c, utsnittet viste mest himmel). Ligger klargjort i `public/images/bygg/` | |
 | verksted.jpg | Tjenestekort, videoposter (hovedvideo), galleri | Forside, `/video`, `/verksted` |
 | verksted2.jpg | Veteran og classic, videoposter | `/verksted`, forside, `/video` |
 | verksted3.jpg | Reparasjon, feed-plassholder | `/verksted`, forside |
@@ -80,8 +80,8 @@ Alle åpnet og motivet bekreftet 21.10.2026. Tredjeparts skilt (Mobil, Kendall, 
 
 | Fil | Manifest-nøkkel | Brukt som | Hvor |
 |---|---|---|---|
-| hero.mp4 | `/video/hero.mp4` | Hero-video (stum, loop, etter load) og videoen «Butikken» først i videolisten | Forside, `/video` |
-| hero-poster.jpg | `hero/butikk-hero-poster` | Hero-bilde (LCP) og poster for «Butikken» | Forside, `/video` |
+| hero.mp4 | `/video/hero.mp4` | Bakgrunnsvideo i heroen på `/video` (stum, loop, etter load, runde 5c), videoen «Butikken» først i videolisten, og i «Butikken i Myggveien» på `/deler` | `/video`, `/deler` |
+| hero-poster.jpg | `hero/butikk-hero-poster` | Poster og LCP-bilde i heroen på `/video` (runde 5c) og poster for «Butikken», poster i «Butikken i Myggveien» på `/deler` | `/video`, `/deler` |
 | butikk-disk.jpg | `butikk/kundemottak-disk-chevrolet` | Om oss-bilde, kundemottaket | Forside, `/om-oss` |
 | butikk-mobil-vegg.jpg | `butikk/butikk-mobil-vegg` | Deler-seksjonen, butikkbilder | `/verksted`, `/deler` |
 | butikk-kasseapparat-national.jpg | `butikk/butikk-kasseapparat-national` | Kundemottaket | `/om-oss` |

@@ -614,3 +614,31 @@ Fortsetter på `feature/runde-5`. Lenken kunden har (`dev`) står urørt til Kim
 
 `src/lib/vegas.js`: tastene V, E, G, A, S (ikke når man skriver i et felt), eller fem raske trykk på ÅPEN-skiltet eller skiltplaten (innenfor 1,5 s), slår på klassen `vegas` på `<html>` for økten (sessionStorage `gtm-vegas`). Pærene i marquee-rammen løper på 0,4 s (var 1 s), neonen lyser sterkere (plate, meny, ÅPEN, neon-linjen i hero), båndets glans går på 4 s og flagget vaier på 1,1 s. Samme vei slår det av, skjermlesere får «Vegas-modus er på» i en `aria-live`-region. Aldri ved `prefers-reduced-motion`, ingen lyd, og lenker oppfører seg som før (platen er fortsatt lenken til forsiden, trykkene telles ved siden av).
 
+## Runde 5c (22.10.2026): ekte flagg i vind, Ford og Cadillac, kustom-skiltet foran og ny hero på video
+
+Kort rettingsrunde på `feature/runde-5`.
+
+### Kustom-skiltet foran bildene (punkt 1)
+
+Skiltet lå bak bildeshowet etter runde 5b: rammen fikk `relative z-10` for å ligge over flagget, mens skiltet hadde `transform` (rotasjon) uten z-index og havnet under i samme stablingskontekst (`-rotate-3` lager egen kontekst, men z-auto taper mot z-10 hos søsknet). Skiltet har nå `relative z-20` på alle bredder, så det ligger over rammen både i flyt (mobil, der det overlapper nederste kant av rammen som før) og absolutt plassert (fra 1024 px). Plasseringen er uendret, så det dekker ikke bilene mer enn før. Verifisert med `elementFromPoint` på fem punkter i skiltet på 375, 768 og 1440 px (rotasjonen gjør at hjørnene i boksen ligger utenfor skiltet, så punktene ligger 30 % inn).
+
+### Ford og Cadillac (punkt 2)
+
+- Ford: byttet til den offisielle blå ovalen med hvit skrift (`Ford logo flat.svg` fra Wikimedia Commons, Public domain, fra Ford 2017 Annual Report, 1000 × 360 uten luft). Målene i `brands.js` er 1000 × 360 og visningshøyden 28 px (den sorte filen hadde mye luft og 60 px), så ovalen får samme visuelle tyngde som Chevrolet og Cadillac. Logoen er ikke endret.
+- Cadillac: beholdt i sort. Merkets gjeldende logo (2021) er ensfarget etter design, og våpenskjoldet i farger (med wreath til 2014, uten wreath 2014-2021) finnes ikke som SVG på Wikimedia Commons (sjekket 22.10.2026, kategorier og søk); bare historiske rastere som `Cadillac Logo 1995.webp`. Å bruke et utgått fargeskjold fra en raster ville vært både feil logo og dårligere kvalitet. Dokumentert i `_kilder/LOGOER.md`. Vil Gjermund ha det gamle fargeskjoldet, trengs en originalfil fra merket.
+
+### Flagget i WebGL (punkt 3)
+
+- Skivene fra runde 5b ga loddrette streker. `WavingFlag` er skrevet om til WebGL uten bibliotek: ett sammenhengende, indeksert nett på 72 × 36 ruter (ingen skjøter), der vertex shaderen legger tre bølger med ulik lengde og fart (`WAVES` i `lib/flagTexture.js`) fra stangsiden mot den frie enden, med utslag som vokser mot enden (`0,15 + 0,85·x`). Normalen regnes fra helningen i shaderen, og fragment shaderen legger diffust lys ovenfra og litt forfra, svak glans på toppene (`pow(…, 28)`) og mørkere i dalene. Kantene vaier litt i bildeplanet.
+- Flagget tegnes én gang som tekstur på et canvas 2D (`drawFlag`): proporsjon 10:19, 13 striper, stjernefelt 2/5 × 7/13, 50 stjerner i 9 rader, fargene lest fra flagg-tokenene på `:root`.
+- Forsiden: flagget dekker hele heroen (`absolute inset-0`), bak overskrift og knapper; bildeshowet med rammen (`z-10`) og kustom-skiltet (`z-20`) ligger oppå. Opacity 0,34 og en mørk toning (fra `brand-primary` til 85 % over tekstkolonnen på desktop, 90/75/90 % loddrett på mobil). Utsnitt: stjernefeltet synlig fra 768 px (anker venstre), stripene på mobil (anker høyre). Kontrast regnet på verste punkt (hvit stripe ved 34 % over primær = #646463, så 85 % eller 75 % primær over): overskrift #F3EFE7 på #212120 14,05:1 (desktop) og på #292928 12,70:1 (mobil), ingress #B9B2A6 7,66:1 og 6,92:1, neon-linjen og kicker #F79A2B 7,38:1 og 6,67:1. Alle AA (tabell i `scripts/check-contrast.mjs`).
+- Footeren: samme komponent, mindre (323 × 170 på mobil, 475 × 250 fra 768 px), opacity 0,2, roligere vind (`speed` 0,8), uttoning mot kantene som før.
+- Ytelse: heroen viser først et stillbilde (canvas 2D med folder og lys, `drawStillFlag`: samme bilde tegnet i 1 px kolonner med bølgens forskyvning, så lys og skygge fra helningen), og WebGL tones inn 2,5 s etter load (`useAfterLoad`, 1,2 s overgang). Begge canvasene er absolutt plassert, så LCP-elementet og CLS er uendret (LCP er fortsatt overskriften). Maks 30 bilder i sekundet under 768 px, `devicePixelRatio` begrenset til 1,5. Rendering stopper utenfor skjermen (IntersectionObserver) og i skjult fane (`visibilitychange`), og tiden går ikke mens den er stoppet. Alt ligger utenfor hovedtråden etter oppstart: 4x CPU-struping ga ingen long tasks mens flagget vaiet, og rulling uten trege rammer.
+- Reserveløsning: stillbildet alene ved `prefers-reduced-motion`, Save-Data (`navigator.connection.saveData`) og når WebGL mangler eller shaderen ikke kompilerer. Ingen skiver der heller.
+- Vegas-modus (`html.vegas`) gir 1,9 ganger farten i vinden.
+- Feil funnet underveis: `half` er et reservert ord i GLSL ES, og tall må skrives som flyttall («11.0», ikke «11»); begge ga stille feil (shaderen kompilerte ikke, så bare stillbildet vistes). Konstantene skrives nå med `toFixed(3)`.
+
+### Herobildet på /video (punkt 4)
+
+Utsnittet av `fasade-dag-bilpark` viste mest himmel og tak. Siden handler om film, så butikkvideoen er bakgrunn i heroen som på butikksiden i runde 4c: `PageHero` med `video`, posteren (`butikk-hero-poster`) vises først og er LCP (forhåndslastet via `videoSection.page.heroImage` i `heroImages.js`), videoen starter etter load, ikke ved `prefers-reduced-motion` eller Save-Data. Utsnitt `50% 45%` (klesstativet og kasseapparatet, ikke taket). Teksten ligger på PageHero-overtoningen (primær til gjennomsiktig) som før, så kontrasten er den samme som på `/deler` i runde 4c (AA). Lighthouse `/video` 90.
+
