@@ -498,3 +498,59 @@ Designrunde etter mer testing på Samsung, på `feature/runde-4`.
 - Pærene animeres med `opacity` på to pseudo-elementer (annenhver pære lys) i stedet for `background-position`, så animasjonen går på kompositoren og ikke tegner om siden to ganger i sekundet (TBT).
 - Kustom-emblemet ligger fortsatt som klistremerke nede til venstre, nå over rammen.
 - BILDELISTE.md har fått en rad om flere bilder av biler fra Gjermund (prosjekter, biler inne til arbeid og ferdige biler, helst liggende).
+
+## Runde 5 (22.10.2026): delekatalog etter bil og kategori, tette lister og Min bil
+
+På `feature/runde-5` fra `dev`. Lenken kunden har (`dev`) står urørt til Kim-Ove har sett over og merget.
+
+### Mønsteret
+
+Katalogen er bygd etter mønsteret fra en stor amerikansk delekatalog på nett som Gjermund liker: katalogen er selve siden, et tre som foldes ut på stedet (merke › modell › årsmodell › kategori › deltype), ett søkefelt for alt, egne innganger for det som passer alle biler, tette lister med én rad per vare, og en adresse som følger valget. Vi låner mønsteret, ikke farger, logo, tekster eller bilder. Forbedringene: mobil først (trinnvis liste med store trykkflater), «Min bil», ingen blindveier (alltid «Vi skaffer»), designsystemet til GT Maskin, og merkelogoene fra skiltveggen som knapper for å velge merke. Referansesiden nevnes ikke ved navn i repoet.
+
+### Katalogmodellen (punkt 1)
+
+- `src/data/catalog.js`: 11 hovedkategorier med deltyper, slug, navn og lucide-ikon. Ni delekategorier (Motor, Drivverk og girkasse, Bremser, Understell og styring, Kjøling, Eksos, Elektrisk og tenning, Drivstoff, Karosseri og interiør) og to universalgrupper (`universal: true`): «Olje, kjemi og tilbehør» og «Klær og utstyr» (`layout: "grid"`). «US-biler» og «Tesla» er ikke kategorier lenger, de er merker i bilvelgeren. Kategoriene er et forslag og tilpasses kassesystemet når varelisten kommer.
+- `src/data/vehicles.js`: 16 merker. De seks med logo er de samme som på skiltveggen (Chevrolet, Dodge, Ram, Ford, Cadillac, Tesla), de ti andre (Buick, Chrysler, GMC, Hummer, Jeep, Lincoln, Mercury, Oldsmobile, Plymouth, Pontiac) uten logo. 100 modeller med grove produksjonsintervaller; modellnavn som er brukt over flere generasjoner er slått sammen til ett intervall (for eksempel Challenger 1970-2023), og `to: null` betyr at modellen fortsatt produseres. Listen bekreftes mot det GT Maskin faktisk har deler til. Siste valg i listen er «Annet merke eller modell», som går til forespørsel.
+- `products.js`: hver vare har `category` og `type` (slugs), `fits` som liste med `{ brand, model, from, to }` (slugs fra `vehicles.js`) eller `universal: true`. `slug`, `brand`, `title`, `price`, `sku`, `stock`, `image`, `description`, `sizes` og `placeholder` er som før; `group` er borte. Kommentaren «Slik legges et ekte produkt inn» er oppdatert, og `docs/VARELISTE-FORMAT.md` beskriver kolonnene vi trenger.
+- Eksempeldata: 32 eksempeldeler på fem biler (Chevrolet Camaro 1967-1969, Chevrolet Silverado 2014-2018, Dodge Durango 2011-2023, Ram 1500 2019-2024, Tesla Model 3 2017-2023) og tolv deltyper, pluss sju varer i olje og kjemi fra merkene i butikken (Amsoil og Fluid Film, med hyllebildene fra 21.10.2026 bak). Varenumrene er `EKS-1001` til `EKS-1039`, merke og pris står i klammer der de ikke er kjent, og hver rad er merket «Eksempel» på samme måte som Facebook-feeden. Lagerstatus på eksemplene er satt bare for å vise de tre tilstandene (på lager, ikke på lager, ukjent). Wunder-Baum (35 kr) og klær og utstyr med priser fra tavlene er uendret.
+- Reg.nr.-oppslag: bilvalget er bygd som en trinnvis liste der et felt for registreringsnummer kan stå foran merke og modell uten ny layout. Tekstene ligger klare i `partsSection.catalog.regNr`, feltet er ikke bygd.
+
+### Stiene (punkt 2 og 3)
+
+- Tilstanden i katalogen er adressen: `/deler/bil/<merke>/<modell>/<år>/<kategori>/<deltype>`, `/deler/kategori/<kategori>/<deltype>` og `/deler/sok?q=<søk>`. Alle nivåer kan mangle fra høyre; ugyldige segmenter gir en `replace` til den gyldige delen av stien. Samme side (`Deler.jsx`) rendrer alle fire ruter; de faste segmentene `bil`, `kategori` og `sok` vinner over `/deler/:slug` i react-router, så produktsidene kolliderer ikke.
+- `/deler` uten mer går til Min bil når den er valgt, ellers til `/deler/bil`. Gamle lenker virker: `?gruppe=klaer` går til `/deler/kategori/klaer-og-utstyr`, `?gruppe=deler` til `/deler/kategori`, og de gamle kategoriene (`?kategori=bremser` og så videre) til nærmeste nye sti. `/deler/:slug` er uendret.
+- Hvert klikk i treet er en navigering (push), så tilbakeknappen går ett nivå tilbake og lenker kan deles. Bare én gren er åpen per nivå fordi treet speiler adressen. Tiårene under en modell er lokal tilstand (ikke i adressen): tiåret med valgt år, eller det nyeste, er åpent.
+- Forhåndslasting av sidechunken (`gtm-hero-preload` i `vite.config.js`) matcher nå også prefiksene `/deler/bil`, `/deler/kategori` og `/deler/sok` (`pageByPath` i `heroImages.js`).
+
+### Heroen på butikksiden (punkt 2)
+
+Valg: lav stripe med kicker og tittel øverst (ca. 90 px på mobil, 140 px på desktop, ingressen bare fra 768 px), og butikkvideoen flyttet ned til «Butikken i Myggveien» der den står ved siden av butikkbildene (`StoreVideo`: posteren alltid, videoen monteres først når rammen nærmer seg viewport, ikke ved redusert bevegelse). Begrunnelse: katalogen skal stå i første skjermbilde på 375×667 (søkefelt, de fire inngangene og starten på treet ligger over bretten), og posteren var LCP-elementet som holdt `/deler` under 90 i runde 4c. Skiltveggen med delemerkene under heroen er tatt ut; logoene er nå knappene for å velge merke. Hero-bildet for `/deler` er fjernet fra `heroByPath` (ingen forhåndslasting av poster lenger).
+
+### Oppbygning og lister (punkt 2 og 4)
+
+- Søkefelt og handlekurv (alltid synlig, med antall) øverst, så Min bil-chip og de fire inngangene som faner (to rader på mobil). Fra 1024 px: treet i en venstre kolonne på 320 px som blir stående ved rulling (`sticky`, maks skjermhøyden minus header, egen rulling), varelisten til høyre med brødsmuler over. Under 1024 px: `CatalogSteps` viser ett nivå om gangen med tilbake og brødsmuler øverst, og varelisten under når kategori eller deltype er valgt. Bytte mellom tre og trinnvis liste gjøres med `useMediaQuery("(min-width: 1024px)")`, som leser `matchMedia` ved første render, så det ikke blir et hopp.
+- Varelisten (`PartsList`): tette rader gruppert per deltype med ikon og antall. Hver rad: lite bilde eller kategoriikonet (aldri grå plassholderboks), navn, merke og varenummer, «Passer til», lagerstatus, pris høyrejustert med tabulære sifre (`tabular-nums`) og «Legg i kurv» (klær med størrelser: «Velg størrelse» til produktsiden). På mobil to linjer med pris og knapp på samme linje (`md:contents` gjør at raden blir én linje fra 768 px). Klær og utstyr vises som rutenett med de gamle kortene (`ProductCard`), som nå viser kategoriikonet uten bilde og «Eksempel»-pille.
+- Sortering: relevans (katalogens rekkefølge, eller søkets treffscore), pris lav til høy og høy til lav; varer uten pris legges sist. 50 rader om gangen med «Vis flere».
+- Under hver liste, og når listen er tom: «Fant du ikke delen? Vi skaffer den» med lenke til `/kontakt?vare=<deltype eller søk>&bil=<bil>`. `Kontakt.jsx` leser nå `vare` som vare-slug eller fritekst og `bil` som bil til salgs (slug) eller bilen fra butikken som tekst, og fyller meldingen med begge.
+- Under en valgt bil vises bare deler og olje/kjemi, ikke klær og utstyr.
+
+### Søk (punkt 5)
+
+- `searchCatalog()` i `src/lib/catalog.js`: søket deles i ord, hvert ord må forklares av varen (navn, merke, varenummer, kategori eller deltype) eller av bilen varen passer (merke, modell, årsmodell). «2017 durango eksos» gir Dodge Durango 2017 og de to eksosdelene som passer; «bremseklosser camaro» gir Camaro-klossene; «amsoil» gir de fire oljene. Et eksakt varenummer går rett til varen. Kategorien som er eksakt treff (Eksos) står før deltypene som begynner på ordet (Eksosrør). Min bil og funnet bil gir bonus i rekkefølgen.
+- Forslag mens man skriver (fra to tegn) i tre grupper: biler, kategorier og varer, pluss «Vis alle treff». Combobox med `aria-activedescendant`, piltaster, Enter og Escape. Bil-forslaget tar med kategorien fra søket, så «2017 durango eksos» går rett til `/deler/bil/dodge/durango/2017/eksos`.
+- Null treff gir «Vi skaffer» med søket ferdig utfylt.
+
+### Min bil (punkt 6 og 7)
+
+- `src/lib/myCar.js`: `useSyncExternalStore` uten provider, nøkkel `gtm-min-bil` i localStorage med lesing og skriving i try/catch. Bilen settes når merke, modell og årsmodell er valgt, og vises som chip øverst med «Bytt» (til `/deler/bil`) og «Fjern». Bare biler som finnes i `vehicles.js` godtas ved lesing.
+- Med Min bil valgt: «Deler etter bil» åpner på bilen, `/deler` går til bilen, søket gir bonus til det som passer, rader som passer får «Passer din bil». Produktsiden viser «Passer din bil», «Passer alle biler» eller «Sjekk at den passer, spør oss» (med bilen i parentes) ut fra dataene, og «Velg bilen din i butikken» uten bil.
+- Produktsiden har brødsmuler (Butikk › kategori › deltype), «Passer til» fra `fits`, «Flere i samme deltype» som rader, og «Spør om denne delen» til `/kontakt` med vare og bil.
+
+### Tilgjengelighet
+
+Nestede lister med knapper som har `aria-expanded` (pluss og minus som ikon, `aria-hidden`), deltyper som lenker med `aria-current="page"`, bokstavlinje som `role="group"`, årsmodeller som lenker med `aria-current`. På mobil flyttes fokus til overskriften (`tabIndex={-1}`) når nivået skifter, men ikke ved første visning. Kolonnen med treet er en `div` (ikke `aside`), så den ikke blir et komplementær-landemerke inne i `main`. Søkefeltet er en combobox med listbox; forslagene velges med piltaster og mus. Kontraster er de målte fra tidligere runder (ingen nye farger).
+
+### Linjeskift
+
+Biome krever LF, og `core.autocrlf=true` på Windows ga CRLF i arbeidskopien etter merge (lint rød på alle filer). Ny `.gitattributes` med `* text=auto eol=lf` gjør at alle tekstfiler sjekkes ut med LF uavhengig av git-innstillingene, og binærfiler er merket. Arbeidskopien ble normalisert med `git add --renormalize`; ingen innholdsendringer.
+

@@ -1,5 +1,23 @@
 # ARBEIDSLOGG
 
+
+## 22.10.2026: runde 5, delekatalog etter bil og kategori
+
+Branch `feature/runde-5` fra `dev`. Katalogen er drevet av data (`catalog.js`, `vehicles.js`, `products.js`) og bygd etter mønsteret fra en stor amerikansk delekatalog, med GT Maskins egen stil.
+
+**Gjort, per punkt**
+
+1. Datamodell: kategoritre (11 hovedkategorier, 56 deltyper, lucide-ikon per kategori), kjøretøy (16 merker, 100 modeller med produksjonsår, «Annet merke eller modell» sist), varer med `category`, `type`, `fits` eller `universal`. 32 eksempeldeler på fem biler (EKS-1001 og videre, merket «Eksempel»), sju oljer og kjemi fra Amsoil og Fluid Film, Wunder-Baum og klær som før. Plass til reg.nr.-felt foran merke og modell.
+2. `/deler`: lav tittelstripe, søk og handlekurv øverst, Min bil, fire innganger som faner (to rader på mobil), tre i sticky venstre kolonne fra 1024 px, trinnvis liste på mobil, «Butikken i Myggveien» nederst med butikkvideoen (monteres når den nærmer seg viewport) og bildene. Gamle lenker videresendes, lenkene på forsiden peker på de nye inngangene.
+3. Treet: merke › modell › årsmodell (per tiår) › kategori (med antall, dempet uten varer) › deltype, logoknapper og alfabetisk liste med bokstavlinje, «Alle kategorier» uten bilvalg, pluss og minus på stedet, én gren åpen per nivå, lesbare stier, `aria-expanded`, fokus til overskrift på mobil.
+4. Varelisten: tette rader per deltype (bilde eller kategoriikon, navn, merke, varenummer, passer til, lager, pris med tabulære sifre, kjøpsknapp), to linjer på mobil, rutenett for klær, sortering relevans og pris, 50 om gangen, «Vi skaffer» under og ved tom liste.
+5. Søk: ett felt for årsmodell, merke, modell, kategori, deltype, varenavn og varenummer i vilkårlig rekkefølge, forslag i tre grupper med piltaster og Enter, eksakt varenummer rett til varen, null treff gir «Vi skaffer».
+6. Min bil: localStorage i try/catch, chip med «Bytt» og «Fjern», «Deler etter bil» åpner på bilen, bonus i søk, «Passer din bil» på rader og produktside.
+7. Produktsiden: brødsmuler, deltype, «Passer til», sjekk mot Min bil, «Flere i samme deltype», «Spør om denne delen» med vare og bil. Størrelser på klær som før.
+8. QA: se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 5». Linjeskift normalisert til LF med `.gitattributes` (Biome).
+
+**Beslutninger**: BESLUTNINGER.md, seksjon «Runde 5». **Format for varelisten**: `docs/VARELISTE-FORMAT.md`.
+
 ## 22.10.2026: runde 4c, mindre luft, bildeshow i USA-stil og butikkvideo på butikksiden
 
 Samme branch, `feature/runde-4`, etter runde 4b.

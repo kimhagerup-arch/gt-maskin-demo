@@ -318,3 +318,45 @@ Forsiden holder kravet (93). `/deler` ligger på 84-90 og er ikke stabilt over 9
 1. `/deler` under 90 i Lighthouse (se over).
 2. Flere bilder av biler fra Gjermund til bildeshowet, og bekreftelse på om de røde klassikerne er samme bil.
 3. Teste på Samsung (liste i STATUS.md).
+
+## Runde 5 (22.10.2026): delekatalog etter bil og kategori, tette lister og Min bil
+
+Branch `feature/runde-5`, mot `npm run preview` i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-5/` (18 filer): `/deler` på 375 og 1440 px, en bilsti ned til deltype (`/deler/bil/chevrolet/camaro/1969/bremser/bremseklosser-foran`) på begge bredder, bilstien med varelisten (full side) på begge bredder, søkeforslagene, søkeresultatet og null treff, Min bil, produktsiden med og uten Min bil, «Alle kategorier», «Klær og utstyr», årsmodell- og kategorinivået på mobil, og kontaktskjemaet med vare og bil ferdig utfylt.
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` | rene før hver commit (lint krevde LF, se BESLUTNINGER.md) |
+| 16 ruter × 375, 768 og 1440 px (`/deler`, `/deler/bil`, bilsti til deltype, `/deler/bil/dodge/durango/2017/eksos`, `/deler/kategori`, kategoristi, olje, klær, søk med treff, søk uten treff, produktside med og uten Min bil, klesprodukt, `/kasse`, `/`, `/kontakt?vare=…&bil=…`) | `scrollWidth` lik viewport på alle 48, ingen konsollfeil eller -advarsler, ingen eksterne kall. Eneste DevTools-issue er den rådgivende `LazyLoadImageIssue` (bilder med `loading="lazy"` i første skjermbilde, kjent fra runde 4) |
+| axe-core (375 og 1440 px) på de 16 rutene | 0 funn på alle katalogruter, produktsidene, `/kasse` og `/kontakt`. Første kjøring ga `landmark-complementary-is-top-level` på kolonnen med treet (`aside` inne i `main`); rettet til `div`. Ett funn på forsiden ved 375 px: `scrollable-region-focusable` på sporet i Facebook-sliderens plassholderkort (ikke endret i denne runden, se gjenstående) |
+| Dyp lenke i preview | `/deler/bil/chevrolet/camaro/1969/bremser/bremseklosser-foran` lastet direkte og etter oppdatering av siden; klikk på «Bremseskiver foran» og tilbakeknappen gikk ett nivå tilbake til bremseklossene |
+| Gamle lenker | `/deler?gruppe=klaer` → `/deler/kategori/klaer-og-utstyr`, `/deler?gruppe=deler` → `/deler/kategori`, `/deler?gruppe=deler&kategori=bremser` → `/deler/kategori/bremser`, `/deler/t-skjorte` viser T-skjorte. Ugyldig sti `/deler/bil/tull/ball` → `/deler/bil` |
+| Søk «2017 durango eksos» | Forslag: Dodge Durango 2017 (Eksos), kategorien Eksos og tre deltyper, de to eksosdelene, «Vis alle treff». ArrowDown og Enter går til `/deler/bil/dodge/durango/2017/eksos`. Resultatsiden viser «Bil funnet i søket: Dodge Durango 2017» og 2 varer (Lyddemper bak, Eksosrør, midtre) |
+| Søk «bremseklosser camaro» | 1 vare (Bremseklosser foran til Camaro 1967-1969), bil Chevrolet Camaro |
+| Søk «amsoil» | 4 varer (to motoroljer, to giroljer) |
+| Søk «EKS-1021» | Går rett til `/deler/tennplugger-durango-11-23` |
+| Søk «finnesikke xyz» | 0 varer, «Ingen treff» og «Vi skaffer» med søket i lenken |
+| Min bil | Valg av 1969 under Camaro gir chip «Min bil: Chevrolet Camaro 1969» og `gtm-min-bil` i localStorage; chipen står etter oppdatering; `/deler` går til `/deler/bil/chevrolet/camaro/1969`; produktsiden viser «Passer din bil» (Camaro-kloss), «Sjekk at den passer, spør oss» (Ram-kloss) og «Passer alle biler» (Wunder-Baum); «Fjern» tømmer lageret |
+| localStorage blokkert (`window.localStorage` kaster) | `/deler/bil/dodge/durango/2017/eksos` viser listen, Min bil-chipen lever i minnet, ingen konsollfeil |
+| Tastatur i treet (1440 px) | Enter på «Chevrolet» åpner merket (`/deler/bil/chevrolet`), mellomrom på «Camaro» åpner modellen, Enter på «1960-tallet» åpner tiåret, Enter på «1969» velger året. `aria-expanded` følger adressen; bare Chevrolet, Camaro og ett tiår er åpne |
+| Mobil (375 px) | Trykk på Dodge-logoen gir modellisten med fokus på overskriften («Velg modell»), så årsmodeller per tiår, kategorier med antall (dempet ved 0), deltyper og varelisten under |
+| 2 000 testvarer (generert lokalt, ikke committet) | «Alle kategorier» lastet på 1,1 s, Bremser (509 varer, 50 vist) på 134 ms, deltype på 94 ms, «Vis flere» på 129 ms, Chevrolet 146 ms, Camaro 86 ms, 2019 (79 varer) 59 ms. Søk med 17 tegn skrevet uten pause: 762 ms totalt (ca. 45 ms per tastetrykk), ingen long tasks |
+| Tankestrek, forbudte ord, verktøyord, referansesidens navn | null treff i `src`, `public`, `index.html` og `docs` (bare binære bildefiler matcher bytemønsteret for tankestrek) |
+
+### Lighthouse (mobil, `npm run preview`, fire kjøringer)
+
+| Rute | Ytelse | Tilgjengelighet | Beste praksis | SEO | LCP | TBT | CLS |
+|---|---|---|---|---|---|---|---|
+| `/deler/bil` | 93, 92, 89, 89 | 100 | 100 | 69 | 2,9-3,6 s | 10-70 ms | 0 |
+| `/deler/bil/chevrolet/camaro/1969/bremser` (tre kjøringer, tidligere serie) | 89, 84, 68 | 100 | 100 | 69 | 3,1-3,6 s | 200-910 ms | 0 |
+| `/deler/bremseklosser-foran-camaro-67-69` (tre kjøringer, tidligere serie) | 79, 87, 80 | 100 | 100 | 69 | 2,9 s | 290-590 ms | 0 |
+
+Tilgjengelighet 100 og CLS 0 på alle. Ytelsen på `/deler/bil` ligger på 89-93, to av fire kjøringer over 90. LCP-elementet er nå tekst (hintlinjen under søkefeltet, 2,9-3,6 s), ikke posteren som i runde 4c, og tallet styres av fontene og renderingsstien som er felles for alle sider. Den tidligere serien på bilstien og produktsiden ble kjørt mens den fulle QA-kjøringen gikk i samme Chrome, og har TBT opp til 910 ms av den grunn; i den rolige serien er TBT 10-70 ms. SEO 69 skyldes `noindex`.
+
+### Gjenstående
+
+1. `scrollable-region-focusable` på Facebook-sliderens plassholderkort på forsiden (375 px): plassholderkortene har ingen fokuserbare elementer, så sporet må få `tabIndex={0}` eller kortene en lenke. Ikke en del av runde 5, rettes i neste runde.
+2. Lighthouse på `/deler/bil` under 90 i halvparten av kjøringene (se over).
+3. Teste på Samsung (liste i STATUS.md).
+

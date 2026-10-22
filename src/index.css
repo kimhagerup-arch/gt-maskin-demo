@@ -313,7 +313,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgb(var(--brand-accent-light)) 0 2.2px, rgb(var(--brand-accent-light) / 0.35) 3px, transparent 4.5px);
+  background-image: radial-gradient(
+    circle,
+    rgb(var(--brand-accent-light)) 0 2.2px,
+    rgb(var(--brand-accent-light) / 0.35) 3px,
+    transparent 4.5px
+  );
   background-repeat: inherit;
   background-size: inherit;
   animation: marquee-blink 1s steps(1) infinite;

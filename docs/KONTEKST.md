@@ -11,16 +11,18 @@
 
 ## Ruting
 
-`src/App.jsx`: `Layout` (DraftBanner, Header, Outlet, Footer, StickyMobileBar, CartDrawer). Forsiden importeres eagert, øvrige sider lastes med `React.lazy` i `Suspense` med `RouteFallback` i full høyde. Ruter: `/`, `/verksted`, `/deler`, `/deler/:slug`, `/kasse`, `/biler-til-salgs`, `/biler-til-salgs/:slug`, `/video`, `/utleie`, `/om-oss`, `/bestill`, `/kontakt`, `/personvern`, `*`.
+`src/App.jsx`: `Layout` (DraftBanner, Header, Outlet, Footer, StickyMobileBar, CartDrawer). Forsiden importeres eagert, øvrige sider lastes med `React.lazy` i `Suspense` med `RouteFallback` i full høyde. Ruter: `/`, `/verksted`, `/deler` (også `/deler/bil/*`, `/deler/kategori/*` og `/deler/sok`, samme side), `/deler/:slug`, `/kasse`, `/biler-til-salgs`, `/biler-til-salgs/:slug`, `/video`, `/utleie`, `/om-oss`, `/bestill`, `/kontakt`, `/personvern`, `*`.
 
 `ScrollToTop` ruller til toppen eller til hash-anker etter 60 ms (brukes av `/biler-til-salgs#vi-skaffer`, `/utleie#utleieforesporsel`, `/utleie#<slug>`). Preload per rute gjøres av Vite-pluginen `gtm-hero-preload` i `vite.config.js`: den leser `src/data/heroImages.js` (`heroByPath`, `fontsByPath`, `pageByPath`) og skriver et inline-script i `<head>` som preloader rutens hero-bilde (webp-srcset og sizes), Yellowtail på forsiden og rutens sidechunk (`modulepreload`, kun i build). `HeroPreload.jsx` er fjernet. `useAfterLoad()` utsetter bilder under folden (videominiatyrer, scootere i utleiebanneret, QR) til etter `window` `load`. `useSeoMeta` setter title, description og og:title per side.
 
-`/deler` leser og skriver `?gruppe=deler|klaer&kategori=<slug>` med `useSearchParams`; `categorySlug()` i `products.js` lager URL-nøkkelen.
+`/deler` er delekatalogen (runde 5): tilstanden er stien `/deler/bil/<merke>/<modell>/<år>/<kategori>/<deltype>`, `/deler/kategori/<kategori>/<deltype>` eller `/deler/sok?q=`. `parseVehiclePath()`, `parseCategoryPath()`, `vehiclePath()` og `categoryPath()` i `src/lib/catalog.js` leser og bygger stiene; ugyldige segmenter gir `replace` til gyldig del. `/deler` alene går til Min bil eller `/deler/bil`; gamle `?gruppe=` og `?kategori=` lenker videresendes. Vite-pluginen matcher sidechunk på prefiks for nøkler med mer enn to segmenter i `pageByPath`.
 
 ## Data og bilder
 
 - Alt innhold i `src/data/`. Komponenter leser data, ingen hardkodet tekst i JSX.
-- `products.js`: `groups` (deler, klaer med kategorier), `products` med `group`, `sizes` (`null` = ikke klær, `[]` = størrelser ikke bekreftet, `["S", …]` = aktiv velger), `placeholderImage` (demo) bak PLASSHOLDER-etiketten.
+- `products.js`: `products` med `category` og `type` (slugs fra `catalog.js`), `fits` (`[{ brand, model, from, to }]` med slugs fra `vehicles.js`) eller `universal: true`, `sizes` (`null` = ikke klær, `[]` = størrelser ikke bekreftet, `["S", …]` = aktiv velger), `placeholder: true` = eksempelrad («Eksempel»), `placeholderImage` (demo). `getProduct(slug)`, `featuredProducts()` (forsiden). Format for varelisten: `docs/VARELISTE-FORMAT.md`.
+- `catalog.js`: `categories` (slug, name, icon, `universal`, `layout`, `types`), `partCategories`, `universalCategories`, `getCategory()`, `getType()`.
+- `vehicles.js`: `vehicles` (merke med `logo`, `models` med `from`/`to`, `to: null` = produseres fortsatt), `otherVehicle`, `getBrand()`, `getModel()`, `decadesFor()`, `lastYear()`, `yearInModel()`.
 - `cars.js`: `cars` (ekte, tom), `exampleCars` (to plassholdere, vises kun når `cars` er tom), `findCar(slug)`.
 - `videos.js`: `source` er `youtube` | `facebook` | `mp4` | `snapchat`, `aspect` er `16:9` | `9:16`, `poster` alltid lokal nøkkel, `duration` og `date` kan være `null`. Facebook-`src` kan være en reel-lenke; `facebookEmbedHref()` i `VideoPlayer` skriver den om til `/<handle>/videos/<id>/` for pluginen.
 - `channels.js`: facebook (tall med dato), messenger (`https://m.me/GtMaskinas`), snapchat (`username` gtmaskin-as, `url`, `embedUrl` til profilvisningen, `qrImage`). `getChannel(platform)`.
@@ -28,6 +30,27 @@
 - `socialFeed.js`: uendret objektform (make.com). `SocialFeed` viser bare ekte innlegg når det finnes minst 3, rundet ned til multiplum av 3.
 - `src/data/imageManifest.js` skrives av `scripts/prepare-images.mjs`. Varianter: full (maks 1920), 800 og 400 px, webp + jpg.
 - `src/lib/images.js` `getImage(key)` gir `src`, `srcSet`, `webpSrcSet`, `sizes`, `smallest`. `Picture` bygger `<picture>`.
+
+## Lagt til i runde 5
+
+| Hva | Rolle |
+|---|---|
+| `src/lib/catalog.js` | Stier, `productsFor(selection)`, `fitsVehicle()`, `countBy()`, `groupByType()`, `sortProducts()`, `priceNumber()`, `searchCatalog(query, { myCar })` (ord må forklares av vare eller bil; `exact` varenummer, `vehicle`, `vehicles`, `categories`, `types`, `best`, `products` etter score), `fitStatus()`, `formatFits()`, `vehicleLabel()` |
+| `src/lib/myCar.js` | «Min bil» i localStorage (`gtm-min-bil`) via `useSyncExternalStore`: `useMyCar()`, `setMyCar()`, `clearMyCar()`, `expandCar()`. try/catch rundt lagring |
+| `src/hooks/useMediaQuery.js` | `useMediaQuery(query)` med `matchMedia`, brukt til tre (desktop) eller trinnvis liste (mobil) |
+| `pages/Deler.jsx` | Katalogsiden: lav tittelstripe, søk og handlekurv, `MyCarChip`, `CatalogTabs`, tre (`CatalogTree`) i sticky kolonne fra 1024 px eller `CatalogSteps` under, hovedpanel per tilstand (bil, kategori, søk), «Butikken i Myggveien» med `StoreVideo` og butikkbildene |
+| `components/katalog/CatalogSearch.jsx` | Combobox med forslag (biler, kategorier, varer, «Vis alle treff»), piltaster, Enter, Escape; eksakt varenummer går til varen |
+| `components/katalog/CatalogTree.jsx` | Desktop-tre: logoknapper, bokstavlinje, merker › modeller › tiår › år › kategorier (med antall) › deltyper. `TreeButton` med `aria-expanded`, blad som `Link` med `aria-current` |
+| `components/katalog/CatalogSteps.jsx` | Mobil: ett nivå om gangen med tilbake og brødsmuler, fokus til overskrift ved nivåskifte |
+| `components/katalog/PartsList.jsx` | `PartsList` (rader per deltype, eller rutenett for klær, 50 om gangen), `PartRow`, `SortSelect` |
+| `components/katalog/ProductThumb.jsx` | Lite varebilde eller kategoriikon (aldri grå boks). Brukes også i `ProductCard` og på produktsiden |
+| `components/katalog/BrandLogoButtons.jsx`, `Breadcrumbs.jsx`, `CatalogTabs.jsx`, `MyCarChip.jsx`, `SourceRequest.jsx` (`requestLink()`), `StoreVideo.jsx` | Byggesteiner i katalogen |
+| `pages/Produkt.jsx` | Brødsmuler, deltype, «Passer til» fra `fits`, status mot Min bil, «Flere i samme deltype», «Spør om denne delen» med vare og bil |
+| `pages/Kontakt.jsx` | `?vare=` som slug eller fritekst, `?bil=` som bil til salgs (slug) eller biltekst; begge linjer i meldingen |
+| `.gitattributes` | `* text=auto eol=lf`, binærfiler merket. Biome krever LF |
+| `Icon.jsx` | Nye ikoner: Cog, Disc, Droplets, Fuel, Move, Settings, Shirt, Thermometer, Wind, ChevronUp, CircleHelp, ArrowUpDown |
+
+Fjernet: `groups`, `getGroup()` og `categorySlug()` i `products.js`, `PageHero` med video på `/deler`, skiltveggen under heroen på `/deler`, hero-preload for `/deler`.
 
 ## Lagt til i runde 4c
 
