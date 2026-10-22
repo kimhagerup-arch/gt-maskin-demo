@@ -554,3 +554,63 @@ Nestede lister med knapper som har `aria-expanded` (pluss og minus som ikon, `ar
 
 Biome krever LF, og `core.autocrlf=true` på Windows ga CRLF i arbeidskopien etter merge (lint rød på alle filer). Ny `.gitattributes` med `* text=auto eol=lf` gjør at alle tekstfiler sjekkes ut med LF uavhengig av git-innstillingene, og binærfiler er merket. Arbeidskopien ble normalisert med `git add --renormalize`; ingen innholdsendringer.
 
+## Runde 5b (22.10.2026): engelsk med USA-flagg, neon og krom i headeren og flagg i vind
+
+Fortsetter på `feature/runde-5`. Lenken kunden har (`dev`) står urørt til Kim-Ove har sett over og merget.
+
+### Engelsk versjon (punkt 1)
+
+- Språket styres av stien: norsk som før, engelsk under `/en` med de samme stiene (`/en/deler/bil/chevrolet/camaro/1969`). `App.jsx` rendrer de samme rutene under `/` og `/en`; `LocaleRoot` setter språket med `LocaleProvider` (`src/i18n/`) og nøkler `Layout` på språk, så hele treet rendres på nytt ved bytte. Engelske ord i stiene kan komme før go-live (STATUS.md).
+- Innholdet ligger fortsatt i `src/data/`: den norske kilden er flyttet til `src/data/nb/`, den engelske ligger i `src/data/en/` med samme form, og `src/data/<modul>.js` er en tospråklig fasade (`localized(nb, en)` i `src/i18n/localized.js`): et Proxy på øverste nivå som leser fra den aktive språkkilden når en egenskap hentes. Komponentene importerer som før (`partsSection.catalog.tabs.bil`), så ingen av dem måtte skrives om for språk. Bare det øverste nivået går gjennom proxyen; alt under er vanlige objekter (første utkast med dype proxyer kostet ca. 25 ms per sidelasting på mobil og ble forenklet). Katalogdata (`catalog`, `vehicles`, `products`) får engelske navn fra oppslagstabeller i `en/`-filene, så slugs, år, varenummer, priser og «passer til» aldri kan sprike.
+- `scripts/check-i18n.mjs` sammenligner formen på alle 15 modulpar (nøkler, typer, listelengder, tomme strenger) og feiler ved avvik. Kjøres av `npm run lint` og som `npm run check:i18n`.
+- Lenker: `src/i18n/LocaleLink.jsx` eksporterer `Link`, `NavLink`, `Navigate` og `useNavigate` som legger på `/en` når språket er engelsk. Alle komponenter importerer disse i stedet for react-routers. Stiene i datafilene og katalogen er alltid de norske. Komponenter som leser `location.pathname` (`Deler`, `InstallPrompt`) bruker `stripLocale()`.
+- Oversettelsen er amerikansk engelsk, tro mot Gjermunds formuleringer uten å forskjønne («We are car enthusiasts, not just American cars, but all special cars.»). Forbudte ord gjelder på engelsk også (luxury, premium, exclusive), ingen tankestrek. Bilmerker, modeller, firmanavn, «Kustom Speedshop» og merkenavn står som de er. «Levert av KOVISION» er «Built by KOVISION». Menyen: Shop floor, Store, Video, Rental, About us, Contact. **Gjermund bør se over den engelske teksten før go-live** (STATUS.md).
+- Tall og tider: `formatPrice()` skriver nå valutaen selv, «1 595 kr» på norsk og «NOK 1,595» på engelsk, så `priceSuffix` er borte fra datafilene og komponentene. `formatNumber()` og `formatDate()` følger språket («1,023», «October 22, 2026»). Åpningstidene står som «Monday to Friday, 8:30 AM to 4:00 PM». Telefon og adresse som i dag (adressen får «Norway» på engelsk). Handlekurven lagrer navnet fra da varen ble lagt i; skuffen og kassen slår opp navnet på gjeldende språk via `getProduct(slug)`.
+- Språkvelger: `LangSwitch` med flagg tegnet i SVG (`FlagIcon.jsx`, ingen emoji): på norsk et USA-flagg med «EN», på engelsk et norsk flagg med «NO». I headeren på alle bredder (ved siden av handlekurven) og i mobilmenyen. Bytte beholder siden og søkestrengen, og valget huskes i localStorage (`gtm-sprak`, i try/catch). Den som har valgt engelsk og kommer inn på `/`, sendes til `/en` (`LocaleRoot`).
+- Engelsk-stripen (`LangStripe`): «View this site in English» med flagget, bare på norske sider ved første besøk med engelsk nettleserspråk (`navigator.languages[0]`), ingen omdirigering, lukkbar (`gtm-engelsk-stripe-lukket`), vises ikke når språket allerede er valgt. Tilstanden leses synkront ved første render, så ingenting flytter seg.
+- `html lang` settes per språk, `useSeoMeta` leser tittel og beskrivelse fra den tospråklige `seo`, og `LocaleProvider` legger inn `hreflang`-lenker (nb, en og x-default) for siden man står på. `public/offline.html` viser engelsk tekst under `/en`.
+- Små tekster som lå i komponentene (skip-lenke, «Hovedmeny», «Hurtigvalg», honeypot-etiketten, «Færre»/«Flere», «Eller ring», «[varenummer]», «[PRIS]») er flyttet til `a11y` i `siteContent`.
+
+### Headeren (punkt 2)
+
+- Stjerner og striper: `FlagBand`, et 6 px bånd øverst i headeren med røde og hvite striper (CSS-gradient) og et blått felt med små stjerner (radial-gradient) i venstre ende. En langsom glans glir over hvert 11. sekund (bare `transform`). Båndet ligger absolutt øverst i headerens eksisterende høyde, så headeren er like høy som før (64 px mobil, 88 px fra 768 px).
+- Neonskilt: logoen står på en mørk skiltplate (`NeonPlate`, `brand-primary-dark`) med tynn neonkant og glød på `::after`. Første gang i økten (sessionStorage `gtm-neon-tent`) tennes kanten med et kort flimmer (1,4 s, `steps`), ellers lyser den rolig. Logoen endres ikke; flimringen ligger på kantlaget, så logoen står stille.
+- Menyen: aktiv side får et neonrør under (`.nav-neon::after` med glød, styrt av `aria-current="page"` som NavLink setter), hover gir svak glød (`text-shadow`). Fokusringen er som før.
+- ÅPEN-skilt (`OpenSign`): fra 1280 px ved telefonnummeret, lyser «ÅPEN» («OPEN») i rødt neon innenfor åpningstidene i FAKTA (mandag til fredag 08:30-16:00, norsk tid via `Intl.DateTimeFormat` med `Europe/Oslo`), ellers slukket med «STENGT» («CLOSED»). Skjermlesere får hele setningen («Åpent nå, stenger 16:00», «Stengt nå, åpner mandag 08:30»). Oppdateres hvert minutt. **Helligdager er ikke med**: skiltet kan lyse ÅPEN på en helligdag som faller på en ukedag. Status regnes bare når skiltet er synlig (fra 1280 px), så telefoner slipper å lage tidssoneformatteren.
+- Ved rulling (over 24 px) får headeren en tynn kromkant nederst (`.chrome-edge`, gradient av de tre kromtonene, lagt utenpå boksen) og skiltplaten krymper til 90 % (`transform`). Boksen endrer ikke høyde, så innholdet under flytter seg ikke (CLS 0).
+- Mobil: samme uttrykk i kompakt form: båndet, neonkanten og flaggknappen ved siden av ring-knappen og menyen. Headeren er ikke høyere enn før.
+- Plass i menyen: Facebook- og Snapchat-ikonene i headeren vises nå bare fra 1536 px (de står også i hero, footer og mobilmeny), logoen er 56 px fra 768 px (var 64), og mellomrommene er strammet. Sjekket på 1024, 1280 og 1440 px: ingen trengsel og ingen linjebrekk, på begge språk.
+- Tokens (`tailwind.config.js` og `index.css`): `flag-red` #B22234, `flag-white`, `flag-blue` #3C3B6E (de offisielle flaggfargene, brukt i både USA- og Norge-flagget), `neon` #F79A2B (samme som accent-light), `neon-deep`, `neon-red` #FF4D4D, `chrome-light`/`chrome`/`chrome-dark`. Kontrast (scripts/check-contrast.mjs): ÅPEN-skiltet #FF4D4D på #151412 5,63:1, neonrør #F79A2B på #151412 8,43:1, hvitt på flaggrødt 6,62:1, hvitt på flaggblått 10,28:1, tekst på skiltplaten #F3EFE7 på #0F0E0D 16,82:1. Alle AA. «STENGT» står i `brand-muted-inverse` (8,9:1), ikke i slukket neon, så det også leses.
+
+### Flagg i vind og kustom-detaljer (punkt 3)
+
+- `WavingFlag`: USA-flagg i riktige proporsjoner (10:19) med 13 striper og 50 stjerner (ni rader som veksler mellom seks og fem), laget i SVG og CSS uten video og uten bibliotek. Flagget er én SVG (data-URI, fargene leses fra flagg-tokens på `:root`) som bakgrunn på 14 vertikale skiver, og skivene beveger seg opp og ned i en bølge (bare `transform`, forskjøvet per skive). Første utkast med 14 `<use>` av en SVG-gruppe (900 elementer) kostet synlig i Lighthouse og ble byttet med skivene. Flagget monteres først når det nærmer seg skjermen (IntersectionObserver, 300 px), pauser utenfor skjermen (`is-still`) og i skjult fane, og står stille ved `prefers-reduced-motion`. Det tones ut mot kantene (`mask-image`) og ligger dempet på mørk bunn (opacity 0,2-0,26).
+- Plassering: bred bakgrunn øverst i footeren bak navnet (med mørk overtoning fra venstre så teksten leses), og bak marquee-rammen i forsidens hero fra 1024 px (der amerikanske biler er tema).
+- Pinstriping: `PinstripeDivider`, et håndtegnet kustom-ornament i SVG i samme stil som kustom-emblemet (hovedlinje med sløyfer, tynn følgelinje, speilet om midten, spiss i midten), som skille før «Utleie» og «Om oss» på forsiden og før galleriet på `/verksted`. Ingen bevegelse.
+- Stjerner og striper som svak tekstur i CTA-båndene (`.cta-texture::before`, 6 % opacity, tonet ut mot høyre).
+
+### Min bil som bilskilt (punkt 4)
+
+`LicensePlate` i `MyCarChip`: lys plate med preget skrift (`text-shadow` lys og mørk), skruer i hjørnene, «ALTA · NORWAY» øverst og modell og årsmodell i midten («CAMARO 69», to siste sifre i året). Hele bilen leses av skjermlesere som «Min bil: Chevrolet Camaro 1969» (`role="img"` med `aria-label`, pynten `aria-hidden`). «Bytt» og «Fjern» som før, på begge språk.
+
+### 404 som veiskilt (punkt 5)
+
+`NotFound`: et skilt på kromstolpe (egen SVG) med «404» og «Rute finnes ikke» («Route not found») i neon og en pil, som flimrer én gang når siden kommer (`neon-flicker`) og står stille ved `prefers-reduced-motion`. Tittelen er «Feil avkjøring» («Wrong turn»), med lenker til forsiden, butikken og kontakt. Teksten i skiltet er ekte tekst i SVG, hele skiltet `aria-hidden` siden overskriften sier det samme.
+
+### Ytelse og opprydding (punkt 6)
+
+- Alle nye effekter bruker bare `transform` og `opacity` (båndets glans, neonflimmer, flaggskivene, kromkanten og platen ved rulling), pauser i skjult fane (`html.is-hidden` setter `--play: paused`, som hver animert regel leser; ingen universell selektor) og utenfor skjermen (flagget), og står stille ved `prefers-reduced-motion`. CLS 0 på alle målte ruter.
+- Lighthouse: se QA-rapporten. Dagens tall på `/deler/bil` er 87 (tre kjøringer); forrige rundes bygg måler 89 på `/deler/bil` og 88-89 på `/` på samme maskin i dag (målt i en worktree), så maskinen er tregere enn i går (89-93). LCP-elementet er tekst (hintlinjen under søkefeltet, Barlow 400, som allerede er forhåndslastet); «render delay» er JS-kjøring før React tegner, ikke fonten. Gjort: flagget som CSS-skiver, språkvisningen forenklet til ett proxynivå, ÅPEN-skiltet regner ikke status på mobil, forhåndslastingen (hero-bilde og sidechunk) virker også under `/en`. Prøvd og forkastet: forsiden som egen chunk (hovedbunten krympet fra 422 til 316 kB, men `/` fikk ett ledd til i kjeden og falt fra 85 til 80). Å komme stabilt over 90 på denne maskinen i dag krever mindre JS før første tegning (for eksempel forhåndsrendret hero-markup), som er større enn runden.
+- Rettet axe-funnet fra runde 5: sporet i `MobileSlider` har `tabIndex={0}`, så det kan rulles med tastatur også når kortene ikke har lenker.
+- CLAUDE.md: fontene er selvhostet, og alt innhold skal finnes på norsk og engelsk.
+
+### Klar for go-live (punkt 7)
+
+- `StructuredData` legger JSON-LD i `<head>` for verkstedet (`AutoRepair`) og butikken (`AutoPartsStore`) med navn, beskrivelse, adresse, telefon, e-post, åpningstider (mandag til fredag 08:30-16:00), lenker til Facebook og gtmaskin.com og `inLanguage`, på begge språk. Ingen anmeldelsestall.
+- `sitemap.xml` skrives i bygget av Vite-pluginen `gtm-sitemap` (`vite.config.js`): 12 hovedsider og 11 kategorisider på norsk og engelsk (46 adresser) med `hreflang`-alternativer. `SITE_URL` er demo-adressen og byttes ved go-live.
+- `noindex` beholdes i `index.html`, `vercel.json` og `robots.txt`. Hva som slås på ved go-live står i STATUS.md.
+
+### Vegas-modus (punkt 8)
+
+`src/lib/vegas.js`: tastene V, E, G, A, S (ikke når man skriver i et felt), eller fem raske trykk på ÅPEN-skiltet eller skiltplaten (innenfor 1,5 s), slår på klassen `vegas` på `<html>` for økten (sessionStorage `gtm-vegas`). Pærene i marquee-rammen løper på 0,4 s (var 1 s), neonen lyser sterkere (plate, meny, ÅPEN, neon-linjen i hero), båndets glans går på 4 s og flagget vaier på 1,1 s. Samme vei slår det av, skjermlesere får «Vegas-modus er på» i en `aria-live`-region. Aldri ved `prefers-reduced-motion`, ingen lyd, og lenker oppfører seg som før (platen er fortsatt lenken til forsiden, trykkene telles ved siden av).
+

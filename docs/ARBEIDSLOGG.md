@@ -1,6 +1,25 @@
 # ARBEIDSLOGG
 
 
+
+## 22.10.2026: runde 5b, engelsk med USA-flagg, neon og krom i headeren og flagg i vind
+
+Samme branch, `feature/runde-5`, etter runde 5.
+
+**Gjort, per punkt**
+
+1. Engelsk: `src/data/nb/` og `src/data/en/` (15 modulpar, samme form), tospråklige fasader i `src/data/` med `localized()` (`src/i18n/localized.js`), `LocaleProvider`, `LocaleLink` (Link, NavLink, Navigate, useNavigate med `/en`), ruter under `/` og `/en` i `App.jsx`, `LangSwitch` med SVG-flagg (`FlagIcon`), `LangStripe`, `html lang` og hreflang, `formatPrice`/`formatNumber`/`formatDate` etter språk, tospråklig `offline.html`, `scripts/check-i18n.mjs` i `npm run lint`. Små komponenttekster flyttet til `a11y`.
+2. Header: `FlagBand`, `NeonPlate` (tenning én gang per økt), `.nav-neon`, `OpenSign` med `lib/openingHours.js` (Europe/Oslo), kromkant og platekrymp ved rulling, tokens for flagg, neon og krom, kontrast målt. Sosiale ikoner i header bare fra 1536 px.
+3. `WavingFlag` (én SVG som data-URI på 14 CSS-skiver, monteres nær skjermen, pauser utenfor og i skjult fane), `PinstripeDivider`, `.cta-texture`. Plassert i footer, forsidens hero, før «Utleie» og «Om oss» på forsiden og før galleriet på `/verksted`.
+4. `LicensePlate` i `MyCarChip`.
+5. `NotFound` som veiskilt i neon, tekster `notFoundPage.shop`, `signTop`, `signBottom`.
+6. `html.is-hidden` → `--play: paused` på de animerte reglene, `MobileSlider`-sporet med `tabIndex={0}`, CLAUDE.md oppdatert, ytelsestiltak (se BESLUTNINGER.md).
+7. `StructuredData` (JSON-LD, AutoRepair og AutoPartsStore), Vite-plugin `gtm-sitemap` (46 adresser med hreflang), noindex beholdt.
+8. `src/lib/vegas.js`: tastene og fem trykk, klassen `vegas`, pause i skjult fane.
+9. QA: se `docs/qa/QA-RAPPORT.md`, seksjon «Runde 5b».
+
+**Beslutninger**: BESLUTNINGER.md, seksjon «Runde 5b».
+
 ## 22.10.2026: runde 5, delekatalog etter bil og kategori
 
 Branch `feature/runde-5` fra `dev`. Katalogen er drevet av data (`catalog.js`, `vehicles.js`, `products.js`) og bygd etter mønsteret fra en stor amerikansk delekatalog, med GT Maskins egen stil.

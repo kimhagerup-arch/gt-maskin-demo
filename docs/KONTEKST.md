@@ -31,6 +31,23 @@
 - `src/data/imageManifest.js` skrives av `scripts/prepare-images.mjs`. Varianter: full (maks 1920), 800 og 400 px, webp + jpg.
 - `src/lib/images.js` `getImage(key)` gir `src`, `srcSet`, `webpSrcSet`, `sizes`, `smallest`. `Picture` bygger `<picture>`.
 
+## Lagt til i runde 5b
+
+| Hva | Rolle |
+|---|---|
+| `src/i18n/localized.js` | `localized(nb, en)`: Proxy på øverste nivå som leser fra aktiv språkkilde; `setActiveLocale`, `getActiveLocale`. Datafasadene i `src/data/*.js` bruker den |
+| `src/i18n/locale.js` | `localeFromPath`, `stripLocale`, `withLocale`, `switchLocalePath`, `readStoredLocale`/`storeLocale` (`gtm-sprak`), `browserPrefersEnglish` |
+| `src/i18n/LocaleContext.jsx` | `LocaleProvider` (setter aktivt språk, `html lang`, hreflang-lenker), `useLocale()` |
+| `src/i18n/LocaleLink.jsx` | `Link`, `NavLink`, `Navigate`, `useNavigate` med `/en`-prefiks. Alle komponenter importerer herfra |
+| `src/data/nb/`, `src/data/en/` | Norsk og engelsk kilde, samme form. `en/catalog.js`, `en/vehicles.js` og `en/products.js` bygger på nb-filene med navnetabeller |
+| `scripts/check-i18n.mjs` | Sammenligner formen på modulparene; i `npm run lint` og `npm run check:i18n` |
+| `App.jsx` | Samme ruter under `/` og `/en` (`LocaleRoot`); `/` med lagret engelsk går til `/en` |
+| `Header`, `FlagBand`, `NeonPlate`, `OpenSign`, `LangSwitch`, `LangStripe`, `FlagIcon` | Headeren i runde 5b. `lib/openingHours.js` (Europe/Oslo), `lib/vegas.js` (Vegas-modus og `is-hidden`) |
+| `WavingFlag`, `PinstripeDivider`, `LicensePlate`, `StructuredData` | Flagg i vind, kustom-ornament, bilskilt, JSON-LD |
+| `vite.config.js` | `gtm-sitemap` skriver `dist/sitemap.xml`; preload-scriptet leser stien uten `/en` |
+| `lib/format.js` | `formatPrice` med valuta per språk («1 595 kr» / «NOK 1,595»), `formatNumber`, `formatDate` etter språk |
+| Tokens | `flag-red/white/blue`, `neon`, `neon-deep`, `neon-red`, `chrome-light/chrome/chrome-dark` |
+
 ## Lagt til i runde 5
 
 | Hva | Rolle |

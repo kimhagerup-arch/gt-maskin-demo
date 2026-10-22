@@ -360,3 +360,47 @@ Tilgjengelighet 100 og CLS 0 på alle. Ytelsen på `/deler/bil` ligger på 89-93
 2. Lighthouse på `/deler/bil` under 90 i halvparten av kjøringene (se over).
 3. Teste på Samsung (liste i STATUS.md).
 
+## Runde 5b (22.10.2026): engelsk med USA-flagg, neon og krom i headeren og flagg i vind
+
+Samme branch, mot `npm run preview` i headless Chrome. Skjermbilder i `docs/qa/skjermbilder/runde-5b/` (19 filer): headeren på 375 og 1440 px på begge språk med ÅPEN og STENGT (klokken overstyrt til tirsdag 10:00 og 18:00 norsk tid) og rullet med kromkant, flagget i footeren og bak bildeshowet, Min bil-skiltet på 1440 (norsk) og 375 (engelsk), 404 på begge språk, engelsk-stripen, Vegas-modus, CTA-teksturen og forsiden, butikken og utleie på engelsk.
+
+### Sjekker
+
+| Sjekk | Resultat |
+|---|---|
+| `npm run build`, `npm run lint` (Biome og `scripts/check-i18n.mjs`) | rene før hver commit. i18n-sjekken: 15 modulpar har samme form |
+| 10 ruter (`/`, `/deler`, bilsti til deltype, produktside, `/verksted`, `/utleie`, `/om-oss`, `/kontakt`, `/kasse`, 404) × norsk og engelsk × 375, 768 og 1440 px | `scrollWidth` lik viewport på alle 60, ingen konsollfeil eller -advarsler, `html lang` riktig, ingen norsk tekst på engelske sider og ingen engelsk på norske (ordlister med 21 og 18 ord som bare finnes på ett av språkene; merker og «Kustom Speedshop» er like) |
+| axe-core (375 og 1440 px) på de 10 rutene på begge språk | 0 funn på alle 40 sidevisninger (10 ruter × 2 språk × 2 bredder), også forsidens feed-slider som hadde ett funn i runde 5 |
+| Språkbytte på dyp sti | «EN» på `/deler/bil/chevrolet/camaro/1969/bremser?x=1` gir `/en/deler/bil/chevrolet/camaro/1969/bremser?x=1`, `html lang` «en», `gtm-sprak` «en»; «NO» tilbake. `/` med lagret engelsk går til `/en`. `/en/deler/bil/dodge/durango/2017/eksos` tåler oppdatering i preview (viser «Exhaust») |
+| Engelsk-stripen | Vises på `/verksted` med `navigator.languages` ["en-US", "en"] uten lagret valg, borte etter lukking og oppdatering; vises ikke med norsk nettleser (nb-NO) |
+| hreflang | nb, en og x-default på hver side, for eksempel `/deler/bil/chevrolet/camaro/1969/bremser` ↔ `/en/deler/bil/chevrolet/camaro/1969/bremser` |
+| Priser, tall og tider på engelsk | `/en/verksted`: «NOK 1,595», «NOK 1,950», «NOK 299»; `/en/kontakt`: «Monday to Friday, 8:30 AM to 4:00 PM»; `/en/deler/wunder-baum`: «NOK 35»; kontaktskjemaet fylles med «Request for part: Wunder-Baum» og «Vehicle: Chevrolet Camaro 1969» |
+| ÅPEN-skiltet (klokken overstyrt, tidssone Europe/Oslo) | Tirsdag 10:00: ÅPEN / OPEN, «Åpent nå, stenger 16:00» / «Open now, closes at 4:00 PM». Tirsdag 18:00: STENGT, «åpner i morgen 08:30» / «opens tomorrow at 8:30 AM». Lørdag: «åpner mandag 08:30» / «opens Monday at 8:30 AM». Tirsdag 07:00: «åpner i dag 08:30». Synlig fra 1280 px |
+| Headeren på 1024, 1280 og 1440 px, begge språk | Ingen linjebrekk i menyen, ingen elementer utenfor kanten. Høyde 64 px (mobil) og 88 px som før. Rullet: `data-scrolled` satt, kromkanten synlig (opacity 1), høyden uendret |
+| Neonen tennes | Første visning i økten: `is-lighting` og animasjonen `neon-flicker` på kanten; etter oppdatering i samme fane: ingen flimring |
+| Flagget | 14 skiver, 13 striper og 50 stjerner i SVG-en; `flag-ripple` kjører når flagget er på skjermen, `is-still` (pauset) når det er utenfor (footeren på forsiden ved last: 10 727 px ned); montert først nær skjermen |
+| `prefers-reduced-motion` | Båndets glans, neonflimmeret, flaggskivene og veiskiltet: `animation-name: none`. Vegas-tastene gjør ingenting |
+| Skjult fane | `html.is-hidden` setter `--play: paused` som de animerte reglene leser (verifisert i stil, se BESLUTNINGER.md) |
+| Vegas-modus | Tastene V, E, G, A, S slår på: pærene 0,4 s (var 1 s), flagget 1,1 s (var 2,6 s), «Vegas-modus er på» i aria-live, lagret i sessionStorage og overlever oppdatering; samme tastene slår av. Fem trykk på skiltplaten slår på. Skriving i søkefeltet trigger ikke |
+| JSON-LD | Ett `<script type="application/ld+json">` med `AutoRepair` («GT Maskin AS», `/verksted`) og `AutoPartsStore` («GT Maskin AS, butikk», `/deler`), åpningstider 08:30-16:00 mandag til fredag, `inLanguage` nb; på `/en/verksted` engelske navn og `/en`-adresser |
+| `sitemap.xml` | 46 adresser (23 sider × 2 språk) med hreflang-alternativer i `dist/sitemap.xml` |
+| Rulling med 4x CPU-struping (412 px) | `/` (13 934 px): 173 rammer, 1 treg ramme, ingen long tasks. `/deler/bil/chevrolet/camaro/1969` (3 343 px): 43 rammer, 1 treg ramme, ingen long tasks. `/en` (14 002 px): 176 rammer, 0 trege rammer, ingen long tasks |
+| Tankestrek, forbudte ord (norsk og engelsk), verktøyord, referansesidens navn | Null treff i `src`, `public`, `index.html`, `docs` og scripts (bare regellinjene i CLAUDE.md nevner ordene) |
+
+### Lighthouse (mobil, `npm run preview`, tre kjøringer per rute)
+
+| Rute | Ytelse | Tilgjengelighet | Beste praksis | SEO | LCP | TBT | CLS |
+|---|---|---|---|---|---|---|---|
+| `/` | 85, 85, 86 | 100 | 100 | 69 | 4,0-4,1 s | 40-50 ms | 0 |
+| `/deler/bil` | 87, 87, 87 | 100 | 100 | 69 | 3,7 s | 10 ms | 0 |
+| `/en` | 85, 85 | 100 | 100 | 69 | 4,1 s | 40 ms | 0 (én kjøring 0,001) |
+| `/en/deler/bil` | 87, 87 | 100 | 100 | 69 | 3,7 s | 10-20 ms | 0 |
+
+Tilgjengelighet 100 og CLS 0 på alle. Ytelsen er under kravet om minst 90. For å skille maskin fra kode ble forrige rundes bygg (runde 5, commit 9c5414a) bygd i en worktree og målt samme dag på samme måte: `/` 88-89 og `/deler/bil` 89 (i går 92-93 og 89-93), så maskinen er tregere i dag, og runde 5b ligger 2-3 poeng bak forrige runde. Forskjellen er «render delay» (JS-kjøring før React tegner teksten), som vokste fra 3,1 til 3,3 s på `/deler/bil`; LCP-elementet er tekst (hintlinjen under søkefeltet, Barlow 400, allerede forhåndslastet), så fonten er ikke årsaken. Tiltak som er gjort og det som er prøvd og forkastet står i BESLUTNINGER.md, punkt 6. SEO 69 skyldes `noindex`.
+
+### Gjenstående
+
+1. Lighthouse ytelse under 90 (se over og BESLUTNINGER.md, punkt 6).
+2. Engelsk tekst gjennomgås av Gjermund.
+3. Teste på Samsung (liste i STATUS.md).
+
