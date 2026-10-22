@@ -7,7 +7,8 @@ import { imageManifest } from "./src/data/imageManifest.js";
 import { categories } from "./src/data/nb/catalog.js";
 
 /**
- * Skriver et lite inline-script i <head> som preloader rutens hero-bilde
+ * Skriver et lite inline-script i <head> som preloader rutens hero-bilde. Stien
+ * leses uten språkprefikset /en, så engelske sider får samme forhåndslasting.
  * (webp-srcset med riktige sizes), rutespesifikke fonter og rutens sidechunk
  * (modulepreload, kun i build der chunk-navnene er kjent) før CSS og JS er
  * lastet. Erstatter en fast preload av forsidens bilde på alle ruter, og gir
@@ -37,7 +38,7 @@ function heroPreloadPlugin() {
           .join(", ");
         heroes[path] = [srcset, sizes];
       }
-      const script = `<script>(function(){var p=location.pathname.replace(/\\/$/,"")||"/";var h=${JSON.stringify(heroes)}[p];var d=document.head;if(h){var l=document.createElement("link");l.rel="preload";l.as="image";l.type="image/webp";l.setAttribute("imagesrcset",h[0]);l.setAttribute("imagesizes",h[1]);l.setAttribute("fetchpriority","high");d.appendChild(l);}var f=${JSON.stringify(fontsByPath)}[p]||[];for(var i=0;i<f.length;i++){var k=document.createElement("link");k.rel="preload";k.as="font";k.type="font/woff2";k.href=f[i];k.crossOrigin="anonymous";d.appendChild(k);}var C=${JSON.stringify(chunks)};var c=C[p];if(!c){for(var k in C){if(k.split("/").length>2&&p.indexOf(k+"/")===0){c=C[k];break;}}}if(c){var m=document.createElement("link");m.rel="modulepreload";m.href=c;d.appendChild(m);}})();</script>`;
+      const script = `<script>(function(){var p=location.pathname;if(p==="/en"||p.indexOf("/en/")===0){p=p.slice(3)||"/";}p=p.replace(/\\/$/,"")||"/";var h=${JSON.stringify(heroes)}[p];var d=document.head;if(h){var l=document.createElement("link");l.rel="preload";l.as="image";l.type="image/webp";l.setAttribute("imagesrcset",h[0]);l.setAttribute("imagesizes",h[1]);l.setAttribute("fetchpriority","high");d.appendChild(l);}var f=${JSON.stringify(fontsByPath)}[p]||[];for(var i=0;i<f.length;i++){var k=document.createElement("link");k.rel="preload";k.as="font";k.type="font/woff2";k.href=f[i];k.crossOrigin="anonymous";d.appendChild(k);}var C=${JSON.stringify(chunks)};var c=C[p];if(!c){for(var k in C){if(k.split("/").length>2&&p.indexOf(k+"/")===0){c=C[k];break;}}}if(c){var m=document.createElement("link");m.rel="modulepreload";m.href=c;d.appendChild(m);}})();</script>`;
       return html.replace("<!-- hero-preload -->", script);
     },
   };

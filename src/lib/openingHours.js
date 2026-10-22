@@ -8,15 +8,25 @@ export const CLOSES_MINUTES = 16 * 60;
 
 const WEEKDAYS = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
 
+let formatter = null;
+
+/** Formatteren lages først når den trengs, og bare én gang (Intl med tidssone koster litt). */
+function osloFormatter() {
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Europe/Oslo",
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    });
+  }
+  return formatter;
+}
+
 /** Ukedag (0-6) og minutter siden midnatt i norsk tid. */
 export function osloNow(now = new Date()) {
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Europe/Oslo",
-    weekday: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-  }).formatToParts(now);
+  const parts = osloFormatter().formatToParts(now);
   const get = (type) => parts.find((p) => p.type === type)?.value;
   const day = WEEKDAYS[get("weekday")] ?? now.getDay();
   const minutes = Number(get("hour")) * 60 + Number(get("minute"));

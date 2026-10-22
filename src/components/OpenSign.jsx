@@ -5,6 +5,13 @@ import { openStatus } from "../lib/openingHours";
 import { useVegas } from "../lib/vegas";
 
 const TICK_MS = 60_000;
+const VISIBLE = "(min-width: 1280px)";
+
+/** Skiltet vises fra 1280 px; på smalere skjermer regnes ingen status (skjult likevel). */
+function initialStatus() {
+  if (typeof window !== "undefined" && window.matchMedia?.(VISIBLE).matches) return openStatus();
+  return null;
+}
 
 function fill(template, values) {
   return template.replace(/\{(\w+)\}/g, (_, key) => values[key] ?? "");
@@ -19,12 +26,22 @@ function fill(template, values) {
 export default function OpenSign({ className }) {
   const t = header.openSign;
   const { tap } = useVegas();
-  const [status, setStatus] = useState(() => openStatus());
+  const [status, setStatus] = useState(initialStatus);
 
+  // Status regnes bare når skiltet er synlig (fra 1280 px), så telefoner slipper
+  // å lage Intl-formatteren med tidssone. Oppdateres hvert minutt.
   useEffect(() => {
-    const timer = window.setInterval(() => setStatus(openStatus()), TICK_MS);
-    return () => window.clearInterval(timer);
+    const mq = window.matchMedia?.(VISIBLE);
+    const update = () => setStatus(mq && !mq.matches ? null : openStatus());
+    mq?.addEventListener("change", update);
+    const timer = window.setInterval(update, TICK_MS);
+    return () => {
+      mq?.removeEventListener("change", update);
+      window.clearInterval(timer);
+    };
   }, []);
+
+  if (!status) return <span className={cx("open-sign is-closed", className)} aria-hidden="true" />;
 
   const dayLabel =
     status.daysAhead === 0

@@ -557,11 +557,19 @@ header[data-scrolled] .header-plate {
   opacity: 1;
 }
 
-/* Skjult fane: alle CSS-animasjoner står stille (klassen settes i lib/vegas.js). */
-html.is-hidden *,
-html.is-hidden *::before,
-html.is-hidden *::after {
-  animation-play-state: paused !important;
+/* Skjult fane: animasjonene i runde 5b og pærene i marquee-rammen står stille
+   (klassen settes i lib/vegas.js). Variabelen leses av hver animert regel, så
+   ingen universell selektor må sjekkes mot alle elementer. */
+html.is-hidden {
+  --play: paused;
+}
+.flag-band::after,
+.neon-plate.is-lighting::after,
+.flag-wave .flag-slice,
+.road-sign .road-sign-neon,
+.marquee-bulbs::before,
+.marquee-bulbs::after {
+  animation-play-state: var(--play, running);
 }
 
 /* Vegas-modus: pærene løper fortere, neonen lyser sterkere, flagget vaier friskere. */
@@ -607,14 +615,13 @@ html.vegas .flag-wave .flag-slice {
    forskjøvet per skive med --i. Pauser utenfor skjermen (.is-still) og i skjult
    fane (html.is-hidden), og står stille ved prefers-reduced-motion. */
 .flag-wave .flag-slice {
-  transform-box: fill-box;
   transform-origin: center;
   animation: flag-ripple 2.6s ease-in-out infinite;
   animation-delay: calc(var(--i, 0) * -0.19s);
   will-change: transform;
 }
 .flag-wave.is-still .flag-slice {
-  animation-play-state: paused;
+  --play: paused;
 }
 /* Tones ut mot kantene, så flagget ligger i bakgrunnen og ikke står som en firkant. */
 .flag-wave.flag-fade {
