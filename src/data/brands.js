@@ -21,7 +21,8 @@ const parts = [
   },
   { slug: "dodge", name: "Dodge", logo: "/images/merker/dodge.svg", w: 500, h: 88, logoHeight: 18 },
   { slug: "ram", name: "Ram", logo: "/images/merker/ram.svg", w: 322, h: 48, logoHeight: 20 },
-  { slug: "ford", name: "Ford", logo: "/images/merker/ford.svg", w: 1920, h: 1080, logoHeight: 60 },
+  // Den blå ovalen (flat utgave fra 2017), uten luft rundt: 1000 × 360.
+  { slug: "ford", name: "Ford", logo: "/images/merker/ford.svg", w: 1000, h: 360, logoHeight: 28 },
   {
     slug: "cadillac",
     name: "Cadillac",

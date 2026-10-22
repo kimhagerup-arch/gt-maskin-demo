@@ -9,8 +9,8 @@ Alle filene er hentet fra Wikimedia Commons. Lisensmerkingen der er «Public dom
 | Chevrolet | `chevrolet.svg` | https://commons.wikimedia.org/wiki/File:Chevrolet-logo.svg | Public domain (PD-textlogo / PD-shape) | Diego HC, SVG av FireDragonValo, avledet av Chevy logotipo.jpg (logo 2013) |
 | Dodge | `dodge.svg` | https://commons.wikimedia.org/wiki/File:Dodge_2022_logo.svg | Public domain | Stellantis N.V., www.dodge.com |
 | Ram | `ram.svg` | https://commons.wikimedia.org/wiki/File:Ram_Trucks_2009_wordmark.svg | Public domain | FCA US LLC, www.ramtrucks.com |
-| Ford | `ford.svg` | https://commons.wikimedia.org/wiki/File:Ford-Logo-Vector.svg | Public domain | Ford Motor Company (sort retrace av ovalen, 1920 × 1080 med luft rundt) |
-| Cadillac | `cadillac.svg` | https://commons.wikimedia.org/wiki/File:Cadillac_Logo_2021.svg | Public domain | Cadillac (logo fra 2021) |
+| Ford | `ford.svg` | https://commons.wikimedia.org/wiki/File:Ford_logo_flat.svg | Public domain (PD) | Ford Motor Company, fra Ford 2017 Annual Report (den blå ovalen med hvit skrift, flat utgave, 1000 × 360). Byttet 22.10.2026 (runde 5c) fra den sorte retracen `Ford-Logo-Vector.svg` |
+| Cadillac | `cadillac.svg` | https://commons.wikimedia.org/wiki/File:Cadillac_Logo_2021.svg | Public domain | Cadillac (logo fra 2021). Dette er merkets gjeldende logo, som er ensfarget (sort eller hvit) etter design. Våpenskjoldet i farger (med wreath til 2014, uten wreath 2014-2021) finnes ikke som SVG på Commons (sjekket 22.10.2026, runde 5c); bare historiske rastere (`Cadillac Logo 1995.webp` med flere). Beholdt i sort, se BESLUTNINGER.md runde 5c |
 | Tesla | `tesla.svg` | https://commons.wikimedia.org/wiki/File:Tesla_Motors_Logo.svg | Public domain | Ukjent, SVG hentet fra PDF (ordmerket) |
 | Carhartt | `carhartt.svg` | https://commons.wikimedia.org/wiki/File:Carhartt_(logo).svg | Public domain | Ikke oppgitt (ordmerke med C) |
 | Stetson | `stetson.svg` | https://commons.wikimedia.org/wiki/File:Stetson_Logo.svg | Public domain | Stetson, stetson.com (hattemerket, ikke universitetet) |
