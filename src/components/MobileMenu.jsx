@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
 import { companyFacts } from "../data/companyFacts";
-import { nav, socialLinks } from "../data/siteContent";
+import { a11y, nav, socialLinks } from "../data/siteContent";
+import { NavLink } from "../i18n/LocaleLink";
 import { cx } from "../lib/format";
 import Button from "./Button";
 import Icon from "./Icon";
 import InstallButton from "./InstallButton";
+import LangSwitch from "./LangSwitch";
 import Logo from "./Logo";
 import SocialIcons from "./SocialIcons";
 
@@ -75,7 +76,7 @@ export default function MobileMenu({ id, open, onClose, returnFocusRef }) {
           <Icon name="X" size={22} strokeWidth={2} />
         </button>
       </div>
-      <nav className="flex flex-1 flex-col overflow-y-auto px-6 py-8" aria-label="Hovedmeny">
+      <nav className="flex flex-1 flex-col overflow-y-auto px-6 py-8" aria-label={a11y.mainMenu}>
         <ul className="flex flex-col">
           {nav.items.map((item, index) => (
             <li key={item.to} className="border-b border-brand-border-dark">
@@ -108,7 +109,10 @@ export default function MobileMenu({ id, open, onClose, returnFocusRef }) {
         <Button to={nav.cta.to} onClick={onClose} arrow>
           {nav.cta.label}
         </Button>
-        <SocialIcons label={socialLinks.follow} className="justify-center pt-1" />
+        <div className="flex items-center justify-center gap-4 pt-1">
+          <SocialIcons label={socialLinks.follow} />
+          <LangSwitch size="lg" />
+        </div>
         <p className="text-center text-sm text-brand-muted-inverse">
           {companyFacts.address.full} · {companyFacts.hours.short}
         </p>

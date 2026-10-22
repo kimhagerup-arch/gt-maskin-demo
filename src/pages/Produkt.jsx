@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
 import Picture from "../components/Picture";
@@ -10,8 +10,9 @@ import { requestLink } from "../components/katalog/SourceRequest";
 import { useCart } from "../context/CartContext";
 import { getCategory, getType } from "../data/catalog";
 import { getProduct } from "../data/products";
-import { partsSection, seo } from "../data/siteContent";
+import { a11y, partsSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
+import { Link } from "../i18n/LocaleLink";
 import {
   CLOTHES_CATEGORY,
   categoryPath,
@@ -145,7 +146,7 @@ export default function Produkt() {
               {product.title}
             </h1>
             <p className="font-display text-4xl tabular-nums text-brand-accent-deep">
-              {formatPrice(product.price)} {partsSection.card.priceSuffix}
+              {formatPrice(product.price)}
             </p>
 
             <p
@@ -171,7 +172,7 @@ export default function Produkt() {
               <dt className="font-bold text-brand-muted">{t.typeLabel}</dt>
               <dd>{type?.name || product.type}</dd>
               <dt className="font-bold text-brand-muted">{t.skuLabel}</dt>
-              <dd translate="no">{product.sku || "[varenummer]"}</dd>
+              <dd translate="no">{product.sku || a11y.skuPlaceholder}</dd>
               <dt className="font-bold text-brand-muted">{t.stockLabel}</dt>
               <dd>{stockLabel}</dd>
               <dt className="font-bold text-brand-muted">{t.fitsLabel}</dt>

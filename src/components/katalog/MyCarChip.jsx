@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { partsSection } from "../../data/siteContent";
+import { Link } from "../../i18n/LocaleLink";
 import { vehicleLabel } from "../../lib/catalog";
 import { cx } from "../../lib/format";
 import { clearMyCar, expandCar } from "../../lib/myCar";

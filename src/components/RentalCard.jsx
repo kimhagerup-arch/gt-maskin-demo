@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { rentalSection } from "../data/siteContent";
+import { Link } from "../i18n/LocaleLink";
 import { formatPrice } from "../lib/format";
 import Icon from "./Icon";
 import IconField from "./IconField";

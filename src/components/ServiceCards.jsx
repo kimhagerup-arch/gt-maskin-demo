@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { services } from "../data/services";
 import { servicesSection } from "../data/siteContent";
+import { Link } from "../i18n/LocaleLink";
 import Icon from "./Icon";
 import MobileSlider from "./MobileSlider";
 import Picture from "./Picture";

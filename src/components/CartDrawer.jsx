@@ -1,11 +1,17 @@
 import { useEffect, useRef } from "react";
 import { useCart } from "../context/CartContext";
-import { partsSection } from "../data/siteContent";
+import { getProduct } from "../data/products";
+import { a11y, partsSection } from "../data/siteContent";
 import { formatPrice } from "../lib/format";
 import Button from "./Button";
 import Icon from "./Icon";
 import Picture from "./Picture";
 import Placeholder from "./Placeholder";
+
+/** Varenavnet hentes fra katalogen (gjeldende språk); lagrede linjer har navnet fra da de ble lagt i. */
+function titleOf(item) {
+  return getProduct(item.slug)?.title || item.title;
+}
 
 /** Handlekurv-skuff fra høyre. Escape lukker, fokus flyttes inn og tilbake. */
 export default function CartDrawer() {
@@ -99,7 +105,7 @@ export default function CartDrawer() {
                       {item.brand}
                     </span>
                     <span className="truncate font-bold" translate="no">
-                      {item.title}
+                      {titleOf(item)}
                     </span>
                     {item.size && (
                       <span className="text-sm text-brand-muted-inverse">
@@ -107,7 +113,7 @@ export default function CartDrawer() {
                       </span>
                     )}
                     <span className="font-display text-xl text-brand-accent-light">
-                      {formatPrice(item.price)} {partsSection.card.priceSuffix}
+                      {formatPrice(item.price)}
                     </span>
                     <div className="mt-1 flex items-center gap-2">
                       <div className="inline-flex items-center rounded-pill border border-brand-border-dark-strong">
@@ -115,7 +121,7 @@ export default function CartDrawer() {
                           type="button"
                           onClick={() => cart.setQty(item.key, item.qty - 1)}
                           className="flex h-9 w-9 items-center justify-center rounded-pill hover:bg-brand-primary-light"
-                          aria-label={`Færre ${item.title}`}
+                          aria-label={`${a11y.fewer} ${titleOf(item)}`}
                         >
                           <Icon name="Minus" size={16} strokeWidth={2} />
                         </button>
@@ -126,7 +132,7 @@ export default function CartDrawer() {
                           type="button"
                           onClick={() => cart.setQty(item.key, item.qty + 1)}
                           className="flex h-9 w-9 items-center justify-center rounded-pill hover:bg-brand-primary-light"
-                          aria-label={`Flere ${item.title}`}
+                          aria-label={`${a11y.more} ${titleOf(item)}`}
                         >
                           <Icon name="Plus" size={16} strokeWidth={2} />
                         </button>
@@ -154,8 +160,7 @@ export default function CartDrawer() {
                 {partsSection.checkout.subtotal}
               </span>
               <span className="font-display text-2xl">
-                {cart.subtotal === null ? "[PRIS]" : formatPrice(cart.subtotal)}{" "}
-                {partsSection.card.priceSuffix}
+                {cart.subtotal === null ? a11y.pricePlaceholder : formatPrice(cart.subtotal)}
               </span>
             </div>
             <p className="text-xs text-brand-muted-inverse">{partsSection.checkout.subtotalNote}</p>

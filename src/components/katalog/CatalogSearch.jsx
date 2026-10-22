@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { partsSection } from "../../data/siteContent";
+import { useNavigate } from "../../i18n/LocaleLink";
 import {
   categoryPath,
   productPath,
@@ -251,7 +252,7 @@ export default function CatalogSearch({ initial = "", myCar, className }) {
                   </span>
                   {opt.price !== undefined && (
                     <span className="shrink-0 font-display text-base tabular-nums text-brand-accent-deep">
-                      {formatPrice(opt.price)} {partsSection.card.priceSuffix}
+                      {formatPrice(opt.price)}
                     </span>
                   )}
                   {opt.group === "all" && (

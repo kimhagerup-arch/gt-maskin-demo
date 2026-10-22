@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, Navigate, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import BrandWall from "../components/BrandWall";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
@@ -22,6 +22,8 @@ import { products } from "../data/products";
 import { partsSection, seo } from "../data/siteContent";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useSeoMeta } from "../hooks/useSeoMeta";
+import { Link, Navigate } from "../i18n/LocaleLink";
+import { stripLocale } from "../i18n/locale";
 import {
   CLOTHES_CATEGORY,
   OIL_CATEGORY,
@@ -86,7 +88,7 @@ export default function Deler() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const [sort, setSort] = useState("relevans");
 
-  const path = location.pathname.replace(/\/$/, "");
+  const path = stripLocale(location.pathname).replace(/\/$/, "");
   const mode =
     path === SHOP
       ? "root"

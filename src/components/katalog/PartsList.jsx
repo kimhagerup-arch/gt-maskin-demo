@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { partsSection } from "../../data/siteContent";
+import { Link } from "../../i18n/LocaleLink";
 import {
   SORT_MODES,
   fitStatus,
@@ -92,7 +92,7 @@ export function PartRow({ product, myCar, showFits = true }) {
       <div className="col-start-2 flex items-center justify-between gap-3 md:contents">
         <span className="text-xs text-brand-muted md:hidden">{stockLabel(product)}</span>
         <span className="ml-auto whitespace-nowrap font-display text-xl tabular-nums text-brand-accent-deep md:ml-0 md:text-right">
-          {formatPrice(product.price)} {card.priceSuffix}
+          {formatPrice(product.price)}
         </span>
         {needsSize ? (
           <Link

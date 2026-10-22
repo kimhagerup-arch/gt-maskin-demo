@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { installApp } from "../data/siteContent";
 import { useInstallPrompt } from "../hooks/useInstallPrompt";
+import { stripLocale } from "../i18n/locale";
 import { cx } from "../lib/format";
 import Icon from "./Icon";
 import { InstallDialog } from "./InstallButton";
@@ -58,7 +59,7 @@ export default function InstallPrompt() {
     !standalone &&
     !dismissed &&
     (canPrompt || ios) &&
-    !QUIET_PATHS.some((p) => location.pathname.startsWith(p));
+    !QUIET_PATHS.some((p) => stripLocale(location.pathname).startsWith(p));
 
   // Vent på tid eller rulling, og vis boksen når vilkårene holder.
   useEffect(() => {

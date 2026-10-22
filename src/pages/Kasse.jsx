@@ -5,7 +5,8 @@ import Icon from "../components/Icon";
 import Picture from "../components/Picture";
 import Placeholder from "../components/Placeholder";
 import { useCart } from "../context/CartContext";
-import { partsSection, seo } from "../data/siteContent";
+import { getProduct } from "../data/products";
+import { a11y, partsSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
 import { formatPrice } from "../lib/format";
 
@@ -52,7 +53,7 @@ export default function Kasse() {
                         {item.brand}
                       </span>
                       <span className="truncate font-bold" translate="no">
-                        {item.title}
+                        {getProduct(item.slug)?.title || item.title}
                       </span>
                       <span className="text-sm text-brand-muted-inverse">
                         {item.size ? `${t.size} ${item.size} · ` : ""}
@@ -61,7 +62,7 @@ export default function Kasse() {
                     </div>
                     <div className="flex flex-col items-end justify-between">
                       <span className="font-display text-xl text-brand-accent-light">
-                        {formatPrice(item.price)} {partsSection.card.priceSuffix}
+                        {formatPrice(item.price)}
                       </span>
                       <button
                         type="button"
@@ -80,8 +81,7 @@ export default function Kasse() {
                       {t.subtotal}
                     </span>
                     <span className="font-display text-2xl">
-                      {cart.subtotal === null ? "[PRIS]" : formatPrice(cart.subtotal)}{" "}
-                      {partsSection.card.priceSuffix}
+                      {cart.subtotal === null ? a11y.pricePlaceholder : formatPrice(cart.subtotal)}
                     </span>
                   </li>
                 )}

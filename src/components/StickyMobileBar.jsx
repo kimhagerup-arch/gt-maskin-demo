@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { companyFacts } from "../data/companyFacts";
-import { nav } from "../data/siteContent";
+import { a11y, nav } from "../data/siteContent";
+import { Link } from "../i18n/LocaleLink";
 import { cx } from "../lib/format";
 import Icon from "./Icon";
 
@@ -22,7 +22,7 @@ export default function StickyMobileBar() {
 
   return (
     <nav
-      aria-label="Hurtigvalg"
+      aria-label={a11y.quickLinks}
       className={cx(
         "fixed inset-x-0 bottom-0 z-30 grid grid-cols-2 border-t border-brand-border-dark bg-brand-primary/95 backdrop-blur transition-transform duration-200 md:hidden",
         hidden && "translate-y-full",

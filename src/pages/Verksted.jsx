@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import CtaBand from "../components/CtaBand";
 import Icon from "../components/Icon";
@@ -9,8 +8,9 @@ import SectionHeader from "../components/SectionHeader";
 import { companyFacts } from "../data/companyFacts";
 import { workshopPrices } from "../data/prices";
 import { workshopGallery, workshopSections } from "../data/services";
-import { seo, workshopPage } from "../data/siteContent";
+import { a11y, seo, workshopPage } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
+import { Link } from "../i18n/LocaleLink";
 import { cx, formatPrice } from "../lib/format";
 
 export default function Verksted() {
@@ -30,7 +30,7 @@ export default function Verksted() {
           <Button to={workshopPage.cta.to} arrow>
             {workshopPage.cta.label}
           </Button>
-          <nav aria-label="Snarveier" className="flex flex-wrap gap-2 text-sm">
+          <nav aria-label={a11y.shortcuts} className="flex flex-wrap gap-2 text-sm">
             {workshopSections.map((s) => (
               <a
                 key={s.id}
@@ -137,7 +137,7 @@ export default function Verksted() {
                 >
                   <dt className="text-[17px] font-semibold">{row.label}</dt>
                   <dd className="whitespace-nowrap font-display text-2xl text-brand-accent-deep">
-                    {formatPrice(row.price)} {workshopPage.priceSuffix}
+                    {formatPrice(row.price)}
                   </dd>
                 </div>
               ))}

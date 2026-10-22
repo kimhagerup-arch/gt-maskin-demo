@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { partsSection } from "../data/siteContent";
+import { Link } from "../i18n/LocaleLink";
 import { fitStatus } from "../lib/catalog";
 import { cx, formatPrice } from "../lib/format";
 import Icon from "./Icon";
@@ -80,7 +80,7 @@ export default function ProductCard({ product, myCar = null }) {
         </span>
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
           <span className="whitespace-nowrap font-display text-xl tabular-nums text-brand-accent-deep md:text-2xl">
-            {formatPrice(product.price)} {partsSection.card.priceSuffix}
+            {formatPrice(product.price)}
           </span>
           {needsSize ? (
             <Link

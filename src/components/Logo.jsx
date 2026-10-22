@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { companyFacts } from "../data/companyFacts";
+import { Link } from "../i18n/LocaleLink";
 import { cx } from "../lib/format";
 import { getImage } from "../lib/images";
 

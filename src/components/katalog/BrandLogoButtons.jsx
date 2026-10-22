@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { brands } from "../../data/brands";
+import { Link } from "../../i18n/LocaleLink";
 import { vehiclePath } from "../../lib/catalog";
 import { cx } from "../../lib/format";
 

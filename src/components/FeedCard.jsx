@@ -1,4 +1,4 @@
-import { feedSection } from "../data/siteContent";
+import { a11y, feedSection } from "../data/siteContent";
 import { cx, formatDate, formatNumber } from "../lib/format";
 import Icon from "./Icon";
 import Picture from "./Picture";
@@ -40,7 +40,11 @@ export default function FeedCard({ post, channelName }) {
         {imageKey ? (
           <Picture
             src={imageKey}
-            alt={example ? `Eksempel: ${post.placeholderLabel}` : post.caption?.slice(0, 80) || ""}
+            alt={
+              example
+                ? `${a11y.examplePrefix} ${post.placeholderLabel}`
+                : post.caption?.slice(0, 80) || ""
+            }
             sizes="(min-width: 1024px) 384px, (min-width: 768px) 50vw, 82vw"
             className="h-full w-full"
             imgClassName={cx("h-full w-full object-cover", example && "saturate-[.85]")}

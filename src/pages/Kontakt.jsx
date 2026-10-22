@@ -18,7 +18,10 @@ export default function Kontakt() {
   const bil = params.get("bil");
   if (vare) {
     const product = getProduct(vare);
-    const brand = product?.brand && !product.brand.startsWith("[") ? ` (${product.brand})` : "";
+    const brand =
+      product?.brand && !product.brand.startsWith("[") && product.brand !== product.title
+        ? ` (${product.brand})`
+        : "";
     lines.push(
       `${contactPage.productRequestPrefix} ${product ? `${product.title}${brand}` : vare}`,
     );

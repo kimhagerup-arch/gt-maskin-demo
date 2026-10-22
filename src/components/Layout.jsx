@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
+import { a11y } from "../data/siteContent";
 import CartDrawer from "./CartDrawer";
 import DraftBanner from "./DraftBanner";
 import Footer from "./Footer";
 import Header from "./Header";
 import InstallPrompt from "./InstallPrompt";
+import LangStripe from "./LangStripe";
 import StickyMobileBar from "./StickyMobileBar";
 
 export default function Layout() {
@@ -13,9 +15,10 @@ export default function Layout() {
         href="#innhold"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-brand-accent focus:px-4 focus:py-2 focus:text-brand-primary"
       >
-        Hopp til innhold
+        {a11y.skipToContent}
       </a>
       <DraftBanner />
+      <LangStripe />
       <Header />
       <main id="innhold" className="flex-1 pb-14 md:pb-0">
         <Outlet />

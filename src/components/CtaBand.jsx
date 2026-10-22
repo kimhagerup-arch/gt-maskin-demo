@@ -1,4 +1,5 @@
 import { companyFacts } from "../data/companyFacts";
+import { a11y } from "../data/siteContent";
 import { cx } from "../lib/format";
 import Button from "./Button";
 
@@ -42,14 +43,14 @@ export default function CtaBand({ kicker, title, text, cta, tone = "light", show
             )}
             {showContact && (
               <p className={cx("text-sm", dark ? "text-brand-muted-inverse" : "text-brand-muted")}>
-                Eller ring{" "}
+                {a11y.callPrefix}{" "}
                 <a
                   href={companyFacts.phone.href}
                   className="font-semibold underline-offset-2 hover:underline"
                 >
                   {companyFacts.phone.display}
                 </a>
-                , send e-post til{" "}
+                , {a11y.emailPrefix}{" "}
                 <a
                   href={companyFacts.email.href}
                   className="font-semibold underline-offset-2 hover:underline"

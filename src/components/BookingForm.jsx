@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { companyFacts } from "../data/companyFacts";
-import { bookingForm } from "../data/siteContent";
+import { a11y, bookingForm } from "../data/siteContent";
 import { cx } from "../lib/format";
 import { EMAIL_RE, isBlank, submitForm } from "../lib/forms";
 import Button from "./Button";
@@ -206,7 +206,7 @@ export default function BookingForm({
 
           {/* Honeypot: skjult for mennesker, fylles av roboter */}
           <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
-            <label htmlFor={fieldId("website")}>Nettside</label>
+            <label htmlFor={fieldId("website")}>{a11y.honeypot}</label>
             <input
               id={fieldId("website")}
               type="text"

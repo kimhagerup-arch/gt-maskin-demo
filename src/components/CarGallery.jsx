@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { carsSection } from "../data/siteContent";
+import { a11y, carsSection } from "../data/siteContent";
 import { cx } from "../lib/format";
 import Icon from "./Icon";
 import Picture from "./Picture";
@@ -58,7 +58,7 @@ export default function CarGallery({ images = [], alts = [], title, placeholderL
     // Piltastene virker når fokus står på en av knappene i galleriet.
     <section
       className="flex flex-col gap-3"
-      aria-roledescription="galleri"
+      aria-roledescription={a11y.galleryRole}
       aria-label={`${t.label}: ${title}`}
       onKeyDown={onKeyDown}
       onTouchStart={onTouchStart}

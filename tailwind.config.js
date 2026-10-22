@@ -39,6 +39,22 @@ export default {
           cyan: "#22d3c8",
           gold: "#d4a843",
         },
+        // Flagget (USA og Norge deler rød, hvit og blå), neon og krom (runde 5b).
+        flag: {
+          red: "rgb(var(--flag-red) / <alpha-value>)",
+          white: "rgb(var(--flag-white) / <alpha-value>)",
+          blue: "rgb(var(--flag-blue) / <alpha-value>)",
+        },
+        neon: {
+          DEFAULT: "rgb(var(--neon) / <alpha-value>)",
+          deep: "rgb(var(--neon-deep) / <alpha-value>)",
+          red: "rgb(var(--neon-red) / <alpha-value>)",
+        },
+        chrome: {
+          light: "rgb(var(--chrome-light) / <alpha-value>)",
+          DEFAULT: "rgb(var(--chrome) / <alpha-value>)",
+          dark: "rgb(var(--chrome-dark) / <alpha-value>)",
+        },
       },
       borderRadius: {
         button: "var(--radius-button)",

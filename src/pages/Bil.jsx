@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Button from "../components/Button";
 import CarGallery from "../components/CarGallery";
 import Icon from "../components/Icon";
@@ -6,6 +6,7 @@ import { findCar } from "../data/cars";
 import { companyFacts } from "../data/companyFacts";
 import { carsSection, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
+import { Link } from "../i18n/LocaleLink";
 import { formatPrice } from "../lib/format";
 import NotFound from "./NotFound";
 
@@ -31,7 +32,7 @@ export default function Bil() {
     { label: t.specs.engine, value: car.engine },
     {
       label: t.specs.price,
-      value: `${formatPrice(car.price)} ${carsSection.card.priceSuffix}`,
+      value: formatPrice(car.price),
       accent: true,
     },
   ];

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "../i18n/LocaleLink";
 import { cx } from "../lib/format";
 import Icon from "./Icon";
 

@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { carsSection } from "../data/siteContent";
+import { Link } from "../i18n/LocaleLink";
 import { cx, formatPrice } from "../lib/format";
 import Picture from "./Picture";
 import Placeholder from "./Placeholder";
@@ -50,7 +50,7 @@ export default function CarCard({ car }) {
               car.sold ? "text-brand-muted-inverse line-through" : "text-brand-accent-light",
             )}
           >
-            {formatPrice(car.price)} {carsSection.card.priceSuffix}
+            {formatPrice(car.price)}
           </span>
         </div>
         <p className="text-sm text-brand-muted-inverse">

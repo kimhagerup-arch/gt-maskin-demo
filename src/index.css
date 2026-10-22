@@ -87,6 +87,21 @@
   --brand-snapchat: 255 252 0; /* #FFFC00 */
   --brand-on-snapchat: 0 0 0; /* #000000 */
 
+  /* Flagg, neon og krom (runde 5b). Flaggrødt og flaggblått er de offisielle
+     fargene i det amerikanske flagget (Old Glory Red #B22234, Old Glory Blue #3C3B6E),
+     og brukes også i det norske flagget i språkvelgeren. Neon er aksentfargen fra
+     logoen som lysrør (samme som accent-light), neon-deep er røret slukket,
+     neon-red er rødt neon til ÅPEN-skiltet. Krom er tre gråtoner til kanten. */
+  --flag-red: 178 34 52; /* #B22234 */
+  --flag-white: 255 255 255; /* #FFFFFF */
+  --flag-blue: 60 59 110; /* #3C3B6E */
+  --neon: 247 154 43; /* #F79A2B */
+  --neon-deep: 122 72 14; /* #7A480E */
+  --neon-red: 255 77 77; /* #FF4D4D */
+  --chrome-light: 236 237 240; /* #ECEDF0 */
+  --chrome: 160 164 172; /* #A0A4AC */
+  --chrome-dark: 92 96 104; /* #5C6068 */
+
   /* Hjørner. Knapper og lenkeknapper 10 px, skjemafelt 8 px, chips, filterknapper,
      sliderpiler og ikonknapper helt runde. Kort og bilder har rette kanter. */
   --radius-button: 10px;

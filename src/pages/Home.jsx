@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { FactBoxes, TeamGrid, Timeline } from "../components/AboutBlocks";
 import BookingForm from "../components/BookingForm";
 import BrandWall from "../components/BrandWall";
@@ -33,6 +32,7 @@ import {
 import { socialFeed } from "../data/socialFeed";
 import { videos } from "../data/videos";
 import { useSeoMeta } from "../hooks/useSeoMeta";
+import { Link } from "../i18n/LocaleLink";
 
 export default function Home() {
   useSeoMeta(seo.home);

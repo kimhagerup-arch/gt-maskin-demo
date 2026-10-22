@@ -1,21 +1,6 @@
-// Folkene. Kun Gjermund Thomassen er verifisert. Resten er plassholdere.
-export const team = [
-  {
-    name: "Gjermund Thomassen",
-    role: "daglig leder og eier",
-    image: null,
-    placeholder: false,
-  },
-  {
-    name: "[Navn]",
-    role: "[rolle]",
-    image: null,
-    placeholder: true,
-  },
-  {
-    name: "[Navn]",
-    role: "[rolle]",
-    image: null,
-    placeholder: true,
-  },
-];
+// Tospråklig visning, se siteContent.js. Kilder: nb/team.js og en/team.js.
+import { localized } from "../i18n/localized";
+import * as en from "./en/team";
+import * as nb from "./nb/team";
+
+export const team = localized(nb.team, en.team);

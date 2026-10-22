@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { companyFacts } from "../data/companyFacts";
 import { footer } from "../data/siteContent";
+import { Link } from "../i18n/LocaleLink";
 import { getImage } from "../lib/images";
 import InstallButton from "./InstallButton";
 import ReviewBadges from "./ReviewBadges";

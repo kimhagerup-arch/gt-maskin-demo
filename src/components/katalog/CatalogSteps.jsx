@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { categories, partCategories } from "../../data/catalog";
 import { partsSection } from "../../data/siteContent";
 import { decadesFor, lastYear, otherVehicle, vehicles } from "../../data/vehicles";
+import { Link } from "../../i18n/LocaleLink";
 import { OIL_CATEGORY, categoryPath, vehicleLabel, vehiclePath } from "../../lib/catalog";
 import { cx } from "../../lib/format";
 import Icon from "../Icon";

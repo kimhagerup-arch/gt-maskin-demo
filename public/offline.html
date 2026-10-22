@@ -80,14 +80,35 @@
       button:hover {
         background: #d46f02;
       }
+      [hidden] {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <main>
       <span class="logo"><img src="/images/logo/gt-maskin-logo-256.png" alt="" width="76" height="76" /></span>
       <h1>GT Maskin</h1>
-      <p>Ingen nett akkurat nå. Sjekk dekningen og prøv igjen.</p>
-      <button type="button" onclick="location.reload()">Prøv igjen</button>
+      <div data-lang="nb">
+        <p>Ingen nett akkurat nå. Sjekk dekningen og prøv igjen.</p>
+        <button type="button" onclick="location.reload()">Prøv igjen</button>
+      </div>
+      <div data-lang="en" lang="en" hidden>
+        <p>No connection right now. Check your coverage and try again.</p>
+        <button type="button" onclick="location.reload()">Try again</button>
+      </div>
     </main>
+    <script>
+      // Engelsk under /en, ellers norsk. Samme regel som i src/i18n/locale.js.
+      (function () {
+        var p = location.pathname;
+        var en = p === "/en" || p.indexOf("/en/") === 0;
+        if (!en) return;
+        document.documentElement.lang = "en";
+        document.title = "No connection | GT Maskin AS";
+        document.querySelector('[data-lang="nb"]').hidden = true;
+        document.querySelector('[data-lang="en"]').hidden = false;
+      })();
+    </script>
   </body>
 </html>

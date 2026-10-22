@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { partsSection } from "../../data/siteContent";
+import { Link } from "../../i18n/LocaleLink";
 import { CLOTHES_CATEGORY, OIL_CATEGORY, categoryPath, vehiclePath } from "../../lib/catalog";
 import { cx } from "../../lib/format";
 

@@ -1,5 +1,5 @@
 import { companyFacts } from "../data/companyFacts";
-import { bookingForm } from "../data/siteContent";
+import { a11y, bookingForm } from "../data/siteContent";
 import Button from "./Button";
 import Icon from "./Icon";
 
@@ -27,7 +27,7 @@ export function Field({ id, label, error, children, className }) {
 export function Honeypot({ id, value, onChange }) {
   return (
     <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
-      <label htmlFor={id}>Nettside</label>
+      <label htmlFor={id}>{a11y.honeypot}</label>
       <input
         id={id}
         type="text"

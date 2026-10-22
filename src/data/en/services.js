@@ -1,0 +1,157 @@
+// Service cards on the front page and sections on /verksted, English.
+// Same shape as nb/services.js. Icons are lucide names.
+import { carsSection } from "./siteContent.js";
+
+export const services = [
+  {
+    slug: "verksted",
+    icon: "Wrench",
+    title: "Shop floor and repairs",
+    text: "Service, diagnostics and repairs of American cars, and most other makes. Skilled technicians with long experience, also on European cars.",
+    short: "Service and repairs of American cars, and most other makes.",
+    to: "/verksted",
+    image: "/images/verksted/verksted-impala-motorblokk",
+    imageAlt: "Red Chevrolet Impala inside the shop with an engine block on a stand",
+  },
+  {
+    slug: "custom",
+    icon: "Gauge",
+    title: "Custom and speedshop",
+    text: "Rebuilds, upgrades and tailored projects. Kustom Speedshop is where your enthusiast car gets what it deserves.",
+    short: "Rebuilds, upgrades and tailored projects.",
+    to: "/verksted#custom",
+    image: "/images/verksted/verksted-camaro-motorrom",
+    imageAlt: "Yellow Chevrolet Camaro SS with the hood open in the shop",
+  },
+  {
+    slug: "deler",
+    icon: "Package",
+    title: "Parts and inventory",
+    text: "Well stocked parts inventory for most American cars, also Tesla. We source parts for your daily driver and your enthusiast car alike.",
+    short: "Well stocked parts inventory for most American cars, also Tesla.",
+    to: "/deler",
+    image: "/images/butikk/butikk-vaesker-disk",
+    imageAlt: "Oils and additives on the counter in the store",
+  },
+  {
+    slug: "classic",
+    icon: "Car",
+    title: "Vintage and classic",
+    text: "Classic cars of all makes, with respect for the original. We take care of your car: old or new, shiny or rusty.",
+    short: "Classic cars of all makes, with respect for the original.",
+    to: "/verksted#classic",
+    image: "/images/hero/verksted-hero-klassiker",
+    imageAlt: "American classic photographed in black and white from a low angle",
+  },
+  {
+    slug: "vi-skaffer",
+    icon: "Search",
+    title: carsSection.wanted.kicker,
+    text: carsSection.wanted.lead,
+    short: carsSection.wanted.lead,
+    to: `/biler-til-salgs#${carsSection.wanted.id}`,
+    image: "/images/butikk/kundemottak-hyller-bar",
+    imageAlt: "The reception with shelves, bar counter and car sofa",
+  },
+  {
+    slug: "utleie",
+    icon: "Snowflake",
+    title: "Rental",
+    text: "Snowmobile, ATV, trailer and car transport trailer. Snowmobile rental all season long.",
+    short: "Snowmobile, ATV, trailer and car transport trailer.",
+    to: "/utleie",
+    image: "/images/utleie/snoscootere-oppstilt",
+    imageAlt: "Snowmobiles lined up in the snow",
+  },
+];
+
+export const workshopSections = [
+  {
+    id: "reparasjon",
+    icon: "Wrench",
+    title: "Repairs and service",
+    text: "Service, diagnostics and repairs of American cars, and most other makes. We have a modern shop that takes care of your car, old or new, shiny or rusty.",
+    image: "/images/verksted/verksted-corvette-service",
+    imageAlt: "Red Corvette on the lift with the hood up during service",
+    image2: "/images/verksted/verksted-suburban-ramme",
+    image2Alt: "The body of a Suburban lifted off the frame in the shop",
+  },
+  {
+    id: "custom",
+    icon: "Gauge",
+    title: "Custom and speedshop",
+    text: "Rebuilds, upgrades and tailored projects. Kustom Speedshop is where your enthusiast car gets what it deserves. We are car enthusiasts, not just American cars, but all special cars.",
+    image: "/images/verksted/verksted-camaro-motorrom",
+    imageAlt: "Yellow Chevrolet Camaro SS with the hood open",
+    image2: "/images/verksted/motor-v8-benk",
+    image2Alt: "Freshly rebuilt V8 engine on a pallet in the shop",
+  },
+  {
+    id: "classic",
+    icon: "Car",
+    title: "Vintage and classic",
+    text: "Classic cars of all makes, with respect for the original. We take everything from old vintage cars to new daily drivers.",
+    image: "/images/verksted/verksted-belair-loftebukk",
+    imageAlt: "Yellow Chevrolet Bel Air on the lift with the hood up",
+    image2: "/images/verksted/verksted-mustang-loftebukk",
+    image2Alt: "Light blue Ford Mustang in front of the lift in the shop",
+  },
+  {
+    id: "europeisk",
+    icon: "Zap",
+    title: "European cars and Tesla",
+    text: "We have skilled technicians with long experience on European cars too. The parts inventory covers most American cars, also Tesla. If you need help with something, just get in touch.",
+    image: "/images/verksted/verksted-cabriolet-loftebukk",
+    imageAlt: "Green convertible on the lift in the shop",
+    image2: null,
+    image2Alt: "",
+  },
+  {
+    id: "maskiner",
+    icon: "Tractor",
+    title: "Machinery and tractors",
+    text: "It is not only cars that come through. Tractors and machinery get room on the lift too. [To be confirmed by Gjermund: which machinery you take in]",
+    image: "/images/verksted/verksted-traktor",
+    imageAlt: "Tractor inside the shop",
+    image2: null,
+    image2Alt: "",
+  },
+  {
+    id: "deler",
+    icon: "Package",
+    title: "Parts",
+    text: "Well stocked parts inventory for most American cars, also Tesla. We source parts for your daily driver and your enthusiast car alike. If you do not find the part in the web shop, send us a request.",
+    image: "/images/butikk/butikk-mobil-vegg",
+    imageAlt: "The GT Maskin store with caps, apparel and oil shelves",
+    image2: "/images/butikk/butikk-hylle-amsoil",
+    image2Alt: "Shelf of motor oils in the store",
+    link: { label: "Go to the web shop", to: "/deler" },
+  },
+];
+
+export const workshopGallery = [
+  {
+    image: "/images/verksted/verksted-cabriolet-kobber",
+    alt: "Copper colored convertible on the lift in the shop",
+  },
+  {
+    image: "/images/verksted/verksted-impala-motorblokk",
+    alt: "Red Chevrolet Impala in the shop with an engine block on a stand",
+  },
+  {
+    image: "/images/bygg/fasade-dag-klassikere",
+    alt: "The GT Maskin building in daylight with American classics out front",
+  },
+  {
+    image: "/images/biler/cadillac-rod-hekk",
+    alt: "Red Cadillac with fins seen from behind",
+  },
+  {
+    image: "/images/biler/corvette-sort-utenfor",
+    alt: "Black Corvette parked outside the shop",
+  },
+  {
+    image: "/images/bygg/firmabil-kustom-speedshop",
+    alt: "The GT Maskin company car with Kustom Speedshop lettering on the side",
+  },
+];

@@ -1,7 +1,7 @@
 import { useId, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { companyFacts } from "../data/companyFacts";
-import { bookingForm, checkoutPage, partsSection } from "../data/siteContent";
+import { a11y, bookingForm, checkoutPage, partsSection } from "../data/siteContent";
 import { cx } from "../lib/format";
 import { EMAIL_RE, isBlank, submitForm } from "../lib/forms";
 import Button from "./Button";
@@ -181,7 +181,7 @@ export default function CheckoutForm({ onSuccess }) {
       </div>
 
       <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
-        <label htmlFor={fieldId("website")}>Nettside</label>
+        <label htmlFor={fieldId("website")}>{a11y.honeypot}</label>
         <input
           id={fieldId("website")}
           type="text"

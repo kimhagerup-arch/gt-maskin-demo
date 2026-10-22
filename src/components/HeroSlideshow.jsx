@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { hero } from "../data/siteContent";
+import { a11y, hero } from "../data/siteContent";
 import { useAfterLoad } from "../hooks/useAfterLoad";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { cx } from "../lib/format";
@@ -96,7 +96,7 @@ export default function HeroSlideshow({ slides = [], className, sizes }) {
         onPointerCancel={() => {
           touch.current = null;
         }}
-        aria-roledescription="bildeshow"
+        aria-roledescription={a11y.slideshowRole}
         aria-label={hero.slideshowLabel}
       >
         {slides.map((slide, i) => {

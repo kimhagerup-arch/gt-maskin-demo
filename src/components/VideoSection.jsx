@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { videoSection } from "../data/siteContent";
+import { Link } from "../i18n/LocaleLink";
 import Icon from "./Icon";
 import SectionHeader from "./SectionHeader";
 import SnapchatSection from "./SnapchatSection";
