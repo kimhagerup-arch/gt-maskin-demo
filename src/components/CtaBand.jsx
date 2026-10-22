@@ -11,7 +11,7 @@ export default function CtaBand({ kicker, title, text, cta, tone = "light", show
       <div className="container-site">
         <div
           className={cx(
-            "flex flex-col gap-6 border p-8 md:flex-row md:items-center md:justify-between md:gap-12 md:p-12",
+            "cta-texture flex flex-col gap-6 border p-8 md:flex-row md:items-center md:justify-between md:gap-12 md:p-12",
             dark
               ? "border-brand-border-dark bg-brand-primary-light"
               : "border-brand-border bg-brand-card",

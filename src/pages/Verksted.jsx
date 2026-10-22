@@ -3,6 +3,7 @@ import CtaBand from "../components/CtaBand";
 import Icon from "../components/Icon";
 import PageHero from "../components/PageHero";
 import Picture from "../components/Picture";
+import PinstripeDivider from "../components/PinstripeDivider";
 import Reveal from "../components/Reveal";
 import SectionHeader from "../components/SectionHeader";
 import { companyFacts } from "../data/companyFacts";
@@ -147,6 +148,7 @@ export default function Verksted() {
       )}
 
       {/* Slik jobber vi */}
+      <PinstripeDivider tone="dark" className="pt-6" />
       <section className="section-pad bg-brand-primary text-brand-text-inverse">
         <div className="container-site flex flex-col gap-6 md:gap-8">
           <SectionHeader kicker={workshopPage.processKicker} title={workshopPage.processTitle} />

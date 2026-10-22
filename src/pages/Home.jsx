@@ -7,6 +7,7 @@ import ContactCard from "../components/ContactCard";
 import HomeHero from "../components/HomeHero";
 import Icon from "../components/Icon";
 import Picture from "../components/Picture";
+import PinstripeDivider from "../components/PinstripeDivider";
 import ProductCard from "../components/ProductCard";
 import RentalBanner from "../components/RentalBanner";
 import RentalCard from "../components/RentalCard";
@@ -159,6 +160,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Kustom-ornament som skille (runde 5b) */}
+      <PinstripeDivider tone="dark" className="pt-6" />
+
       {/* 8. Utleie */}
       <section id="utleie" className="section-pad bg-brand-primary text-brand-text-inverse">
         <div className="container-site flex flex-col gap-6 md:gap-8">
@@ -186,6 +190,8 @@ export default function Home() {
           <RentalBanner cta={rentalBanner.ctaHome} />
         </div>
       </section>
+
+      <PinstripeDivider tone="light" className="pt-6" />
 
       {/* 9. Om oss, kortversjon */}
       <section id="om-oss" className="section-pad bg-brand-bg text-brand-text">

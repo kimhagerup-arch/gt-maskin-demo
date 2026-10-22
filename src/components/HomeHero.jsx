@@ -5,6 +5,7 @@ import Button from "./Button";
 import HeroSlideshow from "./HeroSlideshow";
 import KustomEmblem from "./KustomEmblem";
 import SocialIcons from "./SocialIcons";
+import WavingFlag from "./WavingFlag";
 
 /**
  * Forsidens hero: tekst og knapper til venstre, bildeshow med bilene i en
@@ -13,7 +14,7 @@ import SocialIcons from "./SocialIcons";
  */
 export default function HomeHero() {
   return (
-    <section className="bg-brand-primary">
+    <section className="relative overflow-hidden bg-brand-primary">
       <div className="container-site grid gap-6 py-7 md:gap-6 md:py-12 lg:grid-cols-12 lg:items-center lg:py-14">
         <div className="flex flex-col gap-4 md:gap-6 lg:col-span-7">
           <p className="kicker text-brand-accent-light">
@@ -43,10 +44,15 @@ export default function HomeHero() {
         </div>
 
         <div className="relative lg:col-span-5 lg:col-start-8">
+          {/* Flagg i vind bak rammen, dempet (runde 5b). Bare fra 1024 px. */}
+          <WavingFlag
+            className="flag-fade absolute -right-28 -top-24 hidden h-[360px] w-[684px] lg:block"
+            opacity={0.2}
+          />
           <HeroSlideshow
             slides={heroSlides}
             sizes="(min-width: 1024px) 480px, 100vw"
-            className="aspect-[16/10] w-full md:aspect-[4/3] lg:aspect-auto lg:h-[560px]"
+            className="relative z-10 aspect-[16/10] w-full md:aspect-[4/3] lg:aspect-auto lg:h-[560px]"
           />
           <KustomEmblem
             badge={hero.badge}

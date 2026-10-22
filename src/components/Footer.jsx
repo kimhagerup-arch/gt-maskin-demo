@@ -5,6 +5,7 @@ import { getImage } from "../lib/images";
 import InstallButton from "./InstallButton";
 import ReviewBadges from "./ReviewBadges";
 import SocialLinks from "./SocialLinks";
+import WavingFlag from "./WavingFlag";
 
 const LOGO_KEY = "/images/logo/gt-maskin-logo";
 
@@ -30,8 +31,17 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-brand-border-dark bg-brand-primary-dark text-brand-muted-inverse">
-      <div className="container-site flex flex-col gap-8 py-8 md:py-10">
+    <footer className="relative overflow-hidden border-t border-brand-border-dark bg-brand-primary-dark text-brand-muted-inverse">
+      {/* Flagg i vind som bred, dempet bakgrunn øverst bak navnet (runde 5b). */}
+      <WavingFlag
+        className="flag-fade absolute -right-16 -top-10 h-[220px] w-[418px] md:-right-10 md:-top-14 md:h-[320px] md:w-[608px] lg:right-10"
+        opacity={0.26}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-brand-primary-dark via-brand-primary-dark/70 to-transparent md:via-brand-primary-dark/40"
+        aria-hidden="true"
+      />
+      <div className="container-site relative flex flex-col gap-8 py-8 md:py-10">
         <div className="grid gap-10 md:grid-cols-12 md:gap-8">
           {/* Firma. Logoen lastes ikke lazy: samme fil som i header (allerede lastet),
               og Chrome gir DevTools-issue for lazy bilder nær viewport på korte sider. */}
