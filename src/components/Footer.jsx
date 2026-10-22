@@ -34,8 +34,10 @@ export default function Footer() {
     <footer className="relative overflow-hidden border-t border-brand-border-dark bg-brand-primary-dark text-brand-muted-inverse">
       {/* Flagg i vind som bred, dempet bakgrunn øverst bak navnet (runde 5b). */}
       <WavingFlag
-        className="flag-fade absolute -right-16 -top-10 h-[220px] w-[418px] md:-right-10 md:-top-14 md:h-[320px] md:w-[608px] lg:right-10"
-        opacity={0.26}
+        className="flag-fade absolute -right-10 -top-6 h-[170px] w-[323px] md:-right-6 md:-top-10 md:h-[250px] md:w-[475px] lg:right-10"
+        opacity={0.2}
+        crop="left"
+        speed={0.8}
       />
       <div
         className="pointer-events-none absolute inset-0 bg-gradient-to-r from-brand-primary-dark via-brand-primary-dark/70 to-transparent md:via-brand-primary-dark/40"

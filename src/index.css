@@ -565,7 +565,6 @@ html.is-hidden {
 }
 .flag-band::after,
 .neon-plate.is-lighting::after,
-.flag-wave .flag-slice,
 .road-sign .road-sign-neon,
 .marquee-bulbs::before,
 .marquee-bulbs::after {
@@ -592,14 +591,10 @@ html.vegas .open-sign.is-open {
 html.vegas .flag-band::after {
   animation-duration: 4s;
 }
-html.vegas .flag-wave .flag-slice {
-  animation-duration: 1.1s;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .flag-band::after,
-  .neon-plate.is-lighting::after,
-  .flag-wave .flag-slice {
+  .neon-plate.is-lighting::after {
     animation: none;
   }
   .neon-plate,
@@ -611,31 +606,14 @@ html.vegas .flag-wave .flag-slice {
 
 /* ---------- Runde 5b: flagg i vind, bilskilt, veiskilt, kustom-tekstur ---------- */
 
-/* Flagget er delt i skiver som beveger seg opp og ned i en bølge (bare transform),
-   forskjøvet per skive med --i. Pauser utenfor skjermen (.is-still) og i skjult
-   fane (html.is-hidden), og står stille ved prefers-reduced-motion. */
-.flag-wave .flag-slice {
-  transform-origin: center;
-  animation: flag-ripple 2.6s ease-in-out infinite;
-  animation-delay: calc(var(--i, 0) * -0.19s);
-  will-change: transform;
-}
-.flag-wave.is-still .flag-slice {
-  --play: paused;
+/* Flagget tegnes i WebGL (WavingFlag.jsx); her bare utklipp og uttoning. */
+.flag-wave {
+  overflow: hidden;
 }
 /* Tones ut mot kantene, så flagget ligger i bakgrunnen og ikke står som en firkant. */
 .flag-wave.flag-fade {
   mask-image: radial-gradient(ellipse 70% 75% at 60% 45%, rgb(0 0 0) 30%, transparent 78%);
   -webkit-mask-image: radial-gradient(ellipse 70% 75% at 60% 45%, rgb(0 0 0) 30%, transparent 78%);
-}
-@keyframes flag-ripple {
-  0%,
-  100% {
-    transform: translateY(0) scaleY(1);
-  }
-  50% {
-    transform: translateY(-3.5%) scaleY(0.985);
-  }
 }
 
 /* Amerikansk bilskilt: lys plate med preget skrift og skruer i hjørnene. */
@@ -694,7 +672,6 @@ html.vegas .flag-wave .flag-slice {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flag-wave .flag-slice,
   .road-sign .road-sign-neon {
     animation: none;
   }

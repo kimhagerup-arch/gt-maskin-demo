@@ -32,6 +32,11 @@ const colors = {
   neon: "#F79A2B",
   neonRed: "#FF4D4D",
   chromeLight: "#ECEDF0",
+  // Runde 5c: flagget bak forsidens hero (hvit stripe ved 34 % over primær = #646463)
+  // med mørk toning der teksten står: verste punkt 85 % primær over det (desktop),
+  // 75 % (mobil).
+  heroFlagDesktop: "#212120",
+  heroFlagMobile: "#292928",
 };
 
 function lum(hex) {
@@ -69,6 +74,12 @@ const pairs = [
   ["flagWhite", "flagRed", "Hvitt på flaggrødt (flaggene i språkvelgeren)"],
   ["flagWhite", "flagBlue", "Hvitt (stjerner) på flaggblått"],
   ["textInverse", "primaryDark", "Tekst på skiltplaten (primær mørk)"],
+  ["textInverse", "heroFlagDesktop", "Overskrift over flagget i hero, desktop (verste punkt)"],
+  ["mutedInverse", "heroFlagDesktop", "Ingress over flagget i hero, desktop"],
+  ["accentLight", "heroFlagDesktop", "Neon-linjen og kicker over flagget, desktop"],
+  ["textInverse", "heroFlagMobile", "Overskrift over flagget i hero, mobil"],
+  ["mutedInverse", "heroFlagMobile", "Ingress over flagget i hero, mobil"],
+  ["accentLight", "heroFlagMobile", "Neon-linjen og kicker over flagget, mobil"],
   ["muted", "bg", "Nedtonet på lys flate"],
   ["muted", "card", "Nedtonet på hvitt kort"],
   ["muted", "surface", "Nedtonet på surface (plassholder lys)"],
