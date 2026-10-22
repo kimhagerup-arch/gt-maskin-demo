@@ -370,6 +370,7 @@ export const partsSection = {
       change: "Bytt",
       remove: "Fjern",
       removeAria: "Fjern Min bil",
+      plateTop: "Alta · Norway",
       saved: "Husket som Min bil",
       hint: "Velg merke, modell og årsmodell, så husker vi bilen og viser hva som passer.",
     },
@@ -783,6 +784,8 @@ export const header = {
   openSign: {
     open: "ÅPEN",
     closed: "STENGT",
+    closesAt: "16:00",
+    opensAt: "08:30",
     ariaOpen: "Åpent nå, stenger {time}",
     ariaClosedToday: "Stengt nå, åpner {day} {time}",
     days: ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"],

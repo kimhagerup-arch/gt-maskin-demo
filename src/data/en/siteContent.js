@@ -364,6 +364,7 @@ export const partsSection = {
       change: "Change",
       remove: "Remove",
       removeAria: "Remove My car",
+      plateTop: "Alta · Norway",
       saved: "Saved as My car",
       hint: "Choose make, model and model year, and we remember the car and show what fits.",
     },
@@ -775,6 +776,8 @@ export const header = {
   openSign: {
     open: "OPEN",
     closed: "CLOSED",
+    closesAt: "4:00 PM",
+    opensAt: "8:30 AM",
     ariaOpen: "Open now, closes at {time}",
     ariaClosedToday: "Closed now, opens {day} at {time}",
     days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],

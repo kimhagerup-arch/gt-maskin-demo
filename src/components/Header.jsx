@@ -2,23 +2,38 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { companyFacts } from "../data/companyFacts";
-import { a11y, nav } from "../data/siteContent";
+import { a11y, header as headerText, nav } from "../data/siteContent";
 import { NavLink } from "../i18n/LocaleLink";
 import { cx } from "../lib/format";
+import { useVegas } from "../lib/vegas";
 import Button from "./Button";
+import FlagBand from "./FlagBand";
 import Icon from "./Icon";
 import LangSwitch from "./LangSwitch";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
+import NeonPlate from "./NeonPlate";
+import OpenSign from "./OpenSign";
 import SocialIcons from "./SocialIcons";
 
 const MENU_ID = "mobilmeny";
+const SCROLLED_AT = 24;
 
+/**
+ * Header i USA- og Las Vegas-stil (runde 5b): stjerner og striper som smalt bånd
+ * øverst, logoen på en skiltplate med neonkant, aktiv side med neonrør under,
+ * ÅPEN-skilt ved telefonnummeret fra 1280 px, språkvelger med flagg på alle
+ * bredder. Ved rulling blir headeren litt slankere (platen krymper) og får en
+ * tynn kromkant nederst, uten at boksen endrer høyde (ingen CLS). Høyden er den
+ * samme som før: 64 px på mobil, 88 px fra 768 px.
+ */
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef(null);
   const location = useLocation();
   const cart = useCart();
+  const { on: vegas } = useVegas();
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -28,39 +43,54 @@ export default function Header() {
     setOpen(false);
   }, [location.pathname]);
 
-  return (
-    <header className="sticky top-0 z-40 border-b border-brand-border-dark bg-brand-primary">
-      <div className="container-site flex h-16 items-center justify-between md:h-[88px]">
-        <Logo />
+  useEffect(() => {
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setScrolled(window.scrollY > SCROLLED_AT));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
-        <nav className="hidden items-center gap-3.5 lg:flex xl:gap-7" aria-label={a11y.mainMenu}>
+  return (
+    <header
+      className="sticky top-0 z-40 border-b border-brand-border-dark bg-brand-primary"
+      data-scrolled={scrolled || undefined}
+    >
+      <FlagBand />
+      <div className="container-site flex h-16 items-center justify-between md:h-[88px]">
+        <NeonPlate className="header-plate">
+          <Logo linkClassName="px-2 py-1 md:px-2.5" />
+        </NeonPlate>
+
+        <nav className="hidden items-center gap-3.5 lg:flex xl:gap-5" aria-label={a11y.mainMenu}>
           {nav.items.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
-              className={({ isActive }) =>
-                cx(
-                  "whitespace-nowrap border-b-2 py-1 text-[14px] font-semibold tracking-[0.02em] transition-colors duration-150 xl:text-[15px]",
-                  isActive
-                    ? "border-brand-accent text-brand-text-inverse"
-                    : "border-transparent text-brand-text-inverse hover:border-brand-outline",
-                )
-              }
+              className="nav-neon whitespace-nowrap py-1 text-[14px] font-semibold tracking-[0.02em] text-brand-text-inverse transition-colors duration-150 xl:text-[15px]"
             >
               {item.label}
             </NavLink>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-3 xl:gap-4">
-          <SocialIcons className="hidden lg:flex" />
+        <div className="flex items-center gap-2 md:gap-2.5 xl:gap-3 lg:ml-6">
+          {/* Facebook og Snapchat bare på brede skjermer; de står også i hero, footer og mobilmeny. */}
+          <SocialIcons className="hidden 2xl:flex" />
           <a
             href={companyFacts.phone.href}
-            className="hidden items-center gap-2 text-base font-bold tracking-[0.02em] text-brand-text-inverse transition-colors hover:text-brand-accent-light xl:inline-flex"
+            className="hidden items-center gap-2 whitespace-nowrap text-[15px] font-bold tracking-[0.02em] text-brand-text-inverse transition-colors hover:text-brand-accent-light xl:inline-flex"
           >
             <Icon name="Phone" size={18} strokeWidth={2} />
             {companyFacts.phone.display}
           </a>
+          <OpenSign className="hidden xl:inline-flex" />
 
           <LangSwitch />
 
@@ -103,6 +133,10 @@ export default function Header() {
           </button>
         </div>
       </div>
+      <span className={cx("chrome-edge", scrolled && "is-on")} aria-hidden="true" />
+      <span className="sr-only" aria-live="polite">
+        {vegas ? headerText.vegas.on : ""}
+      </span>
 
       <MobileMenu id={MENU_ID} open={open} onClose={close} returnFocusRef={menuButtonRef} />
     </header>

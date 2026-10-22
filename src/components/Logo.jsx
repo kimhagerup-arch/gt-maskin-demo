@@ -12,7 +12,7 @@ const LOGO_KEY = "/images/logo/gt-maskin-logo";
  */
 export default function Logo({ size = "md", showTagline = true, className, linkClassName }) {
   const image = getImage(LOGO_KEY);
-  const box = size === "sm" ? "h-12 w-12" : "h-12 w-12 md:h-16 md:w-16";
+  const box = size === "sm" ? "h-12 w-12" : "h-12 w-12 md:h-14 md:w-14";
   const wordmark =
     size === "sm"
       ? "text-[24px] tracking-[0.08em]"

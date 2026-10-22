@@ -25,6 +25,13 @@ const colors = {
   onFacebook: "#FFFFFF",
   snapchat: "#FFFC00",
   onSnapchat: "#000000",
+  // Runde 5b: flagg, neon og krom.
+  flagRed: "#B22234",
+  flagWhite: "#FFFFFF",
+  flagBlue: "#3C3B6E",
+  neon: "#F79A2B",
+  neonRed: "#FF4D4D",
+  chromeLight: "#ECEDF0",
 };
 
 function lum(hex) {
@@ -57,6 +64,11 @@ const pairs = [
   ["mutedInverse", "primary", "Nedtonet invers på primær"],
   ["mutedInverse", "primaryLight", "Nedtonet invers på mørkt kort"],
   ["text", "bg", "Brødtekst på lys flate"],
+  ["neonRed", "primary", "ÅPEN-skiltet (rødt neon) på primær"],
+  ["neon", "primary", "Neonrør og neonkant på primær"],
+  ["flagWhite", "flagRed", "Hvitt på flaggrødt (flaggene i språkvelgeren)"],
+  ["flagWhite", "flagBlue", "Hvitt (stjerner) på flaggblått"],
+  ["textInverse", "primaryDark", "Tekst på skiltplaten (primær mørk)"],
   ["muted", "bg", "Nedtonet på lys flate"],
   ["muted", "card", "Nedtonet på hvitt kort"],
   ["muted", "surface", "Nedtonet på surface (plassholder lys)"],
