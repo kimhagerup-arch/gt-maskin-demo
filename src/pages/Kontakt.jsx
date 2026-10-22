@@ -3,7 +3,7 @@ import BookingForm from "../components/BookingForm";
 import ContactCard from "../components/ContactCard";
 import PageHero from "../components/PageHero";
 import { findCar } from "../data/cars";
-import { products } from "../data/products";
+import { getProduct } from "../data/products";
 import { contactPage, seo } from "../data/siteContent";
 import { useSeoMeta } from "../hooks/useSeoMeta";
 
@@ -11,16 +11,27 @@ export default function Kontakt() {
   useSeoMeta(seo.kontakt);
   const [params] = useSearchParams();
 
-  let initialMessage = "";
+  // ?vare= er en vare-slug eller fritekst (deltype, søk), ?bil= en bil til salgs
+  // (slug) eller bilen fra butikken som tekst («Chevrolet Camaro 1969»).
+  const lines = [];
   const vare = params.get("vare");
   const bil = params.get("bil");
   if (vare) {
-    const product = products.find((p) => p.slug === vare);
-    initialMessage = `${contactPage.productRequestPrefix} ${product ? `${product.title} (${product.brand})` : vare}\n\n`;
-  } else if (bil) {
-    const car = findCar(bil);
-    initialMessage = `${contactPage.carRequestPrefix} ${car ? `${car.title} ${car.year}` : bil}\n\n`;
+    const product = getProduct(vare);
+    const brand = product?.brand && !product.brand.startsWith("[") ? ` (${product.brand})` : "";
+    lines.push(
+      `${contactPage.productRequestPrefix} ${product ? `${product.title}${brand}` : vare}`,
+    );
   }
+  if (bil) {
+    const car = findCar(bil);
+    lines.push(
+      car
+        ? `${contactPage.carRequestPrefix} ${car.title} ${car.year}`
+        : `${contactPage.vehiclePrefix} ${bil}`,
+    );
+  }
+  const initialMessage = lines.length ? `${lines.join("\n")}\n\n` : "";
 
   return (
     <>
