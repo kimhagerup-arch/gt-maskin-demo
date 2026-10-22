@@ -163,8 +163,11 @@ export const videoSection = {
     kicker: "Video",
     title: "GT Maskin på film",
     lead: "Prosjekter, før og etter, og litt fra hverdagen på verkstedet i Myggveien.",
-    heroImage: "/images/bygg/fasade-dag-bilpark",
-    heroAlt: "Bygget til GT Maskin på dagtid med mange biler foran",
+    // Butikkvideoen som bakgrunn (runde 5c): posteren er LCP, videoen etter load.
+    heroImage: "/images/hero/butikk-hero-poster",
+    heroAlt: "Butikken hos GT Maskin: moped, gammelt kasseapparat og klesstativ",
+    heroVideo: "/video/hero.mp4",
+    heroPosition: "50% 45%",
     featuredTitle: "Siste video",
     gridTitle: "Alle videoer",
     moreKicker: "Mer fra oss",
