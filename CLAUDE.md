@@ -9,7 +9,7 @@ Kildene ligger i `_kilder/`. Les `_kilder/00-LES-MEG.md` først. Byggeoppdraget 
 - Vite + React 18 (SPA), JavaScript/JSX, `react-router-dom` v6 med v7-future-flags aktivert
 - Tailwind CSS 3.4 med `tailwind.config.js`, alle farger som `brand-*`-tokens (se `_kilder/DESIGNSYSTEM-GTMASKIN.md`)
 - `lucide-react` for ikoner (tre-shaked), ingen emoji
-- Google Fonts: Bebas Neue (display) og Barlow (brødtekst), lastet i `index.html`
+- Fonter: Bebas Neue (display), Barlow (brødtekst) og Yellowtail (kun kustom-emblemet), selvhostet som woff2 i `public/fonts/` med `@font-face` i `src/index.css` og preload i `index.html`. Ingen eksterne fontkall.
 - Biome for lint og format (`npm run lint`, `npm run format`)
 - Ingen backend, ingen database, ingen miljøvariabler i demoen
 - Deploy skjer senere til Vercel (`vercel.json` med SPA-rewrite og `X-Robots-Tag: noindex` skal ligge klar)
@@ -35,6 +35,7 @@ npm run preview
 - Ikke finn på fakta: priser, antall ansatte, kunder, garantier, svartider, anmeldelser. Kun `_kilder/FAKTA.md` er kilde. Mangler noe: plassholder tydelig merket i klammer, aldri noe som ser ekte ut.
 - Verktøy og assistenter som er brukt i arbeidet nevnes aldri: ikke i innhold, kode, kommentarer, commits eller docs.
 - Alt innhold ligger i `src/data/`. Ingen tekst hardkodet i komponenter der det kan unngås.
+- Alt synlig innhold finnes på norsk og amerikansk engelsk: norsk kilde i `src/data/nb/`, engelsk i `src/data/en/` med samme form, og en tospråklig fasade i `src/data/` som komponentene importerer. Engelsk ligger under `/en` med de samme stiene (`src/i18n/`). `npm run lint` kjører `scripts/check-i18n.mjs`, som feiler når en tekst finnes på det ene språket og mangler på det andre. Forbudte ord gjelder på engelsk også (luxury, premium, exclusive), og ingen tankestrek på engelsk heller. Bilmerker, modeller, firmanavn og merkenavn oversettes ikke.
 
 ## Design
 

@@ -88,9 +88,13 @@ export default function MobileSlider({
 
   return (
     <div className={cx("flex flex-col gap-4 md:gap-0", className)}>
+      {/* Sporet kan få fokus, så det kan rulles med tastatur også når kortene
+          ikke har lenker (axe: scrollable-region-focusable). */}
       <ul
         ref={trackRef}
         aria-label={label}
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: rullbart område må kunne få fokus
+        tabIndex={0}
         onFocus={onFocus}
         className={cx(
           "scrollbar-none relative -mx-4 -my-3 flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden scroll-px-4 px-4 py-3",
