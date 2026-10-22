@@ -20,7 +20,7 @@ import VideoSection from "../components/VideoSection";
 import { brands } from "../data/brands";
 import { cars } from "../data/cars";
 import { channels } from "../data/channels";
-import { products } from "../data/products";
+import { featuredProducts } from "../data/products";
 import { rental, rentalBanner } from "../data/rental";
 import {
   aboutSection,
@@ -137,7 +137,7 @@ export default function Home() {
           </div>
           <div className="grid gap-3 md:gap-6 lg:grid-cols-12">
             <ul className="grid grid-cols-2 gap-3 md:gap-6 lg:col-span-8">
-              {products.slice(0, 4).map((product, i) => (
+              {featuredProducts().map((product, i) => (
                 <Reveal as="li" key={product.slug} delay={i * 50}>
                   <ProductCard product={product} />
                 </Reveal>

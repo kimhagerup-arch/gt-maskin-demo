@@ -8,7 +8,6 @@ import {
   aboutSection,
   carsSection,
   contactPage,
-  partsSection,
   rentalSection,
   videoSection,
   workshopPage,
@@ -19,7 +18,6 @@ const PAGE_SIZES = "100vw";
 export const heroByPath = {
   "/": { image: heroSlides[0].image, sizes: "(min-width: 1024px) 480px, 100vw" },
   "/verksted": { image: workshopPage.heroImage, sizes: PAGE_SIZES },
-  "/deler": { image: partsSection.page.heroImage, sizes: PAGE_SIZES },
   "/biler-til-salgs": { image: carsSection.page.heroImage, sizes: PAGE_SIZES },
   "/video": { image: videoSection.page.heroImage, sizes: PAGE_SIZES },
   "/utleie": { image: rentalSection.page.heroImage, sizes: PAGE_SIZES },
@@ -36,6 +34,10 @@ export const fontsByPath = {
 export const pageByPath = {
   "/verksted": "Verksted",
   "/deler": "Deler",
+  // Katalogstiene under /deler/bil, /deler/kategori og /deler/sok (prefiks-match i pluginen).
+  "/deler/bil": "Deler",
+  "/deler/kategori": "Deler",
+  "/deler/sok": "Deler",
   "/kasse": "Kasse",
   "/biler-til-salgs": "BilerTilSalgs",
   "/video": "Video",

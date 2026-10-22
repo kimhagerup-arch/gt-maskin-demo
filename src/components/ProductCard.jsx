@@ -2,16 +2,23 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { partsSection } from "../data/siteContent";
+import { fitStatus } from "../lib/catalog";
 import { cx, formatPrice } from "../lib/format";
 import Icon from "./Icon";
 import Picture from "./Picture";
-import Placeholder from "./Placeholder";
+import ProductThumb from "./katalog/ProductThumb";
 
-export default function ProductCard({ product }) {
+/**
+ * Varekort i rutenett (klær og utstyr, forsiden). Uten bilde vises ikonet til
+ * kategorien. Eksempelvarer får en liten «Eksempel»-pille, og varer som passer
+ * Min bil får «Passer din bil».
+ */
+export default function ProductCard({ product, myCar = null }) {
   const cart = useCart();
   const [added, setAdded] = useState(false);
   const imageKey = product.image || product.placeholderImage;
   const needsSize = Array.isArray(product.sizes) && product.sizes.length > 0;
+  const fit = fitStatus(product, myCar);
 
   useEffect(() => {
     if (!added) return undefined;
@@ -29,35 +36,26 @@ export default function ProductCard({ product }) {
   return (
     <article className="flex h-full flex-col border border-brand-border bg-brand-card transition-colors hover:border-brand-accent">
       <Link to={`/deler/${product.slug}`} className="relative block aspect-[4/3] overflow-hidden">
-        {/* Lenketeksten er tittelen; ekte produktbilder har derfor tom alt. */}
+        {/* Lenketeksten er tittelen; bildet har derfor tom alt. */}
         <span className="sr-only" translate="no">
           {product.title}
         </span>
         {imageKey ? (
           <Picture
             src={imageKey}
-            alt={product.image ? "" : `Eksempel: ${product.placeholderLabel}`}
+            alt=""
             sizes="(min-width: 1024px) 282px, (min-width: 640px) 50vw, 100vw"
             className="h-full w-full"
             imgClassName={cx("h-full w-full object-cover", product.placeholder && "saturate-[.85]")}
             tone="light"
           />
         ) : (
-          <Placeholder
-            tone="light"
-            label={product.placeholderLabel || partsSection.card.imageLabel}
-            className="h-full w-full"
-          />
+          <ProductThumb product={product} className="h-full w-full" iconSize={56} />
         )}
-        {product.placeholder && imageKey && (
-          <>
-            <span className="absolute left-0 top-0 bg-brand-primary px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-accent-light">
-              {partsSection.product.placeholderTag}
-            </span>
-            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-primary/90 to-transparent px-4 pb-3 pt-8 text-sm font-semibold text-brand-text-inverse">
-              {product.placeholderLabel}
-            </span>
-          </>
+        {product.placeholder && (
+          <span className="absolute left-2 top-2 bg-brand-primary px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-accent-light">
+            {partsSection.card.exampleTag}
+          </span>
         )}
       </Link>
       <div className="flex flex-1 flex-col gap-1 px-4 pb-4 pt-4 md:px-5 md:pb-5">
@@ -72,9 +70,16 @@ export default function ProductCard({ product }) {
             {product.title}
           </Link>
         </h3>
-        <span className="text-xs text-brand-muted">{stockLabel}</span>
+        <span className="text-xs text-brand-muted">
+          {stockLabel}
+          {fit === "ja" && (
+            <span className="ml-2 inline-flex h-5 items-center bg-brand-primary px-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-brand-text-inverse">
+              {partsSection.card.fitsMyCar}
+            </span>
+          )}
+        </span>
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
-          <span className="whitespace-nowrap font-display text-xl text-brand-accent-deep md:text-2xl">
+          <span className="whitespace-nowrap font-display text-xl tabular-nums text-brand-accent-deep md:text-2xl">
             {formatPrice(product.price)} {partsSection.card.priceSuffix}
           </span>
           {needsSize ? (

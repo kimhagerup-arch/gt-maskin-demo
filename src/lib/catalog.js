@@ -156,6 +156,8 @@ export function productsFor(selection = {}, list = products) {
   const t = slugOf(type);
   return list.filter((p) => {
     if (c && p.category !== c) return false;
+    // Under en bil hører klær og utstyr ikke hjemme, bare deler og olje/kjemi.
+    if (!c && brand && p.category === CLOTHES_CATEGORY) return false;
     if (t && p.type !== t) return false;
     if (brand && !p.universal && !fitsVehicle(p, selection)) return false;
     return true;
@@ -275,10 +277,11 @@ export function searchCatalog(query, { myCar = null, list = products } = {}) {
     types: [],
     products: [],
     exact: null,
+    best: null,
   };
   if (!tokens.length) return empty;
 
-  const exact = list.find((p) => p.sku && normalize(p.sku) === q) || null;
+  const exactProduct = list.find((p) => p.sku && normalize(p.sku) === q) || null;
 
   const detected = detectVehicle(tokens);
   const vehicle =
@@ -295,6 +298,9 @@ export function searchCatalog(query, { myCar = null, list = products } = {}) {
     vehicleSuggestions.push({ brand: detected.brand, model: null, year: null });
   }
 
+  // Kategorier og deltyper som ordene treffer, eksakte navn først («eksos» gir
+  // kategorien Eksos før deltypen Eksosrør).
+  const exact = (name) => tokens.some((t) => normalize(name) === t);
   const categoryHits = [];
   const typeHits = [];
   for (const c of categories) {
@@ -303,6 +309,15 @@ export function searchCatalog(query, { myCar = null, list = products } = {}) {
       if (tokens.some((t) => tokenMatches(t, type.name))) typeHits.push({ category: c, type });
     }
   }
+  categoryHits.sort((a, b) => Number(exact(b.name)) - Number(exact(a.name)));
+  typeHits.sort((a, b) => Number(exact(b.type.name)) - Number(exact(a.type.name)));
+  const best = exact(categoryHits[0]?.name)
+    ? { category: categoryHits[0], type: null }
+    : typeHits[0]
+      ? { category: typeHits[0].category, type: typeHits[0].type }
+      : categoryHits[0]
+        ? { category: categoryHits[0], type: null }
+        : null;
 
   // Passer varen det som er funnet av merke, modell og årsmodell i søket?
   const fitsDetected = (p) =>
@@ -352,7 +367,8 @@ export function searchCatalog(query, { myCar = null, list = products } = {}) {
     categories: categoryHits,
     types: typeHits,
     products: scored.map((s) => s.p),
-    exact,
+    exact: exactProduct,
+    best,
   };
 }
 

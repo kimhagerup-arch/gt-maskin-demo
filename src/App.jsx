@@ -42,14 +42,19 @@ export default function App() {
               </Suspense>
             }
           />
-          <Route
-            path="deler"
-            element={
-              <Suspense fallback={<RouteFallback />}>
-                <Deler />
-              </Suspense>
-            }
-          />
+          {/* Butikken: samme side for roten, «etter bil», «alle kategorier» og søk.
+              De faste segmentene bil, kategori og sok vinner over /deler/:slug. */}
+          {["deler", "deler/bil/*", "deler/kategori/*", "deler/sok"].map((path) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <Suspense fallback={<RouteFallback />}>
+                  <Deler />
+                </Suspense>
+              }
+            />
+          ))}
           <Route
             path="deler/:slug"
             element={

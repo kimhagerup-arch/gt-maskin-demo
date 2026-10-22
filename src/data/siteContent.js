@@ -294,7 +294,7 @@ export const partsSection = {
   // Delekatalogen på /deler: treet etter bil og etter kategori, søk, lister og «Min bil».
   catalog: {
     searchLabel: "Søk i butikken",
-    searchPlaceholder: "Søk på årsmodell, merke, modell, deltype eller varenummer",
+    searchPlaceholder: "Søk etter bil, del eller varenummer",
     searchHint: "F.eks. «2017 durango eksos» eller «bremseklosser camaro»",
     searchButton: "Søk",
     searchClear: "Tøm søket",
